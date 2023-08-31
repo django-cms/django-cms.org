@@ -12,7 +12,7 @@ whitenoise
 easy-thumbnails
 
 # key requirements for django CMS
-django-cms>=4.1.0rc3
+django-cms>=4.1.0rc4
 djangocms-versioning>=2.0.0rc1
 djangocms-alias>=2.0.0rc1
 
