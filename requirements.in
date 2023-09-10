@@ -28,5 +28,8 @@ djangocms-frontend
 
 django-filer
 
+# djangocms-blog for v4
+git+https://github.com/fsbraun/djangocms-blog@develop-4
+
 
 pip-tools  # needed for compilation of this file into requirements.txt, see start of file

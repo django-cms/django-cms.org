@@ -78,6 +78,13 @@ INSTALLED_APPS = [
     'djangocms_frontend.contrib.image',
     'djangocms_frontend.contrib.tabs',
     'djangocms_frontend.contrib.utilities',
+
+    # djangocms-blog-related stuff
+    'djangocms_blog',
+    'taggit',
+    'taggit_autosuggest',
+    'meta',
+    'sortedm2m',
 ]
 
 MIDDLEWARE = [
