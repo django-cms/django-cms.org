@@ -75,7 +75,10 @@ class FeatureForm(ResponsiveFormMixin, MarginFormMixin, EntangledModelForm):
             ]
         }
 
-    icon = IconPickerField(required=True)
+    icon = IconPickerField(
+        label=_("Icon"),
+        required=True,
+    )
     feature = forms.CharField(
         label=_("Feature"),
         required=True,
