@@ -23,15 +23,10 @@ class Person(ImageMixin, FrontendUIItem):
         if not self.picture:
             return ""
 
-        picture_options = self.get_size(
-            width=settings.FRONTEND_PORTRAIT_SIZE,
-            height=settings.FRONTEND_PORTRAIT_SIZE,
-        )
-
         thumbnail_options = {
-            "size": picture_options["size"],
-            "crop": picture_options["crop"],
-            "upscale": picture_options["upscale"],
+            "size": (settings.FRONTEND_PORTRAIT_SIZE, settings.FRONTEND_PORTRAIT_SIZE),
+            "crop": True,
+            "upscale": True,
             "subject_location": self.rel_image.subject_location
             if self.rel_image
             else (),

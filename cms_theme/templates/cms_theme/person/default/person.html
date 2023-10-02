@@ -1,7 +1,7 @@
-<div class="person">
-    <img src="{{ instance.img_src }}" class="mx-auto rounded-circle" />
-    <div class="text-center">{{ instance.name }}</div>
+<div class="person text-center">
+    <img src="{{ instance.img_src }}" class="rounded-circle" />
+    <div class="name">{{ instance.name }}</div>
     {% if instance.role %}
-        <div class="text-center text-muted">{{ instance.role }}</div>
+        <div class="role text-muted">{{ instance.role }}</div>
     {% endif %}
 </div>
