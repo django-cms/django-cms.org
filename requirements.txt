@@ -6,9 +6,9 @@
 #
 asgiref==3.7.2
     # via django
-boto3==1.28.58
+boto3==1.28.60
     # via -r requirements.in
-botocore==1.31.58
+botocore==1.31.60
     # via
     #   boto3
     #   s3transfer
@@ -20,7 +20,7 @@ cssselect2==0.7.0
     # via svglib
 dj-database-url==2.1.0
     # via -r requirements.in
-django==4.2.5
+django==4.2.6
     # via
     #   -r requirements.in
     #   dj-database-url
@@ -111,9 +111,9 @@ djangocms-attributes-field==3.0.0
     # via djangocms-frontend
 djangocms-blog @ git+https://github.com/fsbraun/djangocms-blog@develop-4
     # via -r requirements.in
-djangocms-frontend==1.1.9
+djangocms-frontend @ git+https://github.com/django-cms/djangocms-frontend@master
     # via -r requirements.in
-djangocms-text-ckeditor==5.1.3
+djangocms-text-ckeditor==5.1.4
     # via
     #   -r requirements.in
     #   djangocms-blog
@@ -152,7 +152,7 @@ pillow==10.0.1
     #   reportlab
 pip-tools==7.3.0
     # via -r requirements.in
-psycopg2==2.9.8
+psycopg2==2.9.9
     # via -r requirements.in
 pyproject-hooks==1.0.0
     # via build
