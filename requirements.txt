@@ -6,9 +6,9 @@
 #
 asgiref==3.7.2
     # via django
-boto3==1.28.60
+boto3==1.28.61
     # via -r requirements.in
-botocore==1.31.60
+botocore==1.31.61
     # via
     #   boto3
     #   s3transfer
@@ -27,6 +27,7 @@ django==4.2.6
     #   django-appconf
     #   django-classy-tags
     #   django-cms
+    #   django-debug-toolbar
     #   django-entangled
     #   django-filer
     #   django-formtools
@@ -59,6 +60,8 @@ django-cms==4.1.0rc4
     #   djangocms-frontend
     #   djangocms-text-ckeditor
     #   djangocms-versioning
+django-debug-toolbar==4.2.0
+    # via -r requirements.in
 django-entangled==0.5.4
     # via djangocms-frontend
 django-filer==3.1.0
@@ -173,7 +176,9 @@ six==1.16.0
     #   orderedmultidict
     #   python-dateutil
 sqlparse==0.4.4
-    # via django
+    # via
+    #   django
+    #   django-debug-toolbar
 svglib==1.5.1
     # via easy-thumbnails
 tinycss2==1.2.1

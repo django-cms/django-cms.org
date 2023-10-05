@@ -238,3 +238,12 @@ THUMBNAIL_TRANSPARENCY_EXTENSION = "webp"
 
 # Design settings
 FRONTEND_PORTRAIT_SIZE = 140
+
+if DEBUG:
+    INSTALLED_APPS += (  # NoQA F405
+        "debug_toolbar",
+    )
+    MIDDLEWARE.insert(  # NoQA F405
+        1,
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    )
