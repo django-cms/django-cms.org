@@ -1,12 +1,12 @@
-{% load i18n easy_thumbnails_tags cms_tags %}
+{% load i18n djangocms_blog easy_thumbnails_tags cms_tags %}
 <div class="h-100 card post-item">
-    {% if postcontent.main_image %}
-        {% thumbnail postcontent.main_image postcontent.thumbnail_options.size crop=postcontent.thumbnail_options.crop upscale=postcontent.thumbnail_options.upscale subject_location=postcontent.main_image.subject_location as thumb %}
+    {% if postcontent.post.main_image %}
+        {% thumbnail postcontent.post.main_image postcontent.post.thumbnail_options.size crop=postcontent.post.thumbnail_options.crop upscale=postcontent.post.thumbnail_options.upscale subject_location=postcontent.post.main_image.subject_location as thumb %}
         <div class="card-img-top" style="height: 180px; background-image: url({{ thumb.url }}); background-position: center; background-size: cover;"></div>
     {% endif %}
     <div class="card-body">
         <h4>{{ postcontent.title }}</h4>
         {{ postcontent.abstract }}
-        <a href="/resources/blog/" class="btn btn-primary">{% translate "Learn more..." %}</a>
+        <a href="{% absolute_url postcontent %}"" class="btn btn-primary">{% translate "Learn more..." %}</a>
     </div>
 </div>
