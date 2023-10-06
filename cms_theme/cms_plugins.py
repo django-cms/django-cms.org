@@ -74,7 +74,7 @@ class CaseStudyProfilePlugin(CMSUIPlugin):
                     "size",
                     "location",
                     "sector",
-                    "lanch",
+                    "launch",
                     "website",
                     "source",
                 ]
