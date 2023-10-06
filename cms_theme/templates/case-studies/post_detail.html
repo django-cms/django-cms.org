@@ -8,23 +8,23 @@
     <div class="container">
         <article id="post-{{ post_content.slug }}" class="post-item post-detail">
             <header>
+                {% if post_content.post.main_image_id %}
+                    <div class="blog-visual">
+                        {% thumbnail post_content.post.main_image post_content.post.full_image_options.size crop=post_content.post.full_image_options.crop upscale=post_content.post.full_image_options.upscale subject_location=post_content.post.main_image.subject_location as main_image %}
+                        {% if main_image %}
+                            <img src="{{ main_image.url }}" alt="{{ post_content.post.main_image.default_alt_text|default:'' }}" class="img-fluid mb-3" />
+                        {% else %}
+                            <img src="{{ post_content.post.main_image.url }}" alt="{{ post_content.post.main_image.default_alt_text|default:'' }}" class="img-fluid mb-3" />
+                        {% endif %}
+                    </div>
+                {% endif %}
                 <h2>{% render_model post_content "title" %}</h2>
                 {% if post_content.subtitle %}
                     <h3>{% render_model post_content "subtitle" %}</h3>
                 {% endif %}
                 {% block blog_meta %}
                 {% endblock %}
-            </header>
-            {% if post_content.post.main_image_id %}
-                <div class="blog-visual">
-                    {% thumbnail post_content.post.main_image post_content.post.full_image_options.size crop=post_content.post.full_image_options.crop upscale=post_content.post.full_image_options.upscale subject_location=post_content.post.main_image.subject_location as main_image %}
-                    {% if main_image %}
-                        <img src="{{ main_image.url }}" alt="{{ post_content.post.main_image.default_alt_text|default:'' }}" class="img-fluid mb-3" />
-                    {% else %}
-                        <img src="{{ post_content.post.main_image.url }}" alt="{{ post_content.post.main_image.default_alt_text|default:'' }}" class="img-fluid mb-3" />
-                    {% endif %}
-                </div>
-            {% endif %}{% endspaceless %}
+            </header>{% endspaceless %}
             <div class="row">
                 <div class="blog-content col">
                     {% if post_content.abstract %}<div class="lead">{% render_model post_content "abstract" %}</div>{% endif %}
