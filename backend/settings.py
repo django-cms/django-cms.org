@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 import dj_database_url
+from django.utils.log import DEFAULT_LOGGING
 from django_storage_url import dsn_configured_storage_class
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -248,6 +249,11 @@ if DEBUG:
     INTERNAL_IPS = [
         "127.0.0.1",
     ]
+    ADMINS = [
+        ("Fabian", "fsbraun@gmx.de"),
+    ]
+    LOGGING = DEFAULT_LOGGING
+    LOGGING["handlers"]["mail_admins"]["include_html"] = True
 
 # Design settings
 FRONTEND_PORTRAIT_SIZE = 140
