@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.redirects',
     'whitenoise.runserver_nostatic',  # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'django.contrib.staticfiles',
     'django.contrib.sites',
@@ -243,7 +244,7 @@ THUMBNAIL_PRESERVE_EXTENSIONS = ('webp',)
 THUMBNAIL_TRANSPARENCY_EXTENSION = "webp"
 
 # For development: django-debug-toolbar
-if DEBUG:
+if DEBUG or True:
     INSTALLED_APPS += (  # NoQA F405
         "debug_toolbar",
     )
@@ -262,7 +263,6 @@ if DEBUG:
     LOGGING["handlers"]["mail_admins"]["filters"] = []
 
 # Design settings
-FRONTEND_PORTRAIT_SIZE = 140
 BLOG_PLUGIN_TEMPLATE_FOLDERS = (
     ("plugins", _("Default")),
     ("cards", _("Cards")),

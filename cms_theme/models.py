@@ -11,6 +11,7 @@ from easy_thumbnails.files import get_thumbnailer
 
 class Person(ImageMixin, FrontendUIItem):
     image_field = "picture"
+    FRONTEND_PORTRAIT_SIZE = 140
 
     class Meta:
         proxy = True
@@ -24,7 +25,7 @@ class Person(ImageMixin, FrontendUIItem):
             return ""
 
         thumbnail_options = {
-            "size": (settings.FRONTEND_PORTRAIT_SIZE, settings.FRONTEND_PORTRAIT_SIZE),
+            "size": (self.FRONTEND_PORTRAIT_SIZE, self.FRONTEND_PORTRAIT_SIZE),
             "crop": True,
             "upscale": True,
             "subject_location": self.rel_image.subject_location
