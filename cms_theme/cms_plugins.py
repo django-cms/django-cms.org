@@ -36,21 +36,16 @@ class PersonPlugin(LayoutMixin, ResponsiveMixin, MarginMixin, CMSUIPlugin):
                 ]
             },
         ),
-    ] + (
-        [
-            (
-                _("Layout"),
-                {
-                    "classes": ("collapse",),
-                    "fields": [
-                        "template",
-                    ],
-                },
-            ),
-        ]
-        if len(form.LAYOUTS) > 1
-        else []
-    )
+        (
+            _("Layout"),
+            {
+                "classes": ("collapse",),
+                "fields": [
+                    "template",
+                ],
+            },
+        ),
+    ]
 
 
 @plugin_pool.register_plugin
@@ -105,21 +100,16 @@ class CaseStudyProfilePlugin(LayoutMixin, CMSUIPlugin):
                 ]
             },
         ),
-    ] + (
-        [
-            (
-                _("Layout"),
-                {
-                    "classes": ("collapse",),
-                    "fields": [
-                        "template",
-                    ],
-                },
-            ),
-        ]
-        if len(form.LAYOUTS) > 1
-        else []
-    )
+        (
+            _("Layout"),
+            {
+                "classes": ("collapse",),
+                "fields": [
+                    "template",
+                ],
+            },
+        ),
+    ]
 
 
 @plugin_pool.register_plugin
@@ -145,19 +135,14 @@ class PromoCardPlugin(LayoutMixin, MarginMixin, LinkPluginMixin, CMSUIPlugin):
                 ]
             },
         ),
-    ] + (
-        [
-            (
-                _("Layout"),
-                {
-                    "classes": ("collapse",),
-                    "fields": [
-                        "template",
-                    ],
-                },
-            ),
-        ]
-        if len(form.LAYOUTS) > 1
-        else []
-    )
+        (
+            _("Layout"),
+            {
+                "classes": ("collapse",),
+                "fields": [
+                    "template",
+                ],
+            },
+        ),
+    ]
     link_fieldset_position = 1
