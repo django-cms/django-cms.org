@@ -1,5 +1,4 @@
 from django import forms
-from django.conf import settings as django_settings
 from django.db.models import ManyToOneRel
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.common.responsive import ResponsiveFormMixin
@@ -12,8 +11,6 @@ from djangocms_text_ckeditor.fields import HTMLFormField
 from entangled.forms import EntangledModelForm
 from filer.fields.image import AdminImageFormField, FilerImageField
 from filer.models import Image
-
-from . import conf
 
 
 class PersonForm(
@@ -32,10 +29,12 @@ class PersonForm(
             ],
         }
 
+    LAYOUTS = (("default", _("Default")),)
+
     template = forms.ChoiceField(
         label=_("Layout"),
-        choices=conf.PERSON_LAYOUTS,
-        initial=first_choice(conf.PERSON_LAYOUTS),
+        choices=LAYOUTS,
+        initial=first_choice(LAYOUTS),
     )
 
     picture = AdminImageFormField(
@@ -68,6 +67,8 @@ class FeatureForm(ResponsiveFormMixin, MarginFormMixin, EntangledModelForm):
             ]
         }
 
+    LAYOUTS = (("default", _("Default")),)
+
     icon = IconPickerField(
         label=_("Icon"),
         required=True,
@@ -79,8 +80,8 @@ class FeatureForm(ResponsiveFormMixin, MarginFormMixin, EntangledModelForm):
     )
     template = forms.ChoiceField(
         label=_("Layout"),
-        choices=conf.FEATURE_LAYOUTS,
-        initial=first_choice(conf.FEATURE_LAYOUTS),
+        choices=LAYOUTS,
+        initial=first_choice(LAYOUTS),
     )
 
 
@@ -99,6 +100,8 @@ class CaseStudyProfileForm(EntangledModelForm):
                 "template",
             ]
         }
+
+    LAYOUTS = (("default", _("Default")),)
 
     client = forms.CharField(
         label=_("Client"),
@@ -131,8 +134,8 @@ class CaseStudyProfileForm(EntangledModelForm):
     )
     template = forms.ChoiceField(
         label=_("Layout"),
-        choices=conf.CASE_STUDY_LAYOUTS,
-        initial=first_choice(conf.CASE_STUDY_LAYOUTS),
+        choices=LAYOUTS,
+        initial=first_choice(LAYOUTS),
     )
 
 
@@ -151,6 +154,8 @@ class CaseStudyProfileForm(EntangledModelForm):
                 "template",
             ]
         }
+
+    LAYOUTS = (("default", _("Default")),)
 
     client = forms.CharField(
         label=_("Client"),
@@ -183,8 +188,8 @@ class CaseStudyProfileForm(EntangledModelForm):
     )
     template = forms.ChoiceField(
         label=_("Layout"),
-        choices=conf.CASE_STUDY_LAYOUTS,
-        initial=first_choice(conf.CASE_STUDY_LAYOUTS),
+        choices=LAYOUTS,
+        initial=first_choice(LAYOUTS),
     )
 
 
@@ -204,12 +209,14 @@ class PromoCardForm(
             ],
         }
 
+    LAYOUTS = (("default", _("Default")),)
+
     link_is_optional = True
 
     template = forms.ChoiceField(
         label=_("Layout"),
-        choices=conf.PERSON_LAYOUTS,
-        initial=first_choice(conf.PERSON_LAYOUTS),
+        choices=LAYOUTS,
+        initial=first_choice(LAYOUTS),
     )
 
     image = AdminImageFormField(

@@ -7,22 +7,23 @@ from djangocms_frontend.contrib.link.cms_plugins import LinkPluginMixin
 from djangocms_frontend.helpers import first_choice
 
 from . import forms, models
-from . import conf
 
 
-def get_plugin_template(
-    instance: models.FrontendUIItem, plugin: str, template: str, templates: tuple
-) -> str:
-    layout = getattr(instance, "template", first_choice(templates))
-    return f"cms_theme/{plugin}/{layout}/{template}.html"
+class LayoutMixin:
+    def get_render_template(self, context, instance, placeholder):
+        layout = getattr(instance, "template", first_choice(self.form.LAYOUTS))
+        plugin, template = self.layout_tuple
+        return f"cms_theme/{plugin}/{layout}/{template}.html"
 
 
 @plugin_pool.register_plugin
-class PersonPlugin(ResponsiveMixin, MarginMixin, CMSUIPlugin):
+class PersonPlugin(LayoutMixin, ResponsiveMixin, MarginMixin, CMSUIPlugin):
     name = _("Person")
 
     model = models.Person
     form = forms.PersonForm
+
+    layout_tuple = ("person", "person")
 
     fieldsets = [
         (
@@ -35,24 +36,25 @@ class PersonPlugin(ResponsiveMixin, MarginMixin, CMSUIPlugin):
                 ]
             },
         ),
-        (
-            _("Layout"),
-            {
-                "classes": ("collapse",),
-                "fields": [
-                    "template",
-                ]
-            }
-        ),
-    ]
-
-    @staticmethod
-    def get_render_template(context, instance, placeholder):
-        return get_plugin_template(instance, "person", "person", conf.PERSON_LAYOUTS)
+    ] + (
+        [
+            (
+                _("Layout"),
+                {
+                    "classes": ("collapse",),
+                    "fields": [
+                        "template",
+                    ],
+                },
+            ),
+        ]
+        if len(form.LAYOUTS) > 1
+        else []
+    )
 
 
 @plugin_pool.register_plugin
-class FeaturePlugin(ResponsiveMixin, MarginMixin, CMSUIPlugin):
+class FeaturePlugin(LayoutMixin, ResponsiveMixin, MarginMixin, CMSUIPlugin):
     name = _("Feature")
 
     model = models.Feature
@@ -63,6 +65,8 @@ class FeaturePlugin(ResponsiveMixin, MarginMixin, CMSUIPlugin):
         "ImagePlugin",
         "IconPlugin",
     ]
+
+    layout_tuple = ("feature", "feature")
 
     fieldsets = [
         (
@@ -76,21 +80,15 @@ class FeaturePlugin(ResponsiveMixin, MarginMixin, CMSUIPlugin):
         ),
     ]
 
-    def get_render_template(self, context, instance, placeholder):
-        return get_plugin_template(
-            instance,
-            "feature",
-            "feature",
-            conf.FEATURE_LAYOUTS,
-        )
-
 
 @plugin_pool.register_plugin
-class CaseStudyProfilePlugin(CMSUIPlugin):
+class CaseStudyProfilePlugin(LayoutMixin, CMSUIPlugin):
     name = _("Case study profile")
 
     model = models.CaseStudyProfile
     form = forms.CaseStudyProfileForm
+
+    layout_tuple = ("case_study", "case_study")
 
     fieldsets = [
         (
@@ -107,28 +105,25 @@ class CaseStudyProfilePlugin(CMSUIPlugin):
                 ]
             },
         ),
-        (
-            _("Layout"),
-            {
-                "classes": ("collapse",),
-                "fields": [
-                    "template",
-                ],
-            },
-        ),
-    ]
-
-    def get_render_template(self, context, instance, placeholder):
-        return get_plugin_template(
-            instance,
-            "case_study",
-            "case_study",
-            conf.CASE_STUDY_LAYOUTS,
-        )
+    ] + (
+        [
+            (
+                _("Layout"),
+                {
+                    "classes": ("collapse",),
+                    "fields": [
+                        "template",
+                    ],
+                },
+            ),
+        ]
+        if len(form.LAYOUTS) > 1
+        else []
+    )
 
 
 @plugin_pool.register_plugin
-class PromoCardPlugin(ResponsiveMixin, MarginMixin, LinkPluginMixin, CMSUIPlugin):
+class PromoCardPlugin(LayoutMixin, MarginMixin, LinkPluginMixin, CMSUIPlugin):
     name = _("Promo card")
 
     model = models.PromoCard
@@ -136,34 +131,33 @@ class PromoCardPlugin(ResponsiveMixin, MarginMixin, LinkPluginMixin, CMSUIPlugin
 
     allow_children = True
 
+    layout_tuple = ("Promo", "Promo")
+
     fieldsets = [
         (
             None,
             {
                 "fields": [
-                    "image",
-                    "icon",
                     "title",
                     "subtitle",
+                    "image",
+                    "icon",
                 ]
             },
         ),
-        (
-            _("Layout"),
-            {
-                "classes": ("collapse",),
-                "fields": [
-                    "template",
-                ]
-            }
-        ),
-    ]
+    ] + (
+        [
+            (
+                _("Layout"),
+                {
+                    "classes": ("collapse",),
+                    "fields": [
+                        "template",
+                    ],
+                },
+            ),
+        ]
+        if len(form.LAYOUTS) > 1
+        else []
+    )
     link_fieldset_position = 1
-
-    def get_render_template(self, context, instance, placeholder):
-        return get_plugin_template(
-            instance,
-            "promo",
-            "promo",
-            conf.PROMO_LAYOUTS,
-        )
