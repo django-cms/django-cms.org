@@ -141,6 +141,7 @@ class PromoCardPlugin(ResponsiveMixin, MarginMixin, LinkPluginMixin, CMSUIPlugin
             None,
             {
                 "fields": [
+                    "image",
                     "icon",
                     "title",
                     "subtitle",

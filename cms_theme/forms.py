@@ -212,6 +212,13 @@ class PromoCardForm(
         initial=first_choice(conf.PERSON_LAYOUTS),
     )
 
+    image = AdminImageFormField(
+        rel=ManyToOneRel(FilerImageField, Image, "id"),
+        queryset=Image.objects.all(),
+        to_field_name="id",
+        label=_("Image"),
+        required=False,
+    )
     icon = IconPickerField(
         label=_("Icon"),
         required=False,

@@ -1,12 +1,17 @@
-{% load cms_tags icon_tags %}{% add_css_for_icon instance.icon %}<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    {% if instance.icon %}
-        <p><i class="{{ instance.icon.iconClass }}" style="font-size: 200%">{{ instance.icon.iconText }}</i></p>
-    {% endif %}
-    <h5 class="card-title">{{ instance.title }}</h5>
-    <h6 class="card-subtitle mb-2 text-body-secondary">{{ instance.subtitle }}</h6>
-    {% for plugin in instance.child_plugin_instances %}
-        {% with parentloop=forloop parent=instance %}{% render_plugin plugin %}{% endwith %}
-    {% endfor %}
-  </div>
+{% load cms_tags icon_tags %}{% add_css_for_icon instance.icon %}<{{ instance.tag_type }}{{ instance.get_attributes }}>
+    <div class="card border border-0">
+      {% if instance.image %}
+          <img class="card-img-top" src="{{ instance.img_src }}" />
+      {% endif %}
+      <div class="card-body p-0">
+        {% if instance.icon %}
+            <p><i class="{{ instance.icon.iconClass }}" style="font-size: 200%">{{ instance.icon.iconText }}</i></p>
+        {% endif %}
+        <h5 class="card-title">{{ instance.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">{{ instance.subtitle }}</h6>
+        {% for plugin in instance.child_plugin_instances %}
+            {% with parentloop=forloop parent=instance %}{% render_plugin plugin %}{% endwith %}
+        {% endfor %}
+      </div>
+    </div>
 </div>
