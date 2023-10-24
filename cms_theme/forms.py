@@ -206,6 +206,7 @@ class PromoCardForm(
                 "title",
                 "subtitle",
                 "icon",
+                "image",
             ],
         }
 
