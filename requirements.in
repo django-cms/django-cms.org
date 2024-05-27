@@ -12,9 +12,9 @@ whitenoise
 easy-thumbnails
 
 # key requirements for django CMS
-django-cms>=4.1.0rc4
-djangocms-versioning>=2.0.0rc1
-djangocms-alias>=2.0.0rc1
+django-cms>=4.1.1
+djangocms-versioning>=2.0.0
+djangocms-alias>=2.0.0
 
 # optional, but used in most projects
 djangocms-admin-style>=3.2.2
@@ -24,7 +24,7 @@ djangocms-text-ckeditor>=5.1.2
 
 
 # optional django CMS frontend
-git+https://github.com/django-cms/djangocms-frontend@master
+djangocms-frontend>=1.3.2
 djangocms-video
 django-filer
 
