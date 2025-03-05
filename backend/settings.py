@@ -61,8 +61,8 @@ INSTALLED_APPS = [
     'djangocms_alias',
     'parler',
 
-    # the default CKEditor - optional, but used in most projects
-    'djangocms_text_ckeditor',
+    # the default text editor - optional, but used in most projects
+    'djangocms_text',
 
     # optional django CMS frontend modules
     'djangocms_frontend',
@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'djangocms_frontend.contrib.image',
     'djangocms_frontend.contrib.tabs',
     'djangocms_frontend.contrib.utilities',
+    'djangocms_link',
 
     # Specific designs for this site
     'cms_theme',

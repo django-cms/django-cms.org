@@ -91,5 +91,8 @@ class PromoCard(ImageMixin, SquareThumbnailMixin, FrontendUIItem):
     keep_full_image = True
     THUMBNAIL_SIZE = 240
 
+    def get_link(self):
+        return ""
+
     def get_short_description(self):
         return self.config.get("title", "-")
