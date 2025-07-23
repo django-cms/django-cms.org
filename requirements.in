@@ -24,12 +24,12 @@ djangocms-text
 
 
 # optional django CMS frontend
-git+https://github.com/django-cms/djangocms-frontend@master
+djangocms-frontend
 djangocms-video
 django-filer
 
 # djangocms-blog for v4
-git+https://github.com/django-cms/djangocms-stories
+djangocms-stories
 
 
 pip-tools  # needed for compilation of this file into requirements.txt, see start of file
