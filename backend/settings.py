@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'backend',
 
     # optional, but used in most projects
-    'djangocms_admin_style',
+    'djangocms_simple_admin_style',
 
     'django.contrib.admin',
     'django.contrib.auth',
