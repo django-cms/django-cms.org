@@ -24,7 +24,7 @@ djangocms-text
 
 
 # optional django CMS frontend
-djangocms-frontend
+git+https://github.com/django-cms/djangocms-frontend@fix/ui-consistency
 djangocms-video
 django-filer
 

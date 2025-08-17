@@ -108,7 +108,7 @@ djangocms-attributes-field==4.1.1
     #   djangocms-frontend
     #   djangocms-link
     #   djangocms-video
-djangocms-frontend==2.2.0
+djangocms-frontend @ git+https://github.com/django-cms/djangocms-frontend@fix/ui-consistency
     # via -r requirements.in
 djangocms-link==5.1.0
     # via djangocms-frontend
