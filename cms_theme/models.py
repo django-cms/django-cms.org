@@ -62,37 +62,3 @@ class Person(ImageMixin, SquareThumbnailMixin, FrontendUIItem):
 
     def get_short_description(self):
         return self.config.get("name", "-")
-
-
-class Feature(FrontendUIItem):
-    class Meta:
-        proxy = True
-        verbose_name = _("Feature")
-
-    def get_short_description(self):
-        return self.config.get("feature", "-")
-
-
-class CaseStudyProfile(FrontendUIItem):
-    class Meta:
-        proxy = True
-        verbose_name = _("Case study profile")
-
-    def get_short_description(self):
-        return self.config.get("client", "-")
-
-
-class PromoCard(ImageMixin, SquareThumbnailMixin, FrontendUIItem):
-    class Meta:
-        proxy = True
-        verbose_name = _("Promo card")
-
-    image_field = "image"
-    keep_full_image = True
-    THUMBNAIL_SIZE = 240
-
-    def get_link(self):
-        return ""
-
-    def get_short_description(self):
-        return self.config.get("title", "-")
