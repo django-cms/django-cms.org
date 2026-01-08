@@ -12,19 +12,19 @@ whitenoise
 easy-thumbnails
 
 # key requirements for django CMS
-git+https://github.com/django-cms/django-cms@demo/new-design
+django-cms
 djangocms-versioning
 djangocms-alias
 
 # optional, but used in most projects
-git+https://github.com/fsbraun/djangocms-simple-admin-style@feat/new-cms
+djangocms-simple-admin-style
 
 # the default RTE - optional, but used in most projects
 djangocms-text
 
 
 # optional django CMS frontend
-git+https://github.com/django-cms/djangocms-frontend@fix/ui-consistency
+djangocms-frontend
 djangocms-video
 django-filer
 
