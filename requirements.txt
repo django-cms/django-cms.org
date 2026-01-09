@@ -40,14 +40,13 @@ django==5.2.6
     #   django-taggit
     #   django-taggit-templatetags
     #   django-treebeard
-    #   djangocms-admin-style
     #   djangocms-versioning
     #   easy-thumbnails
 django-classy-tags==4.1.0
     # via
     #   django-cms
     #   django-sekizai
-django-cms==5.0.5
+django-cms @ git+https://github.com/django-cms/django-cms@main
     # via
     #   -r requirements.in
     #   djangocms-alias
@@ -101,8 +100,6 @@ django-templatetag-sugar==1.0
     # via django-taggit-templatetags
 django-treebeard==4.7.1
     # via django-cms
-djangocms-admin-style==3.3.1
-    # via django-cms
 djangocms-alias==3.0.1
     # via -r requirements.in
 djangocms-attributes-field==4.1.1
@@ -148,7 +145,6 @@ orderedmultidict==1.0.1
 packaging==25.0
     # via
     #   build
-    #   django-cms
     #   djangocms-text
     #   djangocms-versioning
 pillow==11.3.0
