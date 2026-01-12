@@ -1,0 +1,74 @@
+@import "./bootstrap-overrides";
+@import "./typography";
+@import "./theme/bootstrap";
+@import "./accent";
+@import "./cards";
+@import "./list-style";
+@import "./forms";
+@import "./buttons";
+@import "./links";
+
+/* optional custom styles */
+.kitchensink-page {
+  scroll-margin-top: 5rem;
+}
+
+.kitchensink-layout {
+  min-height: 100vh;
+}
+
+.kitchensink-toc {
+  position: sticky;
+  top: 6rem;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+
+  a {
+    &.fw-bold,
+    &.text-primary {
+      background-color: $primary;
+      color: black !important;
+      font-weight: 500 !important;
+    }
+  }
+}
+
+.kitchensink-section-card {
+  border: 0;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+}
+
+.code-block {
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+// Custom border-radius utility (10px = 0.625rem)
+.rounded-6 {
+  border-radius: 0.625rem !important;
+}
+
+.rounded-top-6 {
+  border-top-left-radius: 0.625rem !important;
+  border-top-right-radius: 0.625rem !important;
+}
+
+.rounded-bottom-6 {
+  border-bottom-left-radius: 0.625rem !important;
+  border-bottom-right-radius: 0.625rem !important;
+}
+
+.rounded-start-6 {
+  border-top-left-radius: 0.625rem !important;
+  border-bottom-left-radius: 0.625rem !important;
+}
+
+.rounded-end-6 {
+  border-top-right-radius: 0.625rem !important;
+  border-bottom-right-radius: 0.625rem !important;
+}

@@ -1,0 +1,129 @@
+// ==============================================
+// List Style Overrides
+// ==============================================
+
+// Custom bullet list (square bullets)
+.list-bullet,
+ul.list-styled {
+  list-style: none;
+  padding-left: 1.5rem;
+
+  li {
+    position: relative;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -1rem;
+      top: 0.45em;
+      width: 0.625rem; // 10px
+      height: 0.625rem; // 10px
+      border-radius: 0.125rem; // 2px
+      background-color: $secondary;
+    }
+  }
+}
+
+// Custom bullet list (dash/line bullets)
+.list-dash,
+ul.list-styled-dash {
+  list-style: none;
+  padding-left: 1.5rem;
+
+  li {
+    position: relative;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -1rem;
+      top: 0.6em;
+      width: 0.625rem; // 10px
+      height: 0.1875rem; // 3px
+      border-radius: 0.125rem; // 2px
+      background-color: $secondary;
+    }
+  }
+}
+
+// Custom numbered list
+.list-numbered,
+ol.list-styled {
+  list-style: none;
+  padding-left: 1.5rem;
+  counter-reset: list-counter;
+
+  li {
+    position: relative;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+    counter-increment: list-counter;
+
+    &::before {
+      content: counter(list-counter) ".";
+      position: absolute;
+      left: -1.25rem;
+      font-weight: 500;
+      font-size: 1.125rem; // 18px
+      line-height: 100%;
+      letter-spacing: 0;
+      color: $secondary;
+    }
+  }
+}
+
+// Custom lettered list (lowercase)
+.list-lettered,
+ol.list-styled-alpha {
+  list-style: none;
+  padding-left: 1.5rem;
+  counter-reset: letter-counter;
+
+  li {
+    position: relative;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+    counter-increment: letter-counter;
+
+    &::before {
+      content: counter(letter-counter, lower-alpha) ".";
+      position: absolute;
+      left: -1.25rem;
+      font-weight: 500;
+      font-size: 1.125rem; // 18px
+      line-height: 100%;
+      letter-spacing: 0;
+      color: $secondary;
+    }
+  }
+}
+
+// Custom lettered list (uppercase)
+.list-lettered-upper,
+ol.list-styled-alpha-upper {
+  list-style: none;
+  padding-left: 1.5rem;
+  counter-reset: letter-counter;
+
+  li {
+    position: relative;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+    counter-increment: letter-counter;
+
+    &::before {
+      content: counter(letter-counter, upper-alpha) ".";
+      position: absolute;
+      left: -1.25rem;
+      font-weight: 500;
+      font-size: 1.125rem; // 18px
+      line-height: 100%;
+      letter-spacing: 0;
+      color: $secondary;
+    }
+  }
+}

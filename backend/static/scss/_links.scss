@@ -1,0 +1,58 @@
+// ==============================================
+// Link Overrides
+// ==============================================
+
+// Global link base styles
+a {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: $secondary;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    color: $secondary;
+    background-color: $primary;
+    text-decoration: none;
+  }
+}
+
+// Primary Nav Link (Bootstrap Nav)
+.nav-link,
+.navbar-nav .nav-link {
+  color: $secondary;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    color: $secondary !important;
+    background-color: $primary !important;
+    text-decoration: none;
+  }
+}
+
+// Footer Links (and links on dark backgrounds)
+footer a,
+.footer a,
+.bg-dark a {
+  color: $white;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: $white;
+    text-decoration: none;
+    border-bottom: 2px solid currentColor;
+  }
+}
