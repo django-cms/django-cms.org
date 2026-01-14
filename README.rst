@@ -62,3 +62,35 @@ License
 -------
 
 This project is licensed under the terms of the MIT License.
+
+Frontend Development
+--------------------
+
+This project uses Bootstrap SCSS and Gulp for frontend asset compilation. For detailed information about the frontend development workflow, including:
+
+- SCSS architecture and file structure
+- Bootstrap customization
+- Gulp task configuration
+- Development and production builds
+- File watching
+
+Please refer to the comprehensive guide:
+
+📖 **[Frontend Development Guide](docs/frontend_development_guide.rst)**
+
+Quick Start
+~~~~~~~~~~~
+
+Install dependencies and start development:
+
+.. code-block:: bash
+
+   npm install
+   npm run dev
+
+Build for production:
+
+.. code-block:: bash
+
+   npm run build
+
