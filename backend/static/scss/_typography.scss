@@ -7,30 +7,27 @@
 // Font Face Definitions
 // ==============================================
 
-// Aoenik Font Family
-// Place your Aoenik font files in /src/assets/fonts/
+// Aeonik Font Family
+// Place your Aeonik font files in backend/static/fonts/
 @font-face {
-  font-family: 'Aoenik';
-  src: url('../assets/fonts/Aoenik-Regular.woff2') format('woff2'),
-       url('../assets/fonts/Aoenik-Regular.woff') format('woff');
+  font-family: 'Aeonik';
+  src: url("../fonts/AeonikTRIAL-Regular.woff2") format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Aoenik';
-  src: url('../assets/fonts/Aoenik-Medium.woff2') format('woff2'),
-       url('../assets/fonts/Aoenik-Medium.woff') format('woff');
+  font-family: 'Aeonik';
+  src: url("../fonts/AeonikTRIAL-Regular.woff2") format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Aoenik';
-  src: url('../assets/fonts/Aoenik-Bold.woff2') format('woff2'),
-       url('../assets/fonts/Aoenik-Bold.woff') format('woff');
+  font-family: 'Aeonik';
+  src: url("../fonts/AeonikTRIAL-Regular.woff2") format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
