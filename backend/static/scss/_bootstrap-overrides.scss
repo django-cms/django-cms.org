@@ -1,8 +1,8 @@
 @import "./theme/functions";
-@import "./theme/variables";
 
-// Import custom variables
+// Import custom overrides before Bootstrap's defaults so !default values respect them
 @import "./variables";
+@import "./theme/variables";
 
 $border-radius: 1rem;
 
@@ -27,9 +27,12 @@ $theme-colors: map-merge(
     "light": $light,
     "dark": $dark,
     "warning": $warning,
-    "mid-grey": $mid-grey
+    "mid-grey": $mid-grey,
+    "second-primary": $third-color,
+    "body-color": $body-color
   )
 );
 
 // Extend border-radius sizes (6 = 0.625rem = 10px)
 $border-radius-6: 0.625rem;
+
