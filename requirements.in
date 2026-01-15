@@ -28,9 +28,11 @@ djangocms-frontend
 djangocms-video
 django-filer
 
-# djangocms-blog for v4
+# djangocms-blog for v4+
 djangocms-stories
 
+# single source of truth for the djangocms-ecosystem
+git+https://github.com/django-cms/djangocms-ecosystem
 
 pip-tools  # needed for compilation of this file into requirements.txt, see start of file
 
