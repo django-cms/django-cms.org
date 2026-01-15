@@ -16,7 +16,6 @@ class SquareThumbnailMixin:
     def get_thumbnail_options(self):
         if self.rel_image and getattr(self, "keep_full_image", False):
             if self.rel_image.width > self.rel_image.height:
-
                 thumbnail_options = self.get_size(self.THUMBNAIL_SIZE, None)
             else:
                 thumbnail_options = self.get_size(None, self.THUMBNAIL_SIZE)

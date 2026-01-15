@@ -1,0 +1,50 @@
+{% load static cms_tags sekizai_tags cms_theme_tags %}
+
+<section class="{{ instance.get_classes }} hero-section{% if instance.config.background_grid %} background-grid{% endif %}"{{ instance.get_attributes }}>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-3 mb-lg-0 hero-content-left">
+                {% for plugin in instance.child_plugin_instances %}
+                    {% if plugin.plugin_type != "ImagePlugin" and plugin.plugin_type != "CounterPlugin" %}
+                        {% if forloop.first %}
+                            <div class="overline">
+                                {% render_plugin plugin %}
+                            </div>
+                        {% else %}
+                            {% render_plugin plugin %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="col-lg-6 hero-content-right position-relative">
+                {# Filter right-side plugins (Counter and Image only) #}
+                {% with right_plugins=instance.child_plugin_instances|filter_by_type:"CounterPlugin,ImagePlugin" %}
+
+                    {# Second plugin: main background image #}
+                    {% if right_plugins|length > 1 %}
+                        <div class="hero-main-image mt-5 mt-lg-0">
+                            {% render_plugin right_plugins.1 %}
+                        </div>
+                    {% endif %}
+
+                    {# First and third plugins: overlay items #}
+                    <div class="hero-counters">
+                        {% if right_plugins|length > 0 %}
+                            <div class="hero-counter hero-counter-1">
+                                {% render_plugin right_plugins.0 %}
+                            </div>
+                        {% endif %}
+
+                        {% if right_plugins|length > 2 %}
+                            <div class="hero-counter hero-counter-2">
+                                {% render_plugin right_plugins.2 %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</section>

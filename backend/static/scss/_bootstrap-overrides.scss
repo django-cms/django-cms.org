@@ -4,8 +4,6 @@
 @import "./variables";
 @import "./theme/variables";
 
-$border-radius: 1rem;
-
 // Extend spacers
 $spacers: map-merge(
   $spacers,

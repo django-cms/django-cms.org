@@ -150,7 +150,7 @@
   --bs-border-style: solid;
   --bs-border-color: #dee2e6;
   --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
-  --bs-border-radius: 1rem;
+  --bs-border-radius: 1.25rem;
   --bs-border-radius-sm: 0.25rem;
   --bs-border-radius-lg: 0.5rem;
   --bs-border-radius-xl: 1rem;
@@ -5785,7 +5785,7 @@ textarea.form-control-lg {
   background: transparent var(--bs-btn-close-bg) center/1em auto no-repeat;
   filter: var(--bs-btn-close-filter);
   border: 0;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   opacity: var(--bs-btn-close-opacity);
 }
 .btn-close:hover {
@@ -14586,6 +14586,154 @@ body {
 
 .hljs {
   background: transparent !important;
+}
+
+.background-grid {
+  position: relative;
+  background-image: linear-gradient(to right, rgb(230, 230, 230) 1px, transparent 1px), linear-gradient(to bottom, rgb(230, 230, 230) 1px, transparent 1px) !important;
+  background-size: 78.52px 78.52px;
+  background-position: 0 0, 0 0;
+}
+
+.background-grid-light {
+  position: relative;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px) !important;
+  background-size: 80px 80px;
+  background-position: 0 0, 0 0;
+}
+
+.background-grid-sm {
+  position: relative;
+  background-image: linear-gradient(to right, rgb(230, 230, 230) 1px, transparent 1px), linear-gradient(to bottom, rgb(230, 230, 230) 1px, transparent 1px) !important;
+  background-size: 40px 40px;
+  background-position: 0 0, 0 0;
+}
+
+.background-grid-lg {
+  position: relative;
+  background-image: linear-gradient(to right, rgb(230, 230, 230) 1px, transparent 1px), linear-gradient(to bottom, rgb(230, 230, 230) 1px, transparent 1px) !important;
+  background-size: 120px 120px;
+  background-position: 0 0, 0 0;
+}
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+.hero-section .hero-content-right {
+  position: relative;
+}
+.hero-section .hero-main-image {
+  height: 363px;
+}
+@media (min-width: 992px) {
+  .hero-section .hero-main-image {
+    height: 591px;
+  }
+}
+.hero-section .hero-main-image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.hero-section .hero-counters {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hero-section .hero-counters .hero-counter {
+  position: absolute;
+  pointer-events: auto;
+  z-index: 10;
+  display: none;
+  max-height: 203px;
+}
+@media (min-width: 992px) {
+  .hero-section .hero-counters .hero-counter {
+    max-width: 280px;
+  }
+}
+.hero-section .hero-counters .hero-counter:nth-last-child(2) {
+  display: block;
+}
+@media (max-width: 991.98px) {
+  .hero-section .hero-counters .hero-counter:nth-last-child(2) {
+    top: -5px;
+    left: 5px;
+    bottom: auto;
+    right: auto;
+  }
+}
+@media (min-width: 992px) {
+  .hero-section .hero-counters .hero-counter:nth-last-child(2) {
+    top: 10%;
+    left: 0;
+    bottom: auto;
+    right: auto;
+    transform: translate(-10%, -10%);
+  }
+}
+.hero-section .hero-counters .hero-counter:nth-last-child(1) {
+  display: block;
+}
+@media (max-width: 991.98px) {
+  .hero-section .hero-counters .hero-counter:nth-last-child(1) {
+    top: auto;
+    left: auto;
+    bottom: -15px;
+    right: 5px;
+    padding: 10px;
+  }
+}
+@media (min-width: 992px) {
+  .hero-section .hero-counters .hero-counter:nth-last-child(1) {
+    top: auto;
+    left: auto;
+    bottom: 0;
+    right: 0;
+    transform: translate(10%, 10%);
+    padding: 10px;
+  }
+}
+
+.counter-component {
+  max-width: 199px;
+}
+@media (min-width: 992px) {
+  .counter-component {
+    width: 272px;
+  }
+}
+
+.hero-counter {
+  max-width: 199px;
+}
+@media (min-width: 992px) {
+  .hero-counter {
+    width: 272px;
+  }
+}
+.hero-counter img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.hero-counter .djangocms-frontend-image,
+.hero-counter .cms-plugin {
+  width: 100%;
+  height: 100%;
+}
+.hero-counter .djangocms-frontend-image img,
+.hero-counter .cms-plugin img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 /* optional custom styles */

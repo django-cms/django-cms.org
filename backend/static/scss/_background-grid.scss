@@ -1,0 +1,42 @@
+// Background Grid Pattern
+// Creates a subtle grid background pattern similar to graph paper
+// Apply directly to background-image without ::before pseudo-element
+
+.background-grid {
+  position: relative;
+  background-image:
+    linear-gradient(to right, rgba(230, 230, 230, 1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(230, 230, 230, 1) 1px, transparent 1px) !important;
+  background-size: 78.52px 78.52px;
+  background-position: 0 0, 0 0;
+}
+
+// Variant with lighter grid (for dark backgrounds)
+.background-grid-light {
+  position: relative;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px) !important;
+  background-size: 80px 80px;
+  background-position: 0 0, 0 0;
+}
+
+// Variant with smaller grid cells (40px)
+.background-grid-sm {
+  position: relative;
+  background-image:
+    linear-gradient(to right, rgba(230, 230, 230, 1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(230, 230, 230, 1) 1px, transparent 1px) !important;
+  background-size: 40px 40px;
+  background-position: 0 0, 0 0;
+}
+
+// Variant with larger grid cells (120px)
+.background-grid-lg {
+  position: relative;
+  background-image:
+    linear-gradient(to right, rgba(230, 230, 230, 1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(230, 230, 230, 1) 1px, transparent 1px) !important;
+  background-size: 120px 120px;
+  background-position: 0 0, 0 0;
+}

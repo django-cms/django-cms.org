@@ -1,0 +1,49 @@
+<!-- cms_theme/templates/cms_theme/cms_components/counter.html -->
+{% load frontend cms_component sekizai_tags cms_theme_tags %}
+
+{# Declare component - template tags are evaluated at project startup and will render empty #}
+{% cms_component "Counter" name=_("Counter") child_classes="TextLinkPlugin"|split mixins="Background|Attributes"|split %}
+{% field "title" forms.CharField required=True label=_("Title") %}
+{% field "number" forms.IntegerField required=True label=_("Number") %}
+{% field "description" HTMLFormField required=True label=_("Description") %}
+{% field "color_style" forms.ChoiceField required=False label=_("Text Color") initial="dark" choices=""|color_choices_string|make_choices %}
+
+{# Actual template - when rendering, declared fields are available in the context #}
+<div class="counter-component p-lg-3 rounded text-{{ color_style|default:'black' }} {{ instance.get_classes }}"{{ instance.get_attributes }}>
+    <div class="p-lg-1">
+        <p class="overline pb-1">{{ title }}</p>
+        <div class="counter-number h2 py-4" data-target="{{ number }}">0</div>
+        <div class="counter-description pt-1">{{ description|safe }}</div>
+    </div>
+</div>
+
+{% addtoblock "js" %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const counters = document.querySelectorAll('.counter-number');
+
+        // Format number with comma as thousand separator
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            let count = 0;
+            const increment = target / 200; // Adjust the divisor to change speed
+
+            const updateCounter = () => {
+                if (count < target) {
+                    count += increment;
+                    counter.innerText = formatNumber(Math.ceil(count));
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.innerText = formatNumber(target);
+                }
+            };
+
+            updateCounter();
+        });
+    });
+</script>
+{% endaddtoblock %}

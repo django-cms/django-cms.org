@@ -1,8 +1,13 @@
 from cms.plugin_pool import plugin_pool
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.cms_plugins import CMSUIPlugin
-from djangocms_frontend.common import ResponsiveMixin
-from djangocms_frontend.common import MarginMixin
+from djangocms_frontend.common import (
+    AttributesMixin,
+    BackgroundMixin,
+    MarginMixin,
+    ResponsiveMixin,
+    SpacingMixin,
+)
 from djangocms_frontend.contrib.link.cms_plugins import LinkPluginMixin
 from djangocms_frontend.helpers import first_choice
 

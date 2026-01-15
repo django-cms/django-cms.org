@@ -1,0 +1,129 @@
+// Hero Section Styling
+.hero-section {
+  position: relative;
+  overflow: hidden;
+
+  .hero-content-right {
+    position: relative;
+  }
+
+  .hero-main-image {
+    height: 363px; // Mobile height
+
+    @media (min-width: 992px) {
+      height: 591px; // Desktop height
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .hero-counters {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    .hero-counter {
+      position: absolute;
+      pointer-events: auto;
+      z-index: 10;
+      display: none; // Hide all counters by default
+      max-height: 203px; // Fixed height for all counters
+
+      // Desktop
+      @media (min-width: 992px) {
+        max-width: 280px;
+      }
+
+      // First visible counter - top left
+      &:nth-last-child(2) {
+        display: block;
+
+        // Mobile: slight overlap, -10px from top, 5px left
+        @media (max-width: 991.98px) {
+          top: -5px;
+          left: 5px;
+          bottom: auto;
+          right: auto;
+        }
+
+        // Desktop: larger overlap
+        @media (min-width: 992px) {
+          top: 10%;
+          left: 0;
+          bottom: auto;
+          right: auto;
+          transform: translate(-10%, -10%);
+        }
+      }
+
+      // Second visible counter - bottom right
+      &:nth-last-child(1) {
+        display: block;
+
+        // Mobile: slight overlap, 15px from bottom, 5px right
+        @media (max-width: 991.98px) {
+          top: auto;
+          left: auto;
+          bottom: -15px;
+          right: 5px;
+          padding: 10px;
+        }
+
+        // Desktop: larger overlap
+        @media (min-width: 992px) {
+          top: auto;
+          left: auto;
+          bottom: 0;
+          right: 0;
+          transform: translate(10%, 10%);
+          padding: 10px;
+        }
+      }
+    }
+  }
+}
+
+// Counter Component Styling
+.counter-component {
+  max-width: 199px; // Mobile width
+
+  // Desktop width
+  @media (min-width: 992px) {
+    width: 272px;
+  }
+}
+
+// Images within hero counters should respect counter size
+.hero-counter {
+  max-width: 199px; // Mobile width
+
+  @media (min-width: 992px) {
+    width: 272px; // Desktop width
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // Image plugin within counter overlay
+  .djangocms-frontend-image,
+  .cms-plugin {
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
