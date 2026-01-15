@@ -107,7 +107,7 @@ djangocms-attributes-field==4.1.1
     #   djangocms-frontend
     #   djangocms-link
     #   djangocms-video
-git + https://github.com/django-cms/djangocms-ecosystem@main
+djangocms-ecosystem @ https://github.com/django-cms/djangocms-ecosystem@main
     # via -r requirements.in
 djangocms-frontend==2.3.0
     # via -r requirements.in
