@@ -1,0 +1,91 @@
+// ==============================================
+// Heading Overrides
+// ==============================================
+
+.h1, h1 {
+  font-weight: 400 !important;
+  line-height: 100% !important;
+  letter-spacing: 0 !important;
+}
+
+.h2, h2 {
+    font-feature-settings: 'liga' off, 'clig' off;
+  font-weight: 500 !important;
+  line-height: 100% !important;
+  letter-spacing: 0 !important;
+}
+
+.h3, h3 {
+  font-weight: 400 !important;
+  line-height: 100% !important;
+  letter-spacing: 0 !important;
+}
+
+.h4, h4 {
+  font-weight: 500 !important;
+  line-height: 100% !important;
+  letter-spacing: 0 !important;
+}
+
+// ==============================================
+// Paragraph Override
+// ==============================================
+
+p {
+  margin-bottom: 0 !important;
+}
+
+// ==============================================
+// Blockquote Override
+// ==============================================
+
+q, blockquote, .blockquote {
+    letter-spacing: 0 !important;
+    line-height: 2rem !important;
+    font-size: 1.5rem !important;
+    font-weight: 250 !important;
+    font-style: light !important;
+}
+
+q::before,
+q::after {
+  color: var(--bs-second-primary) !important;
+}
+
+// ==============================================
+// Small Override
+// ==============================================
+
+.small, small {
+    font-weight: 400 !important;
+    font-size: 0.75rem !important;
+    line-height: 1.5rem !important;
+    letter-spacing: 0 !important;
+}
+
+.overline {
+    font-family: Aeonik;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 100% !important; /* 12px */
+    letter-spacing: 2.4px !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+}
+
+// ==============================================
+// Cards Override
+// ==============================================
+
+.card-header {
+    border: none !important;
+}
+
+body {
+  font-feature-settings: 'liga' off, 'clig' off;
+}
+
+.hljs {
+  background: transparent !important;
+}

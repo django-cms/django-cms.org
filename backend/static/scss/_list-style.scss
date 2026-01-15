@@ -1,0 +1,143 @@
+// ==============================================
+// List Style Overrides
+// ==============================================
+
+// ==========================
+// BASE / LEVEL 1 – Quadrat
+// ==========================
+ul,
+.list-bullet,
+ul.list-styled {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin: 0 0 1rem 0;
+}
+
+ul > li,
+.list-bullet > li,
+ul.list-styled > li {
+  position: relative;
+  padding-left: 0.25rem;
+  margin-bottom: 0.5rem;
+
+  > p {
+    margin: 0;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -1rem;
+    top: 0.45em;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 0.125rem;
+    background-color: $secondary;
+  }
+}
+
+// ==========================
+// LEVEL 2+ – Dash
+// ==========================
+ul ul > li,
+.list-bullet ul > li,
+ul.list-styled ul > li,
+.list-dash > li,
+ul.list-styled-dash > li {
+  padding-left: 0; // ✅ enger Abstand für Sublevel
+}
+
+ul ul > li::before,
+.list-bullet ul > li::before,
+ul.list-styled ul > li::before,
+.list-dash > li::before,
+ul.list-styled-dash > li::before {
+  top: 0.67em;
+  width: 0.625rem;
+  height: 0.1875rem;
+  border-radius: 0.125rem;
+  background-color: $secondary;
+}
+
+
+/// ==========================
+// Level 1 – Numbers
+// ==========================
+ol,
+.list-numbered,
+ol.list-styled {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin: 0 0 1rem 0;
+  counter-reset: list-counter;
+}
+
+ol > li,
+.list-numbered > li,
+ol.list-styled > li {
+  position: relative;
+  padding-left: 0; // ✅ enger Abstand
+  margin-bottom: 0.5rem;
+  counter-increment: list-counter;
+
+  > p { margin: 0; }
+
+  &::before {
+    content: counter(list-counter) ".";
+    position: absolute;
+    left: -1.05rem;
+    top: 0.1em;
+
+    font-weight: 500;
+    font-size: 1.125rem;
+    font-style: normal;
+    line-height: 1;
+    color: $secondary;
+  }
+}
+
+// ==========================
+// Level 2 – Letters
+// ==========================
+ol ol {
+  counter-reset: letter-counter;
+}
+
+ol ol > li {
+  padding-left: 5px; // ✅ sehr tight
+  counter-increment: letter-counter;
+
+  &::before {
+    content: counter(letter-counter, lower-alpha) ".";
+    left: -0.8rem;
+  }
+}
+
+// ==========================
+
+// Custom lettered list (uppercase)
+.list-lettered-upper,
+ol.list-styled-alpha-upper {
+  list-style: none;
+  padding-left: 1.5rem;
+  counter-reset: letter-counter;
+
+  li {
+    position: relative;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+    counter-increment: letter-counter;
+
+    &::before {
+      content: counter(letter-counter, upper-alpha) ".";
+      position: absolute;
+      left: -1.25rem;
+      font-weight: 500;
+      font-size: 1.125rem; // 18px
+      line-height: 100%;
+      letter-spacing: 0;
+      font-style: normal;
+      color: $secondary;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+// Letter spacing utility
+.letter-spacing {
+  letter-spacing: 0.15em;
+}
+
+// ==============================================
+// Font Face Definitions
+// ==============================================
+
+// Aeonik Font Family
+// Place your Aeonik font files in backend/static/fonts/
+@font-face {
+  font-family: 'Aeonik';
+  src: url("../fonts/AeonikTRIAL-Light.woff2") format('woff2');
+  font-weight: 250;
+  font-style: light;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url("../fonts/AeonikTRIAL-Regular.woff2") format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url("../fonts/AeonikTRIAL-Medium.woff2") format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url("../fonts/AeonikTRIAL-SemiBold.woff2") format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url("../fonts/AeonikTRIAL-Bold.woff2") format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
