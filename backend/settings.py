@@ -255,3 +255,34 @@ STORIES_PLUGIN_TEMPLATE_FOLDERS = (
     ("plugins", _("Default")),
     ("cards", _("Cards")),
 )
+
+# djangocms-frontend settings
+DJANGOCMS_FRONTEND_ADMIN_CSS = {
+    "all": ("css/main.css",),
+}
+
+DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
+    ("primary", _("Primary")),
+    ("secondary", _("Secondary")),
+    ("success", _("Success")),
+    ("danger", _("Danger")),
+    ("warning", _("Warning")),
+    ("info", _("Info")),
+    ("light", _("Light")),
+    ("dark", _("Dark")),
+    ("second-primary", _("Dark Green")),
+)
+
+DJANGOCMS_FRONTEND_SPACER_SIZES = (
+    ("0", "* 0"),
+    ("1", "* .25"),
+    ("2", "* .5"),
+    ("3", "* 1"),
+    ("4", "* 1.5"),
+    ("5", "* 3"),
+    ("6", "* 4"),
+    ("7", "* 5"),
+    ("8", "* 6"),
+    ("9", "* 7"),
+    ("10", "* 8"),
+)
