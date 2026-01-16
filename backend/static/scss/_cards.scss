@@ -1,0 +1,37 @@
+// ==============================================
+// Card Overrides
+// ==============================================
+
+.card {
+  border-radius: 20px;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  border: none;
+
+  .card-body {
+    padding: 28px;
+  }
+
+  .card-img-top {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+
+  // Allow accent decorations to overflow
+  &:has(.accent-image-wrapper) {
+    overflow: visible;
+
+    .card-body {
+      overflow: visible;
+    }
+  }
+}
+
+// Card with hover effect (shadow intensity increases on hover)
+.card-hover {
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.25);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.8);
+  }
+}

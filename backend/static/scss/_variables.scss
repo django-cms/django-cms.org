@@ -1,0 +1,69 @@
+// ==============================================
+// Typography
+// ==============================================
+
+$font-size-base: 1rem !default; // 16px
+$line-height-base: 1.5 !default; // 24px
+$font-family-base: 'Aeonik', 'Helvetica';
+$font-family-sans-serif: 'Aeonik', 'Helvetica';
+$h1-font-size: $font-size-base * 3.5 !default;
+$h2-font-size: $font-size-base * 2.625 !default;
+$h3-font-size: $font-size-base * 2.25 !default;
+$h4-font-size: $font-size-base * 1.5 !default;
+
+// ==============================================
+// Custom Color Variables
+// ==============================================
+
+// Primary colors
+$primary: #DEFCB9;
+$secondary: #2C4D4C;
+$light: #F7F7F7;
+$dark: #212121;
+$danger: #D44848;
+$third-color: #214A35;
+
+// rgb colors
+$primary-rgb: rgb(222, 252, 185);
+$primary-bg-subtle: rgba(222, 252, 185, 0.3);
+$primary-border-subtle: rgba(222, 252, 185, 0.8);
+$primary-text-emphasis: rgb(72, 82, 60);
+$secondary-rgb: rgb(44, 77, 76);
+$secondary-bg-subtle: rgba(44, 77, 76, 0.3);
+$light-rgb: rgb(247, 247, 247);
+$dark-rgb: rgb(33, 33, 33);
+$dark-bg-subtle: rgba(33, 33, 33, 0.3);
+
+$danger-rgb: rgb(212, 72, 72);
+$danger-bg-subtle: rgba(212, 72, 72, 0.3);
+
+$body-color: #333333;
+
+// pagination colors
+$pagination-color: $secondary;
+$pagination-bg: $primary;
+$pagination-active-bg: $secondary;
+$pagination-active-border-color: $secondary;
+$pagination-hover-color: $secondary;
+
+// list group item colors
+$list-group-active-bg: $primary;
+$list-group-active-color: $secondary;
+$list-group-active-border-color: $primary;
+
+// Custom colors
+$mid-grey: #7C7C7C;
+
+// Extend theme colors map with mid-grey
+$custom-colors: (
+  "mid-grey": $mid-grey,
+  "second-primary": $third-color
+);
+
+// ==============================================
+// lead Variables
+// ==============================================
+
+$lead-font-size: 1.15rem;
+$lead-font-weight: 400;
+$lead-line-height: 1.625rem;

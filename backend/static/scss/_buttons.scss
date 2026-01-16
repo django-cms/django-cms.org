@@ -1,0 +1,83 @@
+// ==============================================
+// Button Overrides
+// ==============================================
+
+// Global button base styles
+.btn {
+  border-radius: 40px;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 1.15;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  padding: 16px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+// Small button variant
+.btn-sm {
+  font-size: 12px;
+  padding: 10px 16px;
+  gap: 8px;
+}
+
+// Large button variant
+.btn-lg {
+  font-size: 16px;
+  padding: 20px 32px;
+  gap: 12px;
+}
+
+// Primary button variant
+.btn-primary {
+  background-color: $primary;
+  color: $secondary;
+  border: 1px solid transparent;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: transparent;
+    color: $secondary;
+    border: 1px solid $secondary;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 0.25rem rgba($secondary, 0.25);
+  }
+}
+
+// Outline secondary button variant
+.btn-outline-secondary {
+  background-color: transparent;
+  color: $secondary;
+  border: 1px solid $secondary;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: $primary;
+    color: $secondary;
+    border-color: $secondary;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+  }
+}
+
+// Icon button variant (square with icon)
+.btn-icon {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}

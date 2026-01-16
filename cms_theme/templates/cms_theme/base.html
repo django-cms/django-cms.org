@@ -1,10 +1,11 @@
-{% load cms_tags sekizai_tags %}
+{% load cms_tags sekizai_tags static %}
 <html>
     <head>
         <title>{% page_attribute "page_title" %}</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" rel="stylesheet">
         {% render_block "css" %}
     </head>
     <body>
@@ -13,5 +14,7 @@
         {% placeholder "content" %}
         {% endblock %}
         {% render_block "js" %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </body>
 </html>

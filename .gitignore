@@ -5,3 +5,13 @@
 # Python
 *.pyc
 __pycache__/
+
+# Node modules
+node_modules/
+
+.vscode/
+
+backend/static/css/main.css
+backend/static/css/main.css.map
+
+data/

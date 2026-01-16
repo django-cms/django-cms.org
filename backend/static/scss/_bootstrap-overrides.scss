@@ -1,0 +1,38 @@
+@import "./theme/functions";
+
+// Import custom overrides before Bootstrap's defaults so !default values respect them
+@import "./variables";
+@import "./theme/variables";
+
+$border-radius: 1rem;
+
+// Extend spacers
+$spacers: map-merge(
+  $spacers,
+  (
+    6: 4rem,
+    7: 5rem,
+    8: 6rem,
+    9: 7rem,
+    10: 8rem
+  )
+);
+
+// Merge custom colors into theme-colors map
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    "primary": $primary,
+    "secondary": $secondary,
+    "light": $light,
+    "dark": $dark,
+    "warning": $warning,
+    "mid-grey": $mid-grey,
+    "second-primary": $third-color,
+    "body-color": $body-color
+  )
+);
+
+// Extend border-radius sizes (6 = 0.625rem = 10px)
+$border-radius-6: 0.625rem;
+
