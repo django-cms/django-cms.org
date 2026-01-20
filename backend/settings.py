@@ -286,3 +286,41 @@ DJANGOCMS_FRONTEND_SPACER_SIZES = (
     ("9", "* 7"),
     ("10", "* 8"),
 )
+
+# djangocms-text settings
+TEXT_EDITOR_SETTINGS = {
+    "inlineStyles": [
+        {
+            "name": "Small",
+            "element": "small",
+        },
+        {
+            "name": "Overline",
+            "element": "span",
+            "attributes": {
+                "class": "overline",
+            },
+        },
+        {
+            "name": "Text XS",
+            "element": "span",
+            "attributes": {
+                "class": "fs-6",
+            },
+        },
+        {
+            "name": "Text SM",
+            "element": "span",
+            "attributes": {
+                "class": "fs-5",
+            },
+        },
+        {
+            "name": "Text LG",
+            "element": "span",
+            "attributes": {
+                "class": "fs-4",
+            },
+        },
+    ],
+}
