@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     # Specific designs for this site
     "cms_theme",
     "djangocms_video",
+    "djangocms_ecosystem",
     # djangocms-stories-related stuff
     "djangocms_stories",
     "taggit",

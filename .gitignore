@@ -10,4 +10,8 @@ __pycache__/
 node_modules/
 
 .vscode/
+
+backend/static/css/main.css
+backend/static/css/main.css.map
+
 data/

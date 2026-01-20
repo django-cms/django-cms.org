@@ -107,6 +107,8 @@ djangocms-attributes-field==4.1.1
     #   djangocms-frontend
     #   djangocms-link
     #   djangocms-video
+djangocms-ecosystem @ git+https://github.com/django-cms/djangocms-ecosystem@main
+    # via -r requirements.in
 djangocms-frontend==2.3.0
     # via -r requirements.in
 djangocms-link==5.1.0
@@ -168,6 +170,8 @@ reportlab==4.4.4
     # via
     #   easy-thumbnails
     #   svglib
+requests==2.32.5
+    # via -r requirements.in
 s3transfer==0.14.0
     # via boto3
 six==1.17.0
