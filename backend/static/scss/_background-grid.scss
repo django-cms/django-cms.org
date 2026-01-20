@@ -5,8 +5,8 @@
 .background-grid {
   position: relative;
   background-image:
-    linear-gradient(to right, rgba(230, 230, 230, 1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(230, 230, 230, 1) 1px, transparent 1px) !important;
+    linear-gradient(to right, rgba(230, 230, 230, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 1px, transparent 1px) !important;
   background-size: 78.52px 78.52px;
   background-position: 0 0, 0 0;
 }
