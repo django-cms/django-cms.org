@@ -7,8 +7,12 @@
                 {% for plugin in instance.child_plugin_instances %}
                     {% if plugin.plugin_type != "ImagePlugin" and plugin.plugin_type != "CounterPlugin" %}
                         {% if forloop.first %}
-                            <div class="overline">
-                                {% render_plugin plugin %}
+                            {% render_plugin plugin %}
+                        {% elif forloop.counter == 2 %}
+                            <div class="row">
+                                <div class="col-12 col-lg-11">
+                                    {% render_plugin plugin %}
+                                </div>
                             </div>
                         {% else %}
                             {% render_plugin plugin %}
