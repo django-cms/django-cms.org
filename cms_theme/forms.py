@@ -2,11 +2,8 @@ from django import forms
 from django.db.models import ManyToOneRel
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.common import (
-    AttributesFormMixin,
-    BackgroundFormMixin,
     MarginFormMixin,
     ResponsiveFormMixin,
-    SpacingFormMixin,
 )
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.contrib.link.forms import AbstractLinkForm

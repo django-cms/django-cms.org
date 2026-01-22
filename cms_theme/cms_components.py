@@ -1,10 +1,5 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from djangocms_frontend.common import (
-    AttributesMixin,
-    BackgroundMixin,
-    SpacingMixin,
-)
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
 
