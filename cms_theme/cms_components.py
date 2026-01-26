@@ -69,10 +69,3 @@ class Features(CMSFrontendComponent):
         required=False,
         initial="default",
     )
-
-    mirror_layout = forms.BooleanField(
-        label=_("Mirror layout"),
-        required=False,
-        initial=False,
-        help_text=_("Places the image column before the accordion on large screens."),
-    )
