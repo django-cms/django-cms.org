@@ -1,6 +1,6 @@
 {% load static cms_tags sekizai_tags frontend %}
 
-<section class="features-section {% if instance.background_grid %} background-grid{% endif %} {{ instance.get_classes }}"{{ instance.get_attributes }}>
+<section class="features-section {% if instance.config.background_grid %} background-grid{% endif %} {{ instance.get_classes }}"{{ instance.get_attributes }}>
     <div class="container">
         {% for plugin in instance.child_plugin_instances %}
             {% if plugin.plugin_type == "TextPlugin" %}
@@ -12,7 +12,7 @@
         {% endfor %}
         <div class="row gx-lg-6">
             {# Left column: Text content and accordion #}
-            <div class="col-lg-6 {% if instance.mirror_layout %}order-lg-2{% endif %} features-content-left">
+            <div class="col-lg-6 {% if instance.config.mirror_layout %}order-lg-2{% endif %} features-content-left">
                 {% for plugin in instance.child_plugin_instances %}
                     {% if plugin.plugin_type == "AccordionPlugin" %}
                         {# Custom accordion rendering without images #}
@@ -52,7 +52,7 @@
             </div>
 
             {# Right column: Accordion images #}
-            <div class="col-lg-6 {% if instance.mirror_layout %}order-lg-1{% endif %} features-content-right">
+            <div class="col-lg-6 {% if instance.config.mirror_layout %}order-lg-1{% endif %} features-content-right">
                 <div class="features-images position-relative">
                     {% for plugin in instance.child_plugin_instances %}
                         {% if plugin.plugin_type == "AccordionPlugin" %}
