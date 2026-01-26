@@ -303,6 +303,13 @@ TEXT_EDITOR_SETTINGS = {
             },
         },
         {
+            "name": "Lead",
+            "element": "span",
+            "attributes": {
+                "class": "lead",
+            },
+        },
+        {
             "name": "Text XS",
             "element": "span",
             "attributes": {
