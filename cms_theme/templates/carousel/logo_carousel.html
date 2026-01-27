@@ -1,0 +1,33 @@
+<!-- cms_theme/templtes/carousel/logo_carousel.html -->
+{% load cms_tags frontend sekizai_tags %}
+
+
+<section class="logo-section {{ instance.get_classes }}" {{ instance.get_attributes }}>
+    <div class="container">
+        <div class="row py-2">
+            <div class="col-12 text-center">
+		    {{ instance.title }}
+            </div>
+        </div>
+
+        <div class="carousel-container">
+		<div class="swiper logoSwiper-{{ instance.id }}" data-instance-id={{ instance.id }} data-loop="{% if instance.loop %}true{% else %}false{% endif %}" data-space-between-slides={{ instance.space_between_slides }} data-autoplay="{% if instance.autoplay %}true{% else %}false{% endif %}" data-delay={{ instance.delay }}>
+		    <div class="swiper-wrapper">
+		    	<!-- here is where you render the items -->
+			{% childplugins %}{% endchildplugins %}
+		    </div>
+	    </div>
+
+	    <button class="nav-btn btn-prev btn-prev-{{ instance.id }} bg-{{ instance.background_context }}" id="prevBtn" aria-label="Previous slide">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+	    <button class="nav-btn btn-next btn-next-{{ instance.id }} bg-{{ instance.background_context }}" id="nextBtn" aria-label="Next slide">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</section>
