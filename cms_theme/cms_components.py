@@ -11,7 +11,7 @@ class Hero(CMSFrontendComponent):
     """Hero component with background grid option"""
 
     class Meta:
-        plugin_name = _("Hero")
+        name = _("Hero")
         render_template = "hero/hero.html"
         allow_children = True
         child_classes = [
@@ -36,7 +36,7 @@ class TimelineContainer(CMSFrontendComponent):
     """Timeline component with vertical layout option"""
 
     class Meta:
-        plugin_name = _("Timeline")
+        name = _("Timeline")
         render_template = "timeline/timeline.html"
         allow_children = True
         child_classes = [
