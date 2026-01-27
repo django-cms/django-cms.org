@@ -36,33 +36,36 @@ class LogoCarousel(CMSFrontendComponent):
         render_template = "carousel/logo_carousel.html"
         allow_children = True
         child_classes = [
-                "CarouselItemPlugin",
+            "CarouselItemPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
 
 
     title = forms.CharField(
-            label=_("Title"),
-            required=False,
+        label=_("Title"),
+        required=False,
     )
 
     loop = forms.BooleanField(
-            label=_("Loop Carousel"),
-            required=False,
-            initial=False,
+        label=_("Loop Carousel"),
+        required=False,
+        initial=False,
     )
+
     space_between_slides = forms.IntegerField(
-            label=_("Space Between Slides"),
-            required=False,
-            initial=20,
+        label=_("Space Between Slides"),
+        required=False,
+        initial=20,
     )
+
     autoplay = forms.BooleanField(
-            label=_("AutoPlay"),
-            required=False,
-            initial=True,
+        label=_("AutoPlay"),
+        required=False,
+        initial=True,
     )
+
     delay = forms.IntegerField(
-            label=_("Autoplay delay"),
-            required=False,
-            initial=3000,
+        label=_("Autoplay delay"),
+        required=False,
+        initial=3000,
     )
