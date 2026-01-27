@@ -1,8 +1,3 @@
-$color_1: #6c757d;
-$color_2: #adb5bd;
-$color_3: #212529;
-$border-color_1: #212529;
-
 .logo-section {
 	padding: 80px 0;
 	height: 30%;
@@ -11,7 +6,7 @@ $border-color_1: #212529;
 	font-size: 13px;
 	font-weight: 600;
 	letter-spacing: 0.2em;
-	color: $color_1;
+	color: $secondary;
 	text-transform: uppercase;
 	margin-bottom: 50px;
 }
@@ -43,15 +38,15 @@ $border-color_1: #212529;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
-	width: 45px;
-	height: 45px;
+	width: 32px;
+	height: 32px;
 	border-radius: 50%;
 	border: 1px solid #dee2e6;
 	background: white;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: $color_2;
+	color: #000000;
 	cursor: pointer;
 	z-index: 10;
 	transition: all 0.3s ease;
@@ -64,8 +59,8 @@ $border-color_1: #212529;
 		fill: none;
 	}
 	&:hover {
-		border-color: $border-color_1;
-		color: $color_3;
+		border-color: $dark;
+		color: $dark;
 	}
 }
 .btn-prev {
