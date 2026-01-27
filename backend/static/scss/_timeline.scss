@@ -1,0 +1,118 @@
+// ==============================================
+// Timeline Component
+// ==============================================
+
+// Main timeline wrapper
+.main-timeline {
+  position: relative;
+
+  // Continuous vertical line in the center
+  &::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    background-color: var(--bs-primary);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -0.5px;
+    z-index: 0;
+  }
+
+  // Divider color variants
+  @each $color in primary, secondary, success, danger, warning, info, light, dark, second-primary, white {
+    &.timeline-divider-#{$color}::after {
+      background-color: var(--bs-#{$color});
+    }
+  }
+}
+
+// Individual timeline item container
+.timeline {
+  position: relative;
+  background-color: inherit;
+  width: 50%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  // Timeline circle indicator - centered on the middle line
+  &::after {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    right: -7.5px; // Half of width to center it (50% position)
+    background-color: var(--bs-secondary);
+    top: 40px;
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 0 8px white;
+  }
+}
+
+// Circle color variants
+@each $color in primary, secondary, success, danger, warning, info, light, dark, second-primary, white {
+  .timeline-circle-#{$color} .timeline::after {
+    background-color: var(--bs-#{$color});
+  }
+}
+
+// Box-shadow (ring around circle) color variants based on background
+@each $color in primary, secondary, success, danger, warning, info, light, dark, second-primary, white {
+  .bg-#{$color} .timeline::after {
+    box-shadow: 0 0 0 8px var(--bs-#{$color});
+  }
+}
+
+// Timeline item positioned on the left
+.timeline-left {
+  padding: 0 62.5px 0 0;
+  left: 0;
+
+  &::after {
+    top: 20px;
+  }
+}
+
+// Timeline item positioned on the right
+.timeline-right {
+  padding-left: 62.5px;
+  padding-right: 0;
+  left: 50%;
+
+  // Adjust circle position for right-side items
+  &::after {
+    left: -7px; // Half of width to center it (50% position)
+    right: auto;
+  }
+}
+
+// Responsive timeline on mobile devices
+@include media-breakpoint-down(md) {
+  // Move the timeline ruler to the left
+  .main-timeline::after {
+    left: 31px;
+  }
+
+  // Make timeline items full-width
+  .timeline {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+  }
+
+  // Align all circles to the same position
+  .timeline-left::after,
+  .timeline-right::after {
+    left: 24px;
+  }
+
+  .timeline-left::before {
+    right: auto;
+  }
+
+  // Reset right-side items to behave like left-side
+  .timeline-right {
+    left: 0;
+  }
+}
