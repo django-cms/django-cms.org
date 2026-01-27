@@ -1,0 +1,26 @@
+<!-- cms_theme/templates/cms_theme/cms_components/carousel_item.html -->
+{% load frontend cms_component thumbnail sekizai_tags djangocms_link_tags %}
+
+{% cms_component "CarouselItem" name=_("Carousel Item") parent_classes="LogoCarouselPlugin" %}
+{% field "logo" ImageFormField required=True %}
+{% field "logo_link" LinkFormField required=False %}
+
+<div class="swiper-slide logo-item">
+	{% with image=logo|get_related_object %}
+		{{ image.subject_location }}
+		{% thumbnail image "400x0" crop subject_location=image.subject_location as sm %}
+		{% thumbnail image "800x0" crop subject_location=image.subject_location as md %}
+		{% thumbnail image "1200x0" crop subject_location=image.subject_location as lg %}
+
+		{% if logo_link %}<a href="{{ logo_link|to_url }}" target="_black" rel="noopener">{% endif %}
+		<img src="{{ md.url }}" srcset="{{ sm.url }} 400w, {{ md.url }} 800w, {{ lg.url }} 1200w"
+		    sizes="(max-width: 768px) 90vw, (max-width: 1200px) 70vw, 1200px"
+		    alt="{{ picture.alt }}"
+		    title="{{ picture.title }}"
+		    loading="lazy"
+		>
+		{% if logo_link %}</a>{% endif %}
+
+	{% endwith %}
+</div>
+
