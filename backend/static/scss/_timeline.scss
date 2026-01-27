@@ -1,16 +1,20 @@
 // ==============================================
 // Timeline Component
 // ==============================================
-
+$timeline-line-width: 3px;
+$timeline-circle-size: 15px;
 // Main timeline wrapper
 .main-timeline {
   position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
   // Continuous vertical line in the center
   &::after {
     content: "";
     position: absolute;
-    width: 3px;
+    width: $timeline-line-width;
     background-color: var(--bs-primary);
     top: 0;
     bottom: 0;
@@ -39,14 +43,14 @@
   &::after {
     content: "";
     position: absolute;
-    width: 15px;
-    height: 15px;
+    width: $timeline-circle-size;
+    height: $timeline-circle-size;
     right: -7.5px; // Half of width to center it (50% position)
     background-color: var(--bs-secondary);
     top: 40px;
     border-radius: 50%;
     z-index: 2;
-    box-shadow: 0 0 0 8px white;
+    box-shadow: 0 0 0 8px var(--bs-white);
   }
 }
 
