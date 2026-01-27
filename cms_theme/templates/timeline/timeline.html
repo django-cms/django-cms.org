@@ -1,0 +1,26 @@
+{% load frontend cms_tags sekizai_tags thumbnail %}
+
+<section id="timeline-{{ instance.pk }}" data-divider-color="{{ instance.config.divider_color|default:'primary' }}" data-circle-color="{{ instance.config.circle_color|default:'secondary' }}">
+    <div class="{% if instance.config.background_grid %}background-grid{% endif %} {{ instance.get_classes }}" {{ instance.get_attributes }}>
+        <div class="container">
+            <div>
+            {% for child in instance.child_plugin_instances %}
+                {% if child.plugin_type != "CardPlugin" %}
+                    {% render_plugin child %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div>
+            <div class="main-timeline timeline-divider-{{ instance.config.divider_color|default:'primary' }} timeline-circle-{{ instance.config.circle_color|default:'secondary' }}">
+            {% for child in instance.child_plugin_instances %}
+                {% if child.plugin_type == "CardPlugin" and child.child_plugin_instances %}
+                    <div class="timeline {% cycle 'timeline-right' 'timeline-left' %}">{% render_plugin child %}</div>
+                {% endif %}
+            {% empty %}
+                <!-- No Timeline-Items found -->
+            {% endfor %}
+            </div>
+        </div>
+        </div>
+    </div>
+</section>

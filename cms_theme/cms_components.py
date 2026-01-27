@@ -43,22 +43,12 @@ class TimelineContainer(CMSFrontendComponent):
             "CardPlugin",
             "TextPlugin",
             "HeadingPlugin",
+            "SpacingPlugin",
         ]
         mixins = [
             "Background",
             "Spacing",
             "Attributes",
-        ]
-        fieldsets = [
-            (
-                None,
-                {
-                    "fields": (
-                        "divider_color",
-                        "circle_color",
-                    )
-                },
-            ),
         ]
 
     background_grid = forms.BooleanField(
