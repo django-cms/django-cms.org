@@ -2,7 +2,6 @@
 
 <section
     id="timeline-{{ instance.pk }}"
-    {% if instance.config.aria_label %}aria-label="{{ instance.config.aria_label }}"{% else %}aria-label="Timeline"{% endif %}
     class="{% if instance.config.background_grid %}background-grid{% endif %} {{ instance.get_classes }}"
     {{ instance.get_attributes }}
 >

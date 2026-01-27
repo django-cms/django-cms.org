@@ -19,7 +19,7 @@ $timeline-circle-size: 15px;
     top: 0;
     bottom: 0;
     left: 50%;
-    margin-left: -0.5px;
+    margin-left: -($timeline-line-width / 2);
     z-index: 0;
   }
 
@@ -86,7 +86,7 @@ $timeline-circle-size: 15px;
 
   // Adjust circle position for right-side items
   &::after {
-    left: -7px; // Half of width to center it (50% position)
+    left: -7.5px; // Half of width to center it (50% position)
     right: auto;
   }
 }
@@ -109,10 +109,6 @@ $timeline-circle-size: 15px;
   .timeline-left::after,
   .timeline-right::after {
     left: 24px;
-  }
-
-  .timeline-left::before {
-    right: auto;
   }
 
   // Reset right-side items to behave like left-side
