@@ -54,7 +54,9 @@ class Features(CMSFrontendComponent):
         label=_("Mirror layout"),
         required=False,
         initial=False,
-        help_text=_("Enable this to display the section mirrored."),
+        help_text=_(
+            "Enable to display images on the left and the accordion on the right."
+        ),
     )
 
     accordion_header_color = forms.ChoiceField(
