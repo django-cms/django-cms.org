@@ -272,6 +272,7 @@ DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
     ("light", _("Light")),
     ("dark", _("Dark")),
     ("second-primary", _("Dark Green")),
+    ("white", _("White")),
 )
 
 DJANGOCMS_FRONTEND_SPACER_SIZES = (
