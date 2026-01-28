@@ -17,19 +17,15 @@
                  data-delay="{{ instance.delay }}">
                 <div class="swiper-wrapper">{% childplugins %}{% endchildplugins %}</div>
             </div>
-            <button class="nav-btn btn-prev btn-prev-{{ instance.id }} bg-{{ instance.btn_color }}"
+            <button class="nav-btn btn-prev btn-prev-{{ instance.id }} btn btn-{{ instance.background_context }} btn-outline-{{ instance.btn_color }}"
                     id="prevBtn-{{ instance.id }}"
                     aria-label="Previous slide">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+                <i class="bi bi-chevron-left"></i>
             </button>
-            <button class="nav-btn btn-next btn-next-{{ instance.id }} bg-{{ instance.btn_color }}"
+            <button class="nav-btn btn-next btn-next-{{ instance.id }} btn btn-outline-{{ instance.btn_color }}"
                     id="nextBtn-{{ instance.id }}"
                     aria-label="Next slide">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+                <i class="bi bi-chevron-right"></i>
             </button>
         </div>
     </div>
