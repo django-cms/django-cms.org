@@ -29,6 +29,7 @@ class Hero(CMSFrontendComponent):
         initial=False,
     )
 
+
 @components.register
 class Features(CMSFrontendComponent):
     """Features section container with accordion and content area"""
@@ -50,7 +51,7 @@ class Features(CMSFrontendComponent):
         required=False,
         initial=False,
     )
-  
+
     mirror_layout = forms.BooleanField(
         label=_("Mirror layout"),
         required=False,
@@ -71,6 +72,8 @@ class Features(CMSFrontendComponent):
         ],
         required=False,
         initial="default",
+    )
+
 
 @components.register
 class TimelineContainer(CMSFrontendComponent):
@@ -91,7 +94,7 @@ class TimelineContainer(CMSFrontendComponent):
             "Spacing",
             "Attributes",
         ]
-        
+
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),
         choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
@@ -108,4 +111,62 @@ class TimelineContainer(CMSFrontendComponent):
         initial="secondary",
         help_text=_("Color of the timeline circles."),
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+
+@components.register
+class Footer(CMSFrontendComponent):
+    """Footer component with background grid option"""
+
+    class Meta:
+        name = _("Footer")
+        render_template = "footer/footer.html"
+        allow_children = True
+        child_classes = [
+            "GridRowPlugin",
+            "TextPlugin",
+            "TextLinkPlugin",
+            "ImagePlugin",
+            "HeadingPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    divider_color = forms.ChoiceField(
+        label=_("Divider line color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="white",
+        help_text=_("Color of the horizontal divider line."),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+
+@components.register
+class FooterLinksList(CMSFrontendComponent):
+    """Footer Links List component"""
+
+    class Meta:
+        name = _("Footer Links List")
+        render_template = "footer/footer_links_list.html"
+        requires_parent = True
+        parent_classes = ["Footer", "GridColumnPlugin"]
+        allow_children = True
+        child_classes = [
+            "TextLinkPlugin",
+        ]
+        mixins = ["Attributes", "Spacing"]
+
+    item_spacing = forms.ChoiceField(
+        label=_("Item Spacing"),
+        choices=settings.DJANGOCMS_FRONTEND_SPACER_SIZES,
+        required=False,
+    )
+
+    item_alignment = forms.ChoiceField(
+        label=_("Item Alignment"),
+        choices=[
+            ("flex-row", _("One line")),
+            ("flex-column", _("Stacked")),
+        ],
+        required=False,
     )
