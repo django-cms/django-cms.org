@@ -1,0 +1,54 @@
+// Features Section Styling
+.features-section {
+  position: relative;
+  padding: 4rem 0;
+
+  // Left content area
+  .features-content-left {
+    padding-right: 2rem;
+
+    @media (max-width: 991.98px) {
+      padding-right: 0;
+      margin-bottom: 2rem;
+    }
+  }
+
+  // Right images area
+  .features-content-right {
+    position: relative;
+    min-height: 500px;
+
+    @media (max-width: 991.98px) {
+      min-height: 400px;
+    }
+  }
+
+  .features-images {
+    width: 100%;
+    height: 100%;
+
+    .features-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      pointer-events: none;
+      display: none;
+
+      &.active {
+        opacity: 1;
+        pointer-events: auto;
+        display: block;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+}

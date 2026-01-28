@@ -29,8 +29,49 @@ class Hero(CMSFrontendComponent):
         initial=False,
     )
 
+@components.register
+class Features(CMSFrontendComponent):
+    """Features section container with accordion and content area"""
 
-# Timeline
+    class Meta:
+        plugin_name = _("Features")
+        render_template = "features/features.html"
+        allow_children = True
+        child_classes = [
+            "TextPlugin",
+            "HeadingPlugin",
+            "AccordionPlugin",
+            "TextLinkPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=False,
+    )
+  
+    mirror_layout = forms.BooleanField(
+        label=_("Mirror layout"),
+        required=False,
+        initial=False,
+        help_text=_(
+            "Enable to display images on the left and the accordion on the right."
+        ),
+    )
+
+    accordion_header_color = forms.ChoiceField(
+        label=_("Accordion header text color"),
+        choices=[
+            ("default", _("Default (Black)")),
+            ("primary", _("Primary")),
+            ("secondary", _("Secondary")),
+            ("white", _("White")),
+            ("muted", _("Muted")),
+        ],
+        required=False,
+        initial="default",
+
 @components.register
 class TimelineContainer(CMSFrontendComponent):
     """Timeline component with vertical layout option"""
@@ -50,13 +91,7 @@ class TimelineContainer(CMSFrontendComponent):
             "Spacing",
             "Attributes",
         ]
-
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=False,
-    )
-
+        
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),
         choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,

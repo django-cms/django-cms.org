@@ -297,10 +297,33 @@ TEXT_EDITOR_SETTINGS = {
             "element": "small",
         },
         {
+            "name": "Kbd",
+            "element": "kbd",
+        },
+        {
+            "name": "Kbd",
+            "element": "kbd",
+        },
+        {
+            "name": "Var",
+            "element": "var",
+        },
+        {
+            "name": "Samp",
+            "element": "samp",
+        },
+        {
             "name": "Overline",
             "element": "span",
             "attributes": {
                 "class": "overline",
+            },
+        },
+        {
+            "name": "Lead",
+            "element": "span",
+            "attributes": {
+                "class": "lead",
             },
         },
         {
