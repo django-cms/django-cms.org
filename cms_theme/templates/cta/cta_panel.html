@@ -1,25 +1,16 @@
 <!-- cms_theme/templates/cms_theme/cms_components/cta_panel.html -->
 {% load static cms_tags cms_theme_tags %}
-<style>
-    .cta-section {
-        position: relative;
-        min-height: 400px;
-        overflow: hidden;
-    }
-
-    .cta-btn-section {
-        margin-top: 5%;
-    }
-</style>
 <section class="{{ instance.get_classes }} cta-section {% if instance.config.background_grid %}background-grid{% endif %} d-flex align-items-center justify-content-center"
          {{ instance.get_attributes }}>
     <div class="container cta-content">
         <div class="text-{{ instance.content_alignment }} text-white">
-            {% if instance.eyebrow_text %}<h6>{{ instance.eyebrow_text }}</h6>{% endif %}
+            {% if instance.eyebrow_text %}<h6 class="overline pb-3">{{ instance.eyebrow_text }}</h6>{% endif %}
             {% if instance.main_heading %}{{ instance.main_heading|safe }}{% endif %}
+            {% if instance.child_plugin_instances %}
             {% with button_plugin=instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}
                 <div class="text-{{ instance.content_alignment }} cta-btn-section">{% render_plugin button_plugin.0 %}</div>
             {% endwith %}
+            {% endif %}
         </div>
     </div>
 </section>
