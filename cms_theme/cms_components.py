@@ -11,7 +11,7 @@ class Hero(CMSFrontendComponent):
     """Hero component with background grid option"""
 
     class Meta:
-        plugin_name = _("Hero")
+        name = _("Hero")
         render_template = "hero/hero.html"
         allow_children = True
         child_classes = [
@@ -28,7 +28,6 @@ class Hero(CMSFrontendComponent):
         required=False,
         initial=False,
     )
-
 
 @components.register
 class Features(CMSFrontendComponent):
@@ -51,7 +50,7 @@ class Features(CMSFrontendComponent):
         required=False,
         initial=False,
     )
-
+  
     mirror_layout = forms.BooleanField(
         label=_("Mirror layout"),
         required=False,
@@ -72,6 +71,43 @@ class Features(CMSFrontendComponent):
         ],
         required=False,
         initial="default",
+
+@components.register
+class TimelineContainer(CMSFrontendComponent):
+    """Timeline component with vertical layout option"""
+
+    class Meta:
+        name = _("Timeline")
+        render_template = "timeline/timeline.html"
+        allow_children = True
+        child_classes = [
+            "CardPlugin",
+            "TextPlugin",
+            "HeadingPlugin",
+            "SpacingPlugin",
+        ]
+        mixins = [
+            "Background",
+            "Spacing",
+            "Attributes",
+        ]
+        
+    divider_color = forms.ChoiceField(
+        label=_("Divider line color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="primary",
+        help_text=_("Color of the vertical timeline line."),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    circle_color = forms.ChoiceField(
+        label=_("Circle color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="secondary",
+        help_text=_("Color of the timeline circles."),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
 

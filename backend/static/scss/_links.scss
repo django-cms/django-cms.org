@@ -9,7 +9,7 @@ a {
   line-height: 24px;
   letter-spacing: 0;
   color: $secondary;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover,
@@ -46,13 +46,45 @@ footer a,
   color: $white;
   text-decoration: none;
   padding-bottom: 2px;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s ease;
+  transition: color 0.3s ease;
 
   &:hover,
   &:focus {
-    color: $white;
+    color: $secondary;
     text-decoration: none;
-    border-bottom: 2px solid currentColor;
+  }
+}
+
+// Light link variant (Bootstrap link-light class)
+.link-light {
+  color: $light !important;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $secondary !important;
+    text-decoration: none;
+  }
+}
+
+.link-primary {
+  color: $primary !important;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $secondary !important;
+    text-decoration: none;
+  }
+}
+
+.link-white {
+  color: $white !important;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $secondary !important;
+    text-decoration: none;
   }
 }
