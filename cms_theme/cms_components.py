@@ -116,7 +116,7 @@ class TimelineContainer(CMSFrontendComponent):
 
 @components.register
 class Footer(CMSFrontendComponent):
-    """Footer component with background grid option"""
+    """Footer component with divider color option"""
 
     class Meta:
         name = _("Footer")
@@ -169,4 +169,5 @@ class FooterLinksList(CMSFrontendComponent):
             ("flex-column", _("Stacked")),
         ],
         required=False,
+        initial="flex-column",
     )

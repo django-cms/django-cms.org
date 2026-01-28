@@ -2,9 +2,10 @@
 
 <section class="footer-section {{ instance.get_classes }}"{{ instance.get_attributes }}>
     <div class="container">
+        {% with plugins=instance.child_plugin_instances %}
 
         {# Top area: Image left + TextLinkPlugin columns right #}
-        {% for plugin in instance.child_plugin_instances %}
+        {% for plugin in plugins %}
             {% if plugin.plugin_type == "GridRowPlugin" %}
                 {% render_plugin plugin %}
             {% endif %}
@@ -17,7 +18,7 @@
         <div class="row align-items-start footer-bottom">
             <div class="col-12 col-lg-6">
                 <div class="d-flex flex-row flex-wrap gap-footer mb-3 mb-md-0 p-1 p-md-0">
-                    {% for plugin in instance.child_plugin_instances %}
+                    {% for plugin in plugins %}
                         {% if plugin.plugin_type == "TextLinkPlugin" %}
                             {% render_plugin plugin %}
                         {% endif %}
@@ -26,12 +27,14 @@
             </div>
 
             <div class="col-12 col-lg-6 text-start text-md-end">
-                {% for plugin in instance.child_plugin_instances %}
+                {% for plugin in plugins %}
                     {% if plugin.plugin_type == "TextPlugin" %}
                         {% render_plugin plugin %}
                     {% endif %}
                 {% endfor %}
             </div>
         </div>
+
+        {% endwith %}
     </div>
 </section>
