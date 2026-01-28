@@ -29,6 +29,7 @@ class Hero(CMSFrontendComponent):
         initial=False,
     )
 
+
 @components.register
 class Features(CMSFrontendComponent):
     """Features section container with accordion and content area"""
@@ -50,7 +51,7 @@ class Features(CMSFrontendComponent):
         required=False,
         initial=False,
     )
-  
+
     mirror_layout = forms.BooleanField(
         label=_("Mirror layout"),
         required=False,
@@ -71,6 +72,8 @@ class Features(CMSFrontendComponent):
         ],
         required=False,
         initial="default",
+    )
+
 
 @components.register
 class TimelineContainer(CMSFrontendComponent):
@@ -91,7 +94,7 @@ class TimelineContainer(CMSFrontendComponent):
             "Spacing",
             "Attributes",
         ]
-        
+
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),
         choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
