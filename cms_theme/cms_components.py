@@ -153,3 +153,62 @@ class CTAPanel(CMSFrontendComponent):
         help_text=_("Controls horizontal alignment of all content")
     )
 
+
+@components.register
+class LogoCarousel(CMSFrontendComponent):
+    """LogoCarousel component"""
+
+    class Meta:
+        name = _("Logo Carousel")
+        render_template = "carousel/logo_carousel.html"
+        allow_children = True
+        child_classes = [
+            "CarouselItemPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+
+    title = forms.CharField(
+        label=_("Title"),
+        required=False,
+    )
+
+    loop = forms.BooleanField(
+        label=_("Loop Carousel"),
+        required=False,
+        initial=False,
+    )
+
+    space_between_slides = forms.IntegerField(
+        label=_("Space Between Slides"),
+        required=False,
+        initial=20,
+    )
+
+    autoplay = forms.BooleanField(
+        label=_("AutoPlay"),
+        required=False,
+        initial=True,
+    )
+
+    delay = forms.IntegerField(
+        label=_("Autoplay delay"),
+        required=False,
+        initial=3000,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text Color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="primary",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    btn_color = forms.ChoiceField(
+        label=_("Button Color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="primary",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
