@@ -1,0 +1,155 @@
+// Global Custom Accordion Styling
+.accordion {
+  border: none;
+  border-radius: 0px;
+  overflow: hidden;
+
+  // Reset Bootstrap accordion variables and override transition
+  --bs-accordion-border-width: 2px;
+  --bs-accordion-border-radius: 0;
+  --bs-accordion-inner-border-radius: 0;
+  --bs-accordion-transition: 0.01s ease-out;
+
+  .accordion-item {
+    background: transparent;
+    border: none;
+    border-left: 3px solid rgba(0, 0, 0, 0.5); // Default border color
+    padding-left: 38px;
+    padding-right: 38px;
+    margin-bottom: 0;
+    position: relative;
+    transition: border-left-color 0.2s ease, border-left-width 0.2s ease;
+
+    @media (min-width: 767.98px) {
+      padding-right: 0;
+    }
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-width: 5px;
+      border-left-color: #000; // Default active color
+    }
+  }
+
+  // Keep collapse overflow hidden
+  .accordion-collapse {
+    overflow: hidden;
+  }
+
+  .accordion-header {
+    .accordion-button {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 1.5rem 0;
+      font-weight: 400;
+      font-size: 2.25rem;
+      border-radius: 0;
+      transition: none; // Disable transition, will be handled by JS
+      width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+
+      &:focus {
+        box-shadow: none;
+        outline: none;
+      }
+
+      // Remove arrow icon
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .accordion-body {
+    padding: 0 0 1.5rem 0;
+    line-height: 1.6;
+  }
+}
+
+// Color variants for accordion headers - GLOBAL
+.accordion-header-primary {
+  .accordion-button {
+    color: rgba(var(--bs-primary-rgb), 0.5);
+
+    &:not(.collapsed) {
+      color: var(--bs-primary);
+    }
+  }
+  .accordion-item {
+    border-left-color: rgba(var(--bs-primary-rgb), 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: var(--bs-primary);
+    }
+  }
+}
+
+.accordion-header-secondary {
+  .accordion-button {
+    color: rgba(var(--bs-secondary-rgb), 0.5);
+
+    &:not(.collapsed) {
+      color: var(--bs-secondary);
+    }
+  }
+  .accordion-item {
+    border-left-color: rgba(var(--bs-secondary-rgb), 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: var(--bs-secondary);
+    }
+  }
+}
+
+.accordion-header-white {
+  .accordion-button {
+    color: rgba(255, 255, 255, 0.5);
+
+    &:not(.collapsed) {
+      color: #fff;
+    }
+  }
+  .accordion-item {
+    border-left-color: rgba(255, 255, 255, 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: #fff;
+    }
+  }
+}
+
+.accordion-header-muted {
+  .accordion-button {
+    color: rgba(108, 117, 125, 0.5);
+
+    &:not(.collapsed) {
+      color: #6c757d;
+    }
+  }
+  .accordion-item {
+    border-left-color: rgba(108, 117, 125, 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: #6c757d;
+    }
+  }
+}
+
+.accordion-header-default {
+  .accordion-button {
+    color: rgba(0, 0, 0, 0.5);
+
+    &:not(.collapsed) {
+      color: #000;
+    }
+  }
+  .accordion-item {
+    border-left-color: rgba(0, 0, 0, 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: #000;
+    }
+  }
+}
