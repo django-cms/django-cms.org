@@ -88,3 +88,11 @@ footer a,
     text-decoration: none;
   }
 }
+
+a:has(i) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bs-secondary);
+  padding: 0.2rem 0.2rem 0 0.2rem;
+}
