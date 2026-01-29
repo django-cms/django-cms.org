@@ -14,7 +14,7 @@
 		}
 
 		try {
-			const swiperElements = document.querySelectorAll('.swiper');
+			const swiperElements = document.querySelectorAll('.logo-swiper-carousel');
 
 			if (swiperElements.length === 0) {
 				return;
@@ -44,11 +44,11 @@
 					breakpoints: {
 						768: {
 							slidesPerView: 3, // Tablet
-							spaceBetween: 40
+							spaceBetween: spaceBetweenSlides
 						},
 						1024: {
 							slidesPerView: 4, // Desktop
-							spaceBetween: 60
+							spaceBetween: spaceBetweenSlides
 						}
 					}
 				});
@@ -65,5 +65,3 @@
 	}
 
 })();
-
-
