@@ -1,0 +1,16 @@
+<!-- cms_theme/templates/cms_theme/cms_components/benefits_card.html -->
+{% load static cms_tags frontend %}
+<div class="col-12 col-md-6 col-lg-3">
+    <div class="benefits-card h-100 p-4 py-5 rounded-4 d-flex flex-column shadow">
+        <div class="mb-4">
+            <i class="{{ instance.icon.iconClass }} display-1"></i>
+        </div>
+        <h3 class="h3 fw-bold mb-4 card-title">{{ title }}</h3>
+        <ol class="fs-5 ps-3 mb-auto">
+            {% if instance.card_content %}{{ instance.card_content|safe }}{% endif %}
+        </ol>
+        {% if instance.child_plugin_instances %}
+            {% childplugins %}{% endchildplugins %}
+        {% endif %}
+    </div>
+</div>

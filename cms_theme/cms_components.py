@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.fields import HTMLFormField
+from djangocms_frontend.contrib.icon.fields import IconPickerField
 
 from djangocms_frontend.fields import ColoredButtonGroup
 
@@ -152,4 +153,61 @@ class CTAPanel(CMSFrontendComponent):
         initial="center",
         help_text=_("Controls horizontal alignment of all content")
     )
+
+
+@components.register
+class BenefitsPanel(CMSFrontendComponent):
+    """Benefits panel component"""
+    class Meta:
+        name = _("Benefits Panel")
+        render_template = "benefits/benefits_panel.html"
+        allow_children = True
+        child_classes = [
+            "BenefitsCardPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    heading_text = forms.CharField(
+        label=_("Heading text"),
+        required=False,
+    )
+
+
+@components.register
+class BenefitsCard(CMSFrontendComponent):
+    """Benefits card component"""
+
+    class Meta:
+        name = _("Benefits Card")
+        render_template = "benefits/benefits_card.html"
+        allow_children = True
+        parent_classes = [
+            "BenefitsPanelPlugin"
+        ]
+        child_classes = [
+            "TextLinkPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    title = forms.CharField(
+        label=_("Card title"),
+        required=False,
+    )
+
+    card_content = HTMLFormField(
+        label=_("Card content"),
+        required=False,
+    )
+
+    icon = IconPickerField(
+        label=_("Icon"),
+        required=False,
+    )
+
+
 
