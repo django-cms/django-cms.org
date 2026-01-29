@@ -229,10 +229,6 @@ class LogoCarousel(CMSFrontendComponent):
         ]
         mixins = ["Background", "Spacing", "Attributes"]
 
-    title = forms.CharField(
-        label=_("Title"), required=False, help_text=_("Title for the Carousel")
-    )
-
     loop = forms.BooleanField(
         label=_("Loop Carousel"),
         required=False,
@@ -267,15 +263,6 @@ class LogoCarousel(CMSFrontendComponent):
         help_text=_(
             "Set the time (in milliseconds) each slide stays visible before moving to the next one."
         ),
-    )
-
-    text_color = forms.ChoiceField(
-        label=_("Text Color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
-        required=False,
-        initial="primary",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
-        help_text=_("Color for the carousel heading."),
     )
 
     btn_color = forms.ChoiceField(
