@@ -1,6 +1,6 @@
 {% load cms_tags cms_theme_tags %}
 
-<nav aria-label="Footer links" class="{{ instance.get_classes }}" {{ instance.get_attributes }}>
+<nav class="{{ instance.get_classes }}" {{ instance.get_attributes }}>
     <ul class="list-unstyled m-0 d-flex {{ instance.config.item_alignment|default:'flex-column' }}{% if instance.config.item_spacing %} gap-{{ instance.config.item_spacing }}{% endif %}"
         role="list">
         {% for plugin in instance.child_plugin_instances %}
