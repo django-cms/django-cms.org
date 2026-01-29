@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
@@ -171,30 +172,37 @@ class LogoCarousel(CMSFrontendComponent):
     title = forms.CharField(
         label=_("Title"),
         required=False,
+        help_text=_("Title for the Carousel")
     )
 
     loop = forms.BooleanField(
         label=_("Loop Carousel"),
         required=False,
         initial=False,
+        help_text=_("Turn on to make the slides loop continuously from the last slide back to the first.")
     )
 
     space_between_slides = forms.IntegerField(
         label=_("Space Between Slides"),
         required=False,
         initial=20,
+        validators=[MinValueValidator(0)],
+        help_text=_("Set the space (in pixels) between each slide in the carousel.")
     )
 
     autoplay = forms.BooleanField(
         label=_("AutoPlay"),
         required=False,
         initial=True,
+        help_text=_("Turn on to make the slides move automatically without manual navigation.")
     )
 
     delay = forms.IntegerField(
         label=_("Autoplay delay"),
         required=False,
         initial=3000,
+        validators=[MinValueValidator(500)],
+        help_text=_("Set the time (in milliseconds) each slide stays visible before moving to the next one.")
     )
 
     text_color = forms.ChoiceField(
@@ -203,6 +211,7 @@ class LogoCarousel(CMSFrontendComponent):
         required=False,
         initial="primary",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Color for the carousel heading.")
     )
 
     btn_color = forms.ChoiceField(
@@ -211,4 +220,5 @@ class LogoCarousel(CMSFrontendComponent):
         required=False,
         initial="primary",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Color for the carousel button."),
     )
