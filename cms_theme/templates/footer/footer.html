@@ -1,0 +1,40 @@
+{% load cms_tags cms_theme_tags %}
+
+<section class="footer-section {{ instance.get_classes }}"{{ instance.get_attributes }}>
+    <div class="container">
+        {% with plugins=instance.child_plugin_instances %}
+
+        {# Top area: Image left + TextLinkPlugin columns right #}
+        {% for plugin in plugins %}
+            {% if plugin.plugin_type == "GridRowPlugin" %}
+                {% render_plugin plugin %}
+            {% endif %}
+        {% endfor %}
+
+        {# Divider #}
+        <hr class="text-{{ instance.config.divider_color }} opacity-100 mt-6 mb-4 pb-2">
+
+        {# Bottom area: TextLinkPlugin left, TextPlugin right #}
+        <div class="row align-items-start footer-bottom">
+            <div class="col-12 col-lg-6">
+                <div class="d-flex flex-row flex-wrap gap-footer mb-3 mb-md-0 p-1 p-md-0">
+                    {% for plugin in plugins %}
+                        {% if plugin.plugin_type == "TextLinkPlugin" %}
+                            {% render_plugin plugin %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6 text-start text-md-end">
+                {% for plugin in plugins %}
+                    {% if plugin.plugin_type == "TextPlugin" %}
+                        {% render_plugin plugin %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {% endwith %}
+    </div>
+</section>
