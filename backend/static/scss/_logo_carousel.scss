@@ -53,11 +53,15 @@
 		stroke-width: 2;
 		fill: none;
 	}
+	&.btn-outline-dark:hover,
+    .btn-outline-dark:hover & {
+        color: $white;
+    }
 	&:hover {
-		border-color: $dark;
 		color: $dark;
 	}
 }
+
 .btn-prev {
 	left: 0;
 }

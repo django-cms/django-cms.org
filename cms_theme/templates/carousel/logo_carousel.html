@@ -2,31 +2,39 @@
 {% load cms_tags frontend sekizai_tags %}
 <section class="logo-section {{ instance.get_classes }}"
          {{ instance.get_attributes }}>
-    <div class="container">
-        <div class="row py-2">
-            <div class="col-12 text-center overline text-{{ instance.text_color }}">
-                <h6>{{ instance.title }}</h6>
+    {% with plugins=instance.child_plugin_instances %}
+        <div class="container">
+            {% for plugin in plugins %}
+                {% if plugin.plugin_type == "HeadingPlugin" %}
+                    {% render_plugin plugin %}
+                {% endif %}
+            {% endfor %}
+            <div class="carousel-container">
+                <div class="swiper logo-swiper-carousel logoSwiper-{{ instance.id }}"
+                    data-instance-id="{{ instance.id }}"
+                    data-loop="{% if instance.loop %}true{% else %}false{% endif %}"
+                    data-space-between-slides="{{ instance.space_between_slides }}"
+                    data-autoplay="{% if instance.autoplay %}true{% else %}false{% endif %}"
+                    data-delay="{{ instance.delay }}">
+                    <div class="swiper-wrapper">
+                        {% for plugin in plugins %}
+                            {% if plugin.plugin_type == "CarouselItemPlugin" %}
+                                {% render_plugin plugin %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="nav-btn btn-prev btn-prev-{{ instance.id }} btn btn-{{ instance.background_context }} btn-outline-{{ instance.btn_color }}"
+                        id="prevBtn-{{ instance.id }}"
+                        aria-label="Previous slide">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="nav-btn btn-next btn-next-{{ instance.id }} btn btn-outline-{{ instance.btn_color }}"
+                        id="nextBtn-{{ instance.id }}"
+                        aria-label="Next slide">
+                    <i class="ps-1 bi bi-chevron-right"></i>
+                </button>
             </div>
         </div>
-        <div class="carousel-container">
-            <div class="swiper logo-swiper-carousel logoSwiper-{{ instance.id }}"
-                 data-instance-id="{{ instance.id }}"
-                 data-loop="{% if instance.loop %}true{% else %}false{% endif %}"
-                 data-space-between-slides="{{ instance.space_between_slides }}"
-                 data-autoplay="{% if instance.autoplay %}true{% else %}false{% endif %}"
-                 data-delay="{{ instance.delay }}">
-                <div class="swiper-wrapper">{% childplugins %}{% endchildplugins %}</div>
-            </div>
-            <button class="nav-btn btn-prev btn-prev-{{ instance.id }} btn btn-{{ instance.background_context }} btn-outline-{{ instance.btn_color }}"
-                    id="prevBtn-{{ instance.id }}"
-                    aria-label="Previous slide">
-                <i class="bi bi-chevron-left"></i>
-            </button>
-            <button class="nav-btn btn-next btn-next-{{ instance.id }} btn btn-outline-{{ instance.btn_color }}"
-                    id="nextBtn-{{ instance.id }}"
-                    aria-label="Next slide">
-                <i class="bi bi-chevron-right"></i>
-            </button>
-        </div>
-    </div>
+    {% endwith %}
 </section>
