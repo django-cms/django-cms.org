@@ -14,16 +14,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	filter: grayscale(100%);
-	opacity: 0.6;
 	transition: all 0.4s ease;
 	height: 100px;
-	&:hover {
-		filter: grayscale(0%);
-		opacity: 1;
-	}
 	img {
-		max-height: 50px;
+		max-height: 100px;
 		width: 178px;
 		max-width: 100%;
 	}
@@ -62,6 +56,11 @@
 	&:hover {
 		color: $dark;
 	}
+	&:focus,
+	&:focus-visible {
+		outline: 2px solid $dark;
+		outline-offset: 2px;
+	}
 }
 
 .btn-prev {
@@ -78,5 +77,14 @@
 .swiper-button-prev {
 	&:after {
 		display: none;
+	}
+}
+.grayscale {
+	filter: grayscale(100%);
+	opacity: 0.6;
+	transition: all 0.4s ease;
+	&:hover {
+		filter: grayscale(0%);
+		opacity: 1;
 	}
 }

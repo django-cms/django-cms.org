@@ -3,7 +3,8 @@
 {% cms_component "CarouselItem" name=_("Carousel Item") parent_classes="LogoCarouselPlugin" %}
 {% field "logo" ImageFormField required=True %}
 {% field "logo_link" LinkFormField required=False %}
-<div class="swiper-slide logo-item">
+{% field "grayscale" forms.BooleanField required=False label=_("Grayscale") help_text=_("Apply grayscale filter to the logo") %}
+<div class="swiper-slide logo-item{% if grayscale %} grayscale{% endif %}">
     {% with image=logo|get_related_object %}
         {% thumbnail image "400x0" crop subject_location=image.subject_location as sm %}
             {% thumbnail image "800x0" crop subject_location=image.subject_location as md %}

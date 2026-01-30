@@ -22,7 +22,7 @@
 
 			swiperElements.forEach(elem => {
 				const loop = (elem.dataset.loop) === 'true';
-				const spaceBetweenSlides = parseInt(elem.dataset.spaceBetweenSlides) || 20;
+				const spaceBetweenSlides = parseInt(elem.dataset.spaceBetweenSlides, 10) || 20;
 				const delay = parseInt(elem.dataset.delay) || 3000;
 				const autoplay = (elem.dataset.autoplay === 'true')
 					? {delay: delay, disableOnInteraction: false}
