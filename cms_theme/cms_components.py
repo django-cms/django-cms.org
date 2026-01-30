@@ -1,12 +1,11 @@
 from django import forms
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
-from djangocms_frontend.fields import HTMLFormField
+from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
 from djangocms_frontend.contrib.icon.fields import IconPickerField
-
-from djangocms_frontend.fields import ColoredButtonGroup
 
 
 @components.register
@@ -76,7 +75,7 @@ class Features(CMSFrontendComponent):
         required=False,
         initial="default",
     )
-    
+
 
 @components.register
 class TimelineContainer(CMSFrontendComponent):
@@ -174,8 +173,8 @@ class FooterLinksList(CMSFrontendComponent):
         required=False,
         initial="flex-column",
     )
-    
-    
+
+
 @components.register
 class CTAPanel(CMSFrontendComponent):
     """CTAPanel component with background grid option"""
@@ -210,13 +209,73 @@ class CTAPanel(CMSFrontendComponent):
         choices=[
             ("start", _("Start")),
             ("center", _("Center (Default)")),
-            ("end", _("End"))
+            ("end", _("End")),
         ],
         initial="center",
-        help_text=_("Controls horizontal alignment of all content")
+        help_text=_("Controls horizontal alignment of all content"),
     )
 
 
+@components.register
+class LogoCarousel(CMSFrontendComponent):
+    """LogoCarousel component"""
+
+    class Meta:
+        name = _("Logo Carousel")
+        render_template = "carousel/logo_carousel.html"
+        allow_children = True
+        child_classes = [
+            "HeadingPlugin",
+            "CarouselItemPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    loop = forms.BooleanField(
+        label=_("Loop Carousel"),
+        required=False,
+        initial=False,
+        help_text=_(
+            "Turn on to make the slides loop continuously from the last slide back to the first."
+        ),
+    )
+
+    space_between_slides = forms.IntegerField(
+        label=_("Space Between Slides"),
+        required=False,
+        initial=20,
+        validators=[MinValueValidator(0)],
+        help_text=_("Set the space (in pixels) between each slide in the carousel."),
+    )
+
+    autoplay = forms.BooleanField(
+        label=_("AutoPlay"),
+        required=False,
+        initial=True,
+        help_text=_(
+            "Turn on to make the slides move automatically without manual navigation."
+        ),
+    )
+
+    delay = forms.IntegerField(
+        label=_("Autoplay delay"),
+        required=False,
+        initial=3000,
+        validators=[MinValueValidator(500)],
+        help_text=_(
+            "Set the time (in milliseconds) each slide stays visible before moving to the next one."
+        ),
+    )
+
+    btn_color = forms.ChoiceField(
+        label=_("Button Color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="primary",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Color for the carousel button."),
+    )
+
+   
 @components.register
 class BenefitsPanel(CMSFrontendComponent):
     """Benefits panel component"""
@@ -270,6 +329,4 @@ class BenefitsCard(CMSFrontendComponent):
         label=_("Icon"),
         required=False,
     )
-
-
-
+    
