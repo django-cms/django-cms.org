@@ -1,0 +1,20 @@
+<!-- cms_theme/templates/benefits/benefits_panel.html -->
+{% load static cms_tags frontend %}
+<div {% if instance.background_grid %}class="{{ instance.get_classes }}  background-grid"{% endif %} {{ instance.get_attributes }}>
+    <div class="container">
+       {% with plugins=instance.child_plugin_instances %}
+            {% for plugin in plugins %}
+                {% if plugin.plugin_type != 'BenefitsCardPlugin' %}
+                    {% render_plugin plugin %}
+                {% endif %}
+            {% endfor %}
+            <div class="row g-4 justify-content-center">
+                {% for plugin in plugins %}
+                    {% if plugin.plugin_type == 'BenefitsCardPlugin' %}
+                        {% render_plugin plugin %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+       {% endwith %}
+    </div>
+</div>

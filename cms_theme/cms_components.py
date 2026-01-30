@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
+from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
 
 
@@ -272,4 +273,64 @@ class LogoCarousel(CMSFrontendComponent):
         initial="primary",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
         help_text=_("Color for the carousel button."),
+    )
+
+
+@components.register
+class BenefitsPanel(CMSFrontendComponent):
+    """Benefits panel component"""
+
+    class Meta:
+        name = _("Benefits Panel")
+        render_template = "benefits/benefits_panel.html"
+        allow_children = True
+        child_classes = [
+            "BenefitsCardPlugin",
+            "TextPlugin",
+            "HeadingPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=False,
+    )
+
+
+@components.register
+class BenefitsCard(CMSFrontendComponent):
+    """Benefits card component"""
+
+    class Meta:
+        name = _("Benefits Card")
+        render_template = "benefits/benefits_card.html"
+        allow_children = True
+        parent_classes = ["BenefitsPanelPlugin"]
+        child_classes = [
+            "TextLinkPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    card_title = forms.CharField(
+        label=_("Card title"),
+        required=False,
+    )
+
+    card_content = HTMLFormField(
+        label=_("Card content"),
+        required=False,
+    )
+
+    card_icon = IconPickerField(
+        label=_("Icon"),
+        required=False,
     )
