@@ -1,0 +1,28 @@
+{% load static frontend cms_tags cms_theme_tags thumbnail %}
+<div class="{{ instance.get_classes }} card related-people-card p-4 shadow-lg"
+     {{ instance.get_attributes }}>
+    <div class="profile-wrapper mb-4 mt-3">
+        <div class="position-absolute bg-lime shape-tl z-0"></div>
+        <div class="position-absolute bg-lime shape-br z-0"></div>
+        <img src="{{ instance.photo.url }}"
+             class="card-img img-fluid rounded-4 shadow position-relative z-1"
+             alt="{{ photo.alt }}">
+    </div>
+    <div class="card-body p-0 mt-2">
+        <div class="mt-auto">
+            {% if instance.role %}
+                <p class="text-uppercase mb-1 small fw-bold opacity-50 letter-spacing-1">{{ instance.role }}</p>
+            {% endif %}
+            {% if instance.person_name %}<h4 class="fw-bold mb-0 fs-3">{{ instance.person_name }}</h4>{% endif %}
+            {% if instance.sub_headline %}<p class="text-muted mb-3 small fw-medium">{{ instance.sub_headline }}</p>{% endif %}
+            {% if instance.description %}{{ instance.description|safe }}{% endif %}
+            {% with btn_container=instance.child_plugin_instances|filter_by_type:"CardButtonContainerPlugin" %}
+                <div class="d-flex gap-2 button-group">
+                    {% for btn in btn_container.0.child_plugin_instances %}
+                        {% render_plugin btn %}
+                    {% endfor %}
+                </div>
+            {% endwith %}
+        </div>
+    </div>
+</div>
