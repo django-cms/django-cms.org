@@ -1,0 +1,99 @@
+@mixin create-grid($cols) {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(1, 1fr);
+
+  @if $cols > 1 {
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(if($cols > 2, 2, $cols), 1fr);
+    }
+  }
+
+  @if $cols > 2 {
+    @media (min-width: 992px) {
+      grid-template-columns: repeat($cols, 1fr);
+    }
+  }
+}
+
+// 3. Utilities & Components
+.bg-lime {
+  background-color: $primary;
+}
+
+.letter-spacing-1 {
+  letter-spacing: 1px;
+}
+
+.related-people-card {
+  border-radius: 1rem;
+  border: none;
+  overflow: hidden;
+  max-width: 400px;
+  width: 100%;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  box-shadow: 0 1rem 3rem rgba(0,0,0,0.175); // shadow-lg
+
+  .card-img {
+    height: 27vh;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0; // p-0
+    margin-top: 0.5rem; // mt-2
+  }
+}
+
+.button-group {
+  a {
+    @extend .rounded-3;
+    @extend .px-3;
+    font-size: 1.2rem;
+  }
+}
+
+.profile-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+
+  .shape-tl, .shape-br {
+    position: absolute;
+    background-color: $primary;
+    border-radius: 10px;
+    z-index: 0;
+  }
+
+  .shape-tl {
+    width: 50px;
+    height: 80px;
+    top: 5px;
+    left: -20px;
+  }
+
+  .shape-br {
+    width: 130px;
+    height: 120px;
+    bottom: -30px;
+    right: -10px;
+  }
+
+  img {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// 4. Grid Implementation
+.grid-1 { @include create-grid(1); }
+.grid-2 { @include create-grid(2); }
+.grid-3 { @include create-grid(3); }
