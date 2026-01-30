@@ -1,5 +1,5 @@
-{% load cms_tags sekizai_tags static %}
-<!DOCTYPE html>{% load cms_tags menu_tags sekizai_tags static i18n %}
+{% load cms_tags menu_tags sekizai_tags static i18n %}
+<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
         <meta charset="utf-8"/>
@@ -8,7 +8,7 @@
         {% block meta %}
             <meta name="description" content="{% page_attribute meta_description %}"/>
             <meta property="og:type" content="website"/>
-            <meta property="og:title" content="{% page_attribute "page_title" %}"/>
+            <meta property="og:title" content="{% page_attribute 'page_title' %}"/>
             <meta property="og:description" content="{% page_attribute meta_description %}"/>
         {% endblock meta %}
         {% block canonical_url %}
@@ -38,12 +38,12 @@
             <script src="{% static 'js/bootstrap.js' %}"></script>
             <script src="{% static 'js/features.js' %}"></script>
         {% endblock base_js %}
-        {% render_block "js" %}
+        {% render_block 'js' %}
         {% block end_js %}
             <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
             <script src="{% static 'js/logo_carousel.js' %}"></script>
             <script>hljs.highlightAll();</script>
-        {% endblock end_js %}  
+        {% endblock end_js %}
     </body>
 </html>
