@@ -17,11 +17,13 @@
             {% if instance.sub_headline %}<p class="text-muted mb-3 small fw-medium">{{ instance.sub_headline }}</p>{% endif %}
             {% if instance.description %}{{ instance.description|safe }}{% endif %}
             {% with btn_container=instance.child_plugin_instances|filter_by_type:"CardButtonContainerPlugin" %}
-                <div class="d-flex gap-2 button-group">
-                    {% for btn in btn_container.0.child_plugin_instances %}
-                        {% render_plugin btn %}
-                    {% endfor %}
-                </div>
+                {% if btn_container %}
+                    <div class="d-flex gap-2 button-group">
+                        {% for btn in btn_container.0.child_plugin_instances %}
+                            {% render_plugin btn %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             {% endwith %}
         </div>
     </div>
