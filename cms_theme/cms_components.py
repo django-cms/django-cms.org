@@ -7,9 +7,6 @@ from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
 from djangocms_frontend.contrib.image.fields import ImageFormField
-from djangocms_frontend.fields import HTMLFormField
-
-from djangocms_frontend.fields import ColoredButtonGroup
 
 
 @components.register
@@ -338,10 +335,12 @@ class BenefitsCard(CMSFrontendComponent):
         label=_("Icon"),
         required=False,
     )
+
+
 @components.register
 class RelatedPeople(CMSFrontendComponent):
-
     """Related People component"""
+
     class Meta:
         name = _("Related People")
         render_template = "related_people/related_people.html"
@@ -358,6 +357,15 @@ class RelatedPeople(CMSFrontendComponent):
         help_text=_("Eyebrow text"),
     )
 
+    eyebrow_text_color = forms.ChoiceField(
+        label=_("Eyebrow text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Eyebrow text color."),
+    )
+
     grid_columns = forms.ChoiceField(
         label=_("Grid columns"),
         choices=[
@@ -368,6 +376,7 @@ class RelatedPeople(CMSFrontendComponent):
         initial="3",
         help_text=_("Number of grid columns."),
     )
+
 
 @components.register
 class CardButtonContainer(CMSFrontendComponent):
@@ -430,5 +439,3 @@ class PeopleCard(CMSFrontendComponent):
         required=False,
         help_text=_("Description displayed in people card."),
     )
-
-
