@@ -14,5 +14,6 @@ node_modules/
 
 backend/static/css/main.css
 backend/static/css/main.css.map
+backend/static/djangocms_text/css/tiptap.admin.css
 
 data/

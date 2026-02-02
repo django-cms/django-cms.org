@@ -348,4 +348,16 @@ TEXT_EDITOR_SETTINGS = {
             },
         },
     ],
+    "textColors": {
+        "text-primary": {"name": "Primary"},
+        "text-secondary": {"name": "Secondary"},
+        "text-success": {"name": "Success"},
+        "text-warning": {"name": "Warning"},
+        "text-danger": {"name": "Danger"},
+        "text-body": {"name": "Body"},
+        "text-light": {"name": "Light"},
+        "text-dark": {"name": "Dark"},
+        "text-muted": {"name": "Muted"},
+        "text-white": {"name": "White"},
+    },
 }
