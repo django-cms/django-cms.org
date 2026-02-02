@@ -1,0 +1,33 @@
+{% load menu_tags cms_tags %}
+
+<nav class="navbar navbar-expand-lg bg-white py-4">
+  <div class="container">
+
+    {% with img=instance.image %}
+        <div>
+            <a class="navbar-brand" href="/"><img src="{{ img.url }}" alt="{{ img.alt }}" width="120" height="50"></a>
+        </div>
+    {% endwith %}
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      {# Links #}
+      <ul class="navbar-nav mx-auto">
+        {% show_menu 0 1 100 100 "menu/menu.html" %}
+      </ul>
+
+      {# Buttons #}
+      <div class="d-flex gap-3">
+        {% for plugin in instance.child_plugin_instances %}
+            {% if plugin.plugin_type == "TextLinkPlugin" %}
+                {% render_plugin plugin %}
+            {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</nav>
