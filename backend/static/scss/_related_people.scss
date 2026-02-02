@@ -57,6 +57,12 @@
     @extend .rounded-3;
     @extend .px-3;
     font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  i {
+    margin: 0 !important;
   }
 }
 
