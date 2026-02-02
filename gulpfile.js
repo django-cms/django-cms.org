@@ -12,7 +12,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 const paths = {
   entry: "backend/static/scss/main.scss",
-  tiptapAdmin: "backend/static/scss/tiptap-admin.scss",
+  tiptapAdmin: "backend/static/scss/tiptap_admin.scss",
   scss: "backend/static/scss/**/*.scss",
   outDir: "backend/static/css",
   tiptapOutDir: "backend/static/djangocms_text/css",
