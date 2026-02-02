@@ -1,0 +1,10 @@
+{% extends "cms_theme/base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Aliases" %}{% endblock %}
+{% block content %}
+    <div class="aliases my-additional-class">
+        {% block aliases_content %}
+        {% endblock aliases_content %}
+    </div>
+{% endblock content %}
