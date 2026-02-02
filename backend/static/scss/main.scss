@@ -3,7 +3,7 @@
 @import "./theme/bootstrap";
 @import "./accent";
 @import "./cards";
-// @import "./list-style";
+@import "./list-style";
 @import "./forms";
 @import "./buttons";
 @import "./links";
@@ -19,6 +19,7 @@
 @import "./code_block";
 @import "./benefits_panel";
 @import "./kbd_tags";
+@import "./table";
 
 /* optional custom styles */
 .kitchensink-page {
