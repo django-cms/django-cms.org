@@ -1,10 +1,12 @@
 from django import forms
 from django.conf import settings
 from django.core.validators import MinValueValidator
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
+from djangocms_frontend.contrib.image.fields import ImageFormField
 from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
 
 
@@ -332,5 +334,25 @@ class BenefitsCard(CMSFrontendComponent):
 
     card_icon = IconPickerField(
         label=_("Icon"),
+        required=False,
+    )
+
+
+@components.register
+class Navbar(CMSFrontendComponent):
+    """Navbar component with background grid option"""
+
+    class Meta:
+        name = _("Navbar")
+        render_template = "navbar/navbar.html"
+        allow_children = True
+        child_classes = [
+            "TextLinkPlugin",
+            "ImagePlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    image = ImageFormField(
+        label=_("Logo Image"),
         required=False,
     )
