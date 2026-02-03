@@ -1,0 +1,21 @@
+{% load i18n menu_tags %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {% for ancestor in ancestors %}
+            <li class="breadcrumb-item">
+                <a href="{{ ancestor.get_absolute_url }}">{{ ancestor.get_menu_title }}</a>
+            </li>
+        {% endfor %}
+        <li class="breadcrumb-item active" aria-current="page">
+            <span class="breadcrumb-active-text">
+                {% if post_content %}
+                    {# For blog posts, show the post title instead of the menu title #}
+                    {{ post_content.title }}
+                {% else %}
+                    {{ request.current_page.get_menu_title }}
+                {% endif %}
+            </span>
+        </li>
+    </ol>
+</nav>
