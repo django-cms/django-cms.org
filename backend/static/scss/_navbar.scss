@@ -13,7 +13,8 @@
 }
 
 // Button Container - 20px Gap
-.navbar .d-flex.gap-3 {
+.navbar .d-flex.gap-3,
+.navbar .d-lg-flex.gap-3 {
   gap: 20px !important;
 
   // Buttons same width
@@ -48,8 +49,34 @@
 
 // Navbar Links
 .navbar-nav {
-  gap: 40px;
+  gap: 1.5rem;
   --bs-nav-link-padding-y: 0;
+}
+
+// Desktop: Center navbar links using grid
+@media (min-width: 992px) {
+  .navbar > .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  // Logo left-aligned in first column
+  .navbar-brand {
+    justify-self: start;
+  }
+
+  // Links centered in middle column (true center of viewport)
+  .navbar-nav {
+    justify-self: center;
+    margin: 0;
+  }
+
+  // Buttons right-aligned in third column
+  .d-flex.gap-3 {
+    justify-self: end;
+  }
 }
 
 // delete default dropdown arrow

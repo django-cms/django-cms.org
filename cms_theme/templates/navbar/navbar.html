@@ -6,7 +6,7 @@
     {% with img=instance.image %}
         {% if img %}
           <div>
-              <a class="navbar-brand" href="/"><img src="{{ img.url }}" alt="{{ img.default_alt_text|default:img.name|default:'Logo' }}" width="120" height="50"></a>
+              <a class="navbar-brand" href="/"><img src="{{ img.url }}" alt="{{ img.default_alt_text|default:img.name|default:'Logo' }}" height="50"></a>
           </div>
         {% endif %}
     {% endwith %}
@@ -17,18 +17,27 @@
 
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       {# Links #}
-      <ul class="navbar-nav mx-auto">
+      <ul class="navbar-nav">
         {% show_menu 0 1 100 100 "menu/menu.html" %}
       </ul>
 
-      {# Buttons #}
-      <div class="d-flex gap-3 pt-4 pt-lg-0">
+      {# Buttons - Mobile only (inside collapse) #}
+      <div class="d-flex d-lg-none gap-3 pt-4">
         {% for plugin in instance.child_plugin_instances %}
             {% if plugin.plugin_type == "TextLinkPlugin" %}
                 {% render_plugin plugin %}
             {% endif %}
         {% endfor %}
       </div>
+    </div>
+
+    {# Buttons - Desktop only (outside collapse for grid layout) #}
+    <div class="d-none d-lg-flex gap-3 ms-auto">
+      {% for plugin in instance.child_plugin_instances %}
+          {% if plugin.plugin_type == "TextLinkPlugin" %}
+              {% render_plugin plugin %}
+          {% endif %}
+      {% endfor %}
     </div>
 
   </div>
