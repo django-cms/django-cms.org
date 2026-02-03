@@ -1,0 +1,56 @@
+.breadcrumb-item {
+    --bs-breadcrumb-item-padding-x: 0;
+
+    font-family: $font-family-base;
+    font-size: 12px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 100% !important; /* 12px */
+    letter-spacing: 2.4px !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+
+    // Fix vertical alignment
+    display: inline-flex;
+    align-items: center;
+
+    a {
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        letter-spacing: 2.4px !important;
+        line-height: 100% !important;
+        text-transform: uppercase !important;
+        color: $secondary;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        padding: 2px 4px;
+
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            color: $secondary;
+            background-color: $primary;
+        }
+    }
+
+    &.active {
+        color: $secondary;
+    }
+
+    // Make separator thicker and adjust spacing
+    + .breadcrumb-item::before {
+        vertical-align: baseline;
+        line-height: 100%;
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
+        font-weight: 700 !important;
+    }
+}
+
+// Active breadcrumb text styling (only the span, not the separator)
+.breadcrumb-active-text {
+    background-color: $primary;
+    color: $secondary;
+    padding: 2px 4px;
+    display: inline-block;
+}
