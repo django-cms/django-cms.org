@@ -4,9 +4,11 @@
   <div class="container">
 
     {% with img=instance.image %}
-        <div>
-            <a class="navbar-brand" href="/"><img src="{{ img.url }}" alt="{{ img.alt }}" width="120" height="50"></a>
-        </div>
+        {% if img %}
+          <div>
+              <a class="navbar-brand" href="/"><img src="{{ img.url }}" alt="{{ img.default_alt_text|default:img.name|default:'Logo' }}" width="120" height="50"></a>
+          </div>
+        {% endif %}
     {% endwith %}
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
@@ -20,7 +22,7 @@
       </ul>
 
       {# Buttons #}
-      <div class="d-flex gap-3">
+      <div class="d-flex gap-3 pt-4 pt-lg-0">
         {% for plugin in instance.child_plugin_instances %}
             {% if plugin.plugin_type == "TextLinkPlugin" %}
                 {% render_plugin plugin %}
