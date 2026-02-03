@@ -1,0 +1,26 @@
+{% load static cms_tags sekizai_tags cms_theme_tags %}
+<div class="col-12">
+    <div class="{{ instance.get_classes }} supporter-bar shadow-lg"
+         {{ instance.get_attributes }}>
+        <div class="row align-items-center">
+            {% with image=instance.child_plugin_instances|filter_by_type:"ImagePlugin" %}
+                {% if image %}
+                    <div class="col-lg-2 text-center mb-4 mb-lg-0">
+                        <div class="profile-img-wrapper">
+                            <div class="profile-shape shape-1"></div>
+                            <div class="profile-shape shape-2"></div>
+                            {% render_plugin image.0 %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% with cols=instance.child_plugin_instances|filter_by_type:"GridColumnPlugin" %}
+                {% if cols %}
+                    {% for col in cols %}
+                        {% render_plugin col %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</div>

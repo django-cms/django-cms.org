@@ -1,0 +1,46 @@
+{% load static cms_tags sekizai_tags cms_theme_tags %}
+<div class="{{ instance.get_classes }} container-fluid px-lg-10 pt-3"
+     {{ instance.get_attributes }}>
+    {% with top_section=instance.child_plugin_instances|filter_by_type:"MembershipTopSectionGroupPlugin" %}
+        {% if top_section %}
+            <div class="row mb-5">
+                <div class="col-12">
+                    {% if top_section.0 %}
+                        <h6 class="text-uppercase overline pb-2 {% if top_section.0.eyebrow_text_color %}text-{{ top_section.0.eyebrow_text_color }}{% endif %}">
+                            {{ top_section.0.eyebrow_text }}
+                        </h6>
+                    {% endif %}
+                    {% with headlines=top_section.0.child_plugin_instances %}
+                        {% if headlines %}
+                            {% for headline in headlines %}
+                                {% render_plugin headline %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+    <div class="row g-4 align-items-stretch justify-content-center">
+        {% with plan_card_groups=instance.child_plugin_instances|filter_by_type:"PlanCardGroupPlugin" %}
+            {% if plan_card_groups %}
+                {% for plan_card_group in plan_card_groups %}
+                    {% if plan_card_group and plan_card_group.child_plugin_instances|length > 0 %}
+                        {% for plan_card in plan_card_group.child_plugin_instances %}
+                            {% render_plugin plan_card %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="row mt-5">
+        {% with horizontal_plan_cards=instance.child_plugin_instances|filter_by_type:"HorizontalPlanCardPlugin" %}
+            {% if horizontal_plan_cards %}
+                {% for horizontal_plan_card in horizontal_plan_cards %}
+                    {% render_plugin horizontal_plan_card %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
