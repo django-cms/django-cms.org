@@ -353,6 +353,7 @@ TEXT_EDITOR_SETTINGS = {
         "text-secondary": {"name": "Secondary"},
         "text-success": {"name": "Success"},
         "text-warning": {"name": "Warning"},
+        "text-info": {"name": "Info"},
         "text-danger": {"name": "Danger"},
         "text-body": {"name": "Body"},
         "text-light": {"name": "Light"},

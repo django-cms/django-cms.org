@@ -1,6 +1,6 @@
 table, .table {
     border-radius: 20px !important;
-    border: 1px solid #7C7C7C !important;
+    border: 1px solid $mid-grey !important;
     border-collapse: separate !important;
     border-spacing: 0 !important;
     width: 100%;
@@ -15,9 +15,9 @@ table tbody tr th,
     font-weight: 700;
     color: $black;
     border-top: none !important;
-    border-bottom: 1px solid #7C7C7C !important;
+    border-bottom: 1px solid $mid-grey !important;
     border-left: none !important;
-    border-right: 1px solid #7C7C7C !important;
+    border-right: 1px solid $mid-grey !important;
 }
 
 table tbody tr th:last-child,
@@ -38,9 +38,9 @@ table tbody tr td,
 .table tbody tr td {
     padding: 1rem !important;
     border-top: none !important;
-    border-bottom: 1px solid #7C7C7C !important;
+    border-bottom: 1px solid $mid-grey !important;
     border-left: none !important;
-    border-right: 1px solid #7C7C7C !important;
+    border-right: 1px solid $mid-grey !important;
 }
 
 table tbody tr td:last-child,
@@ -59,12 +59,12 @@ table tbody tr td:first-child,
 // Weiße Zeilen (ungerade)
 table tbody tr:nth-child(odd),
 .table tbody tr:nth-child(odd) {
-    background-color: var(--Light-grey, #F7F7F7);;
+    background-color: $light;
 }
 
 table tbody tr:nth-child(odd) td,
 .table tbody tr:nth-child(odd) td {
-    background-color: var(--Light-grey, #F7F7F7);;
+    background-color: $light;
 }
 
 // Graue Zeilen (gerade)

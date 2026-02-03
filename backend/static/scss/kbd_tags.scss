@@ -6,13 +6,13 @@ kbd {
 
     border-radius: 4px !important;
     border: 0.5px solid !important;
-    border-color: var(--Mid-grey, #7C7C7C) !important;
+    border-color: $mid-grey !important;
     background-color: transparent;
     color: currentColor;
-    box-shadow: 0 2px 2.8px 0 #7C7C7C;
+    box-shadow: 0 2px 2.8px 0 $mid-grey;
 
     font-feature-settings: 'liga' off, 'clig' off;
-    font-family: Aeonik;
+    font-family: $font-family-base;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

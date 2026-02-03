@@ -157,7 +157,7 @@ Why No Source Maps?
 
 The ``tiptap.admin.css`` file is intentionally compiled **without source maps** to keep the admin interface clean. The file is simple enough for debugging without source maps, and it reduces clutter in the admin CSS directory.
 
-If you need source maps for debugging, you can modify ``gulpfile.js`` line 40-52 to add ``sourcemaps.init()`` and ``sourcemaps.write(".")``.
+If you need source maps for debugging, you can modify ``gulpfile.js`` line 40-56 to add ``sourcemaps.init()`` and ``sourcemaps.write(".")``.
 
 Local Development Workflow
 ===========================
