@@ -1,7 +1,6 @@
 from django import forms
 from django.conf import settings
 from django.core.validators import MinValueValidator
-from django.db import models
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
@@ -348,7 +347,6 @@ class Navbar(CMSFrontendComponent):
         allow_children = True
         child_classes = [
             "TextLinkPlugin",
-            "ImagePlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
 
