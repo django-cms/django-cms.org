@@ -16,7 +16,6 @@
   }
 }
 
-// 3. Utilities & Components
 .bg-lime {
   background-color: $primary;
 }
@@ -35,7 +34,7 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  box-shadow: 0 1rem 3rem rgba(0,0,0,0.175); // shadow-lg
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
 
   .card-img {
     height: 27vh;
@@ -47,8 +46,14 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 0; // p-0
-    margin-top: 0.5rem; // mt-2
+
+    padding: 28px;
+
+    margin-top: 0.5rem;
+
+    .mt-auto-container {
+      margin-top: auto;
+    }
   }
 }
 
@@ -60,6 +65,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 63px;
+    height: 63px;
   }
   i {
     margin: 0 !important;
@@ -74,7 +81,6 @@
 
   .shape-tl, .shape-br {
     position: absolute;
-    background-color: $primary;
     border-radius: 10px;
     z-index: 0;
   }
@@ -82,15 +88,15 @@
   .shape-tl {
     width: 50px;
     height: 80px;
-    top: 5px;
-    left: -20px;
+    top: 25px;
+    left: -25px;
   }
 
   .shape-br {
-    width: 130px;
-    height: 120px;
+    width: 150px;
+    height: 160px;
     bottom: -30px;
-    right: -10px;
+    right: -40px;
   }
 
   img {
@@ -99,7 +105,6 @@
   }
 }
 
-// 4. Grid Implementation
 .grid-1 { @include create-grid(1); }
 .grid-2 { @include create-grid(2); }
 .grid-3 { @include create-grid(3); }
