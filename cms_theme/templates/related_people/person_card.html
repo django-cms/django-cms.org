@@ -1,30 +1,44 @@
 {% load static frontend cms_tags cms_theme_tags thumbnail %}
 <div class="{{ instance.get_classes }} card related-people-card p-4 shadow-lg"
      {{ instance.get_attributes }}>
-    <div class="profile-wrapper mb-4 mt-3">
-        <div class="position-absolute bg-lime shape-tl z-0"></div>
-        <div class="position-absolute bg-lime shape-br z-0"></div>
-        <img src="{{ instance.photo.url }}"
-             class="card-img img-fluid rounded-4 shadow position-relative z-1"
-             alt="{{ photo.alt }}">
-    </div>
-    <div class="card-body p-0 mt-2">
-        <div class="mt-auto">
-            {% if instance.role %}
-                <p class="text-uppercase mb-1 small fw-bold opacity-50 letter-spacing-1">{{ instance.role }}</p>
+    {% with child_plugins=instance.child_plugin_instances %}
+        {% for plugin in child_plugins %}
+            {% if plugin.plugin_type == "ImagePlugin" %}
+                <div class="profile-wrapper mb-4 mt-3">
+                    {% if instance.image_accent %}
+                        <div class="position-absolute {% if instance.image_accent_color %}bg-{{ instance.image_accent_color }}{% endif %} shape-tl z-0">
+                        </div>
+                        <div class="position-absolute {% if instance.image_accent_color %}bg-{{ instance.image_accent_color }}{% endif %} shape-br z-0">
+                        </div>
+                    {% endif %}
+                    {% render_plugin plugin %}
+                </div>
             {% endif %}
-            {% if instance.person_name %}<h4 class="fw-bold mb-0 fs-3">{{ instance.person_name }}</h4>{% endif %}
-            {% if instance.sub_headline %}<p class="text-muted mb-3 small fw-medium">{{ instance.sub_headline }}</p>{% endif %}
-            {% if instance.description %}{{ instance.description|safe }}{% endif %}
-            {% with btn_container=instance.child_plugin_instances|filter_by_type:"CardButtonContainerPlugin" %}
-                {% if btn_container %}
-                    <div class="d-flex gap-2 button-group">
-                        {% for btn in btn_container.0.child_plugin_instances %}
-                            {% render_plugin btn %}
+        {% endfor %}
+        <div class="card-body p-0 mt-2 text-{{ instance.text_color }}">
+            <div class="mt-auto">
+                <div class="text-uppercase mb-1 overline pb-2">contact:</div>
+                {% with texts=instance.child_plugin_instances|filter_by_type:"TextPlugin,HeadingPlugin" %}
+                    {% if texts and texts|length > 0 %}
+                        {% for text in texts %}
+                            {% render_plugin text %}
                         {% endfor %}
-                    </div>
+                    {% endif %}
+                {% endwith %}
+                {% if instance.role %}
+                    <p class="text-uppercase mb-1 small fw-bold opacity-50 letter-spacing-1">{{ instance.role }}</p>
                 {% endif %}
-            {% endwith %}
+                {% if instance.description %}{{ instance.description|safe }}{% endif %}
+                {% with buttons=instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}
+                    {% if buttons and buttons|length > 0 %}
+                        <div class="d-flex gap-2 button-group">
+                            {% for button in buttons %}
+                                {% render_plugin button %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
         </div>
-    </div>
+    {% endwith %}
 </div>

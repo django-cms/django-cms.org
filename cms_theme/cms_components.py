@@ -6,7 +6,6 @@ from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
-from djangocms_frontend.contrib.image.fields import ImageFormField
 
 
 @components.register
@@ -377,22 +376,6 @@ class RelatedPeople(CMSFrontendComponent):
         help_text=_("Number of grid columns."),
     )
 
-
-@components.register
-class CardButtonContainer(CMSFrontendComponent):
-    """Card button container component"""
-
-    class Meta:
-        name = _("Card button container")
-        allow_children = True
-        child_classes = [
-            "TextLinkPlugin",
-        ]
-        parent_classes = [
-            "PeopleCardPlugin",
-        ]
-
-
 @components.register
 class PeopleCard(CMSFrontendComponent):
     """People card component"""
@@ -405,15 +388,27 @@ class PeopleCard(CMSFrontendComponent):
             "RelatedPeoplePlugin",
         ]
         child_classes = [
-            "CardButtonContainerPlugin",
+            "ImagePlugin",
+            "TextPlugin",
+            "HeadingPlugin",
+            "TextLinkPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
 
-    # profile image goes here
-    photo = ImageFormField(
-        label=_("Photo"),
-        required=True,
-        help_text=_("Photo displayed in people card."),
+    image_accent = forms.BooleanField(
+        label=_("Image accent"),
+        required=False,
+        initial=False,
+        help_text=_("Add image accent"),
+    )
+
+    image_accent_color = forms.ChoiceField(
+        label=_("Image accent color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="primary",
+        help_text=_("Image accent color."),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
     role = forms.CharField(
@@ -422,20 +417,17 @@ class PeopleCard(CMSFrontendComponent):
         help_text=_("Role displayed in people card."),
     )
 
-    person_name = forms.CharField(
-        label=_("Person name"),
-        required=False,
-        help_text=_("Person name displayed in people card."),
-    )
-
-    sub_headline = forms.CharField(
-        label=_("Sub headline"),
-        required=False,
-        help_text=_("Sub headline displayed in people card."),
-    )
-
     description = HTMLFormField(
         label=_("Description"),
         required=False,
         help_text=_("Description displayed in people card."),
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text Color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="dark",
+        help_text=_("Card content text color."),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
