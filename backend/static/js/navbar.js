@@ -1,41 +1,33 @@
-// Navbar Mega Menu - Backdrop für geöffnetes Dropdown
+// Navbar Mega Menu - Backdrop Management
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Warte bis Bootstrap geladen ist
-  if (typeof bootstrap === 'undefined') {
-    console.error('Bootstrap ist nicht geladen!');
-    return;
-  }
-
-  // Backdrop-Element erstellen
+  // create backdrop element
   const backdrop = document.createElement('div');
   backdrop.className = 'dropdown-backdrop';
   document.body.appendChild(backdrop);
 
-  // Alle Dropdowns in der Navbar
+  // All dropdowns in the navbar
   const dropdowns = document.querySelectorAll('.navbar .dropdown');
 
   dropdowns.forEach(dropdown => {
     const toggle = dropdown.querySelector('[data-bs-toggle="dropdown"]');
     if (!toggle) return;
 
-    // Wenn Dropdown geöffnet wird
+    // If dropdown is shown
     toggle.addEventListener('show.bs.dropdown', function() {
-      console.log('Dropdown öffnet sich');
       backdrop.classList.add('show');
     });
 
-    // Wenn Dropdown geschlossen wird
+    // if dropdown is hidden
     toggle.addEventListener('hide.bs.dropdown', function() {
-      console.log('Dropdown schließt sich');
       backdrop.classList.remove('show');
     });
   });
 
-  // Backdrop schließt Dropdown beim Klick
+  // Backdrop closes dropdown on click
   backdrop.addEventListener('click', function() {
-    console.log('Backdrop geklickt');
-    // Schließe alle offenen Dropdowns
+    console.log('Backdrop clicked');
+    // Close all open dropdowns
     dropdowns.forEach(dropdown => {
       const toggle = dropdown.querySelector('[data-bs-toggle="dropdown"]');
       if (toggle && toggle.getAttribute('aria-expanded') === 'true') {
