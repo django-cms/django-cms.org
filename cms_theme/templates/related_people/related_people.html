@@ -1,6 +1,5 @@
 {% load static cms_tags frontend cms_theme_tags %}
-<section class="{{ instance.get_classes }} py-5 px-3"
-         {{ instance.get_attributes }}>
+<section class="{{ instance.get_classes }}" {{ instance.get_attributes }}>
     <div class="container">
         <div class="mb-5 text-white text-center text-lg-start">
             {% if instance.eyebrow_text %}
