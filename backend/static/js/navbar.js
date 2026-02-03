@@ -9,24 +9,45 @@ document.addEventListener('DOMContentLoaded', function() {
   // All dropdowns in the navbar
   const dropdowns = document.querySelectorAll('.navbar .dropdown');
 
+  // Check if viewport is desktop (min-width: 992px)
+  function isDesktop() {
+    return window.matchMedia('(min-width: 992px)').matches;
+  }
+
   dropdowns.forEach(dropdown => {
     const toggle = dropdown.querySelector('[data-bs-toggle="dropdown"]');
     if (!toggle) return;
 
     // If dropdown is shown
     toggle.addEventListener('show.bs.dropdown', function() {
-      backdrop.classList.add('show');
+      // Only show backdrop on desktop
+      if (isDesktop()) {
+        backdrop.classList.add('show');
+      }
     });
 
     // if dropdown is hidden
     toggle.addEventListener('hide.bs.dropdown', function() {
-      backdrop.classList.remove('show');
+      // Only handle backdrop on desktop
+      if (isDesktop()) {
+        // Check if any other dropdown is still open
+        setTimeout(() => {
+          const anyOpen = Array.from(dropdowns).some(dd => {
+            const ddToggle = dd.querySelector('[data-bs-toggle="dropdown"]');
+            return ddToggle && ddToggle.getAttribute('aria-expanded') === 'true';
+          });
+
+          // Only hide backdrop if no dropdown is open
+          if (!anyOpen) {
+            backdrop.classList.remove('show');
+          }
+        }, 0);
+      }
     });
   });
 
   // Backdrop closes dropdown on click
   backdrop.addEventListener('click', function() {
-    console.log('Backdrop clicked');
     // Close all open dropdowns
     dropdowns.forEach(dropdown => {
       const toggle = dropdown.querySelector('[data-bs-toggle="dropdown"]');
