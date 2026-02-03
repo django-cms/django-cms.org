@@ -1,0 +1,108 @@
+// Navbar & Mega Menu Styles
+
+// Button Container - 20px Gap
+.navbar .d-flex.gap-3 {
+  gap: 20px !important;
+
+  // Buttons same width
+  a, .btn {
+    width: 158px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
+// open Dropdown Backdrop
+.dropdown-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(124, 124, 124, 0);
+  z-index: 1040;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    background: rgba(124, 124, 124, 0.40);
+  }
+}
+
+// Navbar Links
+.navbar-nav {
+  gap: 40px;
+  --bs-nav-link-padding-y: 0;
+}
+
+// delete default dropdown arrow
+.navbar-nav .dropdown-toggle::after {
+  display: none !important;
+}
+
+// Navbar over Backdrop
+.navbar {
+  position: relative;
+  z-index: 1060;
+
+  border-bottom: 0.5px solid var(--Dark-green, #2C4D4C)
+}
+
+// Mega Menu full width - Desktop
+@media (min-width: 992px) {
+
+  // Dropdown static so it does not align to the link
+  .navbar-nav .dropdown {
+    position: static;
+  }
+
+  // Dropdown-Menu full width - Desktop
+  .navbar-nav .dropdown-menu {
+    position: absolute;
+    top: 100%; // Begins directly at the bottom edge of the navbar
+    left: 0;
+    right: 0;
+    width: auto;
+    max-width: 1140px; // Container width
+
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.75rem;
+
+    border-radius: 0 0 1.25rem 1.25rem;
+    border-top: 0.5px solid var(--Dark-green, #2C4D4C);
+
+    z-index: 1050;
+
+    // Animation - Initial State (closed)
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease-in-out,
+                transform 0.3s ease-in-out,
+                visibility 0.3s ease-in-out;
+    pointer-events: none;
+
+    // if dropdown is open
+    &.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+}
+
+// Mobile: Standard Dropdown
+@media (max-width: 991px) {
+  .navbar-nav .dropdown-menu {
+    margin-top: 0;
+  }
+}
