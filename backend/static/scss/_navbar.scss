@@ -54,7 +54,7 @@
 }
 
 // Desktop: Center navbar links using grid
-@media (min-width: 992px) {
+@media (min-width: 1199.98px) {
   .navbar > .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -93,7 +93,7 @@
 }
 
 // Mega Menu full width - Desktop
-@media (min-width: 992px) {
+@media (min-width: 1199.98px) {
 
   // Dropdown static so it does not align to the link
   .navbar-nav .dropdown {
@@ -162,7 +162,7 @@
 }
 
 // Mobile: Standard Dropdown
-@media (max-width: 991px) {
+@media (max-width: 1199.98px) {
   // Navbar toggler custom styles
   .navbar-toggler {
     border: none;
