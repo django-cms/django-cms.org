@@ -247,7 +247,7 @@
     margin-top: 0;
     border-top: none;
     border-radius: 0 0 1.25rem 1.25rem;
-    padding: 0.75rem;
+    padding: 0;
 
     // Animation for mobile dropdown
     display: block !important;
@@ -257,12 +257,19 @@
     transform: translateY(-10px);
     transition: max-height 0.4s ease-in-out,
                 opacity 0.45s ease-in-out,
-                transform 0.45s ease-in-out;
+                transform 0.45s ease-in-out,
+                padding 0.4s ease-in-out;
 
     &.show {
       max-height: 100%; // Large enough for all content
       opacity: 1;
       transform: translateY(0);
+      padding: 0.75rem;
+    }
+
+    // Hide empty h3 tags
+    h3:empty {
+      display: none;
     }
   }
 }
