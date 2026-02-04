@@ -145,11 +145,11 @@ class Footer(CMSFrontendComponent):
 
 
 @components.register
-class FooterLinksList(CMSFrontendComponent):
+class LinksListContainer(CMSFrontendComponent):
     """Footer Links List component"""
 
     class Meta:
-        name = _("Footer Links List")
+        name = _("Links List Container")
         render_template = "footer/footer_links_list.html"
         requires_parent = True
         parent_classes = ["Footer", "GridColumnPlugin"]
@@ -354,8 +354,8 @@ class Navbar(CMSFrontendComponent):
         label=_("Logo Image"),
         required=False,
     )
-    
-    
+
+
 @components.register
 class RelatedPeople(CMSFrontendComponent):
     """Related People component"""

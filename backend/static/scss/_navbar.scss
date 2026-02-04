@@ -281,3 +281,27 @@
     }
   }
 }
+
+.navbar-nav.list-unstyled,
+.navbar-nav.list-unstyled li {
+  list-style: none;
+  list-style-type: none;
+}
+
+.navbar-nav .nav-item::before,
+.navbar-nav .nav-item::marker {
+  display: none;
+  content: none;
+}
+
+.list-link-container.list-unstyled,
+.list-link-container.list-unstyled li {
+  list-style: none;
+  list-style-type: none;
+}
+
+.list-link-container .list-link-item::before,
+.list-link-container .list-link-item::marker {
+  display: none;
+  content: none;
+}
