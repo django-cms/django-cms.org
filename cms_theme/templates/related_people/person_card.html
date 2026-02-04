@@ -17,8 +17,8 @@
                 {% endif %}
             {% endif %}
         {% endfor %}
-        <div class="card-body p-0 mt-2 text-{{ instance.text_color }}">
-            <div class="mt-auto">
+        <div class="card-body p-0 mt-4 text-{{ instance.text_color }}">
+            <div class="pt-1">
                 <div class="text-uppercase mb-1 overline pb-2">contact:</div>
                 {% with texts=instance.child_plugin_instances|filter_by_type:"TextPlugin,HeadingPlugin" %}
                     {% if texts and texts|length > 0 %}
@@ -28,12 +28,12 @@
                     {% endif %}
                 {% endwith %}
                 {% if instance.role %}
-                    <p class="text-uppercase mb-1 small fw-bold opacity-50 letter-spacing-1">{{ instance.role }}</p>
+                    <p>{{ instance.role }}</p>
                 {% endif %}
                 {% if instance.description %}{{ instance.description|safe }}{% endif %}
                 {% with buttons=instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}
                     {% if buttons and buttons|length > 0 %}
-                        <div class="d-flex gap-2 button-group pt-3">
+                        <div class="d-flex gap-2 button-group pt-1 mt-4">
                             {% for button in buttons %}
                                 {% render_plugin button %}
                             {% endfor %}
