@@ -25,6 +25,14 @@
     text-align: center;
     white-space: nowrap;
   }
+
+  @media (min-width: 1199.98px) and (max-width: 1399.98px) {
+    gap: 10px !important;
+
+    a, .btn {
+      width: 140px;
+    }
+  }
 }
 
 // open Dropdown Backdrop
