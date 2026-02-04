@@ -9,9 +9,29 @@ document.addEventListener('DOMContentLoaded', function() {
   // All dropdowns in the navbar
   const dropdowns = document.querySelectorAll('.navbar .dropdown');
 
-  // Check if viewport is desktop (min-width: 1199.98px)
+  // Check if viewport is desktop (min-width: 1200px)
   function isDesktop() {
-    return window.matchMedia('(min-width: 1199.98px)').matches;
+    return window.matchMedia('(min-width: 1200px)').matches;
+  }
+
+  function hideBackdrop() {
+    backdrop.classList.remove('show');
+  }
+
+  function closeAllDropdowns() {
+    dropdowns.forEach(dropdown => {
+      const toggle = dropdown.querySelector('[data-bs-toggle="dropdown"]');
+      if (toggle) {
+        // Remove active class from toggle
+        toggle.classList.remove('active');
+        
+        if (toggle.getAttribute('aria-expanded') === 'true') {
+          const bsDropdown = bootstrap.Dropdown.getInstance(toggle) ||
+            bootstrap.Dropdown.getOrCreateInstance(toggle);
+          bsDropdown.hide();
+        }
+      }
+    });
   }
 
   dropdowns.forEach(dropdown => {
@@ -23,11 +43,15 @@ document.addEventListener('DOMContentLoaded', function() {
       // Only show backdrop on desktop
       if (isDesktop()) {
         backdrop.classList.add('show');
+        toggle.classList.add('active');
       }
     });
 
     // if dropdown is hidden
     toggle.addEventListener('hide.bs.dropdown', function() {
+      // Remove active class from toggle
+      toggle.classList.remove('active');
+      
       // Only handle backdrop on desktop
       if (isDesktop()) {
         // Check if any other dropdown is still open
@@ -57,15 +81,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Backdrop closes dropdown on click
   backdrop.addEventListener('click', function() {
-    // Close all open dropdowns
-    dropdowns.forEach(dropdown => {
-      const toggle = dropdown.querySelector('[data-bs-toggle="dropdown"]');
-      if (toggle && toggle.getAttribute('aria-expanded') === 'true') {
-        const bsDropdown = bootstrap.Dropdown.getInstance(toggle);
-        if (bsDropdown) {
-          bsDropdown.hide();
-        }
-      }
-    });
+    closeAllDropdowns();
+    hideBackdrop();
+  });
+
+  // Resize handler: close dropdowns when crossing 1199px threshold
+  let resizeTimeout;
+
+  function handleResize() {
+    // If viewport is 1199px or smaller, close everything
+    if (window.innerWidth <= 1199) {
+      closeAllDropdowns();
+      hideBackdrop();
+    }
+  }
+
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(handleResize, 100);
   });
 });
