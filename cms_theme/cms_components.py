@@ -353,7 +353,6 @@ class RelatedPeople(CMSFrontendComponent):
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
         required=False,
-        help_text=_("Eyebrow text"),
     )
 
     eyebrow_text_color = forms.ChoiceField(
@@ -375,6 +374,7 @@ class RelatedPeople(CMSFrontendComponent):
         initial="3",
         help_text=_("Number of grid columns."),
     )
+
 
 @components.register
 class PeopleCard(CMSFrontendComponent):
