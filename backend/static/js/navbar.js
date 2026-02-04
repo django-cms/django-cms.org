@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // All dropdowns in the navbar
   const dropdowns = document.querySelectorAll('.navbar .dropdown');
 
-  // Check if viewport is desktop (min-width: 992px)
+  // Check if viewport is desktop (min-width: 1199.98px)
   function isDesktop() {
-    return window.matchMedia('(min-width: 992px)').matches;
+    return window.matchMedia('(min-width: 1199.98px)').matches;
   }
 
   dropdowns.forEach(dropdown => {
