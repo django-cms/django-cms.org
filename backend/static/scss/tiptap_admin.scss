@@ -1,0 +1,110 @@
+// TipTap Admin editor styles
+// This file defines custom styles for the TipTap Admin editor in Django CMS.
+
+// Import Bootstrap functions and variables
+@import "./theme/functions";
+@import "./variables";
+@import "./theme/variables";
+
+// Merge custom colors into theme-colors map
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    "primary": $primary,
+    "secondary": $secondary,
+    "light": $light,
+    "dark": $dark,
+    "danger": $danger,
+    "mid-grey": $mid-grey,
+    "second-primary": $third-color,
+  )
+);
+
+// TipTap Admin Editor Styles
+.cms-admin {
+    // Text colors - using Bootstrap theme colors
+    .text-primary {
+        color: $primary !important;
+    }
+
+    .text-secondary {
+        color: $secondary !important;
+    }
+
+    .text-success {
+        color: map-get($theme-colors, "success") !important;
+    }
+
+    .text-danger {
+        color: $danger !important;
+    }
+
+    .text-warning {
+        color: map-get($theme-colors, "warning") !important;
+    }
+
+    .text-info {
+        color: map-get($theme-colors, "info") !important;
+    }
+
+    .text-light {
+        color: $light !important;
+    }
+
+    .text-dark {
+        color: $dark !important;
+    }
+
+    .text-body {
+        color: $body-color !important;
+    }
+
+    .text-muted {
+        color: $mid-grey !important;
+    }
+
+    .text-white {
+        color: #ffffff !important;
+    }
+
+    // Background colors
+    .bg-primary {
+        background-color: $primary !important;
+    }
+
+    .bg-secondary {
+        background-color: $secondary !important;
+    }
+
+    .bg-success {
+        background-color: map-get($theme-colors, "success") !important;
+    }
+
+    .bg-danger {
+        background-color: $danger !important;
+    }
+
+    .bg-warning {
+        background-color: map-get($theme-colors, "warning") !important;
+    }
+
+    .bg-info {
+        background-color: map-get($theme-colors, "info") !important;
+    }
+
+    .bg-light {
+        background-color: $light !important;
+    }
+
+    .bg-dark {
+        background-color: $dark !important;
+    }
+
+    .bg-body {
+        background-color: #ffffff !important;
+    }
+
+    .bg-white {
+        background-color: #ffffff !important;
+    }
+}

@@ -1,0 +1,106 @@
+table, .table {
+    border-radius: 20px !important;
+    border: 1px solid $mid-grey !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    width: 100%;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.10) !important;
+}
+
+// Header - Grün mit vertikalen Borders
+table tbody tr th,
+.table tbody tr th {
+    background-color: $primary !important;
+    padding: 1rem 0.875rem;
+    font-weight: 700;
+    color: $black;
+    border-top: none !important;
+    border-bottom: 1px solid $mid-grey !important;
+    border-left: none !important;
+    border-right: 1px solid $mid-grey !important;
+}
+
+table tbody tr th:last-child,
+.table tbody tr th:last-child {
+    border-right: none !important;
+    border-radius: 0 1.25rem 0 0;
+}
+
+// Erste Header-Spalte breiter
+table tbody tr th:first-child,
+.table tbody tr th:first-child {
+    width: 25% !important;
+    min-width: 200px !important;
+    border-radius: 1.25rem 0 0 0;
+}
+
+table tbody tr td,
+.table tbody tr td {
+    padding: 1rem !important;
+    border-top: none !important;
+    border-bottom: 1px solid $mid-grey !important;
+    border-left: none !important;
+    border-right: 1px solid $mid-grey !important;
+}
+
+table tbody tr td:last-child,
+.table tbody tr td:last-child {
+    border-right: none !important;
+}
+
+// Erste Spalte breiter und fett
+table tbody tr td:first-child,
+.table tbody tr td:first-child {
+    width: 25% !important;
+    min-width: 200px !important;
+    font-weight: 600 !important;
+}
+
+// Weiße Zeilen (ungerade)
+table tbody tr:nth-child(odd),
+.table tbody tr:nth-child(odd) {
+    background-color: $light;
+}
+
+table tbody tr:nth-child(odd) td,
+.table tbody tr:nth-child(odd) td {
+    background-color: $light;
+}
+
+// Graue Zeilen (gerade)
+table tbody tr:nth-child(even),
+.table tbody tr:nth-child(even) {
+    background-color: $white;
+}
+
+table tbody tr:nth-child(even) td,
+.table tbody tr:nth-child(even) td {
+    background-color: $white;
+}
+
+// Letzter Row hat keinen unteren Border
+table tbody tr:last-child td,
+.table tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+// Border Radius für die äußeren Ecken
+table thead tr:first-child th:first-child,
+.table thead tr:first-child th:first-child {
+    border-top-left-radius: 20px !important;
+}
+
+table thead tr:first-child th:last-child,
+.table thead tr:first-child th:last-child {
+    border-top-right-radius: 20px !important;
+}
+
+table tbody tr:last-child td:first-child,
+.table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 20px !important;
+}
+
+table tbody tr:last-child td:last-child,
+.table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 20px !important;
+}
