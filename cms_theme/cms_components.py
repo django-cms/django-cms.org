@@ -345,26 +345,11 @@ class MembershipPlans(CMSFrontendComponent):
         render_template = "membership/membership_plans.html"
         allow_children = True
         child_classes = [
-            "MembershipTopSectionGroupPlugin",
-            "PlanCardGroupPlugin",
+            "HeadingPlugin",
+            "PlanCardPlugin",
             "HorizontalPlanCardPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
-
-
-@components.register
-class MembershipTopSectionGroup(CMSFrontendComponent):
-    """Membership top section group"""
-
-    class Meta:
-        name = _("Top Section Group")
-        allow_children = True
-        child_classes = [
-            "HeadingPlugin",
-        ]
-        parent_classes = [
-            "MembershipPlansPlugin",
-        ]
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
@@ -383,21 +368,6 @@ class MembershipTopSectionGroup(CMSFrontendComponent):
 
 
 @components.register
-class PlanCardGroup(CMSFrontendComponent):
-    """Plan card group"""
-
-    class Meta:
-        name = _("Plan Card Group")
-        allow_children = True
-        child_classes = [
-            "PlanCardPlugin",
-        ]
-        parent_classes = [
-            "MembershipPlansPlugin",
-        ]
-
-
-@components.register
 class PlanCard(CMSFrontendComponent):
     """Membership plan card component"""
 
@@ -406,11 +376,13 @@ class PlanCard(CMSFrontendComponent):
         render_template = "membership/cards/plan_card.html"
         allow_children = True
         child_classes = [
-            "TextLinkPlugin",
             "TextPlugin",
+            "SpacingPlugin",
+            "FeatureItemPlugin",
+            "TextLinkPlugin",
         ]
         parent_classes = [
-            "PlanCardGroup",
+            "MembershipPlansPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
 
@@ -444,6 +416,24 @@ class PlanCard(CMSFrontendComponent):
 
 
 @components.register
+class FeatureItem(CMSFrontendComponent):
+    """Feature item component to render icon and text"""
+
+    class Meta:
+        name = _("Feature Item")
+        render_template = "membership/groups/feature_item.html"
+        allow_children = True
+        child_classes = [
+            "IconPlugin",
+            "TextPlugin",
+        ]
+        parent_classes = [
+            "PlanCardPlugin",
+        ]
+
+
+
+@components.register
 class HorizontalPlanCard(CMSFrontendComponent):
     """Membership Horizontal plan card component"""
 
@@ -452,10 +442,34 @@ class HorizontalPlanCard(CMSFrontendComponent):
         render_template = "membership/cards/horizontal_plan_card.html"
         allow_children = True
         child_classes = [
+            "TextPlugin",
+            "SpacingPlugin",
+            "FeatureItemPlugin",
+            "TextLinkPlugin",
             "ImagePlugin",
-            "GridColumnPlugin",
         ]
         parent_classes = [
             "MembershipPlansPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+
+
+    card_heading = forms.CharField(
+        label=_("Card heading"),
+        required=True,
+        help_text=_("Card heading"),
+    )
+
+    card_sub_heading = forms.CharField(
+        label=_("Card sub heading"),
+        required=False,
+        help_text=_("Card sub heading"),
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
