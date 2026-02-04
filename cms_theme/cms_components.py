@@ -354,3 +354,100 @@ class Navbar(CMSFrontendComponent):
         label=_("Logo Image"),
         required=False,
     )
+    
+    
+@components.register
+class RelatedPeople(CMSFrontendComponent):
+    """Related People component"""
+
+    class Meta:
+        name = _("Related People")
+        render_template = "related_people/related_people.html"
+        allow_children = True
+        child_classes = [
+            "HeadingPlugin",
+            "PeopleCardPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    eyebrow_text_color = forms.ChoiceField(
+        label=_("Eyebrow text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Eyebrow text color."),
+    )
+
+    grid_columns = forms.ChoiceField(
+        label=_("Grid columns"),
+        choices=[
+            ("1", _("1")),
+            ("2", _("2")),
+            ("3", _("3")),
+        ],
+        initial="3",
+        help_text=_("Number of grid columns."),
+    )
+
+
+@components.register
+class PeopleCard(CMSFrontendComponent):
+    """People card component"""
+
+    class Meta:
+        name = _("People Card")
+        render_template = "related_people/person_card.html"
+        allow_children = True
+        parent_classes = [
+            "RelatedPeoplePlugin",
+        ]
+        child_classes = [
+            "ImagePlugin",
+            "TextPlugin",
+            "HeadingPlugin",
+            "TextLinkPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    image_accent = forms.BooleanField(
+        label=_("Image accent"),
+        required=False,
+        initial=False,
+        help_text=_("Add image accent"),
+    )
+
+    image_accent_color = forms.ChoiceField(
+        label=_("Image accent color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="primary",
+        help_text=_("Image accent color."),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    role = forms.CharField(
+        label=_("Role"),
+        required=False,
+        help_text=_("Role displayed in people card."),
+    )
+
+    description = HTMLFormField(
+        label=_("Description"),
+        required=False,
+        help_text=_("Description displayed in people card."),
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text Color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="dark",
+        help_text=_("Card content text color."),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
