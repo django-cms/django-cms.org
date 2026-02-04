@@ -4,15 +4,17 @@
     {% with child_plugins=instance.child_plugin_instances %}
         {% for plugin in child_plugins %}
             {% if plugin.plugin_type == "ImagePlugin" %}
-                <div class="profile-wrapper mb-4 mt-3">
-                    {% if instance.image_accent %}
+                {% if instance.image_accent %}
+                    <div class="profile-wrapper mb-4 mt-3">
                         <div class="position-absolute {% if instance.image_accent_color %}bg-{{ instance.image_accent_color }}{% endif %} shape-tl z-0">
                         </div>
                         <div class="position-absolute {% if instance.image_accent_color %}bg-{{ instance.image_accent_color }}{% endif %} shape-br z-0">
                         </div>
-                    {% endif %}
+                        {% render_plugin plugin %}
+                    </div>
+                {% else %}
                     {% render_plugin plugin %}
-                </div>
+                {% endif %}
             {% endif %}
         {% endfor %}
         <div class="card-body p-0 mt-2 text-{{ instance.text_color }}">
@@ -31,7 +33,7 @@
                 {% if instance.description %}{{ instance.description|safe }}{% endif %}
                 {% with buttons=instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}
                     {% if buttons and buttons|length > 0 %}
-                        <div class="d-flex gap-2 button-group">
+                        <div class="d-flex gap-2 button-group pt-3">
                             {% for button in buttons %}
                                 {% render_plugin button %}
                             {% endfor %}
