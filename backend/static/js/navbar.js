@@ -46,6 +46,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // Mark dropdown links as active if they match the current URL
+  const currentPath = window.location.pathname;
+  document.querySelectorAll('.navbar .dropdown-menu a[href]').forEach(link => {
+    const linkPath = link.getAttribute('href');
+    if (linkPath && linkPath !== '#' && currentPath.startsWith(linkPath)) {
+      link.classList.add('active');
+    }
+  });
+
   // Backdrop closes dropdown on click
   backdrop.addEventListener('click', function() {
     // Close all open dropdowns
