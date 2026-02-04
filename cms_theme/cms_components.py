@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
+from djangocms_frontend.contrib.image.fields import ImageFormField
 from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
 
 
@@ -336,6 +337,25 @@ class BenefitsCard(CMSFrontendComponent):
     )
 
 
+@components.register
+class Navbar(CMSFrontendComponent):
+    """Navbar component with background grid option"""
+
+    class Meta:
+        name = _("Navbar")
+        render_template = "navbar/navbar.html"
+        allow_children = True
+        child_classes = [
+            "TextLinkPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    image = ImageFormField(
+        label=_("Logo Image"),
+        required=False,
+    )
+    
+    
 @components.register
 class RelatedPeople(CMSFrontendComponent):
     """Related People component"""
