@@ -1,0 +1,99 @@
+@mixin create-grid($cols) {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(1, 1fr);
+
+  @if $cols > 1 {
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(if($cols > 2, 2, $cols), 1fr);
+    }
+  }
+
+  @if $cols > 2 {
+    @media (min-width: 992px) {
+      grid-template-columns: repeat($cols, 1fr);
+    }
+  }
+}
+
+.related-people-card {
+  border-radius: 1rem;
+  border: none;
+  overflow: hidden;
+  max-width: 400px;
+  width: 100%;
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 1.75rem !important;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.10) !important;
+
+  .card-img {
+    height: 27vh;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    padding: 28px;
+
+    margin-top: 0.5rem;
+  }
+}
+
+.button-group {
+  a {
+    @extend .rounded-3;
+    @extend .px-3;
+    font-size: 1.3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 63px;
+    height: 63px;
+  }
+  i {
+    margin: 0 !important;
+  }
+}
+
+.profile-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+
+  .shape-tl, .shape-br {
+    position: absolute;
+    border-radius: 10px;
+    z-index: 0;
+  }
+
+  .shape-tl {
+    width: 50px;
+    height: 80px;
+    top: 25px;
+    left: -25px;
+  }
+
+  .shape-br {
+    width: 150px;
+    height: 160px;
+    bottom: -30px;
+    right: -40px;
+  }
+
+  img {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.grid-1 { @include create-grid(1); }
+.grid-2 { @include create-grid(2); }
+.grid-3 { @include create-grid(3); }
