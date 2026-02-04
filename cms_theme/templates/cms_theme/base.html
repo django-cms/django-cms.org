@@ -1,4 +1,4 @@
-{% load cms_tags menu_tags sekizai_tags static i18n %}
+{% load cms_tags menu_tags sekizai_tags static i18n djangocms_alias_tags %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
@@ -29,13 +29,16 @@
     </head>
     <body {% block body_attrs %}{% endblock %}>
         {% cms_toolbar %}
-        {% block navbar %}{% endblock %}
+        {% block navbar %}
+            {% static_alias "navbar" %}
+        {% endblock %}
         {% block content %}
             {% placeholder "content" %}
         {% endblock %}
         {% block base_js %}
             <script src="{% static 'js/counter.js' %}"></script>
-            <script src="{% static 'js/bootstrap.js' %}"></script>
+            <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+            <script src="{% static 'js/navbar.js' %}"></script>
             <script src="{% static 'js/features.js' %}"></script>
         {% endblock base_js %}
         {% render_block 'js' %}

@@ -1,10 +1,10 @@
 {% load cms_tags cms_theme_tags %}
 
-<nav class="{{ instance.get_classes }}" {{ instance.get_attributes }}>
+<nav class="{{ instance.get_classes }} list-link-container" {{ instance.get_attributes }}>
     <ul class="list-unstyled m-0 d-flex {{ instance.config.item_alignment|default:'flex-column' }}{% if instance.config.item_spacing %} gap-{{ instance.config.item_spacing }}{% endif %}"
-        role="list">
+        role="list" style="list-style: none;">
         {% for plugin in instance.child_plugin_instances %}
-            <li class="footer-link-item">
+            <li class="list-link-item">
                 {% render_plugin plugin %}
             </li>
         {% endfor %}
