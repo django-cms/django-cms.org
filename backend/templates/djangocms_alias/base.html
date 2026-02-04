@@ -2,9 +2,7 @@
 {% load i18n cms_tags menu_tags %}
 
 {% block title %}{% translate "Aliases" %}{% endblock %}
-<div class="d-none">
-    {% block navbar %}{% endblock navbar %}
-</div>
+{% block navbar %}{% endblock navbar %}
 {% block content %}
     <div class="aliases my-additional-class">
         {% block aliases_content %}
