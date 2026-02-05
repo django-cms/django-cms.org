@@ -1,0 +1,27 @@
+{% load static cms_tags cms_theme_tags %}
+{% with plugins=instance.child_plugin_instances|filter_by_type:"ImagePlugin" %}
+    {% if plugins and plugins|length > 0 %}
+        {% if plugins|length > 1 %}
+            <div class="col-lg-6">
+                <div class="community-section">
+                    <div class="image-cluster">
+                        {% for image_plugin in plugins %}
+                            <div class="member-card pos-{{ forloop.counter }}">{% render_plugin image_plugin %}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-lg-6 d-flex justify-content-center">
+                <div class="w-100 text-center">{% render_plugin plugins.0 %}</div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endwith %}
+{% with plugins=instance.child_plugin_instances|filter_by_type:"VideoPlayerPlugin" %}
+    {% if plugins and plugins|length > 0 %}
+        <div class="col-lg-6 d-flex justify-content-center align-items-center">
+            <div class="w-100 video-section">{% render_plugin plugins.0 %}</div>
+        </div>
+    {% endif %}
+{% endwith %}

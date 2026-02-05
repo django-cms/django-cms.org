@@ -1,0 +1,5 @@
+{% load static cms_tags cms_theme_tags frontend %}
+<div class="container {{ instance.get_classes }}"
+     {{ instance.get_attributes }}>
+    <div class="row align-items-center g-5">{% childplugins %}{% endchildplugins %}</div>
+</div>
