@@ -11,7 +11,7 @@
                 <div class="col-md-3 {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
                     {% if instance.card_heading %}<h3 class="h3 mb-1">{{ instance.card_heading }}</h3>{% endif %}
                     {% if instance.card_sub_heading %}
-                        <div class="card-subtitle-custom {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
+                        <div class=" {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
                             {{ instance.card_sub_heading }}
                         </div>
                     {% endif %}

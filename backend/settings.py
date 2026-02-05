@@ -273,6 +273,10 @@ DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
     ("dark", _("Dark")),
     ("second-primary", _("Dark Green")),
     ("white", _("White")),
+    ("platinum", _("Platinum")),
+    ("gold", _("Gold")),
+    ("silver", _("Silver")),
+    ("bronze", _("Bronze")),
 )
 
 DJANGOCMS_FRONTEND_SPACER_SIZES = (

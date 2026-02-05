@@ -2,8 +2,8 @@
 <div class="col-11 col-md-8 col-lg-3 d-flex justify-content-center accent-wrapper">
     <div class="accent-box {{ instance.tier_color }}"></div>
     <div class="card plan-card p-4 shadow-sm h-100 d-flex flex-column">
-        {% if instance.card_heading %}<h3 class="h4 mb-1">{{ instance.card_heading }}</h3>{% endif %}
-        {% if instance.card_sub_heading %}<div class="card-subtitle-custom">{{ instance.card_sub_heading }}</div>{% endif %}
+        {% if instance.card_heading %}<h3 class="mb-1">{{ instance.card_heading }}</h3>{% endif %}
+        {% if instance.card_sub_heading %}<div class="overline pb-4 mb-1 pt-1">{{ instance.card_sub_heading }}</div>{% endif %}
         {% with card_content_plugins=instance.child_plugin_instances|filter_by_type:"TextPlugin,SpacingPlugin,FeatureItemPlugin" %}
             {% if card_content_plugins %}
                 {% for card_content_plugin in card_content_plugins %}

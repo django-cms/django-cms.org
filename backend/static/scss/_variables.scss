@@ -61,15 +61,20 @@ $gray-light: #666;
 $gray-border: #aaa;
 $gray-feature: #b0b0b0;
 $black-bg: #1a1a1a;
-$accent-platinum-color: #dadada;
-$accent-gold-color: #fce84c;
-$accent-bronze-color: #cd7f32;
+$accent-platinum-color: #DEE2D9;
+$accent-gold-color: #F8F246;
+$accent-silver-color: #CCD0C7;
+$accent-bronze-color: #BC5728;
 $shape-bg: #dffebf;
 
 // Extend theme colors map with mid-grey
 $custom-colors: (
   "mid-grey": $mid-grey,
-  "second-primary": $third-color
+  "second-primary": $third-color,
+  "platinum": $accent-platinum-color,
+  "gold": $accent-gold-color,
+  "silver": $accent-silver-color,
+  "bronze": $accent-bronze-color
 );
 
 // ==============================================

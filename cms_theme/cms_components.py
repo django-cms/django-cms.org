@@ -503,13 +503,6 @@ class PlanCard(CMSFrontendComponent):
         ]
         mixins = ["Background", "Spacing", "Attributes"]
 
-    TIER_COLOR_CHOICES = (
-        ("accent-platinum", _("Platinum")),
-        ("accent-gold", _("Gold")),
-        ("accent-silver", _("Silver")),
-        ("accent-bronze", _("Bronze")),
-    )
-
     card_heading = forms.CharField(
         label=_("Card heading"),
         required=False,
@@ -524,7 +517,7 @@ class PlanCard(CMSFrontendComponent):
 
     tier_color = forms.ChoiceField(
         label=_("Tier Color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES + TIER_COLOR_CHOICES,
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
@@ -549,7 +542,6 @@ class FeatureItem(CMSFrontendComponent):
         ]
 
 
-
 @components.register
 class HorizontalPlanCard(CMSFrontendComponent):
     """Membership Horizontal plan card component"""
@@ -569,7 +561,6 @@ class HorizontalPlanCard(CMSFrontendComponent):
             "MembershipPlansPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
-
 
     card_heading = forms.CharField(
         label=_("Card heading"),

@@ -27,7 +27,11 @@ $theme-colors: map-merge(
     "warning": $warning,
     "mid-grey": $mid-grey,
     "second-primary": $third-color,
-    "body-color": $body-color
+    "body-color": $body-color,
+    "platinum": $accent-platinum-color,
+    "gold": $accent-gold-color,
+    "silver": $accent-silver-color,
+    "bronze": $accent-bronze-color
   )
 );
 
