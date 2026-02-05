@@ -91,6 +91,22 @@
   }
 }
 
+// White button variant with primary text
+.btn-outline-white {
+  background-color: transparent;
+  color: $primary;
+  border: 1px solid $white;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: $white;
+    color: $black;
+    border-color: transparent;
+  }
+}
+
 // Icon button variant (square with icon)
 .btn-icon {
   width: 48px;

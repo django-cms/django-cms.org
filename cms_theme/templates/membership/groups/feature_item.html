@@ -1,0 +1,17 @@
+{% load static cms_tags sekizai_tags cms_theme_tags %}
+{% with plugins=instance.child_plugin_instances %}
+    {% if plugins and plugins|length > 0 %}
+        <div class="d-flex align-items-center mb-3">
+            {% for plugin in plugins %}
+                {% if plugin.plugin_type == "IconPlugin" %}
+                    <div class="flex-shrink-0 me-3">{% render_plugin plugin %}</div>
+                {% endif %}
+                {% if plugin.plugin_type == "TextPlugin" %}
+                    <div class="flex-grow-1">
+                        <p class="mb-0">{% render_plugin plugin %}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
