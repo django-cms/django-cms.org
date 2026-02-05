@@ -2,7 +2,7 @@
 <div {{ instance.get_attributes }}>
     <div class="container">
         <div class="row mb-4 justify-content-center justify-content-lg-start">
-            <div class="col-12 col-md-10 col-lg-12 ps-lg-0 text-lg-start">
+            <div class="col-12 col-md-10 col-lg-12 text-lg-start">
                 {% if instance.eyebrow_text %}
                     <h6 class="text-uppercase text-muted overline">{{ instance.eyebrow_text }}</h6>
                 {% endif %}
@@ -15,7 +15,7 @@
                 {% endwith %}
             </div>
         </div>
-        <div class="row g-5 justify-content-center justify-content-lg-start">
+        <div class="row">
             {% with plan_cards=instance.child_plugin_instances|filter_by_type:"PlanCardPlugin" %}
                 {% if plan_cards and plan_cards|length > 0 %}
                     {% for plan_card in plan_cards %}
@@ -24,10 +24,10 @@
                 {% endif %}
             {% endwith %}
         </div>
-        <div class="row g-5 mt-2 justify-content-center justify-content-lg-start">
+        <div class="row mt-2 justify-content-center justify-content-lg-start">
             {% with horizontal_plan_cards=instance.child_plugin_instances|filter_by_type:"HorizontalPlanCardPlugin" %}
                 {% if horizontal_plan_cards %}
-                    <div class="col-11 col-lg-12 ps-lg-0">
+                    <div class="col-11 col-lg-12">
                         {% for horizontal_plan_card in horizontal_plan_cards %}
                             {% render_plugin horizontal_plan_card %}
                         {% endfor %}

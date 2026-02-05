@@ -1,17 +1,17 @@
 {% load static cms_tags sekizai_tags frontend cms_theme_tags %}
-<div class="card rounded-2 p-4 bg-dark text-white">
+<div class="card p-4 bg-dark text-white">
     <div class="row align-items-center g-4">
         {% with images=instance.child_plugin_instances|filter_by_type:"ImagePlugin" %}
             {% if images and images|length > 0 %}
-                <div class="col-auto">{% render_plugin images.0 %}</div>
+                <div class="col-12 col-xl-auto d-flex justify-content-center profile-img">{% render_plugin images.0 %}</div>
             {% endif %}
         {% endwith %}
-        <div class="col">
+        <div class="col-12 col-xl mt-4 pt-1">
             <div class="row g-2">
-                <div class="col-md-3 {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
+                <div class="col-xl-3 {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
                     {% if instance.card_heading %}<h3 class="h3 mb-1">{{ instance.card_heading }}</h3>{% endif %}
                     {% if instance.card_sub_heading %}
-                        <div class=" {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
+                        <div class="overline {% if instance.text_color %}text-{{ instance.text_color }}{% endif %} py-2">
                             {{ instance.card_sub_heading }}
                         </div>
                     {% endif %}
@@ -21,7 +21,7 @@
                         {% endif %}
                     {% endwith %}
                 </div>
-                <div class="col-md-5">
+                <div class="col-xl-5 pt-4 mt-1">
                     {% with feature_items=instance.child_plugin_instances|filter_by_type:"FeatureItemPlugin" %}
                         {% if feature_items and feature_items|length > 0 %}
                             {% for feature_item in feature_items %}
@@ -30,7 +30,7 @@
                         {% endif %}
                     {% endwith %}
                 </div>
-                <div class="col-md-4 ps-3 {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
+                <div class="col-xl-4 ps-3 pt-4 mt-1 {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
                     {% with plugins=instance.child_plugin_instances|filter_by_type:"TextPlugin,TextLinkPlugin,SpacingPlugin" %}
                         {% if plugins and plugins|length > 1 %}
                             {% for plugin in plugins|slice:"1:" %}

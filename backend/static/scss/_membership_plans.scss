@@ -1,20 +1,15 @@
 .plan-card {
-  border: none;
-  border-radius: 1.5rem;
-  position: relative;
+  border-radius: $border-radius;
   z-index: 2;
-  width: 290px;
-  display: flex;
-  flex-direction: column;
+  margin: 1.25rem;
 }
 
-.card-subtitle-custom {
-  font-size: 0.75rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: $gray-light;
-  margin-bottom: 1rem;
+.padding-content-card {
+  padding: 1.25rem 0 0 1.25rem;
+}
+
+.padding-card-content {
+  padding-right: 1.25rem
 }
 
 .accent-wrapper {
@@ -23,24 +18,12 @@
 
 .accent-box {
   position: absolute;
-  top: -15px;
-  left: 5px;
+  top: 0%;
+  left: 3.5%;
   width: 75px;
   height: 74px;
-  border-radius: 20px;
+  border-radius: 15px;
   z-index: 1;
-
-  @media (max-width: 991px) {
-    left: 85px;
-  }
-
-  @media (max-width: 430px) {
-    left: 30px;
-  }
-
-  @media (max-width: 360px) {
-    left: 5px;
-  }
 
   &.accent-platinum { background-color: $accent-platinum-color; }
   &.accent-gold { background-color: $accent-gold-color; }
@@ -48,45 +31,15 @@
   &.accent-bronze { background-color: $accent-bronze-color; }
 }
 
-.supporter-bar {
-  background-color: #1a1a1a;
-  border-radius: 2rem;
-
-  .profile-img {
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 1.5rem;
-    position: relative;
-    z-index: 2;
-  }
-
-  .letter-spacing-2 {
-    letter-spacing: 2px;
-  }
-
-  .btn-outline-light {
-    border-width: 1px;
-    font-size: 0.8rem;
-    &:hover {
-      background-color: $primary;
-      border-color: $primary;
-    }
-  }
+.plan-card a.btn {
+  width: 100%;
 }
 
-.profile-img-wrapper {
-  position: relative;
-  z-index: 1;
+.profile-img img {
+  max-width: 100%;
+  height: auto;
 
-  .profile-shape {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border-radius: 1rem;
-    z-index: 0;
-
-    &.shape-1 { top: -10px; left: -10px; background: rgba($primary, 0.4); }
-    &.shape-2 { bottom: -10px; right: -10px; background: rgba($primary, 0.2); }
+  @media (min-width: 992px) {
+    width:217px;
   }
 }
