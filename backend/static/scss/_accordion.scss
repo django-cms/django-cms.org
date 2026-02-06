@@ -28,7 +28,7 @@
     &::before {
       content: "";
       position: absolute;
-      left: 1.5px; // Offset to center 3px within 5px space
+      left: 1.5px; // Offset to center 2px within 5px space
       top: 0;
       bottom: 0;
       width: var(--bs-accordion-before-width);
