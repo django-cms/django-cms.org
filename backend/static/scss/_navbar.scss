@@ -305,3 +305,10 @@
   display: none;
   content: none;
 }
+
+/* verhindert Umbrüche in der Hauptnavigation */
+@media (min-width: 1200px) {
+  .navbar-expand-xl .navbar-nav > .nav-item > .nav-link {
+    white-space: nowrap !important;
+  }
+}
