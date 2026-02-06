@@ -9,8 +9,9 @@
 }
 
 .h2, h2 {
+    font-feature-settings: 'liga' off, 'clig' off;
   font-weight: 500 !important;
-  line-height: normal !important;
+  line-height: 100% !important;
   letter-spacing: 0 !important;
 }
 
@@ -22,7 +23,7 @@
 
 .h4, h4 {
   font-weight: 500 !important;
-  line-height: normal !important;
+  line-height: 100% !important;
   letter-spacing: 0 !important;
 }
 

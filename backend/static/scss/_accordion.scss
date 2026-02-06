@@ -9,37 +9,24 @@
   --bs-accordion-border-radius: 0;
   --bs-accordion-inner-border-radius: 0;
   --bs-accordion-transition: 0.01s ease-out;
-  --bs-accordion-before-width: 2px;
-  --bs-accordion-before-width-active: 5px;
 
   .accordion-item {
     background: transparent;
     border: none;
+    border-left: 3px solid rgba(0, 0, 0, 0.5); // Default border color
     padding-left: 38px;
     padding-right: 38px;
     margin-bottom: 0;
     position: relative;
+    transition: border-left-color 0.2s ease, border-left-width 0.2s ease;
 
     @media (min-width: 767.98px) {
       padding-right: 0;
     }
 
-    // Centered border line using pseudo-element
-    &::before {
-      content: "";
-      position: absolute;
-      left: 1.5px; // Offset to center 2px within 5px space
-      top: 0;
-      bottom: 0;
-      width: var(--bs-accordion-before-width);
-      background-color: rgba(0, 0, 0, 0.5); // Default border color
-      transition: width 0.2s ease, background-color 0.2s ease, left 0.2s ease;
-    }
-
-    &:has(.accordion-button:not(.collapsed))::before {
-      left: 0;
-      width: var(--bs-accordion-before-width-active);
-      background-color: #000; // Default active color
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-width: 5px;
+      border-left-color: #000; // Default active color
     }
   }
 
@@ -84,17 +71,18 @@
 // Color variants for accordion headers - GLOBAL
 .accordion-header-primary {
   .accordion-button {
-    color: rgba(var(--bs-white-rgb), 0.8);
+    color: rgba(var(--bs-primary-rgb), 0.5);
 
     &:not(.collapsed) {
       color: var(--bs-primary);
     }
   }
-  .accordion-item::before {
-    background-color: rgba(var(--bs-primary-rgb), 0.5);
-  }
-  .accordion-item:has(.accordion-button:not(.collapsed))::before {
-    background-color: var(--bs-primary);
+  .accordion-item {
+    border-left-color: rgba(var(--bs-primary-rgb), 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: var(--bs-primary);
+    }
   }
 }
 
@@ -106,11 +94,12 @@
       color: var(--bs-secondary);
     }
   }
-  .accordion-item::before {
-    background-color: rgba(var(--bs-secondary-rgb), 0.5);
-  }
-  .accordion-item:has(.accordion-button:not(.collapsed))::before {
-    background-color: var(--bs-secondary);
+  .accordion-item {
+    border-left-color: rgba(var(--bs-secondary-rgb), 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: var(--bs-secondary);
+    }
   }
 }
 
@@ -122,11 +111,12 @@
       color: #fff;
     }
   }
-  .accordion-item::before {
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-  .accordion-item:has(.accordion-button:not(.collapsed))::before {
-    background-color: #fff;
+  .accordion-item {
+    border-left-color: rgba(255, 255, 255, 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: #fff;
+    }
   }
 }
 
@@ -138,11 +128,12 @@
       color: #6c757d;
     }
   }
-  .accordion-item::before {
-    background-color: rgba(108, 117, 125, 0.5);
-  }
-  .accordion-item:has(.accordion-button:not(.collapsed))::before {
-    background-color: #6c757d;
+  .accordion-item {
+    border-left-color: rgba(108, 117, 125, 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: #6c757d;
+    }
   }
 }
 
@@ -154,10 +145,11 @@
       color: #000;
     }
   }
-  .accordion-item::before {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  .accordion-item:has(.accordion-button:not(.collapsed))::before {
-    background-color: #000;
+  .accordion-item {
+    border-left-color: rgba(0, 0, 0, 0.5);
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: #000;
+    }
   }
 }
