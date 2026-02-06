@@ -1,7 +1,7 @@
 <!-- cms_theme/templates/benefits/benefits_card.html -->
 {% load static cms_tags frontend %}
-<div class="col-12 col-md-6 col-lg-3 {{ instance.get_classes }}" {{ instance.get_attributes }}>
-    <div class="h-100 card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}">
+<div class="col-12 col-md-6 col-lg-3">
+    <div class="{{ instance.get_classes }} h-100 card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}" {{ instance.get_attributes }}>
         <div class="mb-4">
             <i class="{{ instance.card_icon.iconClass }} display-1"></i>
         </div>
