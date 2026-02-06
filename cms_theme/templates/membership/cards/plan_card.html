@@ -1,6 +1,6 @@
 {% load static cms_tags sekizai_tags cms_theme_tags %}
 <div class="col-12 col-md-6 col-xl-3 accent-wrapper mb-7 d-flex justify-content-end">
-    <div class="accent-box {{ instance.tier_color }}"></div>
+    <div class="accent-box accent-{{ instance.tier_color }}"></div>
     <div class="card plan-card p-4 shadow-sm h-100 d-flex flex-column">
         {% if instance.card_heading %}<h3 class="mb-1">{{ instance.card_heading }}</h3>{% endif %}
         {% if instance.card_sub_heading %}<div class="overline pb-4 mb-1 pt-1">{{ instance.card_sub_heading }}</div>{% endif %}
