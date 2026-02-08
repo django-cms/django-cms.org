@@ -581,3 +581,61 @@ class HorizontalPlanCard(CMSFrontendComponent):
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
+
+@components.register
+class ContentTeaser(CMSFrontendComponent):
+    """Content Teaser component"""
+
+    class Meta:
+        name = _("Content Teaser")
+        render_template = "content_teaser/content_teaser.html"
+        allow_children = True
+        child_classes = [
+            "TeaserContentPlugin",
+            "TeaserMediaPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+
+@components.register
+class TeaserContent(CMSFrontendComponent):
+    """Teaser Content component to render text"""
+
+    class Meta:
+        name = _("Teaser Content")
+        render_template = "content_teaser/components/content.html"
+        allow_children = True
+        parent_classes = [
+            "ContentTeaserPlugin",
+        ]
+        child_classes = [
+            "TextPlugin",
+            "HeadingPlugin",
+            "SpacingPlugin",
+            "TextLinkPlugin",
+        ]
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+
+@components.register
+class TeaserMedia(CMSFrontendComponent):
+    """Media Teaser component"""
+
+    class Meta:
+        name = _("Teaser Media")
+        render_template = "content_teaser/components/media.html"
+        allow_children = True
+        parent_classes = [
+            "ContentTeaserPlugin",
+        ]
+        child_classes = [
+            "ImagePlugin",
+            "VideoPlayerPlugin",
+        ]
