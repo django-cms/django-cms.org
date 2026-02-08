@@ -590,8 +590,6 @@ class ContentTeaser(CMSFrontendComponent):
         name = _("Content Teaser")
         render_template = "content_teaser/content_teaser.html"
         allow_children = True
-        parent_classes = [
-        ]
         child_classes = [
             "TeaserContentPlugin",
             "TeaserMediaPlugin",
@@ -601,7 +599,7 @@ class ContentTeaser(CMSFrontendComponent):
 
 @components.register
 class TeaserContent(CMSFrontendComponent):
-    """Content Teaser component"""
+    """Teaser Content component to render text"""
 
     class Meta:
         name = _("Teaser Content")
@@ -639,5 +637,5 @@ class TeaserMedia(CMSFrontendComponent):
         ]
         child_classes = [
             "ImagePlugin",
-            "VideoPlayerPlugin"
+            "VideoPlayerPlugin",
         ]
