@@ -1,0 +1,26 @@
+<a href="{{ instance.file_src.url }}"
+    class="file-download-primary"
+    {% if instance.link_target %} target="{{ instance.link_target }}"{% endif %}
+    {% if instance.link_title %} title="{{ instance.link_title }}"{% endif %}
+    {{ instance.attributes_str }}>
+    <span class="djangocms-link-spacing">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="22" viewBox="0 0 15 22" fill="none">
+  <path d="M0 3.5C0 2.12109 1.12109 1 2.5 1H8.96484C9.62891 1 10.2617 1.26172 10.7305 1.73047L14.2695 5.26562C14.7383 5.73438 15 6.37109 15 7.03516V18.5C15 19.8789 13.8789 21 12.5 21H2.5C1.12109 21 0 19.8789 0 18.5V3.5Z" fill="none"/>
+  <path d="M1.875 18.5V3.5C1.875 3.15625 2.15625 2.875 2.5 2.875H8.75V6C8.75 6.69141 9.30859 7.25 10 7.25H13.125V18.5C13.125 18.8438 12.8438 19.125 12.5 19.125H2.5C2.15625 19.125 1.875 18.8438 1.875 18.5ZM2.5 1C1.12109 1 0 2.12109 0 3.5V18.5C0 19.8789 1.12109 21 2.5 21H12.5C13.8789 21 15 19.8789 15 18.5V7.03516C15 6.37109 14.7383 5.73438 14.2695 5.26562L10.7305 1.73047C10.2617 1.26172 9.62891 1 8.96484 1H2.5ZM8.4375 10.0625C8.4375 9.54297 8.01953 9.125 7.5 9.125C6.98047 9.125 6.5625 9.54297 6.5625 10.0625V14.0508L5.35156 12.8398C4.98438 12.4727 4.39062 12.4727 4.02734 12.8398C3.66406 13.207 3.66016 13.8008 4.02734 14.1641L6.83984 16.9766C7.20703 17.3438 7.80078 17.3438 8.16406 16.9766L10.9766 14.1641C11.3438 13.7969 11.3438 13.2031 10.9766 12.8398C10.6094 12.4766 10.0156 12.4727 9.65234 12.8398L8.44141 14.0508L8.4375 10.0625Z" fill="#DEFCB9"/>
+</svg>
+    <span class="file-download-text">{% if instance.file_name %}{{ instance.file_name }}{% else %}{{ instance.file_src.label }}{% endif %}{% if instance.show_file_size %} ({{ instance.file_src.size|filesizeformat }}){% endif %}</span>
+    </span>
+</a>
+
+{% comment %}
+    # https://github.com/divio/django-filer/blob/master/filer/models/filemodels.py
+    {{ instance.file_src }}
+    {{ instance.file_src.extension }}
+    # Available variables:
+    {{ instance.template }}
+    {{ instance.file_name }}
+    {{ instance.link_target }}
+    {{ instance.link_title }}
+    {{ instance.show_file_size }}
+    {{ instance.attributes_str }}
+{% endcomment %}
