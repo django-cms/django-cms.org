@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     "taggit_autosuggest",
     "meta",
     "sortedm2m",
+    "djangocms_file",
 ]
 
 MIDDLEWARE = [
