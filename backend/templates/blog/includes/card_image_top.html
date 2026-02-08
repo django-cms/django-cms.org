@@ -1,0 +1,30 @@
+{% load djangocms_stories i18n easy_thumbnails_tags cms_tags %}
+
+<article id="post-{{ post_content.slug }}" class="post-item h-100">
+   <div class="card mx-auto h-100" style="max-width: 600px;">
+      {% if post_content.post.main_image %}
+      {% thumbnail post_content.post.main_image 400x241 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as hero_sm %}
+      {% thumbnail post_content.post.main_image 600x362 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as hero_md %}
+      {% thumbnail post_content.post.main_image 800x482 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as hero_lg %}
+            <img src="{{ hero_md.url }}"
+                 srcset="{{ hero_sm.url }} 400w, {{ hero_md.url }} 600w, {{ hero_lg.url }} 800w"
+                 sizes="(max-width: 576px) 400px, (max-width: 992px) 600px, 800px"
+                 class="card-img-top"
+                 {% if post_content.post.main_image.default_alt_text %}alt="{{ post_content.post.main_image.default_alt_text }}"{% endif %} />
+      {% endif %}
+  <div class="card-body d-flex flex-column text-secondary">
+    <p class="overline pb-1">{{ post_content.subtitle }}</p>
+    <h4 class="card-title pt-2">{{ post_content.title }}</h4>
+    <div class="card-text pt-3 pb-2">
+        {% if not TRUNCWORDS_COUNT %}
+            {% render_model post_content "abstract" "" "" "safe" %}
+        {% else %}
+            {% render_model post_content "abstract" "" "" "truncatewords_html:TRUNCWORDS_COUNT|safe"  %}
+        {% endif %}
+    </div>
+    <div class="mt-auto pt-4">
+        <a href="{% absolute_url post_content %}" class="btn btn-outline-secondary">{% trans "Learn more" %} <i class="bi bi-chevron-right"></i></a>
+    </div>
+  </div>
+</div>
+</article>

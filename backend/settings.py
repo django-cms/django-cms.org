@@ -186,6 +186,37 @@ LANGUAGES = [
     ("en", "English"),
 ]
 
+CMS_LANGUAGES = {
+    1: [
+        {
+            "code": "en",
+            "name": "English",
+        },
+    ],
+    "default": {
+        "fallbacks": ["en"],
+        "redirect_on_fallback": False,
+        "public": True,
+        "hide_untranslated": False,
+    },
+}
+
+PARLER_LANGUAGES = {
+    1: (
+        {
+            "code": "en",
+        },
+    ),
+    "default": {
+        "fallbacks": [
+            "en",
+        ],
+    },
+}
+
+PARLER_DEFAULT_LANGUAGE_CODE = "en"
+PARLER_ENABLE_CACHING = False
+
 TIME_ZONE = "UTC"
 
 USE_I18N = True
@@ -254,8 +285,16 @@ if DEBUG or True:
 # Design settings
 STORIES_PLUGIN_TEMPLATE_FOLDERS = (
     ("plugins", _("Default")),
-    ("cards", _("Cards")),
+    ("cards", _("Cards Image on Top")),
+    ("cards_author", _("Cards with Author")),
 )
+
+# djangocms-stories settings
+STORIES_PAGINATION = 10
+STORIES_LATEST_ENTRIES = 5
+STORIES_ENABLE_TAGS = True
+STORIES_TEMPLATE_CHOICES = (("djangocms_stories/post_list.html", _("Default")),)
+
 
 # djangocms-frontend settings
 DJANGOCMS_FRONTEND_ADMIN_CSS = {
