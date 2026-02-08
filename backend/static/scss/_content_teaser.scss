@@ -13,6 +13,21 @@
         object-fit: cover;
     }
 }
+@mixin card-base-2 {
+    position: absolute;
+    width: 40%;
+    aspect-ratio: 1 / 1;
+    border-radius: 10%;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
 
 .community-section {
     padding-top: 10px;
@@ -21,17 +36,32 @@
 
     .image-cluster {
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         height: 100%;
         width: 100%;
         min-height: 500px;
 
         .member-card {
-            @include card-base;
 
-            &.pos-1 { top: 0; right: 8%; z-index: 1; }
-            &.pos-2 { top: 15%; left: 25%; z-index: 2; }
-            &.pos-3 { bottom: 20%; right: 5%; z-index: 3; }
-            &.pos-4 { bottom: 5%; left: 30%; z-index: 4; }
+            &.pos-1 { 
+                @include card-base;
+                top: 0;
+                right: 8%; 
+                z-index: 1; 
+            }
+            &.pos-2 { 
+                @include card-base-2;
+                top: 15%; 
+                left: 25%; 
+                z-index: 2; }
+            &.pos-3 { 
+                @include card-base-2;
+                bottom: 20%; right: 5%; z-index: 3; }
+            &.pos-4 { 
+                @include card-base;
+                bottom: 5%; left: 30%; z-index: 4; }
         }
 
         @media (max-width: 400px) {
@@ -39,21 +69,47 @@
             .pos-4 { bottom: 15% !important; left: 30%; z-index: 4; }
         }
     }
-
-    @media (max-width: 991px) {
+    @media (max-width: 1399.98px) {
         padding: 0 0 0 0;
 
 
         .image-cluster {
             margin-top: 4rem;
-            min-height: 400px;
-            width: 90%;
-            margin-left: auto;
-            margin-right: auto;
+            min-height: 450px;
+            width: 100%;
         }
+    }
 
-        .member-card {
-            width: 30%;
+    @media (max-width: 1199.98px) {
+        padding: 0 0 0 0;
+
+
+        .image-cluster {
+            margin-top: 4rem;
+            min-height: 350px;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        padding: 0 0 0 0;
+
+
+        .image-cluster {
+            margin-top: 4rem;
+            min-height: 500px;
+            width: 80%;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        padding: 0 0 0 0;
+
+
+        .image-cluster {
+            margin-top: 4rem;
+            min-height: 350px;
+            width: 80%;
         }
     }
 
@@ -73,6 +129,7 @@
             margin-left: 0;
             margin-right: 0;
             margin-top: 0;
+            min-height: 250px;
         }
 
     }

@@ -47,11 +47,6 @@ q, blockquote, .blockquote {
     font-style: light !important;
 }
 
-q::before,
-q::after {
-  color: var(--bs-second-primary) !important;
-}
-
 // ==============================================
 // Small Override
 // ==============================================

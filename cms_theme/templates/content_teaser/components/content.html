@@ -1,4 +1,4 @@
 {% load static cms_tags frontend %}
-<div class="col-lg-6 d-flex flex-column justify-content-between {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
+<div class="col-lg-6 {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
     <div class="top-content align-items-start">{% childplugins %}{% endchildplugins %}</div>
 </div>
