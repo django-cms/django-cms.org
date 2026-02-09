@@ -135,15 +135,36 @@
     }
 }
 
-.video-section {
-    video {
-        width: 800px;
+.video-poster-wrapper {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 1rem;
+    width: 100%;
+
+    .video-poster-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.3s ease;
     }
 
-    @media (max-width: 991px) {
-        video {
-            width: 100%;
-            padding: 0 0 0 0;
-        }
+    &:hover .video-poster-img {
+        transform: scale(1.03);
+    }
+
+    .video-play-btn {
+        position: absolute;
+        top: 46.5%;
+        left: 52.5%;
+        transform: translate(-50%, -50%);
+        width: 74px;
+        height: 75px;
+        background: rgba($primary, 0.9);
+        border-radius: 15.45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
     }
 }

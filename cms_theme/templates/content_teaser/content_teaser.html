@@ -1,7 +1,7 @@
 {% load static cms_tags cms_theme_tags frontend %}
 <div {{ instance.get_attributes }}>
     <div class="container">
-        <div class="row align-items-center g-5">
+        <div class="row align-items-center">
             {% for child in instance.child_plugin_instances %}
                 {% render_plugin child %}
             {% endfor %}
