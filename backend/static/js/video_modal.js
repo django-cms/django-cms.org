@@ -48,16 +48,24 @@
             addCloseButton(el);
             return;
         }
-        fsMethod.call(el).then(function() {
-            document.addEventListener('fullscreenchange', function onExit() {
-                if (!document.fullscreenElement) {
-                    document.removeEventListener('fullscreenchange', onExit);
-                    el.remove();
-                }
+        var result = fsMethod.call(el);
+        if (result && typeof result.then === 'function') {
+            result.then(function() {
+                document.addEventListener('fullscreenchange', function onExit() {
+                    if (!document.fullscreenElement) {
+                        document.removeEventListener('fullscreenchange', onExit);
+                        el.remove();
+                    }
+                });
+            }).catch(function() {
+                addCloseButton(el);
             });
-        }).catch(function() {
-            addCloseButton(el);
-        });
+        } else {
+            // iOS webkitEnterFullscreen: no Promise, listen for end event
+            el.addEventListener('webkitendfullscreen', function() {
+                el.remove();
+            });
+        }
     }
 
     function addCloseButton(el) {
@@ -99,9 +107,11 @@
                 if (media.type === 'video') {
                     media.el.pause();
                     media.el.currentTime = 0;
+                    media.el.removeAttribute('src');
+                    media.el.load();
+                } else {
+                    media.el.removeAttribute('src');
                 }
-                media.el.removeAttribute('src');
-                media.el.load();
             });
         });
 
