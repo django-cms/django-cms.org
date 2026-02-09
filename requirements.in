@@ -38,3 +38,4 @@ requests
 pip-tools  # needed for compilation of this file into requirements.txt, see start of file
 
 django-debug-toolbar  # for debuging in the staging environ
+djangocms-file

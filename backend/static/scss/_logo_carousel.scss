@@ -17,9 +17,10 @@
 	transition: all 0.4s ease;
 	height: 100px;
 	img {
-		max-height: 100px;
 		width: 178px;
+		height: 53px;
 		max-width: 100%;
+		object-fit: contain;
 	}
 	a {
 		cursor: pointer;
@@ -64,10 +65,10 @@
 }
 
 .btn-prev {
-	left: 0;
+	left: -23px;
 }
 .btn-next {
-	right: 0;
+	right: -23px;
 }
 .swiper-button-next {
 	&:after {

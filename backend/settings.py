@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     "taggit_autosuggest",
     "meta",
     "sortedm2m",
+    "djangocms_file",
 ]
 
 MIDDLEWARE = [
@@ -369,3 +370,9 @@ TEXT_EDITOR_SETTINGS = {
         "text-white": {"name": "White"},
     },
 }
+
+# djangocms-file settings
+DJANGOCMS_FILE_TEMPLATES = [
+    ("secondary", _("Secondary file link")),
+    ("primary", _("Primary file link")),
+]
