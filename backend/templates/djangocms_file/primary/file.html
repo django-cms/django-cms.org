@@ -1,6 +1,6 @@
 <a href="{{ instance.file_src.url }}"
     class="file-download-primary"
-    {% if instance.link_target %} target="{{ instance.link_target }}"{% endif %}
+    {% if instance.link_target %} target="{{ instance.link_target }}"{% if instance.link_target == "_blank" %} rel="noopener noreferrer"{% endif %}{% endif %}
     {% if instance.link_title %} title="{{ instance.link_title }}"{% endif %}
     {{ instance.attributes_str }}>
     <span class="djangocms-link-spacing">
