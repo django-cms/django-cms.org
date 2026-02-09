@@ -306,10 +306,6 @@ TEXT_EDITOR_SETTINGS = {
             "element": "kbd",
         },
         {
-            "name": "Kbd",
-            "element": "kbd",
-        },
-        {
             "name": "Var",
             "element": "var",
         },
@@ -322,6 +318,13 @@ TEXT_EDITOR_SETTINGS = {
             "element": "span",
             "attributes": {
                 "class": "overline",
+            },
+        },
+        {
+            "name": "Blockquote",
+            "element": "span",
+            "attributes": {
+                "class": "blockquote",
             },
         },
         {
