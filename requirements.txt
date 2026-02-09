@@ -209,3 +209,4 @@ whitenoise==6.11.0
 # setuptools
 
 djangocms-file==3.0.1
+djangocms-form-builder==0.4.0

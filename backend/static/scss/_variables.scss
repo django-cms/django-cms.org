@@ -97,3 +97,14 @@ $enable-rfs: false;
 // ==============================================
 
 $box-shadow-sm: 0 0 10px 2px rgba(0, 0, 0, 0.10);
+
+// ==============================================
+// Form Variables
+// ==============================================
+
+$input-border-color: $secondary;
+$input-border-width: 0.5px;
+$input-border-radius: 8px;
+$input-padding-x: 15px;
+$input-padding-y: 8px;
+$input-placeholder-color: rgba(187, 187, 187, 1);
