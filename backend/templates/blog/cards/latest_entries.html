@@ -1,8 +1,19 @@
 {% load i18n %}{% spaceless %}
-<div class="plugin plugin-blog">
-    <div class="blog-latest-entries">
+<div class="plugin plugin-blog mobile-slider">
+    {% comment %}DEBUG: instance.entries = {{ instance.entries }}, postcontent_list.length = {{ postcontent_list|length }}{% endcomment %}
+    <div class="row">
     {% for post_content in postcontent_list %}
-        {% include "djangocms_stories/includes/post_item.html" with post_content=post_content image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+        {% with total_entries=instance.entries|default:postcontent_list|length %}
+            {% if total_entries == 1 %}
+                <div class="col-12 col-md-6 mx-auto">
+            {% elif total_entries == 2 %}
+                <div class="col-12 col-md-6 mb-4 mb-md-0">
+            {% else %}
+                <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0 mx-auto">
+            {% endif %}
+                {% include "blog/includes/card_image_top.html" with post_content=post_content image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
+            </div>
+        {% endwith %}
     {% empty %}
     <p class="blog-empty">{% trans "No article found." %}</p>
     {% endfor %}
