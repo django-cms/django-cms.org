@@ -9,11 +9,11 @@
             <img src="{{ hero_md.url }}"
                  srcset="{{ hero_sm.url }} 400w, {{ hero_md.url }} 600w, {{ hero_lg.url }} 800w"
                  sizes="(max-width: 576px) 400px, (max-width: 992px) 600px, 800px"
-                 class="card-img-top"
+                 class="card-img-top blog-img-top"
                  {% if post_content.post.main_image.default_alt_text %}alt="{{ post_content.post.main_image.default_alt_text }}"{% endif %} />
       {% endif %}
   <div class="card-body d-flex flex-column text-secondary">
-    <p class="overline pb-1">{{ post_content.subtitle }}</p>
+    <p class="overline pb-1">{{ post.categories.first }}</p>
     <h4 class="card-title pt-2">{{ post_content.title }}</h4>
     <div class="card-text pt-3 pb-2">
         {% if not TRUNCWORDS_COUNT %}
