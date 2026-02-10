@@ -90,6 +90,8 @@ INSTALLED_APPS = [
     "taggit_autosuggest",
     "meta",
     "sortedm2m",
+    "djangocms_file",
+    "djangocms_form_builder",
 ]
 
 MIDDLEWARE = [
@@ -312,6 +314,10 @@ DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
     ("dark", _("Dark")),
     ("second-primary", _("Dark Green")),
     ("white", _("White")),
+    ("platinum", _("Platinum")),
+    ("gold", _("Gold")),
+    ("silver", _("Silver")),
+    ("bronze", _("Bronze")),
 )
 
 DJANGOCMS_FRONTEND_SPACER_SIZES = (
@@ -340,10 +346,6 @@ TEXT_EDITOR_SETTINGS = {
             "element": "kbd",
         },
         {
-            "name": "Kbd",
-            "element": "kbd",
-        },
-        {
             "name": "Var",
             "element": "var",
         },
@@ -356,6 +358,13 @@ TEXT_EDITOR_SETTINGS = {
             "element": "span",
             "attributes": {
                 "class": "overline",
+            },
+        },
+        {
+            "name": "Blockquote",
+            "element": "span",
+            "attributes": {
+                "class": "blockquote",
             },
         },
         {
@@ -387,4 +396,23 @@ TEXT_EDITOR_SETTINGS = {
             },
         },
     ],
+    "textColors": {
+        "text-primary": {"name": "Primary"},
+        "text-secondary": {"name": "Secondary"},
+        "text-success": {"name": "Success"},
+        "text-warning": {"name": "Warning"},
+        "text-info": {"name": "Info"},
+        "text-danger": {"name": "Danger"},
+        "text-body": {"name": "Body"},
+        "text-light": {"name": "Light"},
+        "text-dark": {"name": "Dark"},
+        "text-muted": {"name": "Muted"},
+        "text-white": {"name": "White"},
+    },
 }
+
+# djangocms-file settings
+DJANGOCMS_FILE_TEMPLATES = [
+    ("secondary", _("Secondary file link")),
+    ("primary", _("Primary file link")),
+]

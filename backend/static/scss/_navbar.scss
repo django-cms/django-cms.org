@@ -1,0 +1,314 @@
+// Navbar & Mega Menu Styles
+
+// Mega Menu Preview (for Alias content preview)
+.mega-menu-preview {
+  max-width: 960px;
+  padding: 1.75rem;
+  border-radius: 0 0 1.25rem 1.25rem;
+  border-top: 0.5px solid var(--Dark-green, #2C4D4C);
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+// Button Container - 20px Gap
+.navbar .d-flex.gap-3,
+.navbar .d-xl-flex.gap-3 {
+  gap: 20px !important;
+
+  // Buttons same width
+  a, .btn {
+    width: 158px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 1199.98px) and (max-width: 1399.98px) {
+    gap: 10px !important;
+
+    a, .btn {
+      width: 140px;
+    }
+  }
+}
+
+// open Dropdown Backdrop
+.dropdown-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(124, 124, 124, 0);
+  z-index: 1040;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    background: rgba(124, 124, 124, 0.40);
+  }
+}
+
+// Navbar Links
+.navbar-nav {
+  gap: 1.5rem;
+  --bs-nav-link-padding-y: 0;
+}
+
+// Desktop: Center navbar links using grid
+@media (min-width: 1199.98px) {
+  .navbar > .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  // Logo left-aligned in first column
+  .navbar-brand {
+    justify-self: start;
+  }
+
+  // Links centered in middle column (true center of viewport)
+  .navbar-nav {
+    justify-self: center;
+    margin: 0;
+  }
+
+  // Buttons right-aligned in third column
+  .d-flex.gap-3 {
+    justify-self: end;
+  }
+}
+
+// delete default dropdown arrow
+.navbar-nav .dropdown-toggle::after {
+  display: none !important;
+}
+
+// Navbar over Backdrop
+.navbar {
+  position: relative;
+  z-index: 1060;
+
+  border-bottom: 0.5px solid var(--Dark-green, #2C4D4C)
+}
+
+// Mega Menu full width - Desktop
+@media (min-width: 1199.98px) {
+
+  // Dropdown static so it does not align to the link
+  .navbar-nav .dropdown {
+    position: static;
+  }
+
+  // Dropdown-Menu full width - Desktop
+  .navbar-nav .dropdown-menu {
+    position: absolute;
+    top: 100%; // Begins directly at the bottom edge of the navbar
+    left: 0;
+    right: 0;
+    width: auto;
+
+    // Match Bootstrap container widths
+    max-width: 960px; // lg breakpoint (default)
+
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.75rem;
+
+    border-radius: 0 0 1.25rem 1.25rem;
+    border-top: 0.5px solid var(--Dark-green, #2C4D4C);
+
+    z-index: 1050;
+
+    // Animation - Initial State (closed)
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease-in-out,
+                transform 0.3s ease-in-out,
+                visibility 0.3s ease-in-out;
+    pointer-events: none;
+
+    // if dropdown is open
+    &.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+}
+
+// Responsive container widths to match Bootstrap containers
+@media (min-width: 1200px) {
+  .navbar-nav .dropdown-menu {
+    max-width: 1140px; // xl breakpoint
+  }
+  .mega-menu-preview {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .navbar-nav .dropdown-menu {
+    max-width: 1320px; // xxl breakpoint
+  }
+
+  .mega-menu-preview {
+    max-width: 1320px;
+  }
+}
+
+// Mobile: Standard Dropdown
+@media (max-width: 1199.98px) {
+  // Navbar toggler custom styles
+  .navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    // Custom hamburger icon with dark green color
+    .navbar-toggler-icon {
+      background-image: none;
+      position: relative;
+      width: 24px;
+      height: 2px;
+      background-color: var(--Dark-green, #2C4D4C);
+      transition: background-color 0.3s ease-in-out 0.15s;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: var(--Dark-green, #2C4D4C);
+        transition: all 0.3s ease-in-out;
+        left: 0;
+      }
+
+      &::before {
+        top: -9px;
+      }
+
+      &::after {
+        top: 9px;
+      }
+    }
+
+    // Transform to X when expanded (menu is open)
+    &[aria-expanded="true"] .navbar-toggler-icon {
+      background-color: transparent;
+      transition: background-color 0.3s ease-in-out;
+
+      &::before {
+        top: 0;
+        transform: rotate(45deg);
+      }
+
+      &::after {
+        top: 0;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  // Add spacing to collapsed navbar
+  .navbar-collapse {
+    padding-top: 1rem;
+  }
+
+  // Remove gap and add padding to nav items
+  .navbar-nav {
+    gap: 0;
+  }
+
+  .navbar-nav .nav-item {
+    &:first-child {
+      border-top: 1px solid var(--bs-secondary);
+    }
+
+    &:last-child {
+      border-bottom: 1px solid var(--bs-secondary);
+    }
+
+    .nav-link {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+
+  .navbar-nav .dropdown-menu {
+    margin-top: 0;
+    border-top: none;
+    border-radius: 0 0 1.25rem 1.25rem;
+    padding: 0;
+
+    // Animation for mobile dropdown
+    display: block !important;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: max-height 0.4s ease-in-out,
+                opacity 0.45s ease-in-out,
+                transform 0.45s ease-in-out,
+                padding 0.4s ease-in-out;
+
+    &.show {
+      max-height: 100%; // Large enough for all content
+      opacity: 1;
+      transform: translateY(0);
+      padding: 0.75rem;
+    }
+
+    // Hide empty h3 tags
+    h3:empty {
+      display: none;
+    }
+  }
+}
+
+.navbar-nav.list-unstyled,
+.navbar-nav.list-unstyled li {
+  list-style: none;
+  list-style-type: none;
+}
+
+.navbar-nav .nav-item::before,
+.navbar-nav .nav-item::marker {
+  display: none;
+  content: none;
+}
+
+.list-link-container.list-unstyled,
+.list-link-container.list-unstyled li {
+  list-style: none;
+  list-style-type: none;
+}
+
+.list-link-container .list-link-item::before,
+.list-link-container .list-link-item::marker {
+  display: none;
+  content: none;
+}
+
+/* Prevents line breaks in the main navigation */
+@media (min-width: 1200px) {
+  .navbar-expand-xl .navbar-nav > .nav-item > .nav-link {
+    white-space: nowrap !important;
+  }
+}

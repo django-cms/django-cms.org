@@ -13,17 +13,17 @@
             {% endif %}
         {% endfor %}
 
-        {# Timeline items as ordered list for semantic structure #}
-        <ol class="main-timeline timeline-divider-{{ instance.config.divider_color|default:'primary' }} timeline-circle-{{ instance.config.circle_color|default:'secondary' }}" role="list">
+        {# Timeline items #}
+        <div class="main-timeline timeline-divider-{{ instance.config.divider_color|default:'primary' }} timeline-circle-{{ instance.config.circle_color|default:'secondary' }}" role="list">
             {% for child in instance.child_plugin_instances %}
                 {% if child.plugin_type == "CardPlugin" and child.child_plugin_instances %}
-                    <li class="timeline {% cycle 'timeline-right' 'timeline-left' %}" role="listitem">
+                    <div class="timeline {% cycle 'timeline-right' 'timeline-left' %}" role="listitem">
                         {% render_plugin child %}
-                    </li>
+                    </div>
                 {% endif %}
             {% empty %}
                 {# No timeline items #}
             {% endfor %}
-        </ol>
+        </div>
     </div>
 </section>

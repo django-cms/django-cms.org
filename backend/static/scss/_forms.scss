@@ -1,35 +1,181 @@
 // ==============================================
-// Form Overrides
+// Form Labels
+// ==============================================
+
+.form-label{
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+// ==============================================
+// Form Inputs & Selects
 // ==============================================
 
 .form-control,
 .form-select {
-  border-radius: 8px;
-  border-width: 0.5px;
-  padding: 8px 15px;
-
   &:focus {
     border-color: $primary;
     box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
   }
 }
 
-// Checkbox styles
-.form-check-input {
+// ==============================================
+// Checkboxes
+// ==============================================
+
+.form-check:has(.form-check-input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.form-check-input[type="checkbox"] {
+  margin-top: 0;
   width: 24px;
   height: 24px;
+  border: 1px solid $secondary;
+  border-radius: 7px;
+  background-color: white;
 
   &:checked {
     background-color: $primary;
-    border-color: $primary;
+    border-color: $secondary;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%232C4D4C' stroke-linejoin='miter' stroke-linecap='square' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
   }
 
   &:focus {
-    border-color: $primary;
-    box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+    border-color: $secondary;
+    box-shadow: 0 0 0 0.25rem rgba($secondary, 0.25);
+  }
+}
+
+// ==============================================
+// Radio Buttons
+// ==============================================
+
+.form-check:has(.form-check-input[type="radio"]) {
+  .form-check-label {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+}
+
+.form-check-input[type="radio"] {
+  width: 24px;
+  height: 24px;
+  border: 1px solid $secondary;
+  background-color: white;
+  background-image: none;
+
+  &:checked {
+    background-color: $primary;
+    border-color: $secondary;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3ccircle cx='12' cy='12' r='6' fill='%232C4D4C'/%3e%3c/svg%3e");
   }
 
-  &[type="checkbox"]:checked {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%232C4D4C' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+  &:focus {
+    border-color: $secondary;
+    box-shadow: 0 0 0 0.25rem rgba($secondary, 0.25);
+  }
+}
+
+// ==============================================
+// Toggle / Switch
+// ==============================================
+
+.form-switch {
+  display: flex;
+  align-items: center;
+
+  .form-check-label {
+    margin-top: 0;
+    margin-left: 0.625rem;
+  }
+
+  .form-check-input {
+    position: relative;
+    margin-top: 0;
+    border-radius: 2em;
+    width: 42px;
+    height: 24px;
+    flex-shrink: 0;
+    border-color: $secondary;
+    background-color: #d1d5db;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: $secondary;
+      transform: translateY(-50%);
+      transition: left 0.15s ease-in-out;
+    }
+
+    // Remove Bootstrap's default thumb image
+    background-image: none;
+
+    &:checked {
+      background-color: $primary;
+      border-color: $secondary;
+      background-image: none;
+
+      &::after {
+        left: 21px;
+      }
+    }
+
+    &:focus {
+      border-color: $secondary;
+      box-shadow: 0 0 0 0.25rem rgba($secondary, 0.25);
+      background-image: none;
+    }
+  }
+}
+
+// ==============================================
+// Submit Button
+// ==============================================
+
+.btn-form-secondary {
+  color: $secondary;
+  border: none;
+
+  &:hover {
+    color: $secondary;
+    outline: 1px solid $secondary;
+  }
+
+  &:focus,
+  &:active {
+    color: $secondary;
+    box-shadow: 0 0 0 0.25rem rgba($secondary, 0.25);
+  }
+}
+
+// ==============================================
+// Validation Feedback
+// ==============================================
+
+.invalid-feedback strong {
+  color: $danger;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 2px;
+  margin-top: 0.5rem;
+
+  &::before {
+    font-family: "bootstrap-icons";
+  content: "\F33A";
+  margin-right: 0.375rem;
+  vertical-align: -0.125em;
   }
 }

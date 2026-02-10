@@ -1,0 +1,37 @@
+.plan-card {
+  border-radius: $border-radius;
+  z-index: 2;
+  margin: 1.25rem;
+}
+
+.accent-wrapper {
+  position: relative;
+}
+
+.accent-box {
+  position: absolute;
+  top: 0%;
+  left: 3.5%;
+  width: 75px;
+  height: 74px;
+  border-radius: 15px;
+  z-index: 1;
+
+  &.accent-platinum { background-color: $accent-platinum-color; }
+  &.accent-gold { background-color: $accent-gold-color; }
+  &.accent-silver { background-color: $accent-silver-color; }
+  &.accent-bronze { background-color: $accent-bronze-color; }
+}
+
+.plan-card a.btn {
+  width: 100%;
+}
+
+.profile-img img {
+  max-width: 100%;
+  height: auto;
+
+  @media (min-width: 992px) {
+    width:217px;
+  }
+}

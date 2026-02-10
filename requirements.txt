@@ -100,7 +100,7 @@ django-templatetag-sugar==1.0
     # via django-taggit-templatetags
 django-treebeard==4.7.1
     # via django-cms
-djangocms-alias==3.0.1
+djangocms-alias==3.0.3
     # via -r requirements.in
 djangocms-attributes-field==4.1.1
     # via
@@ -207,3 +207,6 @@ whitenoise==6.11.0
 # The following packages are considered to be unsafe in a requirements file:
 # pip
 # setuptools
+
+djangocms-file==3.0.1
+djangocms-form-builder==0.4.0

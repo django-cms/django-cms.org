@@ -1,0 +1,20 @@
+kbd {
+    display: inline-flex;
+    padding: 2px 5px;
+    align-items: flex-start;
+    gap: 10px;
+
+    border-radius: 4px !important;
+    border: 0.5px solid !important;
+    border-color: $mid-grey !important;
+    background-color: transparent;
+    color: currentColor;
+    box-shadow: 0 2px 2.8px 0 $mid-grey;
+
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: $font-family-base;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+}

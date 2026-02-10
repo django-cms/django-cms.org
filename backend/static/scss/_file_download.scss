@@ -1,0 +1,44 @@
+// ==============================================
+// File Download Component
+// ==============================================
+
+.file-download-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: $secondary;
+  text-decoration: none !important;
+  border-bottom: 2px solid $secondary;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $secondary !important;
+    background-color: transparent !important;
+  }
+}
+
+.file-download-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: $primary;
+  text-decoration: none !important;
+  border-bottom: 2px solid $primary;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $primary !important;
+    background-color: transparent !important;
+  }
+}
+
+.djangocms-link-spacing {
+  padding: 0 2px 2px 2px;
+}
+
+.file-download-text {
+  position: relative;
+  top: 2px;
+}

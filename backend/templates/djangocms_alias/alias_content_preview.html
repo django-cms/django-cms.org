@@ -1,0 +1,24 @@
+{% extends "djangocms_alias/base.html" %}
+{% load i18n cms_tags menu_tags %}
+
+{% block aliases_content %}
+    <div class="cms-aliases-page">
+        <h2 class="cms-aliases-page-heading" id="{{ alias_content.name|slugify }}">
+            <span class="cms-aliases-page-heading-inner">
+                {{ alias_content.name }}
+            </span>
+        </h2>
+        <hr>
+        {% if "mega-menu-" in alias_content.name %}
+                <div class="container">
+                    <div class="cms-aliases-detail dropdown-menu mega-menu-preview show">
+                        {% render_placeholder alias_content.placeholder %}
+                    </div>
+                </div>
+        {% else %}
+            <div class="cms-aliases-detail">
+                {% render_placeholder alias_content.placeholder %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock aliases_content %}

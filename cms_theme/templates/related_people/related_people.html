@@ -1,0 +1,28 @@
+{% load static cms_tags frontend cms_theme_tags %}
+<section class="{{ instance.get_classes }}" {{ instance.get_attributes }}>
+    <div class="container">
+        <div class="mb-5 text-white text-center text-lg-start">
+            {% if instance.eyebrow_text %}
+                <h6 class="overline pb-2 {% if instance.eyebrow_text_color %}text-{{ instance.eyebrow_text_color }}{% endif %}">
+                    {{ instance.eyebrow_text }}
+                </h6>
+            {% endif %}
+            {% with heading_texts=instance.child_plugin_instances|filter_by_type:"HeadingPlugin" %}
+                {% if heading_texts %}
+                    {% for plugin in heading_texts %}
+                        {% render_plugin plugin %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="grid-{{ instance.grid_columns }}">
+            {% with person_cards=instance.child_plugin_instances|filter_by_type:"PeopleCardPlugin" %}
+                {% if person_cards %}
+                    {% for plugin in person_cards %}
+                        {% render_plugin plugin %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</section>
