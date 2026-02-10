@@ -2,3 +2,11 @@
   max-height: 282px;
   object-fit: cover;
 }
+
+.card-author-link {
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+}

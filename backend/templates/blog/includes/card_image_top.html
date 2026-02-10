@@ -13,7 +13,7 @@
                  {% if post_content.post.main_image.default_alt_text %}alt="{{ post_content.post.main_image.default_alt_text }}"{% endif %} />
       {% endif %}
   <div class="card-body d-flex flex-column text-secondary">
-    <p class="overline pb-1">{{ post.categories.first }}</p>
+    <p class="overline pb-1">{{ post_content.post.categories.first }}</p>
     <h4 class="card-title pt-2">{{ post_content.title }}</h4>
     <div class="card-text pt-3 pb-2">
         {% if not TRUNCWORDS_COUNT %}
