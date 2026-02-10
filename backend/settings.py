@@ -291,7 +291,12 @@ STORIES_PLUGIN_TEMPLATE_FOLDERS = (
     ("cards_author", _("Cards with Author")),
 )
 
+# django-meta settings
+META_SITE_PROTOCOL = "https"
+META_SITE_DOMAIN = "localhost:8000"
+
 # djangocms-stories settings
+STORIES_URLCONF = "backend.blog_urls"
 STORIES_PAGINATION = 10
 STORIES_LATEST_ENTRIES = 5
 STORIES_ENABLE_TAGS = True
@@ -312,6 +317,7 @@ DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
     ("info", _("Info")),
     ("light", _("Light")),
     ("dark", _("Dark")),
+    ("black", _("Black")),
     ("second-primary", _("Dark Green")),
     ("white", _("White")),
     ("platinum", _("Platinum")),
