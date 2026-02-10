@@ -1,0 +1,39 @@
+{% load djangocms_stories i18n easy_thumbnails_tags cms_tags %}
+
+<article id="post-{{ post_content.slug }}" class="post-item">
+    <a href="{% absolute_url post_content %}" class="card bg-white shadow-sm text-decoration-none text-reset card-event-link">
+        <div class="row g-0">
+            {% if image and post_content.post.main_image %}
+            <div class="col-md-4">
+                {% thumbnail post_content.post.main_image 400x300 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as event_img %}
+                {% if event_img %}
+                    <img src="{{ event_img.url }}" class="img-fluid rounded-start h-100 object-fit-cover w-100" alt="{{ post_content.post.main_image.default_alt_text|default:'' }}" />
+                {% else %}
+                    <img src="{{ post_content.post.main_image.url }}" class="img-fluid rounded-start h-100 object-fit-cover w-100" alt="{{ post_content.post.main_image.default_alt_text|default:'' }}" />
+                {% endif %}
+            </div>
+            {% endif %}
+            <div class="{% if image and post_content.post.main_image %}col-md-8{% else %}col-12{% endif %}">
+                <div class="card-body d-flex flex-column h-100">
+                    <p class="overline pb-2 mb-1">{{ post_content.post.categories.first }}</p>
+                    <h4 class="text-secondary">{{ post_content.title }}</h4>
+                    <div class="card-text pt-2 pb-3">
+                        {% render_model post_content "abstract" "" "" "truncatewords_html:20|safe" %}
+                    </div>
+                    <div class="mt-auto d-flex flex-column gap-2">
+                        <div class="d-flex align-items-center gap-2 text-muted">
+                            <i class="bi bi-geo-alt"></i>
+                            <span>Online</span>
+                        </div>
+                        {% if post_content.post.date_published %}
+                        <div class="d-flex align-items-center gap-2 text-muted">
+                            <i class="bi bi-calendar3"></i>
+                            <span>{{ post_content.post.date_published|date:"jS F, Y" }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</article>

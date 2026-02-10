@@ -3,7 +3,8 @@
   object-fit: cover;
 }
 
-.card-author-link {
+.card-author-link,
+.card-event-link {
   transition: transform 0.2s ease;
 
   &:hover {

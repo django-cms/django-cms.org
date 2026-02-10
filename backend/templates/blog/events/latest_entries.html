@@ -1,0 +1,14 @@
+{% load i18n %}{% spaceless %}
+<div class="plugin plugin-blog mobile-slider">
+    {% comment %}DEBUG: instance.entries = {{ instance.entries }}, postcontent_list.length = {{ postcontent_list|length }}{% endcomment %}
+    <div class="row">
+    {% for post_content in postcontent_list %}
+            <div class="col-12 mb-4">
+                {% include "blog/includes/events.html" with post_content=post_content image="true" %}
+            </div>
+    {% empty %}
+    <p class="blog-empty">{% trans "No article found." %}</p>
+    {% endfor %}
+    </div>
+</div>
+{% endspaceless %}
