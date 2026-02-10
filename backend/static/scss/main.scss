@@ -1,17 +1,17 @@
 @import "./typography";
-@import "./bootstrap-overrides";
+@import "./bootstrap_overrides";
 @import "./theme/bootstrap";
 @import "./accent";
+@import "./navbar";
 @import "./cards";
-// @import "./list-style";
+@import "./list_style";
 @import "./forms";
 @import "./buttons";
 @import "./links";
 @import "./class_overrides";
 @import "./accordion";
-@import "./background-grid";
+@import "./background_grid";
 @import "./hero";
-@import "./cta_panel";
 @import "./logo_carousel";
 @import "./timeline";
 @import "./features";
@@ -19,6 +19,12 @@
 @import "./code_block";
 @import "./benefits_panel";
 @import "./breadcrumbs";
+@import "./kbd_tags";
+@import "./table";
+@import "./related_people";
+@import "./membership_plans";
+@import "./content_teaser";
+@import "./file_download";
 
 /* optional custom styles */
 .kitchensink-page {

@@ -42,7 +42,8 @@ a {
 // Footer Links (and links on dark backgrounds)
 footer a,
 .footer a,
-.bg-dark a {
+footer .bg-dark a,
+.footer .bg-dark a {
   color: $white;
   text-decoration: none;
   padding-bottom: 2px;

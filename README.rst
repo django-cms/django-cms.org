@@ -94,3 +94,26 @@ Build for production:
 
    npm run build
 
+Mega Menu Setup
+---------------
+
+This project includes a powerful mega menu system that allows you to create rich, customizable navigation dropdowns using django CMS pages and djangocms-alias. For detailed information about:
+
+- Setting up parent pages with reverse IDs
+- Creating mega menu aliases
+- Customizing mega menu layouts
+- Styling and responsive behavior
+- Troubleshooting
+
+Please refer to the comprehensive guide:
+
+📖 **[Mega Menu Setup Guide](docs/mega-menu-setup.rst)**
+
+Quick Overview
+~~~~~~~~~~~~~~
+
+1. Set a **Reverse ID** on your parent page (e.g., ``about``)
+2. Create an **Alias** named ``mega-menu-[reverse-id]`` (e.g., ``mega-menu-about``)
+3. Add content plugins to your alias
+4. Publish and enjoy your mega menu!
+

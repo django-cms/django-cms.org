@@ -90,6 +90,8 @@ INSTALLED_APPS = [
     "taggit_autosuggest",
     "meta",
     "sortedm2m",
+    "djangocms_file",
+    "djangocms_form_builder",
 ]
 
 MIDDLEWARE = [
@@ -186,6 +188,37 @@ LANGUAGES = [
     ("en", "English"),
 ]
 
+CMS_LANGUAGES = {
+    1: [
+        {
+            "code": "en",
+            "name": "English",
+        },
+    ],
+    "default": {
+        "fallbacks": ["en"],
+        "redirect_on_fallback": False,
+        "public": True,
+        "hide_untranslated": False,
+    },
+}
+
+PARLER_LANGUAGES = {
+    1: (
+        {
+            "code": "en",
+        },
+    ),
+    "default": {
+        "fallbacks": [
+            "en",
+        ],
+    },
+}
+
+PARLER_DEFAULT_LANGUAGE_CODE = "en"
+PARLER_ENABLE_CACHING = False
+
 TIME_ZONE = "UTC"
 
 USE_I18N = True
@@ -254,8 +287,16 @@ if DEBUG or True:
 # Design settings
 STORIES_PLUGIN_TEMPLATE_FOLDERS = (
     ("plugins", _("Default")),
-    ("cards", _("Cards")),
+    ("cards", _("Cards Image on Top")),
+    ("cards_author", _("Cards with Author")),
 )
+
+# djangocms-stories settings
+STORIES_PAGINATION = 10
+STORIES_LATEST_ENTRIES = 5
+STORIES_ENABLE_TAGS = True
+STORIES_TEMPLATE_CHOICES = (("djangocms_stories/post_list.html", _("Default")),)
+
 
 # djangocms-frontend settings
 DJANGOCMS_FRONTEND_ADMIN_CSS = {
@@ -273,6 +314,10 @@ DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
     ("dark", _("Dark")),
     ("second-primary", _("Dark Green")),
     ("white", _("White")),
+    ("platinum", _("Platinum")),
+    ("gold", _("Gold")),
+    ("silver", _("Silver")),
+    ("bronze", _("Bronze")),
 )
 
 DJANGOCMS_FRONTEND_SPACER_SIZES = (
@@ -301,10 +346,6 @@ TEXT_EDITOR_SETTINGS = {
             "element": "kbd",
         },
         {
-            "name": "Kbd",
-            "element": "kbd",
-        },
-        {
             "name": "Var",
             "element": "var",
         },
@@ -317,6 +358,13 @@ TEXT_EDITOR_SETTINGS = {
             "element": "span",
             "attributes": {
                 "class": "overline",
+            },
+        },
+        {
+            "name": "Blockquote",
+            "element": "span",
+            "attributes": {
+                "class": "blockquote",
             },
         },
         {
@@ -348,4 +396,23 @@ TEXT_EDITOR_SETTINGS = {
             },
         },
     ],
+    "textColors": {
+        "text-primary": {"name": "Primary"},
+        "text-secondary": {"name": "Secondary"},
+        "text-success": {"name": "Success"},
+        "text-warning": {"name": "Warning"},
+        "text-info": {"name": "Info"},
+        "text-danger": {"name": "Danger"},
+        "text-body": {"name": "Body"},
+        "text-light": {"name": "Light"},
+        "text-dark": {"name": "Dark"},
+        "text-muted": {"name": "Muted"},
+        "text-white": {"name": "White"},
+    },
 }
+
+# djangocms-file settings
+DJANGOCMS_FILE_TEMPLATES = [
+    ("secondary", _("Secondary file link")),
+    ("primary", _("Primary file link")),
+]

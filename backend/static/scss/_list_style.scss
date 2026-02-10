@@ -44,7 +44,7 @@ ul ul > li,
 ul.list-styled ul > li,
 .list-dash > li,
 ul.list-styled-dash > li {
-  padding-left: 0; // ✅ enger Abstand für Sublevel
+  padding-left: 0;
 }
 
 ul ul > li::before,
@@ -61,38 +61,44 @@ ul.list-styled-dash > li::before {
 
 
 /// ==========================
-// Level 1 – Numbers
+// BASE / Level 1 – Numbers
 // ==========================
-ol,
+ol:not(.list-unstyled):not(.breadcrumb),
 .list-numbered,
 ol.list-styled {
   list-style: none;
-  padding-left: 1.5rem;
+  padding-left: 0;
   margin: 0 0 1rem 0;
   counter-reset: list-counter;
 }
 
-ol > li,
+ol:not(.list-unstyled):not(.breadcrumb) > li,
 .list-numbered > li,
 ol.list-styled > li {
   position: relative;
-  padding-left: 0; // ✅ enger Abstand
   margin-bottom: 0.5rem;
   counter-increment: list-counter;
+
+  padding-left: 2.25rem;
 
   > p { margin: 0; }
 
   &::before {
     content: counter(list-counter) ".";
     position: absolute;
-    left: -1.05rem;
+    left: 0;
     top: 0.1em;
+
+    width: 2rem;
+    text-align: right;
 
     font-weight: 500;
     font-size: 1.125rem;
     font-style: normal;
     line-height: 1;
     color: $secondary;
+
+    padding-right: 0.25rem;
   }
 }
 
@@ -101,43 +107,52 @@ ol.list-styled > li {
 // ==========================
 ol ol {
   counter-reset: letter-counter;
+  margin-top: 0.5rem;
+  padding-left: 0;
 }
 
 ol ol > li {
-  padding-left: 5px; // ✅ sehr tight
+  position: relative;
   counter-increment: letter-counter;
+
+  padding-left: 1.75rem;
+  margin-bottom: 0.5rem;
 
   &::before {
     content: counter(letter-counter, lower-alpha) ".";
-    left: -0.8rem;
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+
+    width: 1.5rem;
+    text-align: right;
+    padding-right: 0;
+
+    font-weight: 500;
+    font-size: 1.125rem;
+    line-height: 1;
+    color: $secondary;
   }
 }
 
-// ==========================
-
-// Custom lettered list (uppercase)
-.list-lettered-upper,
-ol.list-styled-alpha-upper {
-  list-style: none;
-  padding-left: 1.5rem;
-  counter-reset: letter-counter;
+// ==============================================
+// CMS Toolbar & Frontend List Style Reset
+.cms-toolbar,
+.djangocms-frontend {
+  ul,
+  ol {
+    list-style: revert;
+    padding-left: revert;
+    margin: revert;
+  }
 
   li {
-    position: relative;
-    padding-left: 0.5rem;
-    margin-bottom: 0.5rem;
-    counter-increment: letter-counter;
+    padding-left: revert;
+    margin-bottom: revert;
+    position: revert;
+  }
 
-    &::before {
-      content: counter(letter-counter, upper-alpha) ".";
-      position: absolute;
-      left: -1.25rem;
-      font-weight: 500;
-      font-size: 1.125rem; // 18px
-      line-height: 100%;
-      letter-spacing: 0;
-      font-style: normal;
-      color: $secondary;
-    }
+  li::before {
+    content: none !important;
   }
 }

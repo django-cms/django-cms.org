@@ -9,9 +9,8 @@
 }
 
 .h2, h2 {
-    font-feature-settings: 'liga' off, 'clig' off;
   font-weight: 500 !important;
-  line-height: 100% !important;
+  line-height: normal !important;
   letter-spacing: 0 !important;
 }
 
@@ -23,7 +22,7 @@
 
 .h4, h4 {
   font-weight: 500 !important;
-  line-height: 100% !important;
+  line-height: normal !important;
   letter-spacing: 0 !important;
 }
 
@@ -45,11 +44,6 @@ q, blockquote, .blockquote {
     font-size: 1.5rem !important;
     font-weight: 250 !important;
     font-style: light !important;
-}
-
-q::before,
-q::after {
-  color: var(--bs-second-primary) !important;
 }
 
 // ==============================================

@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
+from djangocms_frontend.contrib.image.fields import ImageFormField
 from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
 
 
@@ -144,11 +145,11 @@ class Footer(CMSFrontendComponent):
 
 
 @components.register
-class FooterLinksList(CMSFrontendComponent):
+class LinksListContainer(CMSFrontendComponent):
     """Footer Links List component"""
 
     class Meta:
-        name = _("Footer Links List")
+        name = _("Links List Container")
         render_template = "footer/footer_links_list.html"
         requires_parent = True
         parent_classes = ["Footer", "GridColumnPlugin"]
@@ -334,3 +335,307 @@ class BenefitsCard(CMSFrontendComponent):
         label=_("Icon"),
         required=False,
     )
+
+
+@components.register
+class Navbar(CMSFrontendComponent):
+    """Navbar component with background grid option"""
+
+    class Meta:
+        name = _("Navbar")
+        render_template = "navbar/navbar.html"
+        allow_children = True
+        child_classes = [
+            "TextLinkPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    image = ImageFormField(
+        label=_("Logo Image"),
+        required=False,
+    )
+
+
+@components.register
+class RelatedPeople(CMSFrontendComponent):
+    """Related People component"""
+
+    class Meta:
+        name = _("Related People")
+        render_template = "related_people/related_people.html"
+        allow_children = True
+        child_classes = [
+            "HeadingPlugin",
+            "PeopleCardPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    eyebrow_text_color = forms.ChoiceField(
+        label=_("Eyebrow text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Eyebrow text color."),
+    )
+
+    grid_columns = forms.ChoiceField(
+        label=_("Grid columns"),
+        choices=[
+            ("1", _("1")),
+            ("2", _("2")),
+            ("3", _("3")),
+        ],
+        initial="3",
+        help_text=_("Number of grid columns."),
+    )
+
+
+@components.register
+class PeopleCard(CMSFrontendComponent):
+    """People card component"""
+
+    class Meta:
+        name = _("People Card")
+        render_template = "related_people/person_card.html"
+        allow_children = True
+        parent_classes = [
+            "RelatedPeoplePlugin",
+        ]
+        child_classes = [
+            "ImagePlugin",
+            "TextPlugin",
+            "HeadingPlugin",
+            "TextLinkPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    image_accent = forms.BooleanField(
+        label=_("Image accent"),
+        required=False,
+        initial=False,
+        help_text=_("Add image accent"),
+    )
+
+    image_accent_color = forms.ChoiceField(
+        label=_("Image accent color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="primary",
+        help_text=_("Image accent color."),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    role = forms.CharField(
+        label=_("Role"),
+        required=False,
+        help_text=_("Role displayed in people card."),
+    )
+
+    description = HTMLFormField(
+        label=_("Description"),
+        required=False,
+        help_text=_("Description displayed in people card."),
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text Color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="dark",
+        help_text=_("Card content text color."),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+
+@components.register
+class MembershipPlans(CMSFrontendComponent):
+    """Membership component"""
+
+    class Meta:
+        name = _("Membership Plans")
+        render_template = "membership/membership_plans.html"
+        allow_children = True
+        child_classes = [
+            "HeadingPlugin",
+            "PlanCardPlugin",
+            "HorizontalPlanCardPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+        help_text=_("Eyebrow text"),
+    )
+
+    eyebrow_text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Color for eyebrow text."),
+    )
+
+
+@components.register
+class PlanCard(CMSFrontendComponent):
+    """Membership plan card component"""
+
+    class Meta:
+        name = _("Plan Card")
+        render_template = "membership/cards/plan_card.html"
+        allow_children = True
+        child_classes = [
+            "TextPlugin",
+            "SpacingPlugin",
+            "FeatureItemPlugin",
+            "TextLinkPlugin",
+        ]
+        parent_classes = [
+            "MembershipPlansPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    card_heading = forms.CharField(
+        label=_("Card heading"),
+        required=False,
+        help_text=_("Card heading"),
+    )
+
+    card_sub_heading = forms.CharField(
+        label=_("Card sub heading"),
+        required=False,
+        help_text=_("Card sub heading"),
+    )
+
+    tier_color = forms.ChoiceField(
+        label=_("Tier Color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Tier style / Color."),
+    )
+
+
+@components.register
+class FeatureItem(CMSFrontendComponent):
+    """Feature item component to render icon and text"""
+
+    class Meta:
+        name = _("Feature Item")
+        render_template = "membership/groups/feature_item.html"
+        allow_children = True
+        child_classes = [
+            "IconPlugin",
+            "TextPlugin",
+        ]
+        parent_classes = [
+            "PlanCardPlugin",
+        ]
+
+
+@components.register
+class HorizontalPlanCard(CMSFrontendComponent):
+    """Membership Horizontal plan card component"""
+
+    class Meta:
+        name = _("Horizontal Plan Card")
+        render_template = "membership/cards/horizontal_plan_card.html"
+        allow_children = True
+        child_classes = [
+            "TextPlugin",
+            "SpacingPlugin",
+            "FeatureItemPlugin",
+            "TextLinkPlugin",
+            "ImagePlugin",
+        ]
+        parent_classes = [
+            "MembershipPlansPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    card_heading = forms.CharField(
+        label=_("Card heading"),
+        required=True,
+        help_text=_("Card heading"),
+    )
+
+    card_sub_heading = forms.CharField(
+        label=_("Card sub heading"),
+        required=False,
+        help_text=_("Card sub heading"),
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+@components.register
+class ContentTeaser(CMSFrontendComponent):
+    """Content Teaser component"""
+
+    class Meta:
+        name = _("Content Teaser")
+        render_template = "content_teaser/content_teaser.html"
+        allow_children = True
+        child_classes = [
+            "TeaserContentPlugin",
+            "TeaserMediaPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+
+@components.register
+class TeaserContent(CMSFrontendComponent):
+    """Teaser Content component to render text"""
+
+    class Meta:
+        name = _("Teaser Content")
+        render_template = "content_teaser/components/content.html"
+        allow_children = True
+        parent_classes = [
+            "ContentTeaserPlugin",
+        ]
+        child_classes = [
+            "TextPlugin",
+            "HeadingPlugin",
+            "SpacingPlugin",
+            "TextLinkPlugin",
+        ]
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+
+@components.register
+class TeaserMedia(CMSFrontendComponent):
+    """Media Teaser component"""
+
+    class Meta:
+        name = _("Teaser Media")
+        render_template = "content_teaser/components/media.html"
+        allow_children = True
+        parent_classes = [
+            "ContentTeaserPlugin",
+        ]
+        child_classes = [
+            "ImagePlugin",
+            "VideoPlayerPlugin",
+        ]

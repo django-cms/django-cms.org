@@ -1,0 +1,46 @@
+{% load static frontend cms_tags cms_theme_tags thumbnail %}
+<div class="{{ instance.get_classes }} card related-people-card p-4 shadow-lg"
+     {{ instance.get_attributes }}>
+    {% with child_plugins=instance.child_plugin_instances %}
+        {% for plugin in child_plugins %}
+            {% if plugin.plugin_type == "ImagePlugin" %}
+                {% if instance.image_accent %}
+                    <div class="profile-wrapper mb-4 mt-3">
+                        <div class="position-absolute {% if instance.image_accent_color %}bg-{{ instance.image_accent_color }}{% endif %} shape-tl z-0">
+                        </div>
+                        <div class="position-absolute {% if instance.image_accent_color %}bg-{{ instance.image_accent_color }}{% endif %} shape-br z-0">
+                        </div>
+                        {% render_plugin plugin %}
+                    </div>
+                {% else %}
+                    {% render_plugin plugin %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <div class="card-body p-0 mt-4 text-{{ instance.text_color }}">
+            <div class="pt-1">
+                <div class="text-uppercase mb-1 overline pb-2">contact:</div>
+                {% with texts=instance.child_plugin_instances|filter_by_type:"TextPlugin,HeadingPlugin" %}
+                    {% if texts and texts|length > 0 %}
+                        {% for text in texts %}
+                            {% render_plugin text %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% if instance.role %}
+                    <p>{{ instance.role }}</p>
+                {% endif %}
+                {% if instance.description %}{{ instance.description|safe }}{% endif %}
+                {% with buttons=instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}
+                    {% if buttons and buttons|length > 0 %}
+                        <div class="d-flex gap-2 button-group pt-1 mt-4">
+                            {% for button in buttons %}
+                                {% render_plugin button %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    {% endwith %}
+</div>
