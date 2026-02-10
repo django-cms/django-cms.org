@@ -1,21 +1,31 @@
-{% load i18n menu_tags %}
+{% load i18n menu_tags djangocms_stories %}
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        {% for ancestor in ancestors %}
+        {% if post_content %}
+            {# Blog post breadcrumb: Apphook page / Category / Article #}
             <li class="breadcrumb-item">
-                <a href="{{ ancestor.get_absolute_url }}">{{ ancestor.get_menu_title }}</a>
+                <a href="{{ request.current_page.get_absolute_url }}">{{ request.current_page.get_menu_title }}</a>
             </li>
-        {% endfor %}
-        <li class="breadcrumb-item active" aria-current="page">
-            <span class="breadcrumb-active-text">
-                {% if post_content %}
-                    {# For blog posts, show the post title instead of the menu title #}
-                    {{ post_content.title }}
-                {% else %}
-                    {{ request.current_page.get_menu_title }}
+            {% with post_content.post.categories.first as cat %}
+                {% if cat %}
+                    <li class="breadcrumb-item">
+                        <a href="{% namespace_url 'posts-category' cat.slug %}">{{ cat.name }}</a>
+                    </li>
                 {% endif %}
-            </span>
-        </li>
+            {% endwith %}
+            <li class="breadcrumb-item active" aria-current="page">
+                <span class="breadcrumb-active-text">{{ post_content.title }}</span>
+            </li>
+        {% else %}
+            {% for ancestor in ancestors %}
+                <li class="breadcrumb-item">
+                    <a href="{{ ancestor.get_absolute_url }}">{{ ancestor.get_menu_title }}</a>
+                </li>
+            {% endfor %}
+            <li class="breadcrumb-item active" aria-current="page">
+                <span class="breadcrumb-active-text">{{ request.current_page.get_menu_title }}</span>
+            </li>
+        {% endif %}
     </ol>
 </nav>
