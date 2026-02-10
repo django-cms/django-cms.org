@@ -1,0 +1,46 @@
+{% load frontend cms_tags cms_theme_tags %}
+
+
+<section class="{{ instance.get_classes }} {% if instance.background_grid %} background-grid{% endif %}" {{ instance.get_attributes }}>
+    <div class="container">
+        {% with heading_plugins=instance.child_plugin_instances|filter_by_type:"HeadingPlugin" %}
+        {% with quote_items=instance.child_plugin_instances|filter_by_type:"QuotePanelItemPlugin" %}
+
+        {% for plugin in heading_plugins %}
+            {% render_plugin plugin %}
+        {% endfor %}
+
+        {% if quote_items|length >= 2 %}
+        <div class="quote-slider">
+            <div class="quote-slider-nav">
+                <button class="quote-slider-btn quote-slider-prev" aria-label="Previous slide">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="quote-slider-btn quote-slider-next" aria-label="Next slide">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+            <div class="swiper quote-swiper">
+                <div class="swiper-wrapper">
+                    {% for plugin in quote_items %}
+                    <div class="swiper-slide">
+                        <div class="grid-2 gap-6 items-center">
+                            {% render_plugin plugin %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="grid-2 gap-6 items-center">
+                {% for plugin in quote_items %}
+                    {% render_plugin plugin %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% endwith %}
+        {% endwith %}
+    </div>
+</section>
