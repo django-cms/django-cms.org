@@ -17,3 +17,6 @@ backend/static/css/main.css.map
 backend/static/djangocms_text/css/tiptap.admin.css
 
 data/
+
+filer_public/
+filer_public_thumbnails/

@@ -1,0 +1,84 @@
+// Quote Panel Slider
+
+.quote-slider {
+  position: relative;
+
+  .quote-swiper {
+    overflow: hidden;
+  }
+
+  .swiper-slide {
+    height: auto;
+  }
+
+  // Navigation buttons
+  .quote-slider-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 1.75rem;
+
+    @media (max-width: 767.98px) {
+      justify-content: flex-start;
+      order: 1;
+      margin-bottom: 0;
+      margin-top: 1.75rem;
+    }
+  }
+
+  .quote-slider-btn {
+    background: $primary;
+    color: $secondary;
+    border: 2px solid $primary;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+
+    i {
+      font-size: 1rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::before {
+        vertical-align: middle;
+      }
+    }
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  // Mobile: stack nav below swiper
+  @media (max-width: 767.98px) {
+    display: flex;
+    flex-direction: column;
+
+    .quote-swiper {
+      order: 0;
+      width: 100%;
+    }
+
+    .swiper-slide {
+      width: 100%;
+
+      [class*="grid-"] {
+        display: block;
+      }
+    }
+  }
+}
+
+// Invert button colors when quote-slider is inside a primary background
+.bg-primary .quote-slider .quote-slider-btn {
+  background: $secondary;
+  color: $primary;
+  border-color: $secondary;
+}

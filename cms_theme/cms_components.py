@@ -641,3 +641,73 @@ class TeaserMedia(CMSFrontendComponent):
             "ImagePlugin",
             "VideoPlayerPlugin",
         ]
+
+
+@components.register
+class QuotePanelContainer(CMSFrontendComponent):
+    """Quote Panel component with background grid option"""
+
+    class Meta:
+        name = _("Quote Panel")
+        render_template = "quote_panel/quote_panel.html"
+        allow_children = True
+        child_classes = [
+            "HeadingPlugin",
+            "QuotePanelItemPlugin",
+        ]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=False,
+    )
+
+
+@components.register
+class QuotePanelItem(CMSFrontendComponent):
+    """Quote Panel Item component to render quote text and author"""
+
+    class Meta:
+        name = _("Quote Panel Item")
+        render_template = "quote_panel/quote_item.html"
+        allow_children = True
+        parent_classes = [
+            "QuotePanelContainerPlugin",
+        ]
+        child_classes = [
+            "ImagePlugin",
+        ]
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+        help_text=_("Eyebrow text for quote item."),
+    )
+
+    quote_text = HTMLFormField(
+        label=_("Quote text"),
+        required=False,
+        help_text=_("Main quote text for quote item."),
+    )
+
+    author_name = forms.CharField(
+        label=_("Author name"),
+        required=False,
+        help_text=_("Author name for quote item."),
+    )
+
+    author_role = forms.CharField(
+        label=_("Author role"),
+        required=False,
+        help_text=_("Author role for quote item."),
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        required=False,
+        initial="dark",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Text color for quote item."),
+    )

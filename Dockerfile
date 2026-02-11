@@ -17,6 +17,7 @@ RUN pip install -r requirements.txt
 COPY . .
 
 COPY --from=build /app/backend/static/css /app/backend/static/css
+COPY --from=build /app/backend/static/djangocms_text/css /app/backend/static/djangocms_text/css
 
 RUN python manage.py collectstatic --noinput
 
