@@ -292,16 +292,16 @@ STORIES_PLUGIN_TEMPLATE_FOLDERS = (
 )
 
 # django-meta settings
-META_SITE_PROTOCOL = "https"
-META_SITE_DOMAIN = "localhost:8000"
+META_SITE_PROTOCOL = os.environ.get("META_SITE_PROTOCOL", "https")
+META_SITE_DOMAIN = os.environ.get("DOMAIN", "localhost:8000")
 
 # djangocms-stories settings
 STORIES_URLCONF = "backend.blog_urls"
 # djangocms-stories settings
-STORIES_PAGINATION = 10
+STORIES_PAGINATION = 25
 STORIES_LATEST_ENTRIES = 5
 STORIES_ENABLE_TAGS = True
-STORIES_TEMPLATE_CHOICES = (("djangocms_stories/post_list.html", _("Default")),)
+STORIES_TEMPLATE_CHOICES = (("blog/post_list.html", _("Default")),)
 
 
 # djangocms-frontend settings

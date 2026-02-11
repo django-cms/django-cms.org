@@ -6,7 +6,7 @@
     <div class="d-flex flex-row flex-lg-column flex-wrap gap-3 me-auto ps-2 ms-1 w-100">
         <h4 class="text-secondary">Filter by:</h4>
         <a href="{% namespace_url 'posts-latest' %}"
-           class="btn btn-outline-black {% if category.pk == cat.pk %}active{% endif %}">
+           class="btn btn-outline-black {% if not category %}active{% endif %}">
             {% trans "All" %}
         </a>
         {% for cat in categories %}

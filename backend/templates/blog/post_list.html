@@ -1,5 +1,5 @@
 {% extends "djangocms_stories/base.html" %}
-{% load i18n l10n easy_thumbnails_tags cms_tags blog_tags %}{% spaceless %}
+{% load i18n l10n easy_thumbnails_tags cms_tags blog_tags djangocms_stories %}{% spaceless %}
 
 {% block canonical_url %}<link rel="canonical" href="{{ view.get_view_url }}"/>{% endblock canonical_url %}
 
@@ -14,7 +14,7 @@
                 {% else %}
                     <h1 class="text-primary"><span class="h3 text-white">showing {{ postcontent_list|length }} of</span> {{ paginator.count }}</h1>
                 {% endif %}
-                <form method="get" action="{% url 'djangocms_stories:posts-latest' %}" class="d-flex flex-column flex-lg-row gap-2 mt-4 pt-2">
+                <form method="get" action="{% namespace_url 'posts-latest' %}" class="d-flex flex-column flex-lg-row gap-2 mt-4 pt-2">
                     <input type="text" name="q" id="blogSearch" value="{{ search_query }}" placeholder="{% trans 'Search articles...' %}" class="form-control" />
                     <button type="submit" class="btn btn-primary py-3 px-4 h-100">
                         {% trans "search" %}
@@ -35,14 +35,14 @@
                 {% endfor %}
             <div class="d-flex justify-content-center mt-4">
                 {% if author or archive_date or tagged_entries %}
-                    <p class="blog-back"><a href="{% url 'djangocms_stories:posts-latest' %}">{% trans "Back" %}</a></p>
+                    <p class="blog-back"><a href="{% namespace_url 'posts-latest' %}">{% trans "Back" %}</a></p>
                 {% endif %}
                 {% if is_paginated %}
                     {% pagination_range page_obj.number paginator.num_pages as page_range %}
                     <nav class="pagination-nav" aria-label="{% trans 'Pagination' %}">
                         <ul class="pagination">
                             <li class="page-item{% if not page_obj.has_previous %} disabled{% endif %}">
-                                <a class="page-link fw-bold" {% if page_obj.has_previous %}href="?{{ view.page_kwarg }}={{ page_obj.previous_page_number }}"{% endif %} aria-label="{% trans 'Previous' %}">
+                                <a class="page-link fw-bold" {% if page_obj.has_previous %}href="{% page_url page_obj.previous_page_number %}"{% endif %} aria-label="{% trans 'Previous' %}">
                                     &lt;
                                 </a>
                             </li>
@@ -57,12 +57,12 @@
                                     </li>
                                 {% else %}
                                     <li class="page-item">
-                                        <a class="page-link" href="?{{ view.page_kwarg }}={{ p }}">{{ p }}</a>
+                                        <a class="page-link" href="{% page_url p %}">{{ p }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
                             <li class="page-item{% if not page_obj.has_next %} disabled{% endif %}">
-                                <a class="page-link fw-bold" {% if page_obj.has_next %}href="?{{ view.page_kwarg }}={{ page_obj.next_page_number }}"{% endif %} aria-label="{% trans 'Next' %}">
+                                <a class="page-link fw-bold" {% if page_obj.has_next %}href="{% page_url page_obj.next_page_number %}"{% endif %} aria-label="{% trans 'Next' %}">
                                     &gt;
                                 </a>
                             </li>

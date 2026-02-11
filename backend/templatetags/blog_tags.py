@@ -9,6 +9,15 @@ def get_blog_categories():
     return PostCategory.objects.order_by("priority", "translations__name")
 
 
+@register.simple_tag(takes_context=True)
+def page_url(context, page_number):
+    """Build a pagination URL preserving existing GET parameters."""
+    request = context["request"]
+    params = request.GET.copy()
+    params[context.get("view").page_kwarg] = page_number
+    return "?{}".format(params.urlencode())
+
+
 @register.simple_tag
 def pagination_range(current_page, total_pages, neighbours=1):
     """Return list of page numbers/ellipsis for pagination.

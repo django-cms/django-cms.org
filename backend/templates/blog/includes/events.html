@@ -28,7 +28,7 @@
                 {% endif %}
                 <div class="{% if image and post_content.post.main_image %}col-md-8{% else %}col-12{% endif %} pt-3">
                     <div class="card-body pt-1">
-                        <p class="overline pb-1">{{ post_content.categories.first }}</p>
+                        <p class="overline pb-1">{{ post_content.post.categories.first }}</p>
                         <h5 class="card-title pt-2 pb-4 mb-1">{{ post_content.title }}</h5>
                         {% if post_content.subtitle %}
                             <p>{{ post_content.subtitle }}</p>
