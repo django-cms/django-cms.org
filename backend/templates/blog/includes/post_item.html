@@ -1,21 +1,21 @@
 {% load djangocms_stories i18n easy_thumbnails_tags cms_tags %}
 
-<article id="post-{{ post_content.slug }}" class="post-item">
+<article id="post-{{ post_content.slug }}" class="post-item post-item-list">
     <a href="{% absolute_url post_content %}">
-        <div class="card box-shadow-card bg-light mb-3">
+        <div class="card box-shadow-card bg-light mb-3" style="max-height: 220px;">
             <div class="row g-0">
                 {% if image and post_content.post.main_image %}
                     <div class="col-md-4">
                     {% if image and post_content.post.main_image %}
                         <div class="blog-visual h-100">
-                            {% thumbnail post_content.post.main_image 300x229 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as img_sm %}
-                            {% thumbnail post_content.post.main_image 450x340 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as img_md %}
-                            {% thumbnail post_content.post.main_image 620x470 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as img_lg %}
+                            {% thumbnail post_content.post.main_image 400x300 quality=55 subject_location=post_content.post.main_image.subject_location as img_sm %}
+                            {% thumbnail post_content.post.main_image 600x450 quality=55 subject_location=post_content.post.main_image.subject_location as img_md %}
+                            {% thumbnail post_content.post.main_image 700x500 quality=85 subject_location=post_content.post.main_image.subject_location as img_lg %}
                             <img src="{{ img_md.url }}"
                                  srcset="{{ img_sm.url }} 300w, {{ img_md.url }} 450w, {{ img_lg.url }} 620w"
                                  sizes="(max-width: 768px) 100vw, 33vw"
                                  alt="{{ post_content.post.main_image.default_alt_text|default:'' }}"
-                                 class="rounded-start"
+                                 class="blog-card-img"
                                  style="width: 100%; height: 100%; object-fit: cover;" />
                         </div>
                     {% else %}
