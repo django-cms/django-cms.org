@@ -217,8 +217,12 @@ DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
 DEFAULT_FILE_STORAGE = "backend.settings.DefaultStorageClass"
 
 # only required for local file storage and serving, in development
-MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join("/data/media/")
+MEDIA_URL = "/media/"
+if DEFAULT_STORAGE_DSN:
+    DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
+    DEFAULT_FILE_STORAGE = "backend.settings.DefaultStorageClass"
+else:
+    MEDIA_ROOT = "/data/media/"
 
 
 SITE_ID = 1
@@ -235,7 +239,7 @@ THUMBNAIL_PRESERVE_EXTENSIONS = ("webp",)
 THUMBNAIL_TRANSPARENCY_EXTENSION = "webp"
 
 # For development: django-debug-toolbar
-if DEBUG or True:
+if DEBUG:
     INSTALLED_APPS += (  # NoQA F405
         "debug_toolbar",
     )
@@ -300,7 +304,10 @@ DJANGOCMS_FRONTEND_ICON_LIBRARIES = {
     "font-awesome-light": ("font-awesome-light.min.json", "font-awesome-light.css"),
     "font-awesome-thin": ("font-awesome-thin.min.json", "font-awesome-thin.css"),
     **{
-        library: (f"{library}.min.json", _DJANGOCMS_FRONTEND_ICON_CDN.get(library, f"{library}.css"))
+        library: (
+            f"{library}.min.json",
+            _DJANGOCMS_FRONTEND_ICON_CDN.get(library, f"{library}.css"),
+        )
         for library in DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN
         if library not in {"font-awesome-light", "font-awesome-thin"}
     },
