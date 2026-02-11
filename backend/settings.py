@@ -297,6 +297,7 @@ META_SITE_DOMAIN = "localhost:8000"
 
 # djangocms-stories settings
 STORIES_URLCONF = "backend.blog_urls"
+# djangocms-stories settings
 STORIES_PAGINATION = 10
 STORIES_LATEST_ENTRIES = 5
 STORIES_ENABLE_TAGS = True
