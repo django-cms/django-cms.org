@@ -21,7 +21,7 @@
 		const sliderInstances = [];
 
 		containers.forEach(function (container) {
-			const gridEl = container.querySelector('[class*="grid-"]');
+			const gridEl = container.querySelector('[class*="grid-"], .row');
 			if (!gridEl) return;
 
 			const children = Array.from(gridEl.children);

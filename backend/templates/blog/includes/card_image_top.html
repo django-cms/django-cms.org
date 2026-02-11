@@ -1,7 +1,7 @@
 {% load djangocms_stories i18n easy_thumbnails_tags cms_tags %}
 
 <article id="post-{{ post_content.slug }}" class="post-item h-100">
-   <div class="card mx-auto h-100" style="max-width: 600px;">
+   <div class="card shadow-sm mx-auto h-100" style="max-width: 600px;">
       {% if post_content.post.main_image %}
       {% thumbnail post_content.post.main_image 400x241 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as hero_sm %}
       {% thumbnail post_content.post.main_image 600x362 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as hero_md %}
