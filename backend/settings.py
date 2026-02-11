@@ -188,6 +188,37 @@ LANGUAGES = [
     ("en", "English"),
 ]
 
+CMS_LANGUAGES = {
+    1: [
+        {
+            "code": "en",
+            "name": "English",
+        },
+    ],
+    "default": {
+        "fallbacks": ["en"],
+        "redirect_on_fallback": False,
+        "public": True,
+        "hide_untranslated": False,
+    },
+}
+
+PARLER_LANGUAGES = {
+    1: (
+        {
+            "code": "en",
+        },
+    ),
+    "default": {
+        "fallbacks": [
+            "en",
+        ],
+    },
+}
+
+PARLER_DEFAULT_LANGUAGE_CODE = "en"
+PARLER_ENABLE_CACHING = False
+
 TIME_ZONE = "UTC"
 
 USE_I18N = True
@@ -270,8 +301,22 @@ if DEBUG:
 # Design settings
 STORIES_PLUGIN_TEMPLATE_FOLDERS = (
     ("plugins", _("Default")),
-    ("cards", _("Cards")),
+    ("cards", _("Cards Image on Top")),
+    ("cards_author", _("Cards with Author")),
 )
+
+# django-meta settings
+META_SITE_PROTOCOL = os.environ.get("META_SITE_PROTOCOL", "https")
+META_SITE_DOMAIN = os.environ.get("DOMAIN", "localhost:8000")
+
+# djangocms-stories settings
+STORIES_URLCONF = "backend.blog_urls"
+# djangocms-stories settings
+STORIES_PAGINATION = 25
+STORIES_LATEST_ENTRIES = 5
+STORIES_ENABLE_TAGS = True
+STORIES_TEMPLATE_CHOICES = (("blog/post_list.html", _("Default")),)
+
 
 # djangocms-frontend settings
 DJANGOCMS_FRONTEND_ADMIN_CSS = {
@@ -332,6 +377,7 @@ DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
     ("info", _("Info")),
     ("light", _("Light")),
     ("dark", _("Dark")),
+    ("black", _("Black")),
     ("second-primary", _("Dark Green")),
     ("white", _("White")),
     ("platinum", _("Platinum")),

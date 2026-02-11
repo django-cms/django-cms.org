@@ -63,7 +63,7 @@ ul.list-styled-dash > li::before {
 /// ==========================
 // BASE / Level 1 – Numbers
 // ==========================
-ol,
+ol:not(.list-unstyled):not(.breadcrumb),
 .list-numbered,
 ol.list-styled {
   list-style: none;
@@ -72,7 +72,7 @@ ol.list-styled {
   counter-reset: list-counter;
 }
 
-ol > li,
+ol:not(.list-unstyled):not(.breadcrumb) > li,
 .list-numbered > li,
 ol.list-styled > li {
   position: relative;

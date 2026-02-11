@@ -1,0 +1,64 @@
+{% load djangocms_stories i18n easy_thumbnails_tags cms_tags %}
+
+<article id="post-{{ post_content.slug }}" class="post-item post-item-event">
+    <a href="{% absolute_url post_content %}">
+        <div class="card box-shadow-card bg-light">
+            <div class="row g-0">
+                {% if image and post_content.post.main_image %}
+                    <div class="col-md-4">
+                    {% if image and post_content.post.main_image %}
+                        <div class="blog-visual h-100">
+                            {% thumbnail post_content.post.main_image 250x179 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as img_sm %}
+                            {% thumbnail post_content.post.main_image 400x290 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as img_md %}
+                            {% thumbnail post_content.post.main_image 570x420 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as img_lg %}
+                            <img src="{{ img_md.url }}"
+                                 srcset="{{ img_sm.url }} 300w, {{ img_md.url }} 450w, {{ img_lg.url }} 620w"
+                                 sizes="(max-width: 768px) 100vw, 33vw"
+                                 alt="{{ post_content.post.main_image.default_alt_text|default:'' }}"
+                                 class="blog-card-img"
+                                 style="width: 100%; height: 100%; object-fit: cover;" />
+                        </div>
+                    {% else %}
+                        {% media_images post_content as previews %}
+                        <div class="blog-visual h-100">
+                            {% for preview in previews %}<img src="{{ preview }}" style="width: 100%; height: 100%; object-fit: cover;" />{% endfor %}
+                        </div>
+                    {% endif %}
+                    </div>
+                {% endif %}
+                <div class="{% if image and post_content.post.main_image %}col-md-8{% else %}col-12{% endif %} pt-3">
+                    <div class="card-body pt-1">
+                        <p class="overline pb-1">{{ post_content.post.categories.first }}</p>
+                        <h5 class="card-title pt-2 pb-4 mb-1">{{ post_content.title }}</h5>
+                        {% if post_content.subtitle %}
+                            <p>{{ post_content.subtitle }}</p>
+                        {% endif %}
+                        <p class="card-text">
+                            {% if not TRUNCWORDS_COUNT %}
+                                {% render_model post_content "abstract" "" "" "safe" %}
+                            {% else %}
+                                {% render_model post_content "abstract" "" "" "truncatewords_html:TRUNCWORDS_COUNT|safe"  %}
+                            {% endif %}
+                        </p>
+                        <div class="d-flex flex-column gap-3 mt-2 mb-2 me-auto">
+                            <span class="event-location d-flex align-items-center gap-3">
+                               <i class="bi bi-geo-alt fs-4"></i> {% trans "Online" %}
+                            </span>
+                            {% if post_content.post.date_featured %}
+                                <span class="event-date d-flex align-items-center gap-3">
+                                    <i class="bi bi-calendar fs-4"></i>
+                                    {{ post_content.post.date_featured|date:"d. M Y, H:i" }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        {% block post_meta %}
+                            {% block blog_meta %}
+                                {% include "djangocms_stories/includes/post_meta.html" %}
+                            {% endblock %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</article>

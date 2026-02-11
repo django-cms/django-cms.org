@@ -90,6 +90,11 @@ $lead-line-height: 1.625rem;
 // ==============================================
 $border-radius: 1.25rem;
 $lead-line-height: 1.625rem;
+
+.box-shadow-card {
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.10) !important;
+}
+
 $enable-rfs: false;
 
 // ==============================================

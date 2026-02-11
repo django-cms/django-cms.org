@@ -26,17 +26,17 @@
                 {% with right_plugins=instance.child_plugin_instances|filter_by_type:"CounterPlugin,ImagePlugin" %}
 
                     {# Second plugin: main background image #}
-                    {% if right_plugins|length > 1 %}
+                    {% if right_plugins|length > 0 %}
                         <div class="hero-main-image mt-5 mt-lg-0">
-                            {% render_plugin right_plugins.1 %}
+                            {% render_plugin right_plugins.0 %}
                         </div>
                     {% endif %}
 
                     {# First and third plugins: overlay items #}
                     <div class="hero-counters">
-                        {% if right_plugins|length > 0 %}
+                        {% if right_plugins|length > 1 %}
                             <div class="hero-counter hero-counter-1">
-                                {% render_plugin right_plugins.0 %}
+                                {% render_plugin right_plugins.1 %}
                             </div>
                         {% endif %}
 

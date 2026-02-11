@@ -406,6 +406,7 @@ class PeopleCard(CMSFrontendComponent):
         allow_children = True
         parent_classes = [
             "RelatedPeoplePlugin",
+            "GridColumnPlugin",
         ]
         child_classes = [
             "ImagePlugin",

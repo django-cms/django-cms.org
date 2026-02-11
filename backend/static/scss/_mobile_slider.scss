@@ -56,7 +56,13 @@
   @media (max-width: 767.98px) {
     .swiper {
       overflow: hidden;
-      padding-top: 0.5rem;
+      padding: 0.5rem;
+
+      // Entries cards need less horizontal padding
+      &:has(.post-item:not(.post-item-event):not(.post-item-list)) {
+        padding-left: 0.5rem;
+        padding-right: 1.5rem;
+      }
 
       &[class*="grid-"] {
         display: block;
