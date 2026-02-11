@@ -1,5 +1,5 @@
 {% extends "djangocms_stories/base.html" %}
-{% load i18n l10n easy_thumbnails_tags cms_tags %}{% spaceless %}
+{% load i18n l10n easy_thumbnails_tags cms_tags blog_tags %}{% spaceless %}
 
 {% block canonical_url %}<link rel="canonical" href="{{ view.get_view_url }}"/>{% endblock canonical_url %}
 
@@ -27,34 +27,55 @@
 
     <div class="container">
         <div class="row pt-4 mt-2">
-            <div class="col-12 col-md-9 order-2 order-md-1">
+            <div class="col-12 col-lg-9 order-2 order-lg-1">
                 {% for post_content in postcontent_list %}
                     {% include "blog/includes/post_item.html" with post_content=post_content image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
                 {% empty %}
                     <p class="blog-empty">{% trans "No article found." %}</p>
                 {% endfor %}
+            <div class="d-flex justify-content-center mt-4">
+                {% if author or archive_date or tagged_entries %}
+                    <p class="blog-back"><a href="{% url 'djangocms_stories:posts-latest' %}">{% trans "Back" %}</a></p>
+                {% endif %}
+                {% if is_paginated %}
+                    {% pagination_range page_obj.number paginator.num_pages as page_range %}
+                    <nav class="pagination-nav" aria-label="{% trans 'Pagination' %}">
+                        <ul class="pagination">
+                            <li class="page-item{% if not page_obj.has_previous %} disabled{% endif %}">
+                                <a class="page-link fw-bold" {% if page_obj.has_previous %}href="?{{ view.page_kwarg }}={{ page_obj.previous_page_number }}"{% endif %} aria-label="{% trans 'Previous' %}">
+                                    &lt;
+                                </a>
+                            </li>
+                            {% for p in page_range %}
+                                {% if p == "..." %}
+                                    <li class="page-item">
+                                        <span class="page-link fw-bold">&hellip;</span>
+                                    </li>
+                                {% elif p == page_obj.number %}
+                                    <li class="page-item active" aria-current="page">
+                                        <span class="page-link">{{ p }}</span>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{{ view.page_kwarg }}={{ p }}">{{ p }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            <li class="page-item{% if not page_obj.has_next %} disabled{% endif %}">
+                                <a class="page-link fw-bold" {% if page_obj.has_next %}href="?{{ view.page_kwarg }}={{ page_obj.next_page_number }}"{% endif %} aria-label="{% trans 'Next' %}">
+                                    &gt;
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                {% endif %}
             </div>
-            <div class="col-12 col-md-3 order-1 order-md-2">
+            </div>
+            <div class="col-12 col-lg-3 order-1 order-lg-2">
                 {% include "blog/includes/sidebar.html" %}
             </div>
         </div>
     </div>
-    {% if author or archive_date or tagged_entries %}
-    <p class="blog-back"><a href="{% url 'djangocms_stories:posts-latest' %}">{% trans "Back" %}</a></p>
-    {% endif %}
-    {% if is_paginated %}
-    <nav class="{% firstof css_grid instance.css_grid %} pagination">
-        {% if page_obj.has_previous %}
-            <a href="?{{ view.page_kwarg }}={{ page_obj.previous_page_number }}">&laquo; {% trans "previous" %}</a>
-        {% endif %}
-        <span class="current">
-            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ paginator.num_pages }}
-        </span>
-        {% if page_obj.has_next %}
-            <a href="?{{ view.page_kwarg }}={{ page_obj.next_page_number }}">{% trans "next" %} &raquo;</a>
-        {% endif %}
-    </nav>
-    {% endif %}
 </section>
 {% endblock %}
 {% endspaceless %}

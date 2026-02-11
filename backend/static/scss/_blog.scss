@@ -3,11 +3,101 @@
   object-fit: cover;
 }
 
+// Events & post list card styles
+.post-item-event,
+.post-item-list {
+  .blog-card-img {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .card.mb-3 {
+    margin-bottom: 28px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .post-item-list .blog-visual {
+    max-height: 242px;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 768px) {
+  .post-item-event {
+    .card {
+      max-height: 271px;
+      overflow: hidden;
+    }
+  }
+
+  .post-item-list {
+    .card {
+      max-height: 229px;
+      overflow: hidden;
+    }
+  }
+
+  .post-item-event,
+  .post-item-list {
+
+    .blog-card-img {
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
 .card-author-link,
 .card-event-link {
   transition: transform 0.2s ease;
 
   &:hover {
     transform: scale(1.01);
+  }
+}
+
+// Blog pagination
+.pagination-nav .pagination {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.25rem;
+
+  .page-item {
+    padding-left: 0;
+    margin-bottom: 0;
+
+    &::before {
+      content: none;
+    }
+
+    &.active .page-link {
+      background-color: $primary;
+      color: $secondary;
+    }
+
+    &.disabled .page-link {
+      background: none;
+      color: #adb5bd;
+    }
+  }
+
+  .page-link {
+    border: none;
+    background: none;
+    color: $secondary;
+    padding: 0.2rem 0.5rem;
+    text-decoration: none;
+    font-weight: 400;
+
+    &:hover {
+      background-color: $primary;
+      color: $secondary;
+    }
   }
 }
