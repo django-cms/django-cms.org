@@ -1,0 +1,32 @@
+{% load cms_tags cms_theme_tags %}
+
+{% with image_plugins=instance.child_plugin_instances|filter_by_type:"ImagePlugin" %}
+<div class="col quote-item-text d-flex flex-column justify-content-center {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
+    {% if instance.eyebrow_text %}
+        <p class="overline">{{ instance.eyebrow_text }}</p>
+    {% endif %}
+    {% if instance.quote_text %}
+        <div class="my-4 py-1">
+            {{ instance.quote_text|safe }}
+        </div>
+    {% endif %}
+    <div class="quote-item-image-mobile d-md-none mb-4 pb-1">
+        {% for child in image_plugins %}
+            {% render_plugin child %}
+        {% endfor %}
+    </div>
+    <div>
+        {% if instance.author_name %}
+            <p class="pb-2 h4">{{ instance.author_name }}</p>
+        {% endif %}
+        {% if instance.author_role %}
+            <p class="mb-0 pt-1 overline">{{ instance.author_role }}</p>
+        {% endif %}
+    </div>
+</div>
+<div class="col quote-item-image-desktop d-none d-md-block">
+    {% for child in image_plugins %}
+        {% render_plugin child %}
+    {% endfor %}
+</div>
+{% endwith %}
