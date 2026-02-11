@@ -202,7 +202,6 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_collected")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media files
 # DEFAULT_FILE_STORAGE is configured using DEFAULT_STORAGE_DSN
@@ -214,8 +213,25 @@ DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
 MEDIA_URL = "/media/"
 if DEFAULT_STORAGE_DSN:
     DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
-    DEFAULT_FILE_STORAGE = "backend.settings.DefaultStorageClass"
+    STORAGES = {
+        "default": {"BACKEND": "backend.settings.DefaultStorageClass"},
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+        },
+    }
+    # Thumbnails + filer sollen den default storage nutzen (also S3)
+    THUMBNAIL_DEFAULT_STORAGE = "default"
+    FILER_STORAGES = {
+        "public": {"main": {"BACKEND": "django.core.files.storage.DefaultStorage"}},
+        "private": {"main": {"BACKEND": "django.core.files.storage.DefaultStorage"}},
+    }
 else:
+    STORAGES = {
+        "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+        },
+    }
     MEDIA_ROOT = "/data/media/"
 
 
