@@ -1,9 +1,9 @@
 {% load static cms_tags frontend cms_theme_tags %}
-<section class="{{ instance.get_classes }}" {{ instance.get_attributes }}>
+<section class="{{ instance.get_classes }} mobile-slider" {{ instance.get_attributes }}>
     <div class="container">
-        <div class="mb-5 text-white text-center text-lg-start">
+        <div>
             {% if instance.eyebrow_text %}
-                <h6 class="overline pb-2 {% if instance.eyebrow_text_color %}text-{{ instance.eyebrow_text_color }}{% endif %}">
+                <h6 class="overline {% if instance.eyebrow_text_color %}text-{{ instance.eyebrow_text_color }}{% endif %}">
                     {{ instance.eyebrow_text }}
                 </h6>
             {% endif %}

@@ -1,0 +1,72 @@
+// Mobile Slider
+// Converts grid containers into swiper carousels below md breakpoint
+
+.mobile-slider {
+  position: relative;
+
+  .mobile-slider-nav {
+    display: none;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 3.375rem;
+
+    @media (max-width: 767.98px) {
+      display: flex;
+    }
+  }
+
+  .mobile-slider-btn {
+    background: $primary;
+    color: $secondary;
+    border: 2px solid $primary;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+
+    i {
+      font-size: 1rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::before {
+        vertical-align: middle;
+      }
+    }
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  // Invert button colors on primary background
+  &.bg-primary .mobile-slider-btn {
+    background: $secondary;
+    color: $primary;
+    border-color: $secondary;
+  }
+
+  // When slider is active, override grid styles
+  @media (max-width: 767.98px) {
+    .swiper {
+      overflow: hidden;
+      padding-top: 0.5rem;
+
+      &[class*="grid-"] {
+        display: block;
+      }
+
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+        height: auto;
+      }
+    }
+  }
+}

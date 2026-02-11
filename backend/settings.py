@@ -233,7 +233,6 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_collected")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media files
 # DEFAULT_FILE_STORAGE is configured using DEFAULT_STORAGE_DSN
@@ -241,15 +240,30 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # read the setting value from the environment variable
 DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
 
-# dsn_configured_storage_class() requires the name of the setting
-DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
-
-# Django's DEFAULT_FILE_STORAGE requires the class name
-DEFAULT_FILE_STORAGE = "backend.settings.DefaultStorageClass"
-
 # only required for local file storage and serving, in development
-MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join("/data/media/")
+MEDIA_URL = "/media/"
+if DEFAULT_STORAGE_DSN:
+    DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
+    STORAGES = {
+        "default": {"BACKEND": "backend.settings.DefaultStorageClass"},
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+        },
+    }
+    # Thumbnails + filer sollen den default storage nutzen (also S3)
+    THUMBNAIL_DEFAULT_STORAGE = "default"
+    FILER_STORAGES = {
+        "public": {"main": {"BACKEND": "django.core.files.storage.DefaultStorage"}},
+        "private": {"main": {"BACKEND": "django.core.files.storage.DefaultStorage"}},
+    }
+else:
+    STORAGES = {
+        "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+        },
+    }
+    MEDIA_ROOT = "/data/media/"
 
 
 SITE_ID = 1
@@ -266,7 +280,7 @@ THUMBNAIL_PRESERVE_EXTENSIONS = ("webp",)
 THUMBNAIL_TRANSPARENCY_EXTENSION = "webp"
 
 # For development: django-debug-toolbar
-if DEBUG or True:
+if DEBUG:
     INSTALLED_APPS += (  # NoQA F405
         "debug_toolbar",
     )
@@ -307,6 +321,51 @@ STORIES_TEMPLATE_CHOICES = (("djangocms_stories/post_list.html", _("Default")),)
 # djangocms-frontend settings
 DJANGOCMS_FRONTEND_ADMIN_CSS = {
     "all": ("css/main.css",),
+}
+
+DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN = (
+    "font-awesome",
+    "font-awesome-light",
+    "font-awesome-thin",
+    "bootstrap-icons",
+    "material-icons-filled",
+    "material-icons-outlined",
+    "material-icons-round",
+    "material-icons-sharp",
+    "material-icons-two-tone",
+    "fomantic-ui",
+    "foundation-icons",
+    "elegant-icons",
+    "feather-icons",
+    "open-iconic",
+    "tabler-icons",
+    "weather-icons",
+)
+
+DJANGOCMS_FRONTEND_ICONS_LIBRARIES_SHOWN = DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN
+
+_DJANGOCMS_FRONTEND_ICON_CDN = {
+    "bootstrap-icons": "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css",
+    "font-awesome": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css",
+    "material-icons-filled": "https://fonts.googleapis.com/css2?family=Material+Icons",
+    "material-icons-outlined": "https://fonts.googleapis.com/css2?family=Material+Icons+Outlined",
+    "material-icons-round": "https://fonts.googleapis.com/css2?family=Material+Icons+Round",
+    "material-icons-sharp": "https://fonts.googleapis.com/css2?family=Material+Icons+Sharp",
+    "material-icons-two-tone": "https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone",
+    "fomantic-ui": "fomantic-ui-icons.css",
+}
+
+DJANGOCMS_FRONTEND_ICON_LIBRARIES = {
+    "font-awesome-light": ("font-awesome-light.min.json", "font-awesome-light.css"),
+    "font-awesome-thin": ("font-awesome-thin.min.json", "font-awesome-thin.css"),
+    **{
+        library: (
+            f"{library}.min.json",
+            _DJANGOCMS_FRONTEND_ICON_CDN.get(library, f"{library}.css"),
+        )
+        for library in DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN
+        if library not in {"font-awesome-light", "font-awesome-thin"}
+    },
 }
 
 DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
