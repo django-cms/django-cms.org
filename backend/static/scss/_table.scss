@@ -7,6 +7,15 @@ table, .table {
     box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.10) !important;
 }
 
+// Keep tables at natural width inside responsive container
+.table-responsive {
+    > table,
+    > .table {
+        width: max-content;
+        min-width: 100%;
+    }
+}
+
 // Header - Grün mit vertikalen Borders
 table tbody tr th,
 .table tbody tr th {
