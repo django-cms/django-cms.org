@@ -37,9 +37,11 @@
             {% placeholder "content" %}
         {% endblock %}
         </main>
+        <footer class="mt-auto">
         {% block footer %}
             {% static_alias "footer" %}
         {% endblock %}
+        </footer>
         {% block base_js %}
             <script src="{% static 'js/counter.js' %}"></script>
             <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
