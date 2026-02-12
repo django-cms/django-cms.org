@@ -8,8 +8,8 @@
         {% endwith %}
         <div class="col-12 col-xl mt-4 pt-1">
             <div class="row g-2">
-                <div class="col-xl-3 {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
-                    {% if instance.card_heading %}<h3 class="h3 mb-1">{{ instance.card_heading }}</h3>{% endif %}
+                <div class="col-xl-3 {% if instance.text_color %}text-{{ instance.text_color }}{% endif %} pt-4">
+                    {% if instance.card_heading %}<h3 class="h3 pb-2">{{ instance.card_heading }}</h3>{% endif %}
                     {% if instance.card_sub_heading %}
                         <div class="overline {% if instance.text_color %}text-{{ instance.text_color }}{% endif %} py-2">
                             {{ instance.card_sub_heading }}
