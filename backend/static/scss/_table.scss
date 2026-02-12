@@ -7,6 +7,15 @@ table, .table {
     box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.10) !important;
 }
 
+// Keep tables at natural width inside responsive container
+.table-responsive {
+    > table,
+    > .table {
+        width: max-content;
+        min-width: 100%;
+    }
+}
+
 // Header - Grün mit vertikalen Borders
 table tbody tr th,
 .table tbody tr th {
@@ -103,4 +112,59 @@ table tbody tr:last-child td:first-child,
 table tbody tr:last-child td:last-child,
 .table tbody tr:last-child td:last-child {
     border-bottom-right-radius: 20px !important;
+}
+
+// Comparison table: equal columns (except first), no vertical borders
+.table-comparison {
+    table, .table {
+        table-layout: fixed;
+        border: none !important;
+        box-shadow: none !important;
+        background-color: $primary !important;
+        padding: 28px !important;
+        border-radius: 40px !important;
+        border-width: 1px !important;
+        box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.10) !important;
+    }
+
+    // Header row bg-primary
+    tbody tr:first-child th {
+        background-color: $primary !important;
+    }
+
+    tbody tr th,
+    tbody tr td {
+        border-right: none !important;
+        background-color: $primary !important;
+    }
+
+    // Override alternating row colors
+    tbody tr:nth-child(odd) td,
+    tbody tr:nth-child(even) td {
+        background-color: $primary !important;
+    }
+
+    // First column larger, rest equal
+    tbody tr th:first-child,
+    tbody tr td:first-child {
+        font-weight: 400 !important;
+        width: 404px !important;
+        min-width: 380px !important;
+        padding: 1rem 0 !important;
+    }
+
+    // Center all content except first column
+    tbody tr th:not(:first-child),
+    tbody tr td:not(:first-child) {
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
+
+    // Highlight second column (django CMS) white
+    tbody tr th:nth-child(2),
+    tbody tr td:nth-child(2),
+    tbody tr:nth-child(odd) td:nth-child(2),
+    tbody tr:nth-child(even) td:nth-child(2) {
+        background-color: $white !important;
+    }
 }

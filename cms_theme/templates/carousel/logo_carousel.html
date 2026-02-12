@@ -3,7 +3,7 @@
 <section class="logo-section {{ instance.get_classes }}"
          {{ instance.get_attributes }}>
     {% with plugins=instance.child_plugin_instances %}
-        <div class="container">
+        <div class="container text-center">
             {% for plugin in plugins %}
                 {% if plugin.plugin_type == "HeadingPlugin" %}
                     {% render_plugin plugin %}

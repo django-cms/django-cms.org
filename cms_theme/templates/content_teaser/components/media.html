@@ -1,20 +1,22 @@
 {% load static cms_tags cms_theme_tags %}
 {% with image_plugin=instance.child_plugin_instances|filter_by_type:"ImagePlugin" %}
     {% with video_plugin=instance.child_plugin_instances|filter_by_type:"VideoPlayerPlugin" %}
-        {% if video_plugin %}
-            {% with video_sources=video_plugin.0.child_plugin_instances|filter_by_type:"VideoSourcePlugin" %}
-            <div class="col-lg-6 order-2 order-lg-0 mt-6 mt-lg-0 d-flex justify-content-center align-items-center">
+        <div class="col-lg-6 order-2 order-lg-0 mt-6 mt-lg-0 d-flex justify-content-center align-items-center">
+            {% if video_plugin %}
+                {% with video_sources=video_plugin.0.child_plugin_instances|filter_by_type:"VideoSourcePlugin" %}
+                {# Hidden render so CMS can track the plugin and its children in edit mode #}
+                <div class="d-none">{% render_plugin video_plugin.0 %}</div>
                 <div class="video-poster-wrapper" role="button" data-video-target="#videoModal-{{ video_plugin.0.pk }}">
                     {% if video_plugin.0.poster %}
                         <img src="{{ video_plugin.0.poster.url }}" alt="Video" class="video-poster-img">
                     {% endif %}
                     <div class="video-play-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="75" height="74" viewBox="0 0 75 74" fill="none">
-  <g opacity="0.9">
-    <rect width="75" height="74" rx="15.45" fill="#DEFCB9"/>
-    <path d="M57 36.5L27.75 50.7894L27.75 22.2106L57 36.5Z" fill="#2C4D4C"/>
-  </g>
-</svg>
+                            <g opacity="0.9">
+                                <rect width="75" height="74" rx="15.45" fill="#DEFCB9"/>
+                                <path d="M57 36.5L27.75 50.7894L27.75 22.2106L57 36.5Z" fill="#2C4D4C"/>
+                            </g>
+                        </svg>
                     </div>
                 </div>
                 <div class="modal fade" id="videoModal-{{ video_plugin.0.pk }}" tabindex="-1" aria-hidden="true">
@@ -33,11 +35,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            {% endwith %}
-        {% elif image_plugin %}
-            {% if image_plugin|length > 1 %}
-                <div class="col-lg-6 order-2 order-lg-0 mt-6 mt-lg-0 ">
+                {% endwith %}
+            {% elif image_plugin %}
+                {% if image_plugin|length > 1 %}
                     <div class="community-section">
                         <div class="image-cluster">
                             {% for image in image_plugin %}
@@ -45,12 +45,10 @@
                             {% endfor %}
                         </div>
                     </div>
-                </div>
-            {% else %}
-                <div class="col-lg-6 order-2 order-lg-0 mt-6 mt-lg-0 d-flex justify-content-center">
+                {% else %}
                     <div class="w-100 text-center">{% render_plugin image_plugin.0 %}</div>
-                </div>
+                {% endif %}
             {% endif %}
-        {% endif %}
+        </div>
     {% endwith %}
 {% endwith %}

@@ -1,5 +1,6 @@
 <!-- cms_theme/templates/benefits/benefits_card.html -->
-{% load static cms_tags frontend %}
+{% load static cms_tags frontend icon_tags %}
+{% add_css_for_icon instance.card_icon %}
 <div class="col-12 col-md-6 col-lg-3">
     <div class="{{ instance.get_classes }} h-100 card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}" {{ instance.get_attributes }}>
         <div class="mb-4">
