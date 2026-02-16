@@ -156,3 +156,24 @@ ol ol > li {
     content: none !important;
   }
 }
+
+// ==============================================
+// List Style Overrides for Benefits Cards
+
+.benefits-card .benefits-card-body {
+  ol {
+    padding-left: 0 !important;
+  }
+
+  li {
+    padding-left: 1.25rem !important;
+  }
+
+  li::before {
+    font-weight: 400 !important;
+    font-size: 1rem !important;
+    top: 0.25em !important;
+    width: 1.25rem !important;
+    white-space: nowrap !important;
+  }
+}

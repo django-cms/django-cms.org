@@ -2,12 +2,14 @@
 {% load static cms_tags frontend icon_tags %}
 {% add_css_for_icon instance.card_icon %}
 <div class="col-12 col-md-6 col-lg-3">
-    <div class="{{ instance.get_classes }} h-100 card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}" {{ instance.get_attributes }}>
-        <div class="mb-4">
+    <div class="{{ instance.get_classes }} h-100 card benefits-card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}" {{ instance.get_attributes }}>
+        <div class="mb-4 pb-1">
             <i class="{{ instance.card_icon.iconClass }} display-1"></i>
         </div>
-        <h3 class="h4 fw-bold mb-4 pb-3">{{ instance.card_title }}</h3>
-        <div class="benefits-card-spacing flex-grow-1">
+        <div class="benefits-card-wrapper benefits-card-margin-bottom">
+            <h3 class="h4 fw-bold mb-4">{{ instance.card_title }}</h3>
+        </div>
+        <div class="benefits-card-spacing flex-grow-1 benefits-card-body mt-auto">
             {% if instance.card_content %}{{ instance.card_content|safe }}{% endif %}
         </div>
         <div class="mt-auto">

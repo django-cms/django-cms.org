@@ -5,3 +5,11 @@
 .benefits-card-padding {
 	padding: 1.75rem;
 }
+
+.benefits-card-margin-bottom {
+	margin-bottom: 1.75rem;
+}
+
+.benefits-card-wrapper {
+	min-height: 3.625rem; // 4 lines of text at 1.125rem font size with line-height of 1.5
+}
