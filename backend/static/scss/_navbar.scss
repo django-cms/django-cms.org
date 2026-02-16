@@ -268,17 +268,13 @@
       max-height: 100%; // Large enough for all content
       opacity: 1;
       transform: translateY(0);
-      padding: 0.75rem;
+      padding: 0;
     }
 
     // Hide empty h3 tags
     h3:empty {
       display: none;
     }
-  }
-
-  .navbar-nav .dropdown-menu.show {
-    padding: 0 ;
   }
 }
 
