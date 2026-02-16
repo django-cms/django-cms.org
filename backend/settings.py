@@ -320,7 +320,7 @@ STORIES_TEMPLATE_CHOICES = (("blog/post_list.html", _("Default")),)
 
 # djangocms-frontend settings
 DJANGOCMS_FRONTEND_ADMIN_CSS = {
-    "all": ("css/main.css",),
+    "all": ("css/admin_colors.css",),
 }
 
 DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN = (
