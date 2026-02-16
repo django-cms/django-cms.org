@@ -7,9 +7,9 @@
             {% if total_entries == 1 %}
                 <div class="col-12 col-md-6 mx-auto">
             {% elif total_entries == 2 %}
-                <div class="col-12 col-md-6 mb-4 mb-md-0">
+                <div class="col-12 col-md-6 mb-4 mb-md-0 mt-4 mt-md-0">
             {% else %}
-                <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0 mx-auto">
+                <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0 mt-4 mt-md-0 mx-auto">
             {% endif %}
                 {% include "blog/includes/card_author.html" with post_content=post_content image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
             </div>
