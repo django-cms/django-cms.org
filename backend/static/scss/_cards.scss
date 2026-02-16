@@ -46,3 +46,11 @@ a:has(div.card) {
     background-color: transparent;
   }
 }
+
+.latest-entries .row .col-lg-4 .post-item .card {
+  max-width: 400px;
+}
+
+.latest-entries .row .col-md-6 .post-item {
+  max-width: 600px;
+}
