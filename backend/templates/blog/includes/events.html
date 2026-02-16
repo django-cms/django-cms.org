@@ -22,13 +22,11 @@
                                 {% render_model post_content "abstract" "" "" "truncatewords_html:TRUNCWORDS_COUNT|safe" %}
                             {% endif %}
                         </div>
-                        <div class="d-flex flex-column gap-2 mt-auto">
-                            {% if post_content.post.event_location %}
-                                <span class="event-location d-flex align-items-center gap-2">
-                                    <i class="bi bi-geo-alt fs-5"></i> {{ post_content.post.event_location }}
-                                </span>
-                            {% endif %}
+                        <div class="d-flex flex-column gap-2 mt-4 pt-1 text-black">
                             {% if post_content.post.date_featured %}
+                                <span class="event-location d-flex align-items-center gap-2">
+                                    <i class="bi bi-geo-alt fs-5"></i> Online
+                                </span>                      
                                 <span class="event-date d-flex align-items-center gap-2">
                                     <i class="bi bi-calendar4 fs-5"></i>
                                     {{ post_content.post.date_featured|date:"jS F, Y" }}
