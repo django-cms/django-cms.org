@@ -1,0 +1,161 @@
+/* Admin Colors - Color utilities for djangocms-frontend admin */
+
+/* ===== Background colors ===== */
+
+/* Theme colors */
+.bg-primary { background-color: #DEFCB9 !important; }
+.bg-secondary { background-color: #2C4D4C !important; }
+.bg-light { background-color: #F7F7F7 !important; }
+.bg-dark { background-color: #212121 !important; }
+.bg-danger { background-color: #D44848 !important; }
+.bg-success { background-color: #198754 !important; }
+.bg-warning { background-color: #ffc107 !important; }
+.bg-info { background-color: #0dcaf0 !important; }
+.bg-white { background-color: #fff !important; }
+.bg-black { background-color: #000 !important; }
+
+/* Custom colors */
+.bg-mid-grey { background-color: #7C7C7C !important; }
+.bg-second-primary { background-color: #214A35 !important; }
+.bg-platinum { background-color: #DEE2D9 !important; }
+.bg-gold { background-color: #F8F246 !important; }
+.bg-silver { background-color: #CCD0C7 !important; }
+.bg-bronze { background-color: #BC5728 !important; }
+
+/* Subtle variants */
+.bg-primary-subtle { background-color: rgba(222, 252, 185, 0.3) !important; }
+.bg-secondary-subtle { background-color: rgba(44, 77, 76, 0.3) !important; }
+.bg-dark-subtle { background-color: rgba(33, 33, 33, 0.3) !important; }
+.bg-danger-subtle { background-color: rgba(212, 72, 72, 0.3) !important; }
+
+/* ===== Button colors ===== */
+
+/* Primary */
+.btn-primary {
+  background-color: #DEFCB9 !important;
+  border-color: #DEFCB9 !important;
+  color: #2C4D4C !important;
+}
+
+/* Secondary */
+.btn-secondary {
+  background-color: #2C4D4C !important;
+  border-color: #2C4D4C !important;
+  color: #fff !important;
+}
+
+/* Light */
+.btn-light {
+  background-color: #F7F7F7 !important;
+  border-color: #F7F7F7 !important;
+  color: #212121 !important;
+}
+
+/* Dark */
+.btn-dark {
+  background-color: #212121 !important;
+  border-color: #212121 !important;
+  color: #fff !important;
+}
+
+/* Danger */
+.btn-danger {
+  background-color: #D44848 !important;
+  border-color: #D44848 !important;
+  color: #fff !important;
+}
+
+/* Success */
+.btn-success {
+  background-color: #198754 !important;
+  border-color: #198754 !important;
+  color: #fff !important;
+}
+
+/* Warning */
+.btn-warning {
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #000 !important;
+}
+
+/* Info */
+.btn-info {
+  background-color: #0dcaf0 !important;
+  border-color: #0dcaf0 !important;
+  color: #000 !important;
+}
+
+/* Custom button colors */
+.btn-mid-grey {
+  background-color: #7C7C7C !important;
+  border-color: #7C7C7C !important;
+  color: #fff !important;
+}
+
+.btn-second-primary {
+  background-color: #214A35 !important;
+  border-color: #214A35 !important;
+  color: #fff !important;
+}
+
+.btn-platinum {
+  background-color: #DEE2D9 !important;
+  border-color: #DEE2D9 !important;
+  color: #212121 !important;
+}
+
+.btn-gold {
+  background-color: #F8F246 !important;
+  border-color: #F8F246 !important;
+  color: #212121 !important;
+}
+
+.btn-silver {
+  background-color: #CCD0C7 !important;
+  border-color: #CCD0C7 !important;
+  color: #212121 !important;
+}
+
+.btn-bronze {
+  background-color: #BC5728 !important;
+  border-color: #BC5728 !important;
+  color: #fff !important;
+}
+
+/* Outline button variants */
+.btn-outline-primary {
+  border-color: #DEFCB9 !important;
+  color: #2C4D4C !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-secondary {
+  border-color: #2C4D4C !important;
+  color: #2C4D4C !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-dark {
+  border-color: #212121 !important;
+  color: #212121 !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-danger {
+  border-color: #D44848 !important;
+  color: #D44848 !important;
+  background-color: transparent !important;
+}
+
+/* ===== Text colors ===== */
+
+.text-primary { color: #DEFCB9 !important; }
+.text-secondary { color: #2C4D4C !important; }
+.text-light { color: #F7F7F7 !important; }
+.text-dark { color: #212121 !important; }
+.text-danger { color: #D44848 !important; }
+.text-white { color: #fff !important; }
+.text-black { color: #000 !important; }
+.text-mid-grey { color: #7C7C7C !important; }
+.text-second-primary { color: #214A35 !important; }
