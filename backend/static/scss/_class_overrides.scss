@@ -82,6 +82,8 @@ q, blockquote, .blockquote {
 
 body {
   font-feature-settings: 'liga' off, 'clig' off;
+  -webkit-font-smoothing: antialiased;   
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .hljs {

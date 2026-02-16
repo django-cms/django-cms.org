@@ -17,12 +17,11 @@
         </a>
 
         <div class="dropdown-menu w-100" aria-labelledby="menu-{{ child.id|safe }}">
-          {# Mega-Menu Alias if reverse_id is set #}
           {% if child.attr.reverse_id %}
-            {% static_alias "mega-menu-"|add:child.attr.reverse_id %}
-          {% endif %}
-          {# Fallback #}
-          {% if not child.attr.reverse_id %}
+            {% with "mega-menu-"|add:child.attr.reverse_id as alias_code %}
+              {% static_alias alias_code %}
+            {% endwith %}
+          {% else %}
             {% include "menu/dropdown.html" with parent=child only %}
           {% endif %}
         </div>
