@@ -7,8 +7,9 @@
   .mobile-slider-nav {
     display: none;
     justify-content: flex-end;
-    gap: 8px;
-    margin-bottom: 3.375rem;
+    gap: 18px;
+    margin-bottom: 0.75rem;
+    padding: 0 1rem;
 
     @media (max-width: 767.98px) {
       display: flex;
@@ -56,13 +57,6 @@
   @media (max-width: 767.98px) {
     .swiper {
       overflow: hidden;
-      padding: 0.5rem;
-
-      // Entries cards need less horizontal padding
-      &:has(.post-item:not(.post-item-event):not(.post-item-list)) {
-        padding-left: 0.5rem;
-        padding-right: 1.5rem;
-      }
 
       &[class*="grid-"] {
         display: block;
@@ -70,8 +64,13 @@
 
       .swiper-slide {
         display: flex;
-        justify-content: center;
         height: auto;
+        padding: 0 1.5rem 0 0;
+        box-sizing: border-box;
+
+        > * {
+          width: 100%;
+        }
       }
     }
   }

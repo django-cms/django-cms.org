@@ -2,25 +2,24 @@
 
 <article id="post-{{ post_content.slug }}" class="post-item post-item-list">
     <a href="{% absolute_url post_content %}">
-        <div class="card box-shadow-card bg-light mb-3">
+        <div class="card box-shadow-card bg-light mb-3 {% if image and post_content.post.main_image %}post-item-list-height-with-img{% else %}post-item-list-height{% endif %}">
             <div class="row g-0">
                 {% if image and post_content.post.main_image %}
                     <div class="col-md-4">
                         <div class="blog-visual h-100">
-                            {% thumbnail post_content.post.main_image 400x300 quality=55 subject_location=post_content.post.main_image.subject_location as img_sm %}
+                            {% thumbnail post_content.post.main_image 1000x800 quality=85 subject_location=post_content.post.main_image.subject_location as img_sm %}
                             {% thumbnail post_content.post.main_image 600x450 quality=55 subject_location=post_content.post.main_image.subject_location as img_md %}
                             {% thumbnail post_content.post.main_image 700x500 quality=85 subject_location=post_content.post.main_image.subject_location as img_lg %}
                             <img src="{{ img_md.url }}"
                                  srcset="{{ img_sm.url }} 300w, {{ img_md.url }} 450w, {{ img_lg.url }} 620w"
                                  sizes="(max-width: 768px) 100vw, 33vw"
                                  alt="{{ post_content.post.main_image.default_alt_text|default:'' }}"
-                                 class="blog-card-img"
-                                 style="width: 100%; height: 100%; object-fit: cover;" />
+                                 class="post-list-img rounded-start" />
                         </div>
                     </div>
                 {% endif %}
-                <div class="{% if image and post_content.post.main_image %}col-md-8{% else %}col-12{% endif %} pt-3">
-                    <div class="card-body pt-1">
+                <div class="{% if image and post_content.post.main_image %}col-md-8{% else %}col-12{% endif %} post-list-spacing">
+                    <div class="card-body text-secondary">
                         <p class="overline pb-1">{{ post_content.post.categories.first }}</p>
                         <h5 class="card-title pt-2 pb-4 mb-1">{{ post_content.title }}</h5>
                         {% if post_content.subtitle %}
@@ -33,6 +32,19 @@
                                 {% render_model post_content "abstract" "" "" "truncatewords_html:TRUNCWORDS_COUNT|safe"  %}
                             {% endif %}
                         </p>
+                        {% if post_content.post.date_featured %}
+                            <div class="d-flex flex-column gap-2 mt-4 pt-1 text-black">
+                                    <span class="event-location d-flex align-items-center gap-2">
+                                        <i class="bi bi-geo-alt fs-5"></i> Online
+                                    </span>
+                                {% if post_content.post.date_featured %}
+                                    <span class="event-date d-flex align-items-center gap-2">
+                                        <i class="fa-light fa-calendar fs-5"></i>
+                                        {{ post_content.post.date_featured|date:"jS F, Y" }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                         {% block post_meta %}
             {% block blog_meta %}
                 {% include "djangocms_stories/includes/post_meta.html" %}

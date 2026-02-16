@@ -72,7 +72,8 @@
 
 				swiperInstance = new Swiper(gridEl, {
 					slidesPerView: 1,
-					spaceBetween: 20,
+					spaceBetween: 30,
+					centeredSlides: true,
 					loop: true,
 					navigation: {
 						nextEl: navNext,

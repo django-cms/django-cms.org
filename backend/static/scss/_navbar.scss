@@ -19,7 +19,7 @@
 
   // Buttons same width
   a, .btn {
-    width: 158px;
+    min-width: 158px;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -30,7 +30,7 @@
     gap: 10px !important;
 
     a, .btn {
-      width: 140px;
+      min-width: 140px;
     }
   }
 }
@@ -97,7 +97,7 @@
   position: relative;
   z-index: 1060;
 
-  border-bottom: 0.5px solid var(--Dark-green, #2C4D4C)
+  border-bottom: 0.5px solid $dark-green;
 }
 
 // Mega Menu full width - Desktop
@@ -171,6 +171,9 @@
 
 // Mobile: Standard Dropdown
 @media (max-width: 1199.98px) {
+  .navbar {
+    border-bottom: 0.5px solid $mid-grey;
+  }
   // Navbar toggler custom styles
   .navbar-toggler {
     border: none;
@@ -182,10 +185,11 @@
 
     // Custom hamburger icon with dark green color
     .navbar-toggler-icon {
-      background-image: none;
+      background-image: none !important;
       position: relative;
-      width: 24px;
-      height: 2px;
+      width: 37.684px !important;
+      height: 2px !important;
+      flex-shrink: 0;
       background-color: var(--Dark-green, #2C4D4C);
       transition: background-color 0.3s ease-in-out 0.15s;
 
@@ -201,11 +205,11 @@
       }
 
       &::before {
-        top: -9px;
+        top: -12px;
       }
 
       &::after {
-        top: 9px;
+        top: 12px;
       }
     }
 
@@ -237,14 +241,6 @@
   }
 
   .navbar-nav .nav-item {
-    &:first-child {
-      border-top: 1px solid var(--bs-secondary);
-    }
-
-    &:last-child {
-      border-bottom: 1px solid var(--bs-secondary);
-    }
-
     .nav-link {
       padding-top: 10px;
       padding-bottom: 10px;
@@ -253,8 +249,8 @@
 
   .navbar-nav .dropdown-menu {
     margin-top: 0;
-    border-top: none;
-    border-radius: 0 0 1.25rem 1.25rem;
+    border: none;
+    border-radius: 0;
     padding: 0;
 
     // Animation for mobile dropdown
@@ -272,7 +268,7 @@
       max-height: 100%; // Large enough for all content
       opacity: 1;
       transform: translateY(0);
-      padding: 0.75rem;
+      padding: 0;
     }
 
     // Hide empty h3 tags
@@ -286,6 +282,7 @@
 .navbar-nav.list-unstyled li {
   list-style: none;
   list-style-type: none;
+  margin: 0;
 }
 
 .navbar-nav .nav-item::before,
