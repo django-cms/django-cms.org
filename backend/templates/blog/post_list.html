@@ -12,21 +12,23 @@
                 {% if search_query %}
                     <h1 class="text-primary"><span class="h3 text-white">showing {{ postcontent_list|length }} results for</span> {{ search_query }}</h1>
                 {% else %}
-                    <h1 class="text-primary"><span class="h3 text-white">showing {{ postcontent_list|length }} of</span> {{ paginator.count }}</h1>
+                    <h1 class="text-primary"><span class="h3 text-white">showing {{ postcontent_list|length }} results of</span> {{ paginator.count }}</h1>
                 {% endif %}
                 <form method="get" action="{% namespace_url 'posts-latest' %}" class="d-flex flex-column flex-lg-row gap-2 mt-4 pt-2">
-                    <input type="text" name="q" id="blogSearch" value="{{ search_query }}" placeholder="{% trans 'Search articles...' %}" class="form-control" />
-                    <button type="submit" class="btn btn-primary py-3 px-4 h-100">
-                        {% trans "search" %}
-                    </button>
+                    <input type="text" name="q" id="blogSearch" value="{{ search_query }}" placeholder="{% trans 'Search articles...' %}" class="form-control search-term-w " />
+                    <div>
+                        <button type="submit" class="btn btn-primary py-3 px-4 h-100">
+                            {% trans "search" %}
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
     </header>
     {% endblock %}
 
-    <div class="container">
-        <div class="row pt-4 mt-2">
+    <div class="container pt-3 pb-6">
+        <div class="row pt-4">
             <div class="col-12 col-lg-9 order-2 order-lg-1">
                 {% for post_content in postcontent_list %}
                     {% include "blog/includes/post_item.html" with post_content=post_content image="true" TRUNCWORDS_COUNT=TRUNCWORDS_COUNT %}
