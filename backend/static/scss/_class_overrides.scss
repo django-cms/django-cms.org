@@ -66,9 +66,14 @@ q, blockquote, .blockquote {
     font-size: 12px !important;
     font-style: normal !important;
     font-weight: 500 !important;
-    line-height: 100% !important; /* 12px */
+    line-height: 1 !important;
     letter-spacing: 2.4px !important;
     text-transform: uppercase !important;
+    margin: 0 !important;
+}
+
+p:has(.overline) {
+    line-height: 1 !important;
     margin: 0 !important;
 }
 
