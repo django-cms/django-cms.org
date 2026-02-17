@@ -1,7 +1,7 @@
 {% load i18n menu_tags cms_tags djangocms_alias_tags %}{% spaceless %}
   {% for child in children %}
-    <li class="nav-item{% if child.children %} dropdown{% endif %}">
-      {% if child.children %}
+    <li class="nav-item{% if child.children or child.attr.reverse_id %} dropdown{% endif %}">
+      {% if child.children or child.attr.reverse_id %}
         <a
           class="nav-link dropdown-toggle"
           role="button"
