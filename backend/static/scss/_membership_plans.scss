@@ -35,3 +35,11 @@
     width:217px;
   }
 }
+
+@media (max-width: 767.92px) {
+  .plan-card-width {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
