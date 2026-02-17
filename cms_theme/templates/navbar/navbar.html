@@ -5,7 +5,7 @@
 
     {% with img=instance.image %}
         {% if img %}
-            <a class="navbar-brand" href="/"><img src="{{ img.url }}" alt="{{ img.default_alt_text|default:img.name|default:'Logo' }}" height="50"></a>
+            <a class="navbar-brand no-hover" href="/"><img src="{{ img.url }}" alt="{{ img.default_alt_text|default:img.name|default:'Logo' }}" height="47"></a>
         {% endif %}
     {% endwith %}
 

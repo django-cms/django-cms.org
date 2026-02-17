@@ -309,3 +309,9 @@
     white-space: nowrap !important;
   }
 }
+
+.no-hover {
+  &:hover {
+    background-color: transparent !important;
+  }
+}
