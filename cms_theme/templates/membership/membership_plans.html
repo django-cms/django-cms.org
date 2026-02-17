@@ -27,7 +27,7 @@
         <div class="row mt-2 justify-content-center justify-content-lg-start">
             {% with horizontal_plan_cards=instance.child_plugin_instances|filter_by_type:"HorizontalPlanCardPlugin" %}
                 {% if horizontal_plan_cards %}
-                    <div class="col-11 col-lg-12">
+                    <div class="col-11 col-lg-12 plan-card-width">
                         {% for horizontal_plan_card in horizontal_plan_cards %}
                             {% render_plugin horizontal_plan_card %}
                         {% endfor %}
