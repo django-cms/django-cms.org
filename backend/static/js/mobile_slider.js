@@ -70,11 +70,11 @@
 				// Insert nav wrapper above the grid
 				gridEl.parentNode.insertBefore(navWrapper, gridEl);
 
-				swiperInstance = new Swiper(gridEl, {
+					swiperInstance = new Swiper(gridEl, {
 					slidesPerView: 1,
-					spaceBetween: 30,
-					centeredSlides: true,
+					spaceBetween: 0,
 					loop: true,
+					touchStartPreventDefault: false,
 					navigation: {
 						nextEl: navNext,
 						prevEl: navPrev

@@ -23,6 +23,7 @@ class Hero(CMSFrontendComponent):
             "ImagePlugin",
             "HeadingPlugin",
             "CounterPlugin",
+            "SpacingPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
 

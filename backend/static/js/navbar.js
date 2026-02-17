@@ -86,11 +86,17 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Resize handler: close dropdowns when crossing 1199px threshold
+  // Only react to width changes to avoid closing on mobile scroll
+  // (mobile browsers fire resize when address bar hides/shows, changing height only)
   let resizeTimeout;
+  let lastWidth = window.innerWidth;
 
   function handleResize() {
-    // If viewport is 1199px or smaller, close everything
-    if (window.innerWidth <= 1199) {
+    const currentWidth = window.innerWidth;
+    if (currentWidth === lastWidth) return;
+    lastWidth = currentWidth;
+
+    if (currentWidth <= 1199) {
       closeAllDropdowns();
       hideBackdrop();
     }

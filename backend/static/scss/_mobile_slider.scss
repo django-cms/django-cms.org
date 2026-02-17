@@ -58,6 +58,11 @@
     .swiper {
       overflow: hidden;
 
+      &.row {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
       &[class*="grid-"] {
         display: block;
       }

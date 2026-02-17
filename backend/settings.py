@@ -303,6 +303,7 @@ STORIES_PLUGIN_TEMPLATE_FOLDERS = (
     ("plugins", _("Default")),
     ("cards", _("Cards Image on Top")),
     ("cards_author", _("Cards with Author")),
+    ("events", _("Events")),
 )
 
 # django-meta settings
