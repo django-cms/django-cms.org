@@ -117,7 +117,6 @@ table tbody tr:last-child td:last-child,
 // Comparison table: equal columns (except first), no vertical borders
 .table-comparison {
     table, .table {
-        table-layout: fixed;
         width: 100% !important;
         border: none !important;
         box-shadow: none !important;
@@ -159,6 +158,8 @@ table tbody tr:last-child td:last-child,
     tbody tr td:not(:first-child) {
         text-align: center !important;
         vertical-align: middle !important;
+        min-width: 205px;
+        padding: 1rem 0 !important;
     }
 
     // Highlight second column (django CMS) white
