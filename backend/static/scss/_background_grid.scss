@@ -19,6 +19,12 @@
         linear-gradient(to right, rgba(230, 230, 230, 1) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(230, 230, 230, 1) 1px, transparent 1px);
   }
+  &.bg-primary,
+  .bg-primary & {
+      background-image:
+        linear-gradient(to right, rgba(230, 230, 230, 1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(230, 230, 230, 1) 1px, transparent 1px);
+  }
 }
 
 // Variant with lighter grid (for dark backgrounds)
