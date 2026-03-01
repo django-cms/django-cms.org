@@ -115,7 +115,7 @@ djangocms-link==5.1.0
     # via djangocms-frontend
 djangocms-simple-admin-style==2.0.0
     # via -r requirements.in
-djangocms-stories==0.7.3
+djangocms-stories==0.8.0
     # via -r requirements.in
 djangocms-text==0.9.3
     # via -r requirements.in
