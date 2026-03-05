@@ -19,14 +19,15 @@ Prerequisites
 Step-by-Step Setup
 ==================
 
-1. Create Parent Page with Reverse ID
---------------------------------------
+1. Create a Parent Page with Reverse ID
+----------------------------------------
 
-To enable a dropdown menu for a navigation item, you need to:
+To enable a dropdown mega menu for a navigation item:
 
-1. **Create or edit a page** that should have the dropdown menu
-2. **Go to Advanced Settings** of the page
-3. **Set a Reverse ID** - this is crucial for linking the page to its mega menu alias
+1. **Create or edit a page** that should appear in the navigation with a dropdown
+2. **Enable "In Navigation"** in the page settings so it appears in the menu
+3. **Go to Advanced Settings** of the page
+4. **Set a Reverse ID** – this is the identifier used to link the page to its mega menu alias
 
 **Example:**
 
@@ -34,63 +35,66 @@ To enable a dropdown menu for a navigation item, you need to:
 - Reverse ID: ``about`` (use lowercase, no spaces)
 
 .. note::
-   The reverse ID must be unique across your site. It acts as an identifier to connect the page with its mega menu content.
+   The reverse ID must be unique across your site. A page does **not** need child pages to show a dropdown –
+   having a reverse ID is sufficient to trigger the dropdown behavior.
 
-2. Create the Mega Menu Alias
-------------------------------
+2. Visit the Page to Auto-Create the Alias
+-------------------------------------------
 
-Now create an alias that will contain your mega menu content:
+Once the reverse ID is set and the page is visited (by a logged-in staff member or publicly, depending on
+whether versioning is enabled), the ``{% static_alias %}`` template tag **automatically creates** an empty
+alias named ``mega-menu-[reverse-id]``.
 
-1. **Go to Aliases** in your django CMS admin
-2. **Click "Add Alias"**
-3. **Name your alias** using the format: ``mega-menu-[reverse-id]``
+- For the example above: ``mega-menu-about``
 
-   - For the example above: ``mega-menu-about``
+You do not need to manually create the alias in the admin beforehand.
 
-4. **Add plugins** to the alias placeholder to build your mega menu content
+3. Edit the Alias Content
+--------------------------
+
+After the alias has been auto-created:
+
+1. **Go to Aliases** in your django CMS admin (or use the frontend editor)
+2. **Find the alias** named ``mega-menu-[reverse-id]``
+3. **Add plugins** to the alias placeholder to build your mega menu content
 
    - You can use any plugins: Text, Images, Links, Cards, etc.
-   - Use Bootstrap grid classes for layout (row, col-lg-4, etc.)
+   - Use Bootstrap grid classes for layout (``row``, ``col-lg-4``, etc.)
 
-**Naming Convention:**
+4. **Publish** the alias
 
-.. code-block:: text
-
-   mega-menu-[reverse-id]
-
-- If reverse ID is ``about``, alias name is ``mega-menu-about``
-- If reverse ID is ``services``, alias name is ``mega-menu-services``
-
-3. How It Works
----------------
+4. How It Works
+----------------
 
 The system automatically connects pages to their mega menus:
 
-1. **Navigation rendering** checks if a page has child pages
-2. **If the page has children**, it renders a dropdown toggle
-3. **The template looks for** a reverse ID on the page
-4. **If a reverse ID exists**, it loads the alias: ``mega-menu-[reverse-id]``
-5. **The alias content** is rendered inside the dropdown menu
+1. **Navigation rendering** checks if a page has child pages **or** a reverse ID
+2. **If either condition is true**, the page renders as a dropdown toggle
+3. **If a reverse ID exists**, the template loads the alias: ``mega-menu-[reverse-id]``
+4. **If the alias doesn't exist yet**, it is created automatically on first page visit
+5. **If no reverse ID** but child pages exist, a simple dropdown with links to children is shown instead
 
-4. Template Structure
----------------------
+5. Template Structure
+----------------------
 
-The menu template (``templates/menu/menu.html``) handles this logic:
+The menu template ([menu/menu.html](backend/templates/menu/menu.html)) handles this logic:
 
 .. code-block:: django
 
-   {% if child.children %}
+   {% if child.children or child.attr.reverse_id %}
      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
        {{ child.get_menu_title }}
      </a>
 
      <div class="dropdown-menu">
        {% if child.attr.reverse_id %}
-         {# Load mega menu alias #}
-         {% static_alias "mega-menu-"|add:child.attr.reverse_id %}
+         {# Load (or auto-create) mega menu alias #}
+         {% with "mega-menu-"|add:child.attr.reverse_id as alias_code %}
+           {% static_alias alias_code %}
+         {% endwith %}
        {% else %}
-         {# Fallback: render simple dropdown #}
-         {% include "menu/dropdown.html" with parent=child %}
+         {# Fallback: render simple dropdown with child page links #}
+         {% include "menu/dropdown.html" with parent=child only %}
        {% endif %}
      </div>
    {% endif %}
@@ -101,16 +105,17 @@ Example: Creating an "About" Mega Menu
 Page Setup
 ----------
 
-1. Create page titled "About Django CMS"
-2. Add child pages (Who we serve, Our Story, etc.)
+1. Create a page titled "About Django CMS"
+2. Enable "In Navigation"
 3. Set Reverse ID: ``about``
 4. Publish the page
 
 Alias Setup
 -----------
 
-1. Create alias named: ``mega-menu-about``
-2. Add content structure:
+1. Visit the page once (as a logged-in staff member) – the alias ``mega-menu-about`` is created automatically
+2. Open the alias in the admin or frontend editor
+3. Add content structure, for example:
 
    .. code-block:: text
 
@@ -131,7 +136,7 @@ Alias Setup
             - Card footer
               - TextLink Plugin
 
-3. Publish the alias
+4. Publish the alias
 
 Result
 ------
@@ -141,7 +146,11 @@ The "About Django CMS" menu item will now show a rich mega menu with your custom
 Fallback Behavior
 =================
 
-If you don't create a mega menu alias, the system automatically falls back to rendering a simple dropdown menu with links to the child pages.
+If a page has a reverse ID but the alias has not been edited yet (empty), the dropdown will appear but show
+no content until plugins are added to the alias.
+
+If a page has no reverse ID but has child pages, the system automatically falls back to rendering a simple
+dropdown menu with links to the child pages.
 
 Styling
 =======
@@ -158,9 +167,9 @@ Tips
 ====
 
 1. **Keep reverse IDs simple**: Use lowercase, no spaces (e.g., ``about``, ``services``, ``products``)
-2. **Use Bootstrap grid**: Organize mega menu content with Bootstrap's grid system
-3. **Test responsive**: Ensure your mega menu works on all screen sizes
-4. **Use preview**: The alias preview shows how your mega menu will look
+2. **No child pages needed**: A page with only a reverse ID is enough to trigger the mega menu dropdown
+3. **Use Bootstrap grid**: Organize mega menu content with Bootstrap's grid system
+4. **Test responsive**: Ensure your mega menu works on all screen sizes
 5. **Reuse aliases**: You can use the same alias for multiple pages if needed
 
 Troubleshooting
@@ -169,10 +178,16 @@ Troubleshooting
 Mega menu not showing
 ---------------------
 
-- Check that the page has child pages
-- Verify the reverse ID is set correctly
-- Ensure the alias name matches: ``mega-menu-[reverse-id]``
-- Check that the alias is published
+- Verify the reverse ID is set on the page
+- Make sure the page is enabled in navigation
+- Ensure the alias is published (if versioning is enabled)
+- Check that the alias name matches: ``mega-menu-[reverse-id]``
+
+Alias not auto-created
+----------------------
+
+- If versioning is enabled, the alias is only auto-created when a **logged-in staff member** visits the page
+- Unauthenticated visitors will not trigger alias creation when versioning is active
 
 Content not displaying
 ----------------------
@@ -194,19 +209,7 @@ Advanced Customization
 Custom Mega Menu Layout
 -----------------------
 
-You can create unique layouts for each mega menu by adding different plugins and using Bootstrap classes:
-
-.. code-block:: django
-
-   {# Example: Two-column mega menu #}
-   <div class="row">
-     <div class="col-lg-6">
-       {# Left column content #}
-     </div>
-     <div class="col-lg-6">
-       {# Right column content #}
-     </div>
-   </div>
+You can create unique layouts for each mega menu by adding different plugins and using Bootstrap classes.
 
 Multiple Mega Menus
 -------------------
@@ -220,8 +223,8 @@ Create multiple mega menus by repeating the process for different parent pages:
 Summary
 =======
 
-1. **Set Reverse ID** on parent page (e.g., ``about``)
-2. **Create Alias** named ``mega-menu-[reverse-id]`` (e.g., ``mega-menu-about``)
-3. **Add Content** to alias using plugins
-4. **Publish** both page and alias
+1. **Set Reverse ID** on parent page (e.g., ``about``) and enable it in navigation
+2. **Visit the page** as a staff member – alias ``mega-menu-[reverse-id]`` is created automatically
+3. **Edit the alias** and add plugins for your mega menu content
+4. **Publish** the alias
 5. **Done!** Your mega menu will appear in the navigation
