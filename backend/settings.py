@@ -310,6 +310,7 @@ STORIES_PLUGIN_TEMPLATE_FOLDERS = (
 # django-meta settings
 META_SITE_PROTOCOL = os.environ.get("META_SITE_PROTOCOL", "https")
 META_SITE_DOMAIN = os.environ.get("DOMAIN", "localhost:8000")
+META_USE_SITES = True
 
 # djangocms-stories settings
 STORIES_URLCONF = "backend.blog_urls"
