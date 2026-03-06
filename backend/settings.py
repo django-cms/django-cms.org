@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     "djangocms_ecosystem",
     # djangocms-stories-related stuff
     "djangocms_stories",
+    "authors",
     "taggit",
     "taggit_autosuggest",
     "meta",
