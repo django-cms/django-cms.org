@@ -46,18 +46,18 @@ def _override_post_admin():
             model = Post
             fields = "__all__"
 
-    class CustomPostAdmin(PostAdmin):
-        form = CustomPostForm
-
-        def get_form(self, request, obj=None, **kwargs):
-            form = super().get_form(request, obj, **kwargs)
-            if obj and obj.author_id:
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            instance = kwargs.get("instance")
+            if instance and getattr(instance, "author_id", None):
                 try:
-                    profile = AuthorProfile.objects.get(user=obj.author)
-                    form.base_fields["author_profile"].initial = profile.pk
+                    profile = AuthorProfile.objects.get(user=instance.author)
+                    self.fields["author_profile"].initial = profile.pk
                 except AuthorProfile.DoesNotExist:
                     pass
-            return form
+
+    class CustomPostAdmin(PostAdmin):
+        form = CustomPostForm
 
         def get_fieldsets(self, request, obj=None):
             fieldsets = super().get_fieldsets(request, obj)
