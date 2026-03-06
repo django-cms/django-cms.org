@@ -372,10 +372,6 @@ DJANGOCMS_FRONTEND_ICON_LIBRARIES = {
 DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
     ("primary", _("Primary")),
     ("secondary", _("Secondary")),
-    ("success", _("Success")),
-    ("danger", _("Danger")),
-    ("warning", _("Warning")),
-    ("info", _("Info")),
     ("light", _("Light")),
     ("dark", _("Dark")),
     ("black", _("Black")),
@@ -466,10 +462,6 @@ TEXT_EDITOR_SETTINGS = {
     "textColors": {
         "text-primary": {"name": "Primary"},
         "text-secondary": {"name": "Secondary"},
-        "text-success": {"name": "Success"},
-        "text-warning": {"name": "Warning"},
-        "text-info": {"name": "Info"},
-        "text-danger": {"name": "Danger"},
         "text-body": {"name": "Body"},
         "text-light": {"name": "Light"},
         "text-dark": {"name": "Dark"},
