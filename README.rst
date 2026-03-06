@@ -94,6 +94,15 @@ Build for production:
 
    npm run build
 
+Custom Author Model
+-------------------
+
+The ``authors`` app provides a custom **AuthorProfile** model for blog posts, replacing the default Django user selection in djangocms-stories. It includes translatable fields (role, bio), a profile photo, and social media links with support for URLs, email, and phone numbers.
+
+Please refer to the full documentation:
+
+📖 **`Custom Author Model Guide <docs/author-custom-model.rst>`_**
+
 Mega Menu Setup
 ---------------
 
