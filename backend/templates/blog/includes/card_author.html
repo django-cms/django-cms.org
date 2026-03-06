@@ -10,29 +10,17 @@
             {% if post_content.subtitle %}
                 <small>{{ post_content.subtitle }}</small>
             {% endif %}
-            <div class="card-text text-secondary pt-3 pb-2">
+            <div class="card-text pt-3 pb-2">
                 {% render_model post_content "abstract" "" "" "truncatewords_html:20|safe"  %}
             </div>
             <div class="d-flex flex-row gap-4 mt-auto pt-4">
-                {% with post_content.author.author_profile as profile %}
-                {% if profile %}
                 <div>
-                    {% if profile.photo %}
-                        <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" width="135" height="114"/>
-                    {% endif %}
+                    <img src="{% static 'image/test.png' %}" alt="" height="101" />
                 </div>
-                <div class="py-2">
-                    <h4 class="pt-1 pb-2">{{ profile.name }}</h4>
-                    {% if profile.role %}
-                        <p class="pb-1">{{ profile.role }}</p>
-                    {% endif %}
-                </div>
-                {% else %}
                 <div>
                     <h4>{{ post_content.author.get_full_name }}</h4>
+                    <p class="pb-1 mb-2">Software-Entwickler an der Universität Innsbruck</p>
                 </div>
-                {% endif %}
-                {% endwith %}
             </div>
         </div>
     </a>
