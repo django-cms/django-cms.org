@@ -25,6 +25,9 @@
         linear-gradient(to right, rgba(230, 230, 230, 1) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(230, 230, 230, 1) 1px, transparent 1px);
   }
+  & > a {
+    text-align: center;
+  }
 }
 
 // Variant with lighter grid (for dark backgrounds)
