@@ -22,7 +22,7 @@
             {% if links %}
                 <div class="d-flex gap-2 button-group pt-1 mt-4">
                     {% for link in links %}
-                        <a href="{{ link.url }}" aria-label="{{ link.label }}" class="btn btn-primary" title="{{ link.label }}" {% if link.url|slice:":7" == "http://" or link.url|slice:":8" == "https://" %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                        <a href="{{ link.url }}" target="_blank" aria-label="{{ link.label }}" class="btn btn-primary" title="{{ link.label }}" {% if link.url|slice:":7" == "http://" or link.url|slice:":8" == "https://" %}target="_blank" rel="noopener noreferrer"{% endif %}>
                             <i class="{{ link.icon }} fs-4" aria-hidden="True"></i>
                         </a>
                     {% endfor %}
