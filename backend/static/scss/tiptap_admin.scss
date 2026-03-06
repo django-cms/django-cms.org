@@ -60,22 +60,6 @@ $theme-colors: map-merge(
         background-color: $secondary !important;
     }
 
-    .bg-success {
-        background-color: map-get($theme-colors, "success") !important;
-    }
-
-    .bg-danger {
-        background-color: $danger !important;
-    }
-
-    .bg-warning {
-        background-color: map-get($theme-colors, "warning") !important;
-    }
-
-    .bg-info {
-        background-color: map-get($theme-colors, "info") !important;
-    }
-
     .bg-light {
         background-color: $light !important;
     }
