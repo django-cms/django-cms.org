@@ -223,7 +223,7 @@ class LogoCarousel(CMSFrontendComponent):
     """LogoCarousel component"""
 
     class Meta:
-        name = _("Logo Carousel")
+        name = _("Carousel")
         render_template = "carousel/logo_carousel.html"
         allow_children = True
         child_classes = [
