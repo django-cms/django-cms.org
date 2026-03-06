@@ -31,22 +31,6 @@ $theme-colors: map-merge(
         color: $secondary !important;
     }
 
-    .text-success {
-        color: map-get($theme-colors, "success") !important;
-    }
-
-    .text-danger {
-        color: $danger !important;
-    }
-
-    .text-warning {
-        color: map-get($theme-colors, "warning") !important;
-    }
-
-    .text-info {
-        color: map-get($theme-colors, "info") !important;
-    }
-
     .text-light {
         color: $light !important;
     }
