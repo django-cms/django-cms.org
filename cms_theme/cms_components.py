@@ -183,6 +183,7 @@ class CTAPanel(CMSFrontendComponent):
 
     class Meta:
         name = _("CTA Panel")
+        module = _("Sections")
         render_template = "cta/cta_panel.html"
         allow_children = True
         child_classes = [
@@ -284,6 +285,7 @@ class BenefitsPanel(CMSFrontendComponent):
 
     class Meta:
         name = _("Benefits Panel")
+        module = _("Sections")
         render_template = "benefits/benefits_panel.html"
         allow_children = True
         child_classes = [
@@ -650,6 +652,7 @@ class QuotePanelContainer(CMSFrontendComponent):
 
     class Meta:
         name = _("Quote Panel")
+        module = _("Sections")
         render_template = "quote_panel/quote_panel.html"
         allow_children = True
         child_classes = [

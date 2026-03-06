@@ -1,0 +1,11 @@
+{% load frontend cms_component sekizai_tags cms_theme_tags i18n %}
+
+{# Declare component - template tags are evaluated at project startup and will render empty #}
+{% cms_component "ContainerWithGrid" name=_("Grid Section") module=_("Sections") show_add_form=False %}
+<section class="container-full bg-white py-6 background-grid">
+    <div class="container">
+        {% childplugins instance %}
+            <p>{% translate "Add content here" %}</p>
+        {% endchildplugins %}
+    </div>
+</section>
