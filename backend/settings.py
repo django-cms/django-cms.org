@@ -310,6 +310,7 @@ STORIES_PLUGIN_TEMPLATE_FOLDERS = (
 # django-meta settings
 META_SITE_PROTOCOL = os.environ.get("META_SITE_PROTOCOL", "https")
 META_SITE_DOMAIN = os.environ.get("DOMAIN", "localhost:8000")
+META_USE_SITES = True
 
 # djangocms-stories settings
 STORIES_URLCONF = "backend.blog_urls"
@@ -321,6 +322,10 @@ STORIES_TEMPLATE_CHOICES = (("blog/post_list.html", _("Default")),)
 
 
 # djangocms-frontend settings
+DJANGOCMS_FRONTEND_COMPONENT_FIELDS = {
+    "cms_theme": "cms_theme.fields.ColorChoiceField",
+}
+
 DJANGOCMS_FRONTEND_ADMIN_CSS = {
     "all": ("css/admin_colors.css",),
 }

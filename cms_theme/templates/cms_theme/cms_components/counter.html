@@ -1,21 +1,32 @@
 <!-- cms_theme/templates/cms_theme/cms_components/counter.html -->
-{% load frontend cms_component sekizai_tags cms_theme_tags %}
+{% load frontend cms_component sekizai_tags cms_theme_tags icon_tags %}
 
 {# Declare component - template tags are evaluated at project startup and will render empty #}
 {% cms_component "Counter" name=_("Counter") child_classes="TextLinkPlugin"|split mixins="Background|Attributes"|split %}
-{% field "title" forms.CharField required=True label=_("Title") %}
+{% field "icon" IconPickerField required=False label=_("Icon") %}
+{% field "title" forms.CharField required=False label=_("Title") %}
 {% field "number" forms.IntegerField required=True label=_("Number") %}
-{% field "description" HTMLFormField required=True label=_("Description") %}
-{% field "color_style" forms.ChoiceField required=False label=_("Text Color") initial="dark" choices=""|color_choices_string|make_choices %}
-
+{% field "number_color" ColorChoiceField required=False label=_("Number Color") initial="dark" %}
+{% field "description" HTMLFormField required=False label=_("Description") %}
+{% field "color_style" ColorChoiceField required=False label=_("Text Color") initial="dark" %}
 {# Actual template - when rendering, declared fields are available in the context #}
+{% add_css_for_icon icon %}
 <div class="counter-component p-lg-3 rounded text-{{ color_style|default:'black' }} {{ instance.get_classes }}"{{ instance.get_attributes }}>
-    <div class="p-lg-1">
-        <p class="overline pb-1">{{ title }}</p>
-        <div class="counter-number h2 py-4"
+    <div class="counter-body-spacing">
+        {% if icon %}
+            <div class="counter-icon">
+                <i class="{{ icon.iconClass }} counter-icon-size" aria-hidden="true">{{ icon.iconText }}</i>
+            </div>
+        {% endif %}
+        {% if title %}
+            <p class="overline pb-1">{{ title }}</p>
+        {% endif %}
+        <div class="counter-number h2 py-4 {% if number_color %}text-{{ number_color }}{% endif %}"
              data-target="{{ number }}"
-             aria-label="{{ title }}: {{ number }}"
+             aria-label="{% if title %}{{ title }}:{% endif %} {{ number }}"
              role="status">0</div>
-        <div class="counter-description pt-1 fs-4">{{ description|safe }}</div>
+        {% if description %}
+            <div class="counter-description pt-1">{{ description|safe }}</div>
+        {% endif %}
     </div>
 </div>

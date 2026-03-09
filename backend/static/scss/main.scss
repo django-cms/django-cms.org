@@ -98,3 +98,15 @@
   margin: 0;
   padding: 0;
 }
+
+.counter-icon-size {
+  line-height: 1;
+  display: block;
+  text-align: left;
+
+  &::before {
+    display: inline-block !important;
+  font-size: 50px !important;
+  text-align: left !important;
+  }
+}
