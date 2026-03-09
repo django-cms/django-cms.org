@@ -43,8 +43,8 @@
   &:active,
   &.active {
     background-color: transparent;
-    color: $primary;
-    border: 1px solid $primary;
+    color: $secondary;
+    border: 1px solid $secondary;
   }
 
   &:focus-visible {
