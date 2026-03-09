@@ -3,6 +3,13 @@
   position: relative;
   overflow: hidden;
 
+  & .bg-secondary {
+    color: $white;
+    h1, .overline {
+      color: $primary;
+    }
+  }
+
   .hero-content-right {
     position: relative;
   }

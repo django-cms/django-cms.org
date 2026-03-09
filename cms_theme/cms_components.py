@@ -18,15 +18,26 @@ class Hero(CMSFrontendComponent):
         render_template = "hero/hero.html"
         allow_children = True
         child_classes = [
-            "TextPlugin",
-            "TextLinkPlugin",
             "ImagePlugin",
-            "HeadingPlugin",
             "CounterPlugin",
-            "SpacingPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("heading", "overline", "body")
 
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=True,
+        initial="",
+    )
+    overline = forms.CharField(
+        label=_("Overline"),
+        required=False,
+        initial="",
+    )
+    body = HTMLFormField(
+        label=_("Body"),
+        required=False,
+    )
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
         required=False,
