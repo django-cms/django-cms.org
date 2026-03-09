@@ -322,6 +322,10 @@ STORIES_TEMPLATE_CHOICES = (("blog/post_list.html", _("Default")),)
 
 
 # djangocms-frontend settings
+DJANGOCMS_FRONTEND_COMPONENT_FIELDS = {
+    "cms_theme": "cms_theme.fields.ColorChoiceField",
+}
+
 DJANGOCMS_FRONTEND_ADMIN_CSS = {
     "all": ("css/admin_colors.css",),
 }
