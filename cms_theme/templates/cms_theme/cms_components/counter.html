@@ -6,12 +6,13 @@
 {% field "icon" IconPickerField required=False label=_("Icon") %}
 {% field "title" forms.CharField required=False label=_("Title") %}
 {% field "number" forms.IntegerField required=True label=_("Number") %}
+{% field "is_percent" forms.BooleanField required=False label=_("Is Percent") initial=False %}
 {% field "number_color" ColorChoiceField required=False label=_("Number Color") initial="dark" %}
 {% field "description" HTMLFormField required=False label=_("Description") %}
 {% field "color_style" ColorChoiceField required=False label=_("Text Color") initial="dark" %}
 {# Actual template - when rendering, declared fields are available in the context #}
 {% add_css_for_icon icon %}
-<div class="counter-component p-lg-3 rounded text-{{ color_style|default:'black' }} {{ instance.get_classes }}"{{ instance.get_attributes }}>
+<div class="text-start counter-component p-lg-3 rounded text-{{ color_style|default:'black' }} {{ instance.get_classes }}"{{ instance.get_attributes }}>
     <div class="counter-body-spacing">
         {% if icon %}
             <div class="counter-icon">
@@ -23,8 +24,9 @@
         {% endif %}
         <div class="counter-number h2 py-4 {% if number_color %}text-{{ number_color }}{% endif %}"
              data-target="{{ number }}"
-             aria-label="{% if title %}{{ title }}:{% endif %} {{ number }}"
-             role="status">0</div>
+             {% if is_percent %}data-suffix="%"{% endif %}
+             aria-label="{% if title %}{{ title }}:{% endif %} {{ number }}{% if is_percent %}%{% endif %}"
+             role="status">0{% if is_percent %}%{% endif %}</div>
         {% if description %}
             <div class="counter-description pt-1">{{ description|safe }}</div>
         {% endif %}
