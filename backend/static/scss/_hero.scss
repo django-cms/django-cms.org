@@ -3,11 +3,16 @@
   position: relative;
   overflow: hidden;
 
-  &.bg-secondary {
+  color: $secondary;
+
+  &.bg-secondary, &.bg-dark, &.bg-second-primary {
     color: $white;
-    h1,
-    .overline {
+    h1 {
       color: $primary;
+    }
+    a:hover {
+      color: $white;
+      border-color: $white;
     }
   }
 

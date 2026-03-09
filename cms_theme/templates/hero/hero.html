@@ -12,7 +12,10 @@
                         <h1 class="mt-2 pb-4">{% inline_field instance "heading"  %}</h1>
                     </div>
                 </div>
-                {% if instance.body %}{% inline_field instance "body" "" "safe" %}{% endif %}
+                {% if instance.body %}<div class="fs-5 pb-2">{% inline_field instance "body" "" "safe" %}</div>{% endif %}
+                {% for plugin in instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}
+                   {% render_plugin plugin %}
+                {% endfor %}
             </div>
 
             <div class="col-lg-6 hero-content-right position-relative">

@@ -18,6 +18,7 @@ class Hero(CMSFrontendComponent):
         render_template = "hero/hero.html"
         allow_children = True
         child_classes = [
+            "TextLinkPlugin",
             "ImagePlugin",
             "CounterPlugin",
         ]
