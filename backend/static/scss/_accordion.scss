@@ -89,6 +89,10 @@
     &:not(.collapsed) {
       color: var(--bs-primary);
     }
+
+    &.collapsed:hover {
+      color: var(--bs-grey-dark);
+    }
   }
   .accordion-item::before {
     background-color: rgba(var(--bs-primary-rgb), 0.5);
@@ -103,6 +107,10 @@
     color: rgba(var(--bs-secondary-rgb), 0.5);
 
     &:not(.collapsed) {
+      color: var(--bs-secondary);
+    }
+
+    &.collapsed:hover {
       color: var(--bs-secondary);
     }
   }
@@ -121,6 +129,10 @@
     &:not(.collapsed) {
       color: #fff;
     }
+
+    &.collapsed:hover {
+      color: #fff;
+    }
   }
   .accordion-item::before {
     background-color: rgba(255, 255, 255, 0.5);
@@ -137,6 +149,10 @@
     &:not(.collapsed) {
       color: #6c757d;
     }
+
+    &.collapsed:hover {
+      color: #6c757d;
+    }
   }
   .accordion-item::before {
     background-color: rgba(108, 117, 125, 0.5);
@@ -151,6 +167,10 @@
     color: rgba(0, 0, 0, 0.5);
 
     &:not(.collapsed) {
+      color: #000;
+    }
+
+    &.collapsed:hover {
       color: #000;
     }
   }
