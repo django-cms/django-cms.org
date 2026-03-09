@@ -3,9 +3,10 @@
   position: relative;
   overflow: hidden;
 
-  & .bg-secondary {
+  &.bg-secondary {
     color: $white;
-    h1, .overline {
+    h1,
+    .overline {
       color: $primary;
     }
   }
