@@ -23,6 +23,7 @@
         }
 
         const target = parseInt(counter.getAttribute('data-target'), 10);
+        const suffix = counter.getAttribute('data-suffix') || '';
 
         // Validate target number
         if (isNaN(target)) {
@@ -35,7 +36,7 @@
 
         // If user prefers reduced motion, show final value immediately
         if (prefersReducedMotion) {
-            counter.innerText = formatNumber(target);
+            counter.innerText = formatNumber(target) + suffix;
             counter.setAttribute('aria-live', 'off');
             return;
         }
@@ -56,13 +57,13 @@
             const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
 
             count = Math.floor(easeProgress * target);
-            counter.innerText = formatNumber(count);
+            counter.innerText = formatNumber(count) + suffix;
 
             if (progress < 1) {
                 requestAnimationFrame(updateCounter);
             } else {
                 // Ensure final value is exact
-                counter.innerText = formatNumber(target);
+                counter.innerText = formatNumber(target) + suffix;
                 // Stop announcing updates to screen readers
                 counter.setAttribute('aria-live', 'off');
             }
