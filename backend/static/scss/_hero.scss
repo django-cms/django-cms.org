@@ -3,6 +3,19 @@
   position: relative;
   overflow: hidden;
 
+  color: $secondary;
+
+  &.bg-secondary, &.bg-dark, &.bg-second-primary {
+    color: $white;
+    h1 {
+      color: $primary;
+    }
+    a:hover {
+      color: $white;
+      border-color: $white;
+    }
+  }
+
   .hero-content-right {
     position: relative;
   }
