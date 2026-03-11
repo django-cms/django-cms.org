@@ -41,3 +41,8 @@ def pagination_range(current_page, total_pages, neighbours=1):
             result.append("...")
         result.append(page)
     return result
+
+
+@register.filter
+def est_read_time(post_content):
+    return 5

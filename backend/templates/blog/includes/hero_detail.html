@@ -1,4 +1,4 @@
-{% load static cms_tags sekizai_tags cms_theme_tags frontend i18n %}
+{% load static cms_tags sekizai_tags cms_theme_tags frontend i18n blog_tags %}
 
 <section class="py-6 hero-section bg-secondary background-grid">
     <div class="container">
@@ -15,11 +15,17 @@
                 {% endif %}
                 {% if post_content.post.date_featured %}
                     <div class="pt-3 mt-2">
-                        <div class="pb-2 text-white col-12 col-lg-11"><i class="fs-5 bi bi-geo-alt me-2"></i> {% trans "Online" %}</div>
-                        <div class="pb-2 text-white col-12 col-lg-11"><i class="fs-5 bi bi-calendar4 me-2"></i> {{ post_content.post.date_featured|date:"F j, Y" }}</div>
-                        <div class="pb-2 text-white col-12 col-lg-11"><i class="fs-5 bi bi-clock me-2"></i> {{ post_content.post.date_featured|date:"g:i" }} UTC</div>
+                        <div class="pb-2 text-white col-12 col-lg-11 d-flex align-items-center"><i class="fs-5 bi bi-geo-alt me-2"></i> {% trans "Online" %}</div>
+                        <div class="pb-2 text-white col-12 col-lg-11 d-flex align-items-center"><i class="fs-5 bi bi-calendar4 me-2"></i> {{ post_content.post.date_featured|date:"F j, Y" }}</div>
+                        <div class="pb-2 text-white col-12 col-lg-11 d-flex align-items-center"><i class="fs-5 bi bi-clock me-2"></i> {{ post_content.post.date_featured|date:"g:i" }} UTC</div>
                     </div>
                 {% endif %}
+                {# minutes of reading time #}
+                {% with read_time=post_content|est_read_time %}
+                    {% if read_time %}
+                        <div class="pb-2 text-white col-12 col-lg-11 d-flex align-items-center"><i class="fs-5 bi bi-clock me-2"></i> {{ read_time }} {% trans "minutes read" %}</div>
+                    {% endif %}
+                {% endwith %}
             </div>
 
             <div class="col-lg-6 hero-content-right position-relative">
