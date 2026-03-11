@@ -37,7 +37,7 @@
             <div class="col-12 my-lg-0 col col-md-2 py-1 my-4 py-lg-0">
                 <h2 class="text-white pb-1 overline">{% inline_field instance "social" %}</h2>
                 <nav class="{{ instance.get_classes }} list-link-container">
-                    <ul class="list-unstyled m-0 d-flex list-container flex-column gap-2" role="list">
+                    <ul class="list-unstyled m-0 d-flex list-container flex-row gap-2" role="list">
                         {% for plugin in instance|get_slot:"social" %}
                             <li class="list-link-item">
                                 {% render_plugin plugin %}
