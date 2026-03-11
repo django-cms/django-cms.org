@@ -14,17 +14,15 @@
     </div>
     <main>
         <div class="container">
-            <div class="row">
-                <div class="col-12 col-lg-4 order-1 order-lg-2">
-                    <div class="sticky-lg-top">
-                    {% placeholder "Client Card" %}
-                    </div>
-                </div>
-                <div class="col-12 col-lg-8 order-2 order-lg-1">
+            <div class="post-detail-grid pb-6">
+                <div class="post-detail-main">
                     {% placeholder "Left Column" %}
                 </div>
-                <div class="col-12 col-lg-4 offset-lg-8 order-3">
+                <div class="post-detail-sidebar-top">
                     {% include "blog/includes/author_card.html" %}
+                </div>
+                <div class="post-detail-sidebar-bottom">
+                    {% placeholder "Client Card" %}
                 </div>
             </div>
         {% static_alias "Post detail" %}

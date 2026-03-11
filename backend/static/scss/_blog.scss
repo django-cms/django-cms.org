@@ -160,3 +160,34 @@
 .search-term-w {
   max-width: 842px;
 }
+
+// Post detail two-column layout
+.post-detail-grid {
+  display: grid;
+  grid-template-areas:
+    "client-card"
+    "main"
+    "author";
+
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: 1fr 33.333%;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "main author"
+      "main client-card";
+    gap: 0 var(--bs-gutter-x);
+  }
+
+  .post-detail-main           { grid-area: main; }
+  .post-detail-sidebar-top    { grid-area: author; }
+  .post-detail-sidebar-bottom {
+    grid-area: client-card;
+
+    @include media-breakpoint-up(lg) {
+      align-self: start;
+      position: sticky;
+      top: 1rem;
+      margin-top: 64px;
+    }
+  }
+}
