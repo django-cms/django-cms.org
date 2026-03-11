@@ -389,6 +389,13 @@ DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
     ("bronze", _("Bronze")),
 )
 
+DJANGO_FORM_BUILDER_COLOR_STYLE_CHOICES = (
+    ("primary", _("Primary")),
+    ("secondary", _("Secondary")),
+    ("second-primary", _("Dark Green")),
+)
+DJANGOCMS_FORM_BUILDER_COLOR_STYLE_CHOICES = DJANGO_FORM_BUILDER_COLOR_STYLE_CHOICES
+
 DJANGOCMS_FRONTEND_SPACER_SIZES = (
     ("0", "* 0"),
     ("1", "* .25"),
