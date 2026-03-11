@@ -1,0 +1,27 @@
+{% load static cms_tags sekizai_tags cms_theme_tags frontend %}
+
+<section class="py-6 hero-section bg-secondary background-grid">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-3 mb-lg-0 hero-content-left text-start">
+                    <span class="overline text-primary">{{ post_content.post.categories.first }}{% if post_content.post.date_published %} | {{post_content.post.date_published|date:"F j, Y" }}{% endif %}</span>
+                <div class="row">
+                    <div class="col-12 col-lg-11">
+                        <h1 class="mt-2 pb-4 text-primary">{{ post_content.title }}</h1>
+                    </div>
+                </div>
+                {% if post_content.abstract %}
+                    <div class="fs-5 pb-2 text-white col-12 col-lg-11">{{ post_content.abstract }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-6 hero-content-right position-relative">
+                {% if post_content.post.main_image %}
+                    <div class="hero-main-image mt-5 mt-lg-0">
+                        <img src="{{ post_content.post.main_image.url }}" alt="{{ post_content.main_image.default_alt_text|default:'' }}">
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
