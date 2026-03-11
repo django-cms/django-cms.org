@@ -89,10 +89,10 @@ body {
   font-feature-settings: 'liga' off, 'clig' off;
   -webkit-font-smoothing: antialiased;   
   -moz-osx-font-smoothing: grayscale;
-  background: $dark;
+  background-color: $dark;
 
   main {
-    background: $white;
+    background-color: $white;
   }
 }
 
