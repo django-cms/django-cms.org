@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
-from djangocms_frontend.component_base import CMSFrontendComponent
+from djangocms_frontend.component_base import CMSFrontendComponent, Slot
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.contrib.image.fields import ImageFormField
@@ -138,14 +138,44 @@ class Footer(CMSFrontendComponent):
         name = _("Footer")
         render_template = "footer/footer.html"
         allow_children = True
-        child_classes = [
-            "GridRowPlugin",
-            "TextPlugin",
-            "TextLinkPlugin",
-            "ImagePlugin",
-            "HeadingPlugin",
-        ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("community", "developer", "social")
+        slots = (
+            Slot("community", _("Community Links"), child_classes=["TextLinkPlugin"]),
+            Slot("developer", _("Developer Links"), child_classes=["TextLinkPlugin"]),
+            Slot("social", _("Social Links"), child_classes=["TextLinkPlugin"]),
+            Slot("legal", _("Legal (horizontal)"), child_classes=["TextLinkPlugin", "TextPlugin"]),
+        )
+        child_classes = []  # Only slots, no direct children allowed
+        fieldsets = (
+            (
+                None,
+                {
+                    "fields": (
+                        ("community", "developer", "social"),
+                        "divider_color",
+                    )
+                },
+            ),
+        )
+
+    community = forms.CharField(
+        label=_("Community heading"),
+        required=True,
+        initial=_("Community"),
+    )
+
+    developer = forms.CharField(
+        label=_("Developer heading"),
+        required=True,
+        initial=_("Developer"),
+    )
+
+    social = forms.CharField(
+        label=_("Social heading"),
+        required=True,
+        initial=_("Follow us"),
+    )
 
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),

@@ -43,3 +43,14 @@ def filter_by_type(plugins, plugin_types):
     if isinstance(plugin_types, str):
         plugin_types = [t.strip() for t in plugin_types.split(',')]
     return [p for p in plugins if p.plugin_type in plugin_types]
+
+
+@register.filter
+def get_slot(instance, slot_name):
+    """Get plugins for a specific slot
+    Usage: plugins|get_slot:"community"
+    """
+    plugin_type = f"{instance.__class__.__name__}{slot_name.capitalize()}Plugin"
+    for plugin in instance.child_plugin_instances:
+        if plugin.plugin_type == plugin_type:
+            yield from plugin.child_plugin_instances
