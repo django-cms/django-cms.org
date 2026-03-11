@@ -1,15 +1,52 @@
-{% load cms_tags cms_theme_tags %}
+{% load cms_tags cms_theme_tags frontend static %}
 
-<section class="footer-section {{ instance.get_classes }}"{{ instance.get_attributes }}>
+
+<section class="footer-section py-6 bg-dark {{ instance.get_classes }}"{{ instance.get_attributes }}>
     <div class="container">
-        {% with plugins=instance.child_plugin_instances %}
+        <div class="row cms-plugin">
+            <div class="col-12 col col-md-6">
+                <img src="{% static 'cms/fonts/src/logo.svg' %}" height="35" class="img-fluid logo-invert">
+            </div>
 
-        {# Top area: Image left + TextLinkPlugin columns right #}
-        {% for plugin in plugins %}
-            {% if plugin.plugin_type == "GridRowPlugin" %}
-                {% render_plugin plugin %}
-            {% endif %}
-        {% endfor %}
+            <div class="col-12 my-lg-0 col col-md-2 py-1 my-4 py-lg-0">
+                <h2 class="text-white pb-1 overline">{% inline_field instance "community" %}</h2>
+                <nav class="{{ instance.get_classes }} list-link-container">
+                    <ul class="list-unstyled m-0 d-flex list-container flex-column gap-2" role="list">
+                        {% for plugin in instance|get_slot:"community" %}
+                            <li class="list-link-item">
+                                {% render_plugin plugin %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-12 my-lg-0 col col-md-2 py-1 my-4 py-lg-0">
+                <h2 class="text-white pb-1 overline">{% inline_field instance "developer" %}</h2>
+                <nav class="{{ instance.get_classes }} list-link-container">
+                    <ul class="list-unstyled m-0 d-flex list-container flex-column gap-2" role="list">
+                        {% for plugin in instance|get_slot:"developer" %}
+                            <li class="list-link-item">
+                                {% render_plugin plugin %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-12 my-lg-0 col col-md-2 py-1 my-4 py-lg-0">
+                <h2 class="text-white pb-1 overline">{% inline_field instance "social" %}</h2>
+                <nav class="{{ instance.get_classes }} list-link-container">
+                    <ul class="list-unstyled m-0 d-flex list-container flex-column gap-2" role="list">
+                        {% for plugin in instance|get_slot:"social" %}
+                            <li class="list-link-item">
+                                {% render_plugin plugin %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
 
         {# Divider #}
         <hr class="text-{{ instance.config.divider_color }} opacity-100 mt-6 mb-4 pb-2">
@@ -18,7 +55,7 @@
         <div class="row align-items-start footer-bottom">
             <div class="col-12 col-lg-6">
                 <div class="d-flex flex-row flex-wrap gap-footer mb-3 mb-md-0 p-1 p-md-0">
-                    {% for plugin in plugins %}
+                    {% for plugin in instance|get_slot:"legal" %}
                         {% if plugin.plugin_type == "TextLinkPlugin" %}
                             {% render_plugin plugin %}
                         {% endif %}
@@ -26,15 +63,13 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-6 text-start text-md-end">
-                {% for plugin in plugins %}
+            <div class="col-12 col-lg-6 text-start text-md-end text-white">
+                {% for plugin in instance|get_slot:"legal" %}
                     {% if plugin.plugin_type == "TextPlugin" %}
                         {% render_plugin plugin %}
                     {% endif %}
                 {% endfor %}
             </div>
         </div>
-
-        {% endwith %}
     </div>
 </section>

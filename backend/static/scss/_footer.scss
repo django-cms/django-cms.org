@@ -2,4 +2,8 @@
   .gap-footer {
     gap: 1.25rem; // 20px
   }
+  img.logo-invert {
+    filter: invert(1);
+    height: 35px;
+  }
 }
