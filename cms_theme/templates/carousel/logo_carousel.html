@@ -4,11 +4,9 @@
          {{ instance.get_attributes }}>
     {% with plugins=instance.child_plugin_instances %}
         <div class="container text-center">
-            {% for plugin in plugins %}
-                {% if plugin.plugin_type == "HeadingPlugin" %}
-                    {% render_plugin plugin %}
-                {% endif %}
-            {% endfor %}
+            {% if instance.heading %}
+                <h3 class="p-carousel text-center overline text-secondary d-inline text-{{ instance.text_color }} text-bg-{{ instance.bg_color }}">{% inline_field instance "heading" %}</h3>
+            {% endif %}
             <div class="carousel-container mx-6">
                 <div class="swiper logo-swiper-carousel logoSwiper-{{ instance.id }}"
                     data-instance-id="{{ instance.id }}"
@@ -18,9 +16,7 @@
                     data-delay="{{ instance.delay }}">
                     <div class="swiper-wrapper">
                         {% for plugin in plugins %}
-                            {% if plugin.plugin_type == "CarouselItemPlugin" %}
-                                {% render_plugin plugin %}
-                            {% endif %}
+                            {% render_plugin plugin %}
                         {% endfor %}
                     </div>
                 </div>
