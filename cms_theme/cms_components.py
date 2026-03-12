@@ -46,6 +46,8 @@ class Hero(CMSFrontendComponent):
         initial=False,
     )
 
+    def get_short_description(self):
+        return self.heading if self.heading else super().get_short_description()
 
 @components.register
 class Features(CMSFrontendComponent):
@@ -240,13 +242,13 @@ class CTAPanel(CMSFrontendComponent):
         initial=False,
     )
 
-    eyebrow_text = forms.CharField(
-        label=_("Eyebrow text"),
+    main_heading = HTMLFormField(
+        label=_("Main heading"),
         required=False,
     )
 
-    main_heading = HTMLFormField(
-        label=_("Main heading"),
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
 
@@ -365,6 +367,8 @@ class LogoCarousel(CMSFrontendComponent):
         help_text=_("Color for the carousel button."),
     )
 
+    def get_short_description(self):
+        return self.heading if self.heading else super().get_short_description()
 
 @components.register
 class BenefitsPanel(CMSFrontendComponent):
@@ -843,3 +847,6 @@ class Heading(CMSFrontendComponent):
         initial=frontend_settings.EMPTY_CHOICE,
         widget=ColoredButtonGroup(),
     )
+
+    def get_short_description(self):
+        return f"{self.heading} ({self.heading_level})" if self.heading else super().get_short_description()
