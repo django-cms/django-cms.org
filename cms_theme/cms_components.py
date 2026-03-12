@@ -69,6 +69,7 @@ class Hero(CMSFrontendComponent):
     def get_short_description(self):
         return self.heading if self.config.get("heading") else ""
 
+
 @components.register
 class Features(CMSFrontendComponent):
     """Features section container with accordion and content area"""
