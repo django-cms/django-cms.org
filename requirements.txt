@@ -242,3 +242,5 @@ whitenoise==6.12.0
 # The following packages are considered to be unsafe in a requirements file:
 # pip
 # setuptools
+
+git+https://github.com/fsbraun/djangocms4-utilities#egg=djangocms4-utilities
