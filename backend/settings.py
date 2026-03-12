@@ -544,3 +544,13 @@ DJANGOCMS_FILE_TEMPLATES = [
     ("secondary", _("Secondary file link")),
     ("primary", _("Primary file link")),
 ]
+
+
+if not DEBUG:
+    import sentry_sdk
+    sentry_sdk.init(
+        dsn="https://f8c524803172e25fffe7e04be0e9fdc5@o4511032249155584.ingest.de.sentry.io/4511032253415504",
+        # Add data like request headers and IP for users,
+        # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+        send_default_pii=True,
+    )   
