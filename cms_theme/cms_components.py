@@ -283,6 +283,8 @@ class LogoCarousel(CMSFrontendComponent):
                         "bg_color",
                     )
                 },
+            ),
+            (
                 _("Settings"),
                 {
                     "fields": (
@@ -291,7 +293,8 @@ class LogoCarousel(CMSFrontendComponent):
                         "autoplay",
                         "delay",
                         "btn_color",
-                    )
+                    ),
+                    "classes": ("collapse",),
                 },
             ),
         )
