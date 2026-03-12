@@ -1,0 +1,4 @@
+{% load cms_tags frontend %}{% spaceless %}
+    {% if instance.overline %}<p class="overline text-{{ instance.heading_context }}">{% inline_field instance "overline" %}</p>{% endif %}
+    <{{ instance.heading_level }}{{ instance.get_attributes }} class="pb-5 mt-3 text-{{ instance.heading_context }}">{% inline_field instance "heading" %}</{{ instance.heading_level }}>
+{% endspaceless %}
