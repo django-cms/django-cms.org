@@ -1,12 +1,14 @@
 from django import forms
 from django.conf import settings    
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.component_base import CMSFrontendComponent, Slot
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.contrib.image.fields import ImageFormField
-from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
+from djangocms_frontend.fields import ButtonGroup, ColoredButtonGroup, HTMLFormField, IconGroup
+from djangocms_frontend.helpers import first_choice
 from djangocms_frontend import settings as frontend_settings
 
 
@@ -850,3 +852,56 @@ class Heading(CMSFrontendComponent):
 
     def get_short_description(self):
         return f"{self.heading} ({self.heading_level})" if self.heading else super().get_short_description()
+
+
+@components.register
+class Spacing(CMSFrontendComponent):
+    """Spacing component to add vertical spacing between components"""
+
+    class Meta:
+        name = _("Spacing")
+        render_template = "spacing/spacing.html"
+        allow_children = True
+        mixins = ["Attributes"]
+
+    space_property = forms.ChoiceField(
+        label=_("Property"),
+        choices=frontend_settings.SPACER_PROPERTY_CHOICES,
+        initial=first_choice(frontend_settings.SPACER_PROPERTY_CHOICES),
+        widget=ButtonGroup(attrs=dict(property="text")),
+    )
+    space_sides = forms.ChoiceField(
+        label=_("Sides"),
+        choices=frontend_settings.SPACER_SIDE_CHOICES,
+        initial=first_choice(frontend_settings.SPACER_SIDE_CHOICES),
+        required=False,
+        widget=ButtonGroup(attrs=dict(property="text")),
+    )
+    space_size = forms.ChoiceField(
+        label=_("Size"),
+        choices=frontend_settings.SPACER_SIZE_CHOICES + (("auto", _("Auto")),),
+        initial=first_choice(frontend_settings.SPACER_SIZE_CHOICES),
+        widget=ButtonGroup(attrs=dict(property="text")),
+    )
+    space_device = forms.ChoiceField(
+        label=_("Device"),
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.DEVICE_CHOICES,
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
+        required=False,
+        widget=IconGroup(),
+    )
+
+    def clean(self):
+        super().clean()
+        if self.cleaned_data["space_property"] == "p" and self.cleaned_data["space_size"] == "auto":
+            raise ValidationError(
+                {
+                    "space_property": _(
+                        "Padding does not have an auto spacing. Either switch to margin or a defined size."
+                    ),
+                    "space_size": _(
+                        "Padding does not have an auto spacing. Either "
+                        "switch to a defined size or change the spacing property."
+                    ),
+                }
+            )
