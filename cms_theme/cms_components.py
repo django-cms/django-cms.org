@@ -925,3 +925,41 @@ class Spacing(CMSFrontendComponent):
                     ),
                 }
             )
+
+
+@components.register
+class CodeBlock(CMSFrontendComponent):
+    """Code card component to render code snippets with syntax highlighting"""
+    class Media:
+        js = (
+            "admin/vendor/ace/ace.js"
+            if "djangocms_static_ace" in settings.INSTALLED_APPS
+            else "https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.js",
+        )
+
+    class Meta:
+        name = _("Code Block")
+        render_template = "code_block/code_block.html"
+        change_form_template = "code_block/admin/code_block.html"
+        allow_children = True
+        child_classes = []
+        mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("heading",)
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+        help_text=_("Heading for the code block."),
+    )   
+    dark_mode = forms.BooleanField(
+        label=_("Dark mode"),
+        required=False,
+        initial=False,
+        help_text=_("Enable dark mode for code block."),
+    )
+    code_content = forms.CharField(
+        label=_("Code"),
+        initial="",
+        required=True,
+        widget=forms.widgets.Textarea(attrs={"class": "js-ckeditor-use-selected-text"}),
+    )
