@@ -32,7 +32,7 @@ class Hero(CMSFrontendComponent):
         initial="",
     )
     overline = forms.CharField(
-        label=_("Overline"),
+        label=_("Eyebrow text"),
         required=False,
         initial="",
     )
@@ -801,4 +801,45 @@ class QuotePanelItem(CMSFrontendComponent):
         initial="dark",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
         help_text=_("Text color for quote item."),
+    )
+
+
+@components.register
+class Heading(CMSFrontendComponent):
+    """Heading component with text color option"""
+
+    HEADINGS = (
+        ("h1", _("Heading 1")),
+        ("h2", _("Heading 2")),
+        ("h3", _("Heading 3")),
+        ("h4", _("Heading 4")),
+        ("h5", _("Heading 5")),
+    )
+
+    class Meta:
+        name = _("Heading")
+        render_template = "heading/heading.html"
+        allow_children = True
+        child_classes = []
+        frontend_editable_fields = ("heading", "overline")
+
+    heading_level = forms.ChoiceField(
+        label=_("Heading level"),
+        choices=getattr(frontend_settings, "DJANGO_FRONTEND_HEADINGS", HEADINGS),
+        required=True,
+    )
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=True,
+    )
+    heading_context = forms.ChoiceField(
+        label=_("Heading context"),
+        required=False,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        initial=frontend_settings.EMPTY_CHOICE,
+        widget=ColoredButtonGroup(),
     )
