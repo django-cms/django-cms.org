@@ -10,6 +10,12 @@ from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
 from djangocms_frontend import settings as frontend_settings
 
 
+def _hero_clip_path_choices():
+    """Return (id, label) pairs for the Hero clip_path ChoiceField."""
+    clip_paths = getattr(settings, "CMS_HERO_CLIP_PATHS", [("none", _("None"), None)])
+    return [(cp[0], cp[1]) for cp in clip_paths]
+
+
 @components.register
 class Hero(CMSFrontendComponent):
     """Hero component with background grid option"""
@@ -44,6 +50,13 @@ class Hero(CMSFrontendComponent):
         label=_("Show background grid"),
         required=False,
         initial=False,
+    )
+    clip_path = forms.ChoiceField(
+        label=_("Clip path"),
+        choices=_hero_clip_path_choices,
+        required=False,
+        initial="none",
+        help_text=_("Optional SVG clip path applied to the hero image."),
     )
 
     def get_short_description(self):
