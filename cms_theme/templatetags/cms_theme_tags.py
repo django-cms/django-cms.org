@@ -63,8 +63,8 @@ def get_clip_path_data(clip_path_id):
             data["scale_y"] = round(1.0 / data["view_height"], 8)
             return data
     return None
-@register.filter
 
+@register.filter
 def get_slot(instance, slot_name):
     """Get plugins for a specific slot
     Usage: plugins|get_slot:"community"
