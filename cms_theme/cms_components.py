@@ -1,5 +1,5 @@
 from django import forms
-from django.conf import settings    
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
@@ -67,7 +67,7 @@ class Hero(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return self.heading if self.heading else super().get_short_description()
+        return self.heading if self.config.get("heading") else super().get_short_description()
 
 @components.register
 class Features(CMSFrontendComponent):
@@ -388,7 +388,7 @@ class LogoCarousel(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return self.heading if self.heading else super().get_short_description()
+        return self.heading if self.config.get("heading") else super().get_short_description()
 
 @components.register
 class BenefitsPanel(CMSFrontendComponent):
@@ -869,7 +869,7 @@ class Heading(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return f"{self.heading} ({self.heading_level})" if self.heading else super().get_short_description()
+        return f"{self.heading} ({self.heading_level})" if self.config.get("heading") else super().get_short_description()
 
 
 @components.register
