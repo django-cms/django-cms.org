@@ -9,7 +9,7 @@
             </div>
 
             <div class="col-12 my-lg-0 col col-md-2 py-1 my-4 py-lg-0">
-                <h2 class="text-white pb-1 overline">{% inline_field instance "community" %}</h2>
+                <h2 class="text-white pb-1 overline">{% inline_field instance "left_label" %}</h2>
                 <nav class="mt-2 list-link-container">
                     <ul class="list-unstyled m-0 d-flex list-container flex-column gap-2" role="list">
                         {% for plugin in instance|get_slot:"community" %}
@@ -22,7 +22,7 @@
             </div>
 
             <div class="col-12 my-lg-0 col col-md-2 py-1 my-4 py-lg-0">
-                <h2 class="text-white pb-1 overline">{% inline_field instance "developer" %}</h2>
+                <h2 class="text-white pb-1 overline">{% inline_field instance "middle_label" %}</h2>
                 <nav class="mt-2 list-link-container">
                     <ul class="list-unstyled m-0 d-flex list-container flex-column gap-2" role="list">
                         {% for plugin in instance|get_slot:"developer" %}
@@ -35,7 +35,7 @@
             </div>
 
             <div class="col-12 my-lg-0 col col-md-2 py-1 my-4 py-lg-0">
-                <h2 class="text-white pb-1 overline">{% inline_field instance "social" %}</h2>
+                <h2 class="text-white pb-1 overline">{% inline_field instance "right_label" %}</h2>
                 <nav class="mt-2 list-link-container">
                     <ul class="list-unstyled m-0 d-flex list-container flex-row gap-2" role="list">
                         {% for plugin in instance|get_slot:"social" %}
