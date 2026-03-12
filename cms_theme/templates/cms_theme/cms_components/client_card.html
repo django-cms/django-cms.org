@@ -1,0 +1,43 @@
+{% load frontend cms_tags cms_component cms_theme_tags sekizai_tags i18n %}
+{% cms_component "ClientCard" name=_("Client Card") allow_children=True child_classes="TextLinkPlugin"|split mixins="Background|Attributes|Margin"|split %}
+{% field "client_name" forms.CharField required=True label=_("Client Name") %}
+{% field "color_name" ColorChoiceField required=False label=_("Name Color") initial="dark" %}
+{% field "client_size" forms.CharField required=False label=_("Client Size") %}
+{% field "client_location" forms.CharField required=False label=_("Client location") %}
+{% field "client_industry" forms.CharField required=False label=_("Client Industry") %}
+{% field "client_launch" forms.CharField required=False label=_("Year of launch") %}
+{% field "client_done_by" forms.CharField required=False label=_("Done by") %}
+{% field "color_style" ColorChoiceField required=False label=_("Text Color") initial="dark" %}
+
+<div class="client-card card mx-auto {{ instance.get_classes }}"{{ instance.get_attributes }}>
+    <div class="card-body text-{{ color_style }}">
+        <p class="overline pb-2">{% trans "Client" %}:</p>
+        <h4 class="client-name text-{{ color_name }}">{{ client_name }}</h4>
+        <div class="client-details pt-3 mt-2 d-flex flex-column gap-2">
+            {% if client_size %}
+                <p><strong>{% trans "Size" %}:</strong> {{ client_size }}</p>
+            {% endif %}
+            {% if client_location %}
+                <p><strong>{% trans "Location" %}:</strong> {{ client_location }}</p>
+            {% endif %}
+            {% if client_industry %}
+                <p><strong>{% trans "Industry" %}:</strong> {{ client_industry }}</p>
+            {% endif %}
+            {% if client_launch %}
+                <p><strong>{% trans "Launched" %}:</strong> {{ client_launch }}</p>
+            {% endif %}
+            {% if client_done_by %}
+                <p><strong>{% trans "Done by" %}:</strong> {{ client_done_by }}</p>
+            {% endif %}
+        </div>
+        {% with buttons=instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}
+            {% if buttons %}
+                <div class="pt-3 mt-2">
+                    {% for button in buttons %}
+                        {% render_plugin button %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>

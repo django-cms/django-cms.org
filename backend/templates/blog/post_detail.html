@@ -1,5 +1,5 @@
 {% extends "djangocms_stories/base.html" %}
-{% load i18n easy_thumbnails_tags cms_tags menu_tags%}
+{% load i18n easy_thumbnails_tags cms_tags menu_tags djangocms_alias_tags %}
 
 {% block canonical_url %}<link rel="canonical" href="{{ meta.url }}"/>{% endblock canonical_url %}
 {% block title %}{{ post_content.title }}{% endblock %}
@@ -7,38 +7,25 @@
 {% block content_blog %}
 <article id="post-{{ post_content.slug }}" class="post-item post-detail">
     <header>
-        {% placeholder "Hero" %}
+        {% include "blog/includes/hero_detail.html" %}
     </header>
     <div class="container py-3 mt-3">
         {% show_breadcrumb 0 "menu/breadcrumb.html" %}
     </div>
     <main>
         <div class="container">
-            <div class="row">
-
-                {# MOBILE: oben #}
-                <div class="col-12 d-lg-none mb-3">
-                {% placeholder "Right Top Mobile" %}
+            <div class="post-detail-grid pb-6">
+                <div class="post-detail-main">
+                    {% placeholder "Left Column" %}
                 </div>
-
-                <div class="col-12 col-lg-8">
-                {% placeholder "Left Column" %}
+                <div class="post-detail-sidebar-top pb-lg-6 pb-xl-0">
+                    {% include "blog/includes/author_card.html" %}
                 </div>
-
-                <aside class="col-12 col-lg-4">
-                    <div class="d-flex flex-column gap-3">
-                        {% include "blog/includes/author_card.html" %}
-
-                        {# DESKTOP: unter Kontakt #}
-                        <div class="d-none d-lg-block">
-                            {% placeholder "Right Bottom Desktop" %}
-                        </div>
-                    </div>
-                </aside>
+                <div class="post-detail-sidebar-bottom">
+                    {% placeholder "Client Card" %}
+                </div>
             </div>
-        </div>
-
-        {% placeholder "Bottom Content" %}
+        {% static_alias "Post detail" %}
     </main>
 </article>
 {% endblock content_blog %}

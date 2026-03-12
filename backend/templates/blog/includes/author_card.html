@@ -5,7 +5,7 @@
     {% if profile.photo %}
         <div class="text-center">
             {% thumbnail profile.photo 345x0 subject_location=profile.photo.subject_location as thumb %}
-            <img src="{{ thumb.url }}" alt="{{ profile.name }}" />
+            <img src="{{ thumb.url }}" alt="{{ profile.name }}" class="author-photo img-fluid" />
         </div>
     {% endif %}
     <div class="card-body p-0 mt-4 text-secondary">
