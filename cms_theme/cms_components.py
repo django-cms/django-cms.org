@@ -26,11 +26,11 @@ class Hero(CMSFrontendComponent):
         name = _("Hero")
         render_template = "hero/hero.html"
         allow_children = True
-        child_classes = [
-            "TextLinkPlugin",
-            "ImagePlugin",
-            "CounterPlugin",
-        ]
+        child_classes = []
+        slots = (
+            Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
+            Slot("satellites", _("Satellite Images or Counters"), child_classes=["ImagePlugin", "CounterPlugin"]),
+        )
         mixins = ["Background", "Spacing", "Attributes"]
         frontend_editable_fields = ("heading", "overline", "body")
 
@@ -52,6 +52,11 @@ class Hero(CMSFrontendComponent):
         label=_("Show background grid"),
         required=False,
         initial=False,
+    )
+    main_image = ImageFormField(
+        label=_("Main image"),
+        required=False,
+        help_text=_("Primary image for the hero section, typically displayed on the right side. Add satellite images as child plugins."),
     )
     clip_path = forms.ChoiceField(
         label=_("Clip path"),
