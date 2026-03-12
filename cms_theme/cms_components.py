@@ -163,12 +163,12 @@ class Footer(CMSFrontendComponent):
         render_template = "footer/footer.html"
         allow_children = True
         mixins = ["Background", "Spacing", "Attributes"]
-        frontend_editable_fields = ("community", "developer", "social")
+        frontend_editable_fields = ("left_label", "middle_label", "right_label")
         slots = (
-            Slot("community", _("Community Links"), child_classes=["TextLinkPlugin"]),
-            Slot("developer", _("Developer Links"), child_classes=["TextLinkPlugin"]),
-            Slot("social", _("Social Links"), child_classes=["TextLinkPlugin"]),
-            Slot("legal", _("Legal (horizontal)"), child_classes=["TextLinkPlugin", "TextPlugin"]),
+            Slot("left", _("Links left column"), child_classes=["TextLinkPlugin"]),
+            Slot("middle", _("Links middle column"), child_classes=["TextLinkPlugin"]),
+            Slot("right", _("Links right column"), child_classes=["TextLinkPlugin"]),
+            Slot("bottom", _("Bottom links"), child_classes=["TextLinkPlugin", "TextPlugin"]),
         )
         child_classes = []  # Only slots, no direct children allowed
         fieldsets = (
@@ -176,27 +176,27 @@ class Footer(CMSFrontendComponent):
                 None,
                 {
                     "fields": (
-                        ("community", "developer", "social"),
+                        ("left_label", "middle_label", "right_label"),
                         "divider_color",
                     )
                 },
             ),
         )
 
-    community = forms.CharField(
-        label=_("Community heading"),
+    left_label = forms.CharField(
+        label=_("Left column heading"),
         required=True,
         initial=_("Community"),
     )
 
-    developer = forms.CharField(
-        label=_("Developer heading"),
+    middle_label = forms.CharField(
+        label=_("Middle column heading"),
         required=True,
         initial=_("Developer"),
     )
 
-    social = forms.CharField(
-        label=_("Social heading"),
+    right_label = forms.CharField(
+        label=_("Right column heading"),
         required=True,
         initial=_("Follow us"),
     )
