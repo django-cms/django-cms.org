@@ -91,6 +91,8 @@ INSTALLED_APPS = [
     "sortedm2m",
     "djangocms_file",
     "djangocms_form_builder",
+
+    "djangocms4_utilities",
 ]
 
 MIDDLEWARE = [
