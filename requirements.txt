@@ -15,7 +15,9 @@ botocore==1.42.66
 build==1.4.0
     # via pip-tools
 certifi==2026.2.25
-    # via requests
+    # via
+    #   requests
+    #   sentry-sdk
 charset-normalizer==3.4.5
     # via
     #   reportlab
@@ -196,6 +198,8 @@ requests==2.32.5
     # via -r requirements.in
 s3transfer==0.16.0
     # via boto3
+sentry-sdk==2.54.0
+    # via -r requirements.in
 six==1.17.0
     # via
     #   furl
@@ -223,6 +227,7 @@ urllib3==2.6.3
     # via
     #   botocore
     #   requests
+    #   sentry-sdk
 uwsgi==2.0.31
     # via -r requirements.in
 webencodings==0.5.1
