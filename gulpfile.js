@@ -29,6 +29,7 @@ function styles() {
           path.resolve(__dirname, "backend/static/scss"), // falls du lokal imports hast
         ],
         quietDeps: true,
+        silenceDeprecations: ["import", "global-builtin"],
         outputStyle: isProd ? "compressed" : "expanded",
       }).on("error", sass.logError)
     )
@@ -47,6 +48,7 @@ function tiptapAdminStyles() {
           path.resolve(__dirname, "backend/static/scss"),
         ],
         quietDeps: true,
+        silenceDeprecations: ["import", "global-builtin"],
         outputStyle: "expanded",
       }).on("error", sass.logError)
     )
