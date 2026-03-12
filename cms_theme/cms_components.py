@@ -67,7 +67,7 @@ class Hero(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return self.heading if self.config.get("heading") else super().get_short_description()
+        return self.heading if self.config.get("heading") else ""
 
 @components.register
 class Features(CMSFrontendComponent):
@@ -388,7 +388,8 @@ class LogoCarousel(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return self.heading if self.config.get("heading") else super().get_short_description()
+        return self.heading if self.config.get("heading") else ""
+
 
 @components.register
 class BenefitsPanel(CMSFrontendComponent):
@@ -869,7 +870,7 @@ class Heading(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return f"{self.heading} ({self.heading_level})" if self.config.get("heading") else super().get_short_description()
+        return f"{self.heading} ({self.heading_level})" if self.config.get("heading") else ""
 
 
 @components.register
