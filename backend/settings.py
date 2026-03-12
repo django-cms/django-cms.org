@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     "djangocms_frontend.contrib.alert",
     "djangocms_frontend.contrib.badge",
     "djangocms_frontend.contrib.card",
-    "djangocms_frontend.contrib.carousel",
     "djangocms_frontend.contrib.collapse",
     "djangocms_frontend.contrib.content",
     "djangocms_frontend.contrib.grid",
@@ -388,6 +387,13 @@ DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
     ("silver", _("Silver")),
     ("bronze", _("Bronze")),
 )
+
+DJANGO_FORM_BUILDER_COLOR_STYLE_CHOICES = (
+    ("primary", _("Primary")),
+    ("secondary", _("Secondary")),
+    ("second-primary", _("Dark Green")),
+)
+DJANGOCMS_FORM_BUILDER_COLOR_STYLE_CHOICES = DJANGO_FORM_BUILDER_COLOR_STYLE_CHOICES
 
 DJANGOCMS_FRONTEND_SPACER_SIZES = (
     ("0", "* 0"),

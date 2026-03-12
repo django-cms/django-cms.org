@@ -1,12 +1,13 @@
 from django import forms
-from django.conf import settings
+from django.conf import settings    
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
-from djangocms_frontend.component_base import CMSFrontendComponent
+from djangocms_frontend.component_base import CMSFrontendComponent, Slot
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.contrib.image.fields import ImageFormField
 from djangocms_frontend.fields import ColoredButtonGroup, HTMLFormField
+from djangocms_frontend import settings as frontend_settings
 
 
 def _hero_clip_path_choices():
@@ -126,7 +127,7 @@ class TimelineContainer(CMSFrontendComponent):
 
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
         help_text=_("Color of the vertical timeline line."),
@@ -135,7 +136,7 @@ class TimelineContainer(CMSFrontendComponent):
 
     circle_color = forms.ChoiceField(
         label=_("Circle color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="secondary",
         help_text=_("Color of the timeline circles."),
@@ -151,18 +152,48 @@ class Footer(CMSFrontendComponent):
         name = _("Footer")
         render_template = "footer/footer.html"
         allow_children = True
-        child_classes = [
-            "GridRowPlugin",
-            "TextPlugin",
-            "TextLinkPlugin",
-            "ImagePlugin",
-            "HeadingPlugin",
-        ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("community", "developer", "social")
+        slots = (
+            Slot("community", _("Community Links"), child_classes=["TextLinkPlugin"]),
+            Slot("developer", _("Developer Links"), child_classes=["TextLinkPlugin"]),
+            Slot("social", _("Social Links"), child_classes=["TextLinkPlugin"]),
+            Slot("legal", _("Legal (horizontal)"), child_classes=["TextLinkPlugin", "TextPlugin"]),
+        )
+        child_classes = []  # Only slots, no direct children allowed
+        fieldsets = (
+            (
+                None,
+                {
+                    "fields": (
+                        ("community", "developer", "social"),
+                        "divider_color",
+                    )
+                },
+            ),
+        )
+
+    community = forms.CharField(
+        label=_("Community heading"),
+        required=True,
+        initial=_("Community"),
+    )
+
+    developer = forms.CharField(
+        label=_("Developer heading"),
+        required=True,
+        initial=_("Developer"),
+    )
+
+    social = forms.CharField(
+        label=_("Social heading"),
+        required=True,
+        initial=_("Follow us"),
+    )
 
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="white",
         help_text=_("Color of the horizontal divider line."),
@@ -252,11 +283,52 @@ class LogoCarousel(CMSFrontendComponent):
         name = _("Carousel")
         render_template = "carousel/logo_carousel.html"
         allow_children = True
-        child_classes = [
-            "HeadingPlugin",
-            "CarouselItemPlugin",
-        ]
+        child_classes = ["CarouselItemPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("heading",)
+        fieldsets = (
+            (
+                None,
+                {
+                    "fields": (
+                        "heading",
+                        "text_color",
+                        "bg_color",
+                    )
+                },
+                _("Settings"),
+                {
+                    "fields": (
+                        "loop",
+                        "space_between_slides",
+                        "autoplay",
+                        "delay",
+                        "btn_color",
+                    )
+                },
+            ),
+        )
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        required=False,
+    )
+
+    bg_color = forms.ChoiceField(
+        label=_("Background color"),
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        required=False,
+    )
 
     loop = forms.BooleanField(
         label=_("Loop Carousel"),
@@ -296,7 +368,7 @@ class LogoCarousel(CMSFrontendComponent):
 
     btn_color = forms.ChoiceField(
         label=_("Button Color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
@@ -343,7 +415,7 @@ class BenefitsCard(CMSFrontendComponent):
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
@@ -405,7 +477,7 @@ class RelatedPeople(CMSFrontendComponent):
 
     eyebrow_text_color = forms.ChoiceField(
         label=_("Eyebrow text color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
@@ -453,7 +525,7 @@ class PeopleCard(CMSFrontendComponent):
 
     image_accent_color = forms.ChoiceField(
         label=_("Image accent color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
         help_text=_("Image accent color."),
@@ -474,7 +546,7 @@ class PeopleCard(CMSFrontendComponent):
 
     text_color = forms.ChoiceField(
         label=_("Text Color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="dark",
         help_text=_("Card content text color."),
@@ -505,7 +577,7 @@ class MembershipPlans(CMSFrontendComponent):
 
     eyebrow_text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
@@ -546,7 +618,7 @@ class PlanCard(CMSFrontendComponent):
 
     tier_color = forms.ChoiceField(
         label=_("Tier Color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
@@ -605,7 +677,7 @@ class HorizontalPlanCard(CMSFrontendComponent):
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
@@ -647,7 +719,7 @@ class TeaserContent(CMSFrontendComponent):
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
@@ -734,7 +806,7 @@ class QuotePanelItem(CMSFrontendComponent):
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=settings.DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES,
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="dark",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
