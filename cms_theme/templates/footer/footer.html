@@ -12,7 +12,7 @@
                 <h2 class="text-white pb-1 overline">{% inline_field instance "left_label" %}</h2>
                 <nav class="mt-2 list-link-container">
                     <ul class="list-unstyled m-0 d-flex list-container flex-column gap-2" role="list">
-                        {% for plugin in instance|get_slot:"community" %}
+                        {% for plugin in instance|get_slot:"left" %}
                             <li class="list-link-item">
                                 {% render_plugin plugin %}
                             </li>
@@ -25,7 +25,7 @@
                 <h2 class="text-white pb-1 overline">{% inline_field instance "middle_label" %}</h2>
                 <nav class="mt-2 list-link-container">
                     <ul class="list-unstyled m-0 d-flex list-container flex-column gap-2" role="list">
-                        {% for plugin in instance|get_slot:"developer" %}
+                        {% for plugin in instance|get_slot:"middle" %}
                             <li class="list-link-item">
                                 {% render_plugin plugin %}
                             </li>
@@ -38,7 +38,7 @@
                 <h2 class="text-white pb-1 overline">{% inline_field instance "right_label" %}</h2>
                 <nav class="mt-2 list-link-container">
                     <ul class="list-unstyled m-0 d-flex list-container flex-row gap-2" role="list">
-                        {% for plugin in instance|get_slot:"social" %}
+                        {% for plugin in instance|get_slot:"right" %}
                             <li class="list-link-item">
                                 {% render_plugin plugin %}
                             </li>
@@ -55,7 +55,7 @@
         <div class="row align-items-start footer-bottom">
             <div class="col-12 col-lg-6">
                 <div class="d-flex flex-row flex-wrap gap-footer mb-3 mb-md-0 p-1 p-md-0">
-                    {% for plugin in instance|get_slot:"legal" %}
+                    {% for plugin in instance|get_slot:"bottom" %}
                         {% if plugin.plugin_type == "TextLinkPlugin" %}
                             {% render_plugin plugin %}
                         {% endif %}
@@ -64,7 +64,7 @@
             </div>
 
             <div class="col-12 col-lg-6 text-start text-md-end text-white">
-                {% for plugin in instance|get_slot:"legal" %}
+                {% for plugin in instance|get_slot:"bottom" %}
                     {% if plugin.plugin_type == "TextPlugin" %}
                         {% render_plugin plugin %}
                     {% endif %}
