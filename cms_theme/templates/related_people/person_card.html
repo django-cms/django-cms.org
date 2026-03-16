@@ -28,7 +28,7 @@
                     {% endif %}
                 {% endwith %}
                 {% if instance.role %}
-                    <p>{{ instance.role }}</p>
+                    <p class="mb-0">{{ instance.role }}</p>
                 {% endif %}
                 {% if instance.description %}{{ instance.description|safe }}{% endif %}
                 {% with buttons=instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}

@@ -5,7 +5,7 @@
     {% with plugins=instance.child_plugin_instances %}
         <div class="container text-center">
             {% if instance.heading %}
-                <h3 class="p-carousel text-center overline text-secondary d-inline text-{{ instance.text_color }} text-bg-{{ instance.bg_color }}">{% inline_field instance "heading" %}</h3>
+                <h3 class="p-carousel text-center overline text-secondary d-inline text-{{ instance.text_color }} text-bg-{{ instance.bg_color }} mb-0">{% inline_field instance "heading" %}</h3>
             {% endif %}
             <div class="carousel-container mx-6">
                 <div class="swiper logo-swiper-carousel logoSwiper-{{ instance.id }}"
