@@ -540,13 +540,14 @@ class PeopleCard(CMSFrontendComponent):
             "RelatedPeoplePlugin",
             "GridColumnPlugin",
         ]
-        child_classes = [
-            "ImagePlugin",
-            "TextPlugin",
-            "HeadingPlugin",
-            "TextLinkPlugin",
-        ]
+        child_classes = ["TextLinkPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+
+    image = ImageFormField(
+        label=_("Image"),
+        required=True,
+        help_text=_("Portrait of the person with white background")
+    )
 
     image_accent = forms.BooleanField(
         label=_("Image accent"),
@@ -560,20 +561,26 @@ class PeopleCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
-        help_text=_("Image accent color."),
+        help_text=_("Image accent color"),
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    name = forms.CharField(
+        label=_("Name"),
+        required=True,
+        help_text=_("Full name")
     )
 
     role = forms.CharField(
         label=_("Role"),
         required=False,
-        help_text=_("Role displayed in people card."),
+        help_text=_("Role displayed in people card"),
     )
 
     description = HTMLFormField(
         label=_("Description"),
         required=False,
-        help_text=_("Description displayed in people card."),
+        help_text=_("Description displayed in people card"),
     )
 
     text_color = forms.ChoiceField(
@@ -581,7 +588,7 @@ class PeopleCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="dark",
-        help_text=_("Card content text color."),
+        help_text=_("Card content text color"),
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
@@ -973,7 +980,7 @@ class CodeBlock(CMSFrontendComponent):
         label=_("Heading"),
         required=False,
         help_text=_("Heading for the code block."),
-    )   
+    )
     dark_mode = forms.BooleanField(
         label=_("Dark mode"),
         required=False,
