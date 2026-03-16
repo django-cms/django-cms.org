@@ -495,20 +495,6 @@ TEXT_EDITOR_SETTINGS = {
             },
         },
         {
-            "name": "Blockquote",
-            "element": "span",
-            "attributes": {
-                "class": "blockquote",
-            },
-        },
-        {
-            "name": "Lead",
-            "element": "span",
-            "attributes": {
-                "class": "lead",
-            },
-        },
-        {
             "name": "Text XS",
             "element": "span",
             "attributes": {
@@ -530,6 +516,22 @@ TEXT_EDITOR_SETTINGS = {
             },
         },
     ],
+    "blockStyles": [
+        {
+            "name": "Blockquote",
+            "element": "span",
+            "attributes": {
+                "class": "blockquote",
+            },
+        },
+        {
+            "name": "Lead",
+            "element": "span",
+            "attributes": {
+                "class": "lead",
+            },
+        },
+    ],
     "textColors": {
         "text-primary": {"name": "Primary"},
         "text-secondary": {"name": "Secondary"},
@@ -539,6 +541,10 @@ TEXT_EDITOR_SETTINGS = {
         "text-muted": {"name": "Muted"},
         "text-white": {"name": "White"},
     },
+    "tableClasses": [
+        ["table", _("Default")],
+        ["table table-responsive", _("Responsive")],
+    ]
 }
 
 # djangocms-file settings
