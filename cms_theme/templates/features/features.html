@@ -20,7 +20,7 @@
                             <div class="accordion" id="accordion-{{ plugin.pk }}">
                                 {% for accordion_item in plugin.child_plugin_instances %}
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading-{{ accordion_item.pk }}">
+                                        <h2 class="accordion-header mb-0" id="heading-{{ accordion_item.pk }}">
                                             <button class="accordion-button{% if not accordion_item.accordion_item_open %} collapsed{% endif %}"
                                                     type="button"
                                                     data-bs-toggle="collapse"

@@ -11,23 +11,23 @@
 
 <div class="client-card card mx-auto {{ instance.get_classes }}"{{ instance.get_attributes }}>
     <div class="card-body text-{{ color_style }}">
-        <p class="overline pb-2">{% trans "Client" %}:</p>
-        <h4 class="client-name text-{{ color_name }}">{{ client_name }}</h4>
+        <p class="overline pb-2 mb-0">{% trans "Client" %}:</p>
+        <h4 class="client-name text-{{ color_name }} mb-0">{{ client_name }}</h4>
         <div class="client-details pt-3 mt-2 d-flex flex-column gap-2">
             {% if client_size %}
-                <p><strong>{% trans "Size" %}:</strong> {{ client_size }}</p>
+                <p class="mb-0"><strong>{% trans "Size" %}:</strong> {{ client_size }}</p>
             {% endif %}
             {% if client_location %}
-                <p><strong>{% trans "Location" %}:</strong> {{ client_location }}</p>
+                <p class="mb-0"><strong>{% trans "Location" %}:</strong> {{ client_location }}</p>
             {% endif %}
             {% if client_industry %}
-                <p><strong>{% trans "Industry" %}:</strong> {{ client_industry }}</p>
+                <p class="mb-0"><strong>{% trans "Industry" %}:</strong> {{ client_industry }}</p>
             {% endif %}
             {% if client_launch %}
-                <p><strong>{% trans "Launched" %}:</strong> {{ client_launch }}</p>
+                <p class="mb-0"><strong>{% trans "Launched" %}:</strong> {{ client_launch }}</p>
             {% endif %}
             {% if client_done_by %}
-                <p><strong>{% trans "Done by" %}:</strong> {{ client_done_by }}</p>
+                <p class="mb-0"><strong>{% trans "Done by" %}:</strong> {{ client_done_by }}</p>
             {% endif %}
         </div>
         {% with buttons=instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}

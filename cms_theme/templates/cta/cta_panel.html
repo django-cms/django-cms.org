@@ -1,11 +1,11 @@
 <!-- cms_theme/templates/cms_theme/cms_components/cta_panel.html -->
-{% load static cms_tags cms_theme_tags %}
+{% load static cms_tags cms_theme_tags frontend %}
 <section class="{{ instance.get_classes }} cta-section {% if instance.config.background_grid %}background-grid{% endif %}"
          {{ instance.get_attributes }}>
     <div class="container">
         <div class="text-{{ instance.content_alignment }} text-white">
-            {% if instance.eyebrow_text %}<h6 class="overline pb-3">{{ instance.eyebrow_text }}</h6>{% endif %}
-            {% if instance.main_heading %}{{ instance.main_heading|safe }}{% endif %}
+            {% if instance.eyebrow_text %}<h6 class="overline pb-3 mb-0">{% inline_field instance "eyebrow_text" %}</h6>{% endif %}
+            {% if instance.main_heading %}{% inline_field instance "main_heading" "" "safe" %}{% endif %}
             {% if instance.child_plugin_instances %}
             {% with button_plugin=instance.child_plugin_instances|filter_by_type:"TextLinkPlugin" %}
                 <div class="text-{{ instance.content_alignment }} cta-btn-section">{% render_plugin button_plugin.0 %}</div>

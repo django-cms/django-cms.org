@@ -3,13 +3,18 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
+from djangocms_frontend import settings as frontend_settings
 from djangocms_frontend.component_base import CMSFrontendComponent, Slot
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.contrib.image.fields import ImageFormField
-from djangocms_frontend.fields import ButtonGroup, ColoredButtonGroup, HTMLFormField, IconGroup
+from djangocms_frontend.fields import (
+    ButtonGroup,
+    ColoredButtonGroup,
+    HTMLFormField,
+    IconGroup,
+)
 from djangocms_frontend.helpers import first_choice
-from djangocms_frontend import settings as frontend_settings
 
 
 def _hero_clip_path_choices():
@@ -29,7 +34,11 @@ class Hero(CMSFrontendComponent):
         child_classes = []
         slots = (
             Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
-            Slot("satellites", _("Satellite Images or Counters"), child_classes=["ImagePlugin", "CounterPlugin"]),
+            Slot(
+                "satellites",
+                _("Satellite Images or Counters"),
+                child_classes=["ImagePlugin", "CounterPlugin"],
+            ),
         )
         mixins = ["Background", "Spacing", "Attributes"]
         frontend_editable_fields = ("heading", "overline", "body")
@@ -56,7 +65,9 @@ class Hero(CMSFrontendComponent):
     main_image = ImageFormField(
         label=_("Main image"),
         required=False,
-        help_text=_("Primary image for the hero section, typically displayed on the right side. Add satellite images as child plugins."),
+        help_text=_(
+            "Primary image for the hero section, typically displayed on the right side. Add satellite images as child plugins."
+        ),
     )
     clip_path = forms.ChoiceField(
         label=_("Clip path"),
@@ -168,7 +179,11 @@ class Footer(CMSFrontendComponent):
             Slot("left", _("Links left column"), child_classes=["TextLinkPlugin"]),
             Slot("middle", _("Links middle column"), child_classes=["TextLinkPlugin"]),
             Slot("right", _("Links right column"), child_classes=["TextLinkPlugin"]),
-            Slot("bottom", _("Bottom links"), child_classes=["TextLinkPlugin", "TextPlugin"]),
+            Slot(
+                "bottom",
+                _("Bottom links"),
+                child_classes=["TextLinkPlugin", "TextPlugin"],
+            ),
         )
         child_classes = []  # Only slots, no direct children allowed
         fieldsets = (
@@ -256,6 +271,7 @@ class CTAPanel(CMSFrontendComponent):
             "TextLinkPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("main_heading", "eyebrow_text")
 
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
@@ -871,7 +887,11 @@ class Heading(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return f"{self.heading} ({self.heading_level})" if self.config.get("heading") else ""
+        return (
+            f"{self.heading} ({self.heading_level})"
+            if self.config.get("heading")
+            else ""
+        )
 
 
 @components.register
@@ -913,7 +933,10 @@ class Spacing(CMSFrontendComponent):
 
     def clean(self):
         super().clean()
-        if self.cleaned_data["space_property"] == "p" and self.cleaned_data["space_size"] == "auto":
+        if (
+            self.cleaned_data["space_property"] == "p"
+            and self.cleaned_data["space_size"] == "auto"
+        ):
             raise ValidationError(
                 {
                     "space_property": _(

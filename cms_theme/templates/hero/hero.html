@@ -20,10 +20,10 @@
                 {% endif %}
                 <div class="row">
                     <div class="col-12 col-lg-11">
-                        <h1 class="mt-2 pb-4">{% inline_field instance "heading"  %}</h1>
+                        <h1 class="mt-2 pb-4 mb-0">{% inline_field instance "heading"  %}</h1>
                     </div>
                 </div>
-                {% if instance.body %}<div class="fs-5 pb-2">{% inline_field instance "body" "" "safe" %}</div>{% endif %}
+                {% if instance.body %}<div class="fs-5 pb-2 mb-0">{% inline_field instance "body" "" "safe" %}</div>{% endif %}
                 <div class="mt-4">
                     {% for plugin in instance|get_slot:"links" %}
                     {% render_plugin plugin %}

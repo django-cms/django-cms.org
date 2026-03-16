@@ -10,9 +10,9 @@
         <div class="bg-secondary background-grid">
             <div class="container py-6">
                 {% if search_query %}
-                    <h1 class="text-primary"><span class="h3 text-white">showing {{ postcontent_list|length }} results for</span> {{ search_query }}</h1>
+                    <h1 class="text-primary mb-0"><span class="h3 text-white">showing {{ postcontent_list|length }} results for</span> {{ search_query }}</h1>
                 {% else %}
-                    <h1 class="text-primary"><span class="h3 text-white">showing {{ postcontent_list|length }} results of</span> {{ paginator.count }}</h1>
+                    <h1 class="text-primary mb-0"><span class="h3 text-white">showing {{ postcontent_list|length }} results of</span> {{ paginator.count }}</h1>
                 {% endif %}
                 <form method="get" action="{% namespace_url 'posts-latest' %}" class="d-flex flex-column flex-lg-row gap-2 mt-4 pt-2">
                     <input type="text" name="q" id="blogSearch" value="{{ search_query }}" placeholder="{% trans 'Search articles...' %}" class="form-control search-term-w " />
@@ -37,7 +37,7 @@
                 {% endfor %}
             <div class="d-flex justify-content-center mt-4">
                 {% if author or archive_date or tagged_entries %}
-                    <p class="blog-back"><a href="{% namespace_url 'posts-latest' %}">{% trans "Back" %}</a></p>
+                    <p class="blog-back mb-0"><a href="{% namespace_url 'posts-latest' %}">{% trans "Back" %}</a></p>
                 {% endif %}
                 {% if is_paginated %}
                     {% pagination_range page_obj.number paginator.num_pages as page_range %}
