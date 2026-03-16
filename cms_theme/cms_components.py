@@ -494,12 +494,10 @@ class RelatedPeople(CMSFrontendComponent):
 
     class Meta:
         name = _("Related People")
+        module = _("Sections")
         render_template = "related_people/related_people.html"
         allow_children = True
-        child_classes = [
-            "HeadingPlugin",
-            "PeopleCardPlugin",
-        ]
+        child_classes = ["PeopleCardPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
 
     eyebrow_text = forms.CharField(
@@ -507,13 +505,17 @@ class RelatedPeople(CMSFrontendComponent):
         required=False,
     )
 
-    eyebrow_text_color = forms.ChoiceField(
-        label=_("Eyebrow text color"),
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=True,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Heading text color"),
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
-        help_text=_("Eyebrow text color."),
     )
 
     grid_columns = forms.ChoiceField(
