@@ -58,7 +58,7 @@
             <script src="{% static 'js/logo_carousel.js' %}"></script>
             <script src="{% static 'js/mobile_slider.js' %}"></script>
             <script src="{% static 'js/quote_slider.js' %}"></script>
-            <script>hljs.highlightAll();</script>
+            <script>document.addEventListener('DOMContentLoaded', function() { hljs.highlightAll(); });</script>
         {% endblock end_js %}
     </body>
 </html>

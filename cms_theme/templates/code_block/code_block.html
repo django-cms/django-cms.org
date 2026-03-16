@@ -1,0 +1,11 @@
+{% load i18n cms_tags frontend %}
+<div class="mb-5 card {% if instance.dark_mode %}bg-dark{% else %}bg-light{% endif %}">
+    {% if instance.heading %}
+        <div class="card-header bg-primary">
+            <p><span class="overline">{% inline_field instance "heading" %}</span></p>
+        </div>
+    {% endif %}
+    <div class="card-body{% if instance.dark_mode %} text-light{% endif %}">
+        <pre{{ instance.get_attributes }}><code>{{ instance.code_content }}</code></pre>
+    </div>
+</div>
