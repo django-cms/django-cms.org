@@ -7,10 +7,10 @@
                 </div>
                 <div class="position-absolute {% if instance.image_accent_color %}bg-{{ instance.image_accent_color }}{% endif %} shape-br z-0">
                 </div>
-                <img src="{{ instance.image.url }}" alt="{{ image.name }}" class="img-fluid shadow-sm rounded">
+                <img src="{{ instance.image.url }}" alt="{{ instance.name }}" class="img-fluid shadow-sm rounded">
             </div>
         {% else %}
-            <img src="{{ instance.image.url }}" alt="{{ image.name }}" class="img-fluid shadow-sm rounded">
+            <img src="{{ instance.image.url }}" alt="{{ instance.name }}" class="img-fluid shadow-sm rounded">
         {% endif %}
         <div class="card-body p-0 mt-4 text-{{ instance.text_color }}">
             <div class="pt-1">
@@ -31,5 +31,4 @@
                 {% endwith %}
             </div>
         </div>
-    {% endwith %}
 </div>

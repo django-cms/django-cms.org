@@ -546,7 +546,7 @@ class PeopleCard(CMSFrontendComponent):
     image = ImageFormField(
         label=_("Image"),
         required=True,
-        help_text=_("Portrait of the person with white background")
+        help_text=_("Portrait of the person with white background"),
     )
 
     image_accent = forms.BooleanField(
@@ -565,10 +565,17 @@ class PeopleCard(CMSFrontendComponent):
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
+    overline = forms.CharField(
+        label=_("Overline"),
+        required=False,
+        initial="contact:",
+        help_text=_("Text above the name"),
+    )
+
     name = forms.CharField(
         label=_("Name"),
         required=True,
-        help_text=_("Full name")
+        help_text=_("Full name"),
     )
 
     role = forms.CharField(
