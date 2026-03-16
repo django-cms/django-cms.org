@@ -30,6 +30,8 @@
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.10) !important;
 
   > img {
+    width: 100%;
+    height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
   }
@@ -96,6 +98,8 @@
   img {
     position: relative;
     z-index: 1;
+    width: 100%;
+    height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
   }
