@@ -507,7 +507,7 @@ class RelatedPeople(CMSFrontendComponent):
 
     heading = forms.CharField(
         label=_("Heading"),
-        required=True,
+        required=False,
     )
 
     text_color = forms.ChoiceField(
@@ -611,7 +611,6 @@ class MembershipPlans(CMSFrontendComponent):
         render_template = "membership/membership_plans.html"
         allow_children = True
         child_classes = [
-            "HeadingPlugin",
             "PlanCardPlugin",
             "HorizontalPlanCardPlugin",
         ]
@@ -623,13 +622,18 @@ class MembershipPlans(CMSFrontendComponent):
         help_text=_("Eyebrow text"),
     )
 
-    eyebrow_text_color = forms.ChoiceField(
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
         label=_("Text color"),
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
-        help_text=_("Color for eyebrow text."),
+        help_text=_("Color for eyebrow and heading text"),
     )
 
 
@@ -643,7 +647,6 @@ class PlanCard(CMSFrontendComponent):
         allow_children = True
         child_classes = [
             "TextPlugin",
-            "SpacingPlugin",
             "FeatureItemPlugin",
             "TextLinkPlugin",
         ]
@@ -701,7 +704,6 @@ class HorizontalPlanCard(CMSFrontendComponent):
         allow_children = True
         child_classes = [
             "TextPlugin",
-            "SpacingPlugin",
             "FeatureItemPlugin",
             "TextLinkPlugin",
             "ImagePlugin",
