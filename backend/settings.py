@@ -541,10 +541,6 @@ TEXT_EDITOR_SETTINGS = {
         "text-muted": {"name": "Muted"},
         "text-white": {"name": "White"},
     },
-    "tableClasses": [
-        ["table", _("Default")],
-        ["table table-responsive", _("Responsive")],
-    ]
 }
 
 # djangocms-file settings
@@ -561,4 +557,4 @@ if not DEBUG:
         # Add data like request headers and IP for users,
         # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
         send_default_pii=True,
-    )   
+    )
