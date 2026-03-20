@@ -91,7 +91,9 @@
     }
 
     &.collapsed:hover {
-      color: var(--bs-grey-dark);
+      // --bs-grey-dark is not defined; use full white to stay consistent
+      // with the inactive color already used in this dark-bg variant
+      color: rgba(var(--bs-white-rgb), 1);
     }
   }
   .accordion-item::before {
