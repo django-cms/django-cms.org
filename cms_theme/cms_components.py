@@ -1129,7 +1129,7 @@ class Counter(CMSFrontendComponent):
                     "description",
                     "color_style",
                 )
-            })
+            }),
         )
 
     counter_type = forms.ChoiceField(
