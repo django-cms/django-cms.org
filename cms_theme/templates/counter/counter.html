@@ -1,0 +1,22 @@
+{% load frontend sekizai_tags cms_theme_tags icon_tags %}
+{% add_css_for_icon instance.config.icon %}
+<div class="text-start counter-component p-lg-3 rounded text-{{ instance.config.color_style|default:'black' }} {{ instance.get_classes }}"{{ instance.get_attributes }}>
+    <div class="counter-body-spacing">
+        {% if instance.config.icon %}
+            <div class="counter-icon">
+                <i class="{{ instance.config.icon.iconClass }} counter-icon-size" aria-hidden="true">{{ instance.config.icon.iconText }}</i>
+            </div>
+        {% endif %}
+        {% if instance.config.title %}
+            <p class="overline pb-1 mb-0">{{ instance.config.title }}</p>
+        {% endif %}
+        <div class="counter-number h2 py-4 {% if instance.config.number_color %}text-{{ instance.config.number_color }}{% endif %}"
+             data-target="{{ instance.config.number }}"
+             {% if instance.config.is_percent %}data-suffix="%"{% endif %}
+             aria-label="{% if instance.config.title %}{{ instance.config.title }}:{% endif %} {{ instance.config.number }}{% if instance.config.is_percent %}%{% endif %}"
+             role="status">0{% if instance.config.is_percent %}%{% endif %}</div>
+        {% if instance.config.description %}
+            <div class="counter-description pt-1">{{ instance.config.description|safe }}</div>
+        {% endif %}
+    </div>
+</div>

@@ -8,6 +8,8 @@ from djangocms_frontend.component_base import CMSFrontendComponent, Slot
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.contrib.image.fields import ImageFormField
+
+from .fields import ColorChoiceField
 from djangocms_frontend.fields import (
     ButtonGroup,
     ColoredButtonGroup,
@@ -1017,4 +1019,145 @@ class CodeBlock(CMSFrontendComponent):
         initial="",
         required=True,
         widget=forms.widgets.Textarea(attrs={"class": "js-ckeditor-use-selected-text"}),
+    )
+
+
+class CounterPluginMixin:
+    """Plugin mixin that fetches GitHub stats for Counter components."""
+
+    GITHUB_REPO = "django-cms/django-cms"
+    GITHUB_ORG = "django-cms"
+    CACHE_TIMEOUT = 86400  # 24 hours
+
+    def _get_github_number(self, counter_type):
+        import logging
+
+        from django.core.cache import cache
+
+        cache_key = f"counter_github_{counter_type}"
+        cached = cache.get(cache_key)
+        if cached is not None:
+            return cached
+
+        logger = logging.getLogger(__name__)
+        number = 0
+        try:
+            number = self._fetch_github_stat(counter_type)
+        except Exception:
+            logger.exception("Failed to fetch GitHub stat for %s", counter_type)
+        cache.set(cache_key, number, self.CACHE_TIMEOUT)
+        return number
+
+    def _fetch_github_stat(self, counter_type):
+        from datetime import datetime, timedelta, timezone
+
+        import requests
+
+        if counter_type in ("stars", "forks"):
+            resp = requests.get(
+                f"https://api.github.com/repos/{self.GITHUB_REPO}",
+                headers={"Accept": "application/vnd.github.v3+json"},
+                timeout=10,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            return data["stargazers_count" if counter_type == "stars" else "forks_count"]
+
+        since = (datetime.now(tz=timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
+
+        if counter_type == "issues_closed":
+            resp = requests.get(
+                "https://api.github.com/search/issues",
+                params={"q": f"org:{self.GITHUB_ORG} type:issue is:closed closed:>={since}"},
+                headers={"Accept": "application/vnd.github.v3+json"},
+                timeout=10,
+            )
+            resp.raise_for_status()
+            return resp.json()["total_count"]
+
+        if counter_type == "commits":
+            resp = requests.get(
+                "https://api.github.com/search/commits",
+                params={"q": f"org:{self.GITHUB_ORG} committer-date:>={since}"},
+                headers={"Accept": "application/vnd.github.v3+json"},
+                timeout=10,
+            )
+            resp.raise_for_status()
+            return resp.json()["total_count"]
+
+        return 0
+
+    def render(self, context, instance, placeholder):
+        counter_type = instance.config.get("counter_type", "manual")
+        if counter_type != "manual":
+            instance.config["number"] = self._get_github_number(counter_type)
+        return super().render(context, instance, placeholder)
+
+
+@components.register
+class Counter(CMSFrontendComponent):
+    """Counter component with animated number display"""
+
+    _plugin_mixins = [CounterPluginMixin]
+
+    COUNTER_TYPE_CHOICES = [
+        ("manual", _("Manual")),
+        ("stars", _("GitHub Stars")),
+        ("forks", _("GitHub Forks")),
+        ("issues_closed", _("GitHub Issues Closed (30 days)")),
+        ("commits", _("GitHub Commits (30 days)")),
+    ]
+
+    class Meta:
+        name = _("Counter")
+        render_template = "counter/counter.html"
+        allow_children = True
+        child_classes = ["TextLinkPlugin"]
+        mixins = ["Background", "Attributes"]
+        fieldsets = (
+            (None, {
+                "fields": (
+                    "icon",
+                    "title",
+                    ("counter_type", "number", "is_percent"),
+                    "number_color",
+                    "description",
+                    "color_style",
+                )
+            })
+        )
+
+    counter_type = forms.ChoiceField(
+        label=_("Counter Type"),
+        choices=COUNTER_TYPE_CHOICES,
+        initial="manual",
+    )
+    icon = IconPickerField(
+        label=_("Icon"),
+        required=False,
+    )
+    title = forms.CharField(
+        label=_("Title"),
+        required=False,
+    )
+    number = forms.IntegerField(
+        label=_("Number"),
+        required=False,
+    )
+    is_percent = forms.BooleanField(
+        label=_("Is Percent"),
+        required=False,
+        initial=False,
+    )
+    number_color = ColorChoiceField(
+        label=_("Number Color"),
+        initial="dark",
+    )
+    description = HTMLFormField(
+        label=_("Description"),
+        required=False,
+    )
+    color_style = ColorChoiceField(
+        label=_("Text Color"),
+        initial="dark",
     )
