@@ -1027,6 +1027,38 @@ class CodeBlock(CMSFrontendComponent):
     )
 
 
+@components.register
+class CounterContainer(CMSFrontendComponent):
+    """Counter container component with optional heading"""
+
+    class Meta:
+        name = _("Counter Panel")
+        module = _("Sections")
+        render_template = "counter/counter_container.html"
+        allow_children = True
+        child_classes = ["CounterPlugin"]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Color for eyebrow and heading text"),
+    )
+
+
 class CounterPluginMixin:
     """Plugin mixin that fetches GitHub stats for Counter components."""
 
@@ -1080,10 +1112,10 @@ class CounterPluginMixin:
             resp.raise_for_status()
             return resp.json()["total_count"]
 
-        if counter_type == "commits":
+        if counter_type == "merges":
             resp = requests.get(
-                "https://api.github.com/search/commits",
-                params={"q": f"org:{self.GITHUB_ORG} committer-date:>={since}"},
+                "https://api.github.com/search/issues",
+                params={"q": f"org:{self.GITHUB_ORG} type:pr is:merged merged:>={since}"},
                 headers={"Accept": "application/vnd.github.v3+json"},
                 timeout=10,
             )
@@ -1099,19 +1131,20 @@ class CounterPluginMixin:
         return super().render(context, instance, placeholder)
 
 
+COUNTER_TYPE_CHOICES = [
+    ("manual", _("Manual")),
+    ("stars", _("GitHub Stars")),
+    ("forks", _("GitHub Forks")),
+    ("issues_closed", _("GitHub Issues Closed (30 days)")),
+    ("merges", _("GitHub PRs Merged (30 days)")),
+]
+
+
 @components.register
 class Counter(CMSFrontendComponent):
     """Counter component with animated number display"""
 
     _plugin_mixins = [CounterPluginMixin]
-
-    COUNTER_TYPE_CHOICES = [
-        ("manual", _("Manual")),
-        ("stars", _("GitHub Stars")),
-        ("forks", _("GitHub Forks")),
-        ("issues_closed", _("GitHub Issues Closed (30 days)")),
-        ("commits", _("GitHub Commits (30 days)")),
-    ]
 
     class Meta:
         name = _("Counter")
@@ -1166,3 +1199,6 @@ class Counter(CMSFrontendComponent):
         label=_("Text Color"),
         initial="dark",
     )
+
+    def get_short_description(self):
+        return dict(COUNTER_TYPE_CHOICES).get(self.counter_type, _("Manual"))
