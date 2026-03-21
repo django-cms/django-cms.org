@@ -71,6 +71,11 @@ class Hero(CMSFrontendComponent):
             "Primary image for the hero section, typically displayed on the right side. Add satellite images as child plugins."
         ),
     )
+    main_image_url = forms.URLField(
+        label=_("Image URL override"),
+        required=False,
+        help_text=_("If provided, this URL is used instead of the selected image."),
+    )
     clip_path = forms.ChoiceField(
         label=_("Clip path"),
         choices=_hero_clip_path_choices,
