@@ -812,7 +812,7 @@ class QuotePanelContainer(CMSFrontendComponent):
     )
     heading = forms.CharField(
         label=_("Heading"),
-        required=True,
+        required=False,
     )
     heading_context = forms.ChoiceField(
         label=_("Heading context"),
