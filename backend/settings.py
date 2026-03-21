@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "parler",
     # the default text editor - optional, but used in most projects
     "djangocms_text",
+    "djangocms_markdown",
     # optional django CMS frontend modules
     "djangocms_frontend",
     "djangocms_frontend.contrib.accordion",
