@@ -494,12 +494,10 @@ class RelatedPeople(CMSFrontendComponent):
 
     class Meta:
         name = _("Related People")
+        module = _("Sections")
         render_template = "related_people/related_people.html"
         allow_children = True
-        child_classes = [
-            "HeadingPlugin",
-            "PeopleCardPlugin",
-        ]
+        child_classes = ["PeopleCardPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
 
     eyebrow_text = forms.CharField(
@@ -507,13 +505,17 @@ class RelatedPeople(CMSFrontendComponent):
         required=False,
     )
 
-    eyebrow_text_color = forms.ChoiceField(
-        label=_("Eyebrow text color"),
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Heading text color"),
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
-        help_text=_("Eyebrow text color."),
     )
 
     grid_columns = forms.ChoiceField(
@@ -540,13 +542,14 @@ class PeopleCard(CMSFrontendComponent):
             "RelatedPeoplePlugin",
             "GridColumnPlugin",
         ]
-        child_classes = [
-            "ImagePlugin",
-            "TextPlugin",
-            "HeadingPlugin",
-            "TextLinkPlugin",
-        ]
+        child_classes = ["TextLinkPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+
+    image = ImageFormField(
+        label=_("Image"),
+        required=True,
+        help_text=_("Portrait of the person with white background"),
+    )
 
     image_accent = forms.BooleanField(
         label=_("Image accent"),
@@ -560,20 +563,33 @@ class PeopleCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
-        help_text=_("Image accent color."),
+        help_text=_("Image accent color"),
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    overline = forms.CharField(
+        label=_("Overline"),
+        required=False,
+        initial="contact:",
+        help_text=_("Text above the name"),
+    )
+
+    name = forms.CharField(
+        label=_("Name"),
+        required=True,
+        help_text=_("Full name"),
     )
 
     role = forms.CharField(
         label=_("Role"),
         required=False,
-        help_text=_("Role displayed in people card."),
+        help_text=_("Role displayed in people card"),
     )
 
     description = HTMLFormField(
         label=_("Description"),
         required=False,
-        help_text=_("Description displayed in people card."),
+        help_text=_("Description displayed in people card"),
     )
 
     text_color = forms.ChoiceField(
@@ -581,7 +597,7 @@ class PeopleCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="dark",
-        help_text=_("Card content text color."),
+        help_text=_("Card content text color"),
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
@@ -595,7 +611,6 @@ class MembershipPlans(CMSFrontendComponent):
         render_template = "membership/membership_plans.html"
         allow_children = True
         child_classes = [
-            "HeadingPlugin",
             "PlanCardPlugin",
             "HorizontalPlanCardPlugin",
         ]
@@ -607,13 +622,18 @@ class MembershipPlans(CMSFrontendComponent):
         help_text=_("Eyebrow text"),
     )
 
-    eyebrow_text_color = forms.ChoiceField(
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
         label=_("Text color"),
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
-        help_text=_("Color for eyebrow text."),
+        help_text=_("Color for eyebrow and heading text"),
     )
 
 
@@ -627,7 +647,6 @@ class PlanCard(CMSFrontendComponent):
         allow_children = True
         child_classes = [
             "TextPlugin",
-            "SpacingPlugin",
             "FeatureItemPlugin",
             "TextLinkPlugin",
         ]
@@ -685,7 +704,6 @@ class HorizontalPlanCard(CMSFrontendComponent):
         allow_children = True
         child_classes = [
             "TextPlugin",
-            "SpacingPlugin",
             "FeatureItemPlugin",
             "TextLinkPlugin",
             "ImagePlugin",
@@ -973,7 +991,7 @@ class CodeBlock(CMSFrontendComponent):
         label=_("Heading"),
         required=False,
         help_text=_("Heading for the code block."),
-    )   
+    )
     dark_mode = forms.BooleanField(
         label=_("Dark mode"),
         required=False,
