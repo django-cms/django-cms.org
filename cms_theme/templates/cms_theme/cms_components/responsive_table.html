@@ -1,0 +1,8 @@
+{% load frontend cms_component sekizai_tags cms_theme_tags i18n %}
+
+{# Declare component - template tags are evaluated at project startup and will render empty #}
+{% cms_component "ResponsiveTable" name=_("Responsive Table") %}
+{% field "table" HTMLFormField label=_("Add a table in here") help_text=_("Content will be shown in a scollable container") %}
+<div class="table-responsive">
+    {% inline_field instance "table" "" "safe" %}
+</div>

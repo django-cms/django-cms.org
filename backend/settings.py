@@ -496,20 +496,6 @@ TEXT_EDITOR_SETTINGS = {
             },
         },
         {
-            "name": "Blockquote",
-            "element": "span",
-            "attributes": {
-                "class": "blockquote",
-            },
-        },
-        {
-            "name": "Lead",
-            "element": "span",
-            "attributes": {
-                "class": "lead",
-            },
-        },
-        {
             "name": "Text XS",
             "element": "span",
             "attributes": {
@@ -528,6 +514,22 @@ TEXT_EDITOR_SETTINGS = {
             "element": "span",
             "attributes": {
                 "class": "fs-4",
+            },
+        },
+    ],
+    "blockStyles": [
+        {
+            "name": "Blockquote",
+            "element": "span",
+            "attributes": {
+                "class": "blockquote",
+            },
+        },
+        {
+            "name": "Lead",
+            "element": "span",
+            "attributes": {
+                "class": "lead",
             },
         },
     ],
@@ -556,4 +558,4 @@ if not DEBUG:
         # Add data like request headers and IP for users,
         # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
         send_default_pii=True,
-    )   
+    )
