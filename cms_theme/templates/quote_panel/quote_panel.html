@@ -3,14 +3,13 @@
 
 <section class="{{ instance.get_classes }} {% if instance.background_grid %} background-grid{% endif %}" {{ instance.get_attributes }}>
     <div class="container">
-        {% with heading_plugins=instance.child_plugin_instances|filter_by_type:"HeadingPlugin" %}
-        {% with quote_items=instance.child_plugin_instances|filter_by_type:"QuotePanelItemPlugin" %}
-
-        {% for plugin in heading_plugins %}
-            {% render_plugin plugin %}
-        {% endfor %}
-
-        {% if quote_items|length >= 2 %}
+        {% if instance.heading %}
+            {% if instance.overline %}
+                <p class="overline text-{{ instance.heading_context }}">{% inline_field instance "overline" %}</p>
+            {% endif %}
+            <h2 class="pb-5 mt-3 text-{{ instance.heading_context }}">{% inline_field instance "heading" %}</h2>
+        {% endif %}
+        {% if instance.child_plugin_instances|length >= 2 %}
         <div class="quote-slider">
             <div class="quote-slider-nav">
                 <button class="quote-slider-btn quote-slider-prev" aria-label="Previous slide">
@@ -22,7 +21,7 @@
             </div>
             <div class="swiper quote-swiper">
                 <div class="swiper-wrapper">
-                    {% for plugin in quote_items %}
+                    {% for plugin in instance.child_plugin_instances %}
                     <div class="swiper-slide">
                         <div class="grid-2 gap-6 items-center">
                             {% render_plugin plugin %}
@@ -34,13 +33,10 @@
         </div>
         {% else %}
             <div class="grid-2 gap-6 items-center">
-                {% for plugin in quote_items %}
+                {% for plugin in instance.child_plugin_instances %}
                     {% render_plugin plugin %}
                 {% endfor %}
             </div>
         {% endif %}
-
-        {% endwith %}
-        {% endwith %}
     </div>
 </section>

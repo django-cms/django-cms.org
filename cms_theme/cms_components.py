@@ -802,11 +802,25 @@ class QuotePanelContainer(CMSFrontendComponent):
         module = _("Sections")
         render_template = "quote_panel/quote_panel.html"
         allow_children = True
-        child_classes = [
-            "HeadingPlugin",
-            "QuotePanelItemPlugin",
-        ]
+        child_classes = ["QuotePanelItemPlugin"]
+        frontend_editable_fields = ["overline", "heading"]
         mixins = ["Background", "Spacing", "Attributes"]
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=True,
+    )
+    heading_context = forms.ChoiceField(
+        label=_("Heading context"),
+        required=False,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        initial=frontend_settings.EMPTY_CHOICE,
+        widget=ColoredButtonGroup(),
+    )
 
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
