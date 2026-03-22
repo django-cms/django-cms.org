@@ -43,6 +43,9 @@ class Hero(CMSFrontendComponent):
             ),
         )
         mixins = ["Background", "Spacing", "Attributes"]
+        default_config = {
+            "padding-y": "py-6",
+        }
         frontend_editable_fields = ("heading", "overline", "body")
 
     heading = forms.CharField(
@@ -103,6 +106,9 @@ class Features(CMSFrontendComponent):
             "TextLinkPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        default_config = {
+            "padding-y": "py-6",
+        }
 
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
@@ -152,6 +158,9 @@ class TimelineContainer(CMSFrontendComponent):
             "Spacing",
             "Attributes",
         ]
+        default_config = {
+            "padding-y": "py-6",
+        }
 
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),
@@ -278,6 +287,9 @@ class CTAPanel(CMSFrontendComponent):
             "TextLinkPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        default_config = {
+            "padding-y": "py-6",
+        }
         frontend_editable_fields = ("main_heading", "eyebrow_text")
 
     background_grid = forms.BooleanField(
@@ -318,6 +330,9 @@ class LogoCarousel(CMSFrontendComponent):
         allow_children = True
         child_classes = ["CarouselItemPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+        default_config = {
+            "padding-y": "py-6",
+        }
         frontend_editable_fields = ("heading",)
         fieldsets = (
             (
@@ -430,6 +445,9 @@ class BenefitsPanel(CMSFrontendComponent):
             "HeadingPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        default_config = {
+            "padding-y": "py-6",
+        }
 
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
@@ -506,6 +524,9 @@ class RelatedPeople(CMSFrontendComponent):
         allow_children = True
         child_classes = ["PeopleCardPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+        default_config = {
+            "padding-y": "py-6",
+        }
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
@@ -622,6 +643,9 @@ class MembershipPlans(CMSFrontendComponent):
             "HorizontalPlanCardPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        default_config = {
+            "padding-y": "py-6",
+        }
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
@@ -812,6 +836,9 @@ class QuotePanelContainer(CMSFrontendComponent):
         child_classes = ["QuotePanelItemPlugin"]
         frontend_editable_fields = ["overline", "heading"]
         mixins = ["Background", "Spacing", "Attributes"]
+        default_config = {
+            "padding-y": "py-6",
+        }
 
     overline = forms.CharField(
         label=_("Eyebrow text"),
@@ -1038,6 +1065,9 @@ class CounterContainer(CMSFrontendComponent):
         allow_children = True
         child_classes = ["CounterPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+        default_config = {
+            "padding-y": "py-6",
+        }
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
