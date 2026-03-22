@@ -927,7 +927,7 @@ class Heading(CMSFrontendComponent):
 
     def get_short_description(self):
         return (
-            f"{self.heading} ({self.heading_level})"
+            f"{self.heading} <{self.heading_level}>"
             if self.config.get("heading")
             else ""
         )
@@ -1201,4 +1201,4 @@ class Counter(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return dict(COUNTER_TYPE_CHOICES).get(self.counter_type, _("Manual"))
+        return dict(COUNTER_TYPE_CHOICES).get(self.config.get("counter_type"), _("Manual"))
