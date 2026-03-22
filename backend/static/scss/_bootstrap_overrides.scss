@@ -36,6 +36,111 @@ $theme-colors: map-merge(
   )
 );
 
+// ==============================================
+// Custom color subtle variants
+// Required for Bootstrap component variants:
+// alert-{color}, btn-{color}, badge bg-{color}, etc.
+// Bootstrap's _maps.scss only includes the 8 default colors,
+// so we pre-define the full maps here before Bootstrap compiles.
+// ==============================================
+
+// Subtle background colors (80% tint = very light version of the color)
+$platinum-bg-subtle:      tint-color($accent-platinum-color, 80%);
+$gold-bg-subtle:          tint-color($accent-gold-color, 80%);
+$silver-bg-subtle:        tint-color($accent-silver-color, 80%);
+$bronze-bg-subtle:        tint-color($accent-bronze-color, 80%);
+$mid-grey-bg-subtle:      tint-color($mid-grey, 80%);
+$second-primary-bg-subtle: tint-color($third-color, 80%);
+$dark-green-bg-subtle:    tint-color($dark-green, 80%);
+
+// Subtle border colors (60% tint = slightly more saturated than bg-subtle)
+$platinum-border-subtle:      tint-color($accent-platinum-color, 60%);
+$gold-border-subtle:          tint-color($accent-gold-color, 60%);
+$silver-border-subtle:        tint-color($accent-silver-color, 60%);
+$bronze-border-subtle:        tint-color($accent-bronze-color, 60%);
+$mid-grey-border-subtle:      tint-color($mid-grey, 60%);
+$second-primary-border-subtle: tint-color($third-color, 60%);
+$dark-green-border-subtle:    tint-color($dark-green, 60%);
+
+// Text emphasis colors (60% shade = dark readable text on subtle backgrounds)
+$platinum-text-emphasis:      shade-color($accent-platinum-color, 60%);
+$gold-text-emphasis:          shade-color($accent-gold-color, 60%);
+$silver-text-emphasis:        shade-color($accent-silver-color, 60%);
+$bronze-text-emphasis:        shade-color($accent-bronze-color, 60%);
+$mid-grey-text-emphasis:      shade-color($mid-grey, 60%);
+$second-primary-text-emphasis: shade-color($third-color, 60%);
+$dark-green-text-emphasis:    shade-color($dark-green, 60%);
+
+// Extend Bootstrap's color maps to include custom colors.
+// These maps are defined with !default in Bootstrap's _maps.scss,
+// so pre-defining them here causes Bootstrap to use our extended versions.
+
+$theme-colors-text: map-merge(
+  (
+    "primary":   $primary-text-emphasis,
+    "secondary": $secondary-text-emphasis,
+    "success":   $success-text-emphasis,
+    "info":      $info-text-emphasis,
+    "warning":   $warning-text-emphasis,
+    "danger":    $danger-text-emphasis,
+    "light":     $light-text-emphasis,
+    "dark":      $dark-text-emphasis,
+  ),
+  (
+    "platinum":      $platinum-text-emphasis,
+    "gold":          $gold-text-emphasis,
+    "silver":        $silver-text-emphasis,
+    "bronze":        $bronze-text-emphasis,
+    "mid-grey":      $mid-grey-text-emphasis,
+    "second-primary": $second-primary-text-emphasis,
+    "dark-green":    $dark-green-text-emphasis,
+  )
+);
+
+$theme-colors-bg-subtle: map-merge(
+  (
+    "primary":   $primary-bg-subtle,
+    "secondary": $secondary-bg-subtle,
+    "success":   $success-bg-subtle,
+    "info":      $info-bg-subtle,
+    "warning":   $warning-bg-subtle,
+    "danger":    $danger-bg-subtle,
+    "light":     $light-bg-subtle,
+    "dark":      $dark-bg-subtle,
+  ),
+  (
+    "platinum":      $platinum-bg-subtle,
+    "gold":          $gold-bg-subtle,
+    "silver":        $silver-bg-subtle,
+    "bronze":        $bronze-bg-subtle,
+    "mid-grey":      $mid-grey-bg-subtle,
+    "second-primary": $second-primary-bg-subtle,
+    "dark-green":    $dark-green-bg-subtle,
+  )
+);
+
+$theme-colors-border-subtle: map-merge(
+  (
+    "primary":   $primary-border-subtle,
+    "secondary": $secondary-border-subtle,
+    "success":   $success-border-subtle,
+    "info":      $info-border-subtle,
+    "warning":   $warning-border-subtle,
+    "danger":    $danger-border-subtle,
+    "light":     $light-border-subtle,
+    "dark":      $dark-border-subtle,
+  ),
+  (
+    "platinum":      $platinum-border-subtle,
+    "gold":          $gold-border-subtle,
+    "silver":        $silver-border-subtle,
+    "bronze":        $bronze-border-subtle,
+    "mid-grey":      $mid-grey-border-subtle,
+    "second-primary": $second-primary-border-subtle,
+    "dark-green":    $dark-green-border-subtle,
+  )
+);
+
 // Extend border-radius sizes (6 = 0.625rem = 10px)
 $border-radius-6: 0.625rem;
 
