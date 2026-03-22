@@ -56,15 +56,17 @@
         div.cms .cms-structure .cms-draggable .cms-draggable.cms-draggable-{{ slot.pk|safe }}:has(> .cms-dragitem-expanded) {
             background-color: var(--dca-gray-lightest);
             padding-bottom: 6px;
-            padding-block: -2px;
             border: 2px solid var(--dca-secondary);
             border-radius: 5px;
             > .cms-dragitem {
                 background-color: var(--dca-gray-lightest);
                 margin-bottom: 2px;
-                margin-inline: 2px;
                 border: none;
             }
+        }
+        div.cms .cms-structure .cms-draggable .cms-draggable.cms-draggable-{{ slot.pk|safe }} > .cms-collapsable-container .cms-dragitem {
+            border-color: var(--dca-gray-lightest);
+            border-inline-end: none;
         }
         div.cms .cms-structure .cms-draggable .cms-draggable.cms-draggable-{{ slot.pk|safe }} > .cms-dragitem {
             background-color: var(--dca-gray-lightest);
