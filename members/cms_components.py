@@ -8,9 +8,18 @@ from djangocms_frontend.fields import ColoredButtonGroup
 from .models import Member, MembershipType
 
 
-class MemberChoiceField(forms.ModelMultipleChoiceField):
-    def label_from_instance(self, obj):
-        return f"{obj.name} ({obj.get_membership_type_display()})"
+def _get_member_queryset(config, *, require_logo=False):
+    """Shared queryset builder for member plugins."""
+    qs = Member.objects.all()
+    if require_logo:
+        qs = qs.exclude(logo__isnull=True)
+    membership_types = config.get("membership_types")
+    if membership_types:
+        qs = qs.filter(membership_type__in=membership_types)
+    max_items = config.get("max_items")
+    if max_items:
+        qs = qs[:max_items]
+    return qs
 
 
 @components.register
@@ -33,11 +42,19 @@ class MemberCards(CMSFrontendComponent):
         required=False,
     )
 
-    membership_type = forms.ChoiceField(
+    membership_types = forms.MultipleChoiceField(
         label=_("Filter by membership type"),
-        choices=[("", _("All"))] + MembershipType.choices,
+        choices=MembershipType.choices,
         required=False,
-        help_text=_("Only show members of this type. Leave empty to show all."),
+        widget=forms.CheckboxSelectMultiple,
+        help_text=_("Select one or more types to filter. Leave empty to show all."),
+    )
+
+    max_items = forms.IntegerField(
+        label=_("Maximum members displayed"),
+        required=False,
+        min_value=1,
+        help_text=_("Limit the number of members shown. Leave empty for no limit."),
     )
 
     text_color = forms.ChoiceField(
@@ -52,11 +69,7 @@ class MemberCards(CMSFrontendComponent):
         return self.config.get("heading", "")
 
     def get_members(self):
-        qs = Member.objects.all()
-        membership_type = self.config.get("membership_type")
-        if membership_type:
-            qs = qs.filter(membership_type=membership_type)
-        return qs
+        return _get_member_queryset(self.config)
 
 
 @components.register
@@ -74,11 +87,19 @@ class MemberCarousel(CMSFrontendComponent):
         required=False,
     )
 
-    membership_type = forms.ChoiceField(
+    membership_types = forms.MultipleChoiceField(
         label=_("Filter by membership type"),
-        choices=[("", _("All"))] + MembershipType.choices,
+        choices=MembershipType.choices,
         required=False,
-        help_text=_("Only show members of this type. Leave empty to show all."),
+        widget=forms.CheckboxSelectMultiple,
+        help_text=_("Select one or more types to filter. Leave empty to show all."),
+    )
+
+    max_items = forms.IntegerField(
+        label=_("Maximum members displayed"),
+        required=False,
+        min_value=1,
+        help_text=_("Limit the number of members shown. Leave empty for no limit."),
     )
 
     text_color = forms.ChoiceField(
@@ -127,8 +148,4 @@ class MemberCarousel(CMSFrontendComponent):
         return self.config.get("heading", "")
 
     def get_members(self):
-        qs = Member.objects.exclude(logo__isnull=True)
-        membership_type = self.config.get("membership_type")
-        if membership_type:
-            qs = qs.filter(membership_type=membership_type)
-        return qs
+        return _get_member_queryset(self.config, require_logo=True)
