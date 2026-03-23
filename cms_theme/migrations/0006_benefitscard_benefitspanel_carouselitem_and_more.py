@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
             fields=[
             ],
             options={
-                'verbose_name': 'Grid background',
+                'verbose_name': 'Grid section',
                 'managed': False,
                 'proxy': True,
             },
