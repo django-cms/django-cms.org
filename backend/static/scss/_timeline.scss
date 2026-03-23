@@ -90,6 +90,20 @@ $timeline-circle-size: 15px;
   }
 }
 
+// Dark background contrast fix for milestone cards
+// Same pattern as features-section: force white text on dark backgrounds
+.milestone-card {
+  .card {
+    &.bg-dark,
+    &.bg-secondary,
+    &.bg-second-primary,
+    &.bg-dark-green,
+    &.bg-black {
+      color: #fff;
+    }
+  }
+}
+
 // Responsive timeline on mobile devices
 @include media-breakpoint-down(md) {
   // Move the timeline ruler to the left
@@ -113,5 +127,11 @@ $timeline-circle-size: 15px;
   // Reset right-side items to behave like left-side
   .timeline-right {
     left: 0;
+  }
+}
+
+.milestone-text {
+  p {
+    margin-bottom: 0 !important;
   }
 }

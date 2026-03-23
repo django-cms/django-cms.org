@@ -189,6 +189,7 @@ class MilestoneCard(CMSFrontendComponent):
             Slot("image_top", _("Image Top"), child_classes=["ImagePlugin"]),
             Slot("image_bottom", _("Image Bottom"), child_classes=["ImagePlugin"]),
         )
+        frontend_editable_fields = ("label", "heading", "text")
 
     label = forms.CharField(
         label=_("Milestone label"),
