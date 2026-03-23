@@ -1,4 +1,4 @@
-{% load cms_tags frontend %}
+{% load cms_tags frontend i18n %}
 <section class="logo-section {{ instance.get_classes }}" {{ instance.get_attributes }}>
     <div class="container text-center">
         {% if instance.heading %}
@@ -36,12 +36,12 @@
             </div>
             <button class="nav-btn btn-prev btn-prev-{{ instance.id }} btn btn-outline-{{ instance.btn_color }}"
                     id="prevBtn-{{ instance.id }}"
-                    aria-label="Previous slide">
+                    aria-label="{% translate "Previous slide" %}">
                 <i class="bi bi-chevron-left"></i>
             </button>
             <button class="nav-btn btn-next btn-next-{{ instance.id }} btn btn-outline-{{ instance.btn_color }}"
                     id="nextBtn-{{ instance.id }}"
-                    aria-label="Next slide">
+                    aria-label="{% translate "Next slide" %}">
                 <i class="ps-1 bi bi-chevron-right"></i>
             </button>
         </div>

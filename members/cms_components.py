@@ -10,7 +10,7 @@ from .models import Member, MembershipType
 
 def _get_member_queryset(config, *, require_logo=False):
     """Shared queryset builder for member plugins."""
-    qs = Member.objects.all()
+    qs = Member.objects.select_related("logo").all()
     if require_logo:
         qs = qs.exclude(logo__isnull=True)
     membership_types = config.get("membership_types")
