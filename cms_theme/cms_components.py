@@ -1205,7 +1205,7 @@ class Counter(CMSFrontendComponent):
 
 
 @components.register
-class GridContainer(CMSFrontendComponent):
+class ContainerWithGrid(CMSFrontendComponent):
     """Grid section container with optional background grid"""
 
     class Meta:
@@ -1216,7 +1216,7 @@ class GridContainer(CMSFrontendComponent):
         show_add_form = False
         mixins = ["Background", "Spacing", "Attributes"]
 
-    eyebrow_text = forms.CharField(
+    overline = forms.CharField(
         label=_("Eyebrow text"),
         required=False,
     )
