@@ -153,6 +153,21 @@ class TimelineContainer(CMSFrontendComponent):
             "Attributes",
         ]
 
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    title = forms.CharField(
+        label=_("Title"),
+        required=False,
+    )
+
+    text = HTMLFormField(
+        label=_("Text"),
+        required=False,
+    )
+
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),
         choices=frontend_settings.COLOR_STYLE_CHOICES,

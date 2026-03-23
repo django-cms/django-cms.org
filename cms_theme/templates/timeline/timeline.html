@@ -7,11 +7,11 @@
 >
     <div class="container">
         {# Header content: Heading and intro text #}
-        {% for child in instance.child_plugin_instances %}
-            {% if child.plugin_type != "MilestoneCardPlugin" %}
-                {% render_plugin child %}
-            {% endif %}
-        {% endfor %}
+        <div class="text-center pb-7">
+            <p class="overline text-dark">{{ instance.eyebrow_text }}</p>
+            <h2 class="pt-2 pb-4 mb-0 text-secondary">{{ instance.title }}</h2>
+            <div class="timeline-text text-dark">{{ instance.text|safe }}</div>
+        </div>
 
         {# Timeline items #}
         <div class="main-timeline timeline-divider-{{ instance.config.divider_color|default:'primary' }} timeline-circle-{{ instance.config.circle_color|default:'secondary' }}" role="list">
