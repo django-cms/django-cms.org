@@ -1239,3 +1239,10 @@ class ContainerWithGrid(CMSFrontendComponent):
         required=False,
         initial=True,
     )
+
+    def get_short_description(self) -> str:
+        heading = self.config.get("heading")
+        background_context = self.config.get('background_context', 'none')     
+        if heading:
+            return f"{heading} ({background_context})"
+        return background_context
