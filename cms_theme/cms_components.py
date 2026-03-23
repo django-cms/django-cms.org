@@ -8,8 +8,6 @@ from djangocms_frontend.component_base import CMSFrontendComponent, Slot
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.contrib.image.fields import ImageFormField
-
-from .fields import ColorChoiceField
 from djangocms_frontend.fields import (
     ButtonGroup,
     ColoredButtonGroup,
@@ -17,6 +15,8 @@ from djangocms_frontend.fields import (
     IconGroup,
 )
 from djangocms_frontend.helpers import first_choice
+
+from .fields import ColorChoiceField
 
 
 def _hero_clip_path_choices():
@@ -142,7 +142,7 @@ class TimelineContainer(CMSFrontendComponent):
         render_template = "timeline/timeline.html"
         allow_children = True
         child_classes = [
-            "CardPlugin",
+            "MilestoneCardPlugin",
             "TextPlugin",
             "HeadingPlugin",
             "SpacingPlugin",
@@ -169,6 +169,43 @@ class TimelineContainer(CMSFrontendComponent):
         initial="secondary",
         help_text=_("Color of the timeline circles."),
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+
+@components.register
+class MilestoneCard(CMSFrontendComponent):
+    """Milestone card component for Timeline"""
+
+    class Meta:
+        name = _("Milestone Card")
+        render_template = "timeline/milestone_card.html"
+        allow_children = True
+        parent_classes = [
+            "TimelineContainerPlugin",
+        ]
+        mixins = ["Background", "Spacing"]
+        slots = (
+            Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
+            Slot("image_top", _("Image Top"), child_classes=["ImagePlugin"]),
+            Slot("image_bottom", _("Image Bottom"), child_classes=["ImagePlugin"]),
+        )
+
+    label = forms.CharField(
+        label=_("Milestone label"),
+        required=True,
+        help_text=_("Short label for the milestone, e.g. a year or date."),
+    )
+
+    heading = forms.CharField(
+        label=_("Milestone heading"),
+        required=True,
+        help_text=_("Heading for the milestone card."),
+    )
+
+    text = HTMLFormField(
+        label=_("Milestone text"),
+        required=False,
+        help_text=_("Description text for the milestone."),
     )
 
 
@@ -992,6 +1029,7 @@ class Spacing(CMSFrontendComponent):
 @components.register
 class CodeBlock(CMSFrontendComponent):
     """Code card component to render code snippets with syntax highlighting"""
+
     class Media:
         js = (
             "admin/vendor/ace/ace.js"
@@ -1098,14 +1136,20 @@ class CounterPluginMixin:
             )
             resp.raise_for_status()
             data = resp.json()
-            return data["stargazers_count" if counter_type == "stars" else "forks_count"]
+            return data[
+                "stargazers_count" if counter_type == "stars" else "forks_count"
+            ]
 
-        since = (datetime.now(tz=timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
+        since = (datetime.now(tz=timezone.utc) - timedelta(days=30)).strftime(
+            "%Y-%m-%d"
+        )
 
         if counter_type == "issues_closed":
             resp = requests.get(
                 "https://api.github.com/search/issues",
-                params={"q": f"org:{self.GITHUB_ORG} type:issue is:closed closed:>={since}"},
+                params={
+                    "q": f"org:{self.GITHUB_ORG} type:issue is:closed closed:>={since}"
+                },
                 headers={"Accept": "application/vnd.github.v3+json"},
                 timeout=10,
             )
@@ -1115,7 +1159,9 @@ class CounterPluginMixin:
         if counter_type == "merges":
             resp = requests.get(
                 "https://api.github.com/search/issues",
-                params={"q": f"org:{self.GITHUB_ORG} type:pr is:merged merged:>={since}"},
+                params={
+                    "q": f"org:{self.GITHUB_ORG} type:pr is:merged merged:>={since}"
+                },
                 headers={"Accept": "application/vnd.github.v3+json"},
                 timeout=10,
             )
@@ -1153,16 +1199,19 @@ class Counter(CMSFrontendComponent):
         child_classes = ["TextLinkPlugin"]
         mixins = ["Background", "Attributes"]
         fieldsets = (
-            (None, {
-                "fields": (
-                    "icon",
-                    "title",
-                    ("counter_type", "number", "is_percent"),
-                    "number_color",
-                    "description",
-                    "color_style",
-                )
-            }),
+            (
+                None,
+                {
+                    "fields": (
+                        "icon",
+                        "title",
+                        ("counter_type", "number", "is_percent"),
+                        "number_color",
+                        "description",
+                        "color_style",
+                    )
+                },
+            ),
         )
 
     counter_type = forms.ChoiceField(
@@ -1201,4 +1250,6 @@ class Counter(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return dict(COUNTER_TYPE_CHOICES).get(self.config.get("counter_type"), _("Manual"))
+        return dict(COUNTER_TYPE_CHOICES).get(
+            self.config.get("counter_type"), _("Manual")
+        )

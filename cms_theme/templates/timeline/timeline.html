@@ -8,7 +8,7 @@
     <div class="container">
         {# Header content: Heading and intro text #}
         {% for child in instance.child_plugin_instances %}
-            {% if child.plugin_type != "CardPlugin" %}
+            {% if child.plugin_type != "MilestoneCardPlugin" %}
                 {% render_plugin child %}
             {% endif %}
         {% endfor %}
@@ -16,7 +16,7 @@
         {# Timeline items #}
         <div class="main-timeline timeline-divider-{{ instance.config.divider_color|default:'primary' }} timeline-circle-{{ instance.config.circle_color|default:'secondary' }}" role="list">
             {% for child in instance.child_plugin_instances %}
-                {% if child.plugin_type == "CardPlugin" and child.child_plugin_instances %}
+                {% if child.plugin_type == "MilestoneCardPlugin" and child.child_plugin_instances %}
                     <div class="timeline {% cycle 'timeline-right' 'timeline-left' %}" role="listitem">
                         {% render_plugin child %}
                     </div>
