@@ -1,0 +1,51 @@
+{% load cms_tags frontend %}
+<section class="{{ instance.get_classes }}" {{ instance.get_attributes }}>
+    <div class="container">
+        {% if instance.eyebrow_text %}
+            <h6 class="overline mb-0 text-uppercase text-muted{% if instance.text_color %} text-{{ instance.text_color }}{% endif %}">
+                {{ instance.eyebrow_text }}
+            </h6>
+        {% endif %}
+        {% if instance.heading %}
+            <h2{% if instance.text_color %} class="text-{{ instance.text_color }}"{% endif %}>
+                {{ instance.heading }}
+            </h2>
+        {% endif %}
+        <div class="row g-4 mt-2">
+            {% for member in instance.get_members %}
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm text-center p-3">
+                        {% if member.logo %}
+                            <div class="card-img-top d-flex align-items-center justify-content-center p-3" style="min-height: 120px;">
+                                <img src="{{ member.logo.url }}"
+                                     alt="{{ member.name }}"
+                                     class="img-fluid"
+                                     style="max-height: 80px; object-fit: contain;">
+                            </div>
+                        {% endif %}
+                        <div class="card-body px-2 pb-2 pt-0">
+                            <h6 class="card-title mb-1">{{ member.name }}</h6>
+                            <span class="badge bg-{{ member.membership_type }}">
+                                {{ member.get_membership_type_display }}
+                            </span>
+                            {% if member.description %}
+                                <p class="card-text small text-muted mt-2 mb-0">{{ member.description|truncatewords:20 }}</p>
+                            {% endif %}
+                        </div>
+                        {% if member.link %}
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <a href="{{ member.link }}" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener">
+                                    {% translate "Visit" %}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <p class="text-muted text-center">{% translate "No members found." %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

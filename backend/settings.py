@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     "cms_theme",
     "djangocms_video",
     "djangocms_ecosystem",
+    "members",
     # djangocms-stories-related stuff
     "djangocms_stories",
     "authors",

@@ -1,0 +1,49 @@
+{% load cms_tags frontend %}
+<section class="logo-section {{ instance.get_classes }}" {{ instance.get_attributes }}>
+    <div class="container text-center">
+        {% if instance.heading %}
+            <h3 class="p-carousel text-center overline text-secondary d-inline{% if instance.text_color %} text-{{ instance.text_color }}{% endif %}{% if instance.bg_color %} text-bg-{{ instance.bg_color }}{% endif %} mb-0">
+                {{ instance.heading }}
+            </h3>
+        {% endif %}
+        <div class="carousel-container mx-6">
+            <div class="swiper logo-swiper-carousel logoSwiper-{{ instance.id }}"
+                 data-instance-id="{{ instance.id }}"
+                 data-loop="{% if instance.loop %}true{% else %}false{% endif %}"
+                 data-space-between-slides="20"
+                 data-autoplay="{% if instance.autoplay %}true{% else %}false{% endif %}"
+                 data-delay="{{ instance.delay }}">
+                <div class="swiper-wrapper">
+                    {% for member in instance.get_members %}
+                        <div class="swiper-slide">
+                            {% if member.link %}
+                                <a href="{{ member.link }}" target="_blank" rel="noopener" title="{{ member.name }}">
+                            {% endif %}
+                            {% if member.logo %}
+                                <img src="{{ member.logo.url }}"
+                                     alt="{{ member.name }}"
+                                     class="img-fluid"
+                                     style="max-height: 60px; object-fit: contain;">
+                            {% else %}
+                                <span class="fw-bold text-muted">{{ member.name }}</span>
+                            {% endif %}
+                            {% if member.link %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button class="nav-btn btn-prev btn-prev-{{ instance.id }} btn btn-outline-{{ instance.btn_color }}"
+                    id="prevBtn-{{ instance.id }}"
+                    aria-label="Previous slide">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="nav-btn btn-next btn-next-{{ instance.id }} btn btn-outline-{{ instance.btn_color }}"
+                    id="nextBtn-{{ instance.id }}"
+                    aria-label="Next slide">
+                <i class="ps-1 bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
