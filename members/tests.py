@@ -66,7 +66,9 @@ class MemberAdminTests(TestCase):
 
     def test_changelist_view(self):
         Member.objects.create(name="Gold Member", membership_type=MembershipType.GOLD)
-        Member.objects.create(name="Silver Member", membership_type=MembershipType.SILVER)
+        Member.objects.create(
+            name="Silver Member", membership_type=MembershipType.SILVER
+        )
         request = self.factory.get("/admin/members/member/")
         request.user = self.superuser
         response = self.admin.changelist_view(request)
@@ -111,9 +113,9 @@ class MemberComponentQueryTests(TestCase):
         self.assertEqual(qs.count(), 0)
 
     def test_filter_by_type_and_logo(self):
-        qs = Member.objects.filter(
-            membership_type=MembershipType.GOLD
-        ).exclude(logo__isnull=True)
+        qs = Member.objects.filter(membership_type=MembershipType.GOLD).exclude(
+            logo__isnull=True
+        )
         self.assertEqual(qs.count(), 0)
 
     def test_all_membership_types_queryable(self):

@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from djangocms_frontend import settings as frontend_settings
 from djangocms_frontend.component_base import CMSFrontendComponent
 from djangocms_frontend.component_pool import components
-from djangocms_frontend.contrib.image.fields import ImageFormField
 from djangocms_frontend.fields import ColoredButtonGroup
 
 from .models import Member, MembershipType
