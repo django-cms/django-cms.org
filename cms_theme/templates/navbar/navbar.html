@@ -30,7 +30,7 @@
     </div>
 
     {# Buttons - Desktop only (outside collapse for grid layout) #}
-    <div class="d-none d-xl-flex gap-3 ms-auto">
+    <div class="d-none d-xl-flex flex-column flex-xxl-row gap-3 ms-auto">
       {% for plugin in instance.child_plugin_instances %}
           {% if plugin.plugin_type == "TextLinkPlugin" %}
               {% render_plugin plugin %}

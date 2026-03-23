@@ -1253,3 +1253,47 @@ class Counter(CMSFrontendComponent):
         return dict(COUNTER_TYPE_CHOICES).get(
             self.config.get("counter_type"), _("Manual")
         )
+
+
+@components.register
+class ContainerWithGrid(CMSFrontendComponent):
+    """Grid section container with optional background grid"""
+
+    class Meta:
+        name = _("Grid Section")
+        module = _("Sections")
+        render_template = "grid_container/grid_container.html"
+        allow_children = True
+        show_add_form = False
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=True,
+    )
+
+    def get_short_description(self) -> str:
+        heading = self.config.get("heading")
+        background_context = self.config.get("background_context", "none")
+        if heading:
+            return f"{heading} ({background_context})"
+        return background_context
