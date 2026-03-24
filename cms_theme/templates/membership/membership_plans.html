@@ -1,13 +1,13 @@
-{% load static cms_tags sekizai_tags cms_theme_tags %}
+{% load static cms_tags sekizai_tags cms_theme_tags frontend %}
 <div {{ instance.get_attributes }}>
     <div class="container">
         <div class="row mb-4 justify-content-center justify-content-lg-start">
             <div class="col-12 col-md-10 col-lg-12 text-lg-start">
                 {% if instance.eyebrow_text %}
-                    <h6 class="text-uppercase text-muted overline{% if instance.text_color %} text-{{ instance.text_color }}{% endif %}">{{ instance.eyebrow_text }}</h6>
+                    <h6 class="text-uppercase text-muted overline{% if instance.text_color %} text-{{ instance.text_color }}{% endif %}">{% inline_field instance "eyebrow_text" %}</h6>
                 {% endif %}
                 {% if instance.heading %}
-                    <h2{% if instance.text_color %} class="text-{{ instance.text_color }}"{% endif %}>{{ instance.heading }}</h2>
+                    <h2{% if instance.text_color %} class="text-{{ instance.text_color }}"{% endif %}>{% inline_field instance "heading" %}</h2>
                 {% endif %}
             </div>
         </div>

@@ -7,10 +7,10 @@
             <i class="{{ instance.card_icon.iconClass }} display-1"></i>
         </div>
         <div class="benefits-card-wrapper benefits-card-margin-bottom">
-            <h3 class="h4 fw-bold mb-4">{{ instance.card_title }}</h3>
+            <h3 class="h4 fw-bold mb-4">{% inline_field instance "card_title" %}</h3>
         </div>
         <div class="benefits-card-spacing flex-grow-1 benefits-card-body mt-auto">
-            {% if instance.card_content %}{{ instance.card_content|safe }}{% endif %}
+            {% if instance.card_content %}{% inline_field instance "card_content" "" "safe" %}{% endif %}
         </div>
         <div class="mt-auto">
             {% if instance.child_plugin_instances %}
