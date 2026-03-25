@@ -1,0 +1,24 @@
+{% load thumbnail frontend %}
+
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+        <clipPath id="image-clip-{{ instance.pk }}" clipPathUnits="objectBoundingBox"
+                    transform="scale(750, 672)">
+            <path d="M268 0.5H730C740.77 0.5 749.5 9.23045 749.5 20V652L749.493 652.503C749.226 663.04 740.601 671.5 730 671.5H268C257.23 671.5 248.5 662.77 248.5 652V594.5H20C9.23045 594.5 0.5 585.77 0.5 575V167L0.506836 166.497C0.773605 155.96 9.3986 147.5 20 147.5H248.5V20C248.5 9.3986 256.96 0.773603 267.497 0.506836L268 0.5Z"/>
+        </clipPath>
+    </defs>
+</svg>
+{% if picture_link %}
+    <a href="{{ picture_link }}"
+        {% if instance.target %} target="{{ instance.target }}"{% endif %}
+        {% get_attributes instance.link_attributes %}>
+{% endif %}
+<img src="{{ instance.img_src }}" {% if not instance.attributes.alt and instance.rel_image.default_alt_text %}alt="{{ instance.rel_image.default_alt_text }}"{% endif %} {% if instance.width %} width="{{ instance.width|safe }}"{% endif %} {% if instance.height %} height="{{ instance.height|safe }}"{% endif %}
+    {% if img_srcset_data %}
+        srcset="{% for size, thumb in img_srcset_data %}{{ thumb.url }} {{ size|safe }}w,{% endfor %}{{ instance.img_src }} {{ picture_size.size.0|safe }}w"
+        sizes="{% for size, thumb in img_srcset_data %}(max-width: {{ size|safe }}px) {{ size|safe }}px, {% endfor %} {{ picture_size.size.0|safe }}px"
+    {% endif %}
+    {{ instance.get_attributes }} style="clip-path: url(#image-clip-{{ instance.pk }})"/>
+{% if picture_link %}
+    </a>
+{% endif %}
