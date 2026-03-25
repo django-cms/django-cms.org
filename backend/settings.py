@@ -554,9 +554,9 @@ DJANGOCMS_FILE_TEMPLATES = [
 DJANGOCMS_PICTURE_TEMPLATES = [
     ("default", _("Default")),
     ("decorated", _("Decorated")),
-    ("clipped_1", _("Clipped boxes")),
-    ("clipped_2", _("Clipped offset panel")),
-    ("clipped_3", _("Clipped side panel")),
+    ("clipped_0", _("Clipped boxes")),
+    ("clipped_1", _("Clipped offset panel")),
+    ("clipped_2", _("Clipped side panel")),
 ]
 
 if not DEBUG:
