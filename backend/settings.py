@@ -550,6 +550,14 @@ DJANGOCMS_FILE_TEMPLATES = [
     ("primary", _("Primary file link")),
 ]
 
+# djangocms-picture settings
+DJANGOCMS_PICTURE_TEMPLATES = [
+    ("default", _("Default")),
+    ("decorated", _("Decorated")),
+    ("clipped_1", _("Clipped boxes")),
+    ("clipped_2", _("Clipped offset panel")),
+    ("clipped_3", _("Clipped side panel")),
+]
 
 if not DEBUG:
     import sentry_sdk
