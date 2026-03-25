@@ -1,38 +1,37 @@
-  .shape-top, .shape-bottom, .shape-left, .shape-right {
-    position: absolute;
-    border-radius: 20px;
-    z-index: 0;
-  }
+.shape-top, .shape-bottom, .shape-left, .shape-right {
+  position: absolute;
+  border-radius: 20px;
+  z-index: 0;
+}
 
-  .shape-top {
-    width: 55%;
-    height: 140px;
-    top: 0;
-    left: 34%;
-  }
+.shape-top {
+  width: 55%;
+  height: 140px;
+  top: 0;
+  left: 34%;
+}
 
-  .shape-bottom {
-    width: 23%;
-    height: 160px;
-    bottom: -0;
-    left: 19%;
-  }
+.shape-bottom {
+  width: 23%;
+  height: 160px;
+  bottom: -0;
+  left: 19%;
+}
 
-  .shape-left {
-    width: 80px;
-    height: 43%;
-    top: 14%;
-    left: 0;
+.shape-left {
+  width: 80px;
+  height: 43%;
+  top: 14%;
+  left: 0;
+}
+.shape-right {
+  width: 80px;
+  height: 43%;
+  top: 43%;
+  right: 0;
+}
+.shape-top, .shape-bottom, .shape-left, .shape-right {
+  & + img {
+      z-index: 1;
   }
-  .shape-right {
-    width: 80px;
-    height: 43%;
-    top: 43%;
-    right: 0;
-  }
-  .shape-top, .shape-bottom, .shape-left, .shape-right {
-    & + img {
-        z-index: 1;
-        s
-    }
-  } 
+}
