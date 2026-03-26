@@ -14,12 +14,12 @@
         {% endif %}
         <div class="card-body p-0 mt-4 text-{{ instance.text_color }}">
             <div class="pt-1">
-                <div class="text-uppercase mb-1 overline pb-2">{{ instance.overline|default:"contact:" }}</div>
-                <h4>{{ instance.name }}</h4>
+                <div class="text-uppercase mb-1 overline pb-2">{% inline_field instance "overline" %}</div>
+                <h4>{% inline_field instance "name" %}</h4>
                 {% if instance.role %}
-                    <p class="mb-0">{{ instance.role }}</p>
+                    <p class="mb-0">{% inline_field instance "role" %}</p>
                 {% endif %}
-                {% if instance.description %}{{ instance.description|safe }}{% endif %}
+                {% if instance.description %}{% inline_field instance "description" "" "safe" %}{% endif %}
                 {% with buttons=instance.child_plugin_instances %}
                     {% if buttons and buttons|length > 0 %}
                         <div class="d-flex gap-2 button-group pt-1 mt-4">

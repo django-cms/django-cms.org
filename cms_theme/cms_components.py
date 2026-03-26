@@ -499,6 +499,7 @@ class BenefitsCard(CMSFrontendComponent):
             "TextLinkPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("card_title", "card_content")
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
@@ -554,6 +555,7 @@ class RelatedPeople(CMSFrontendComponent):
         allow_children = True
         child_classes = ["PeopleCardPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("eyebrow_text", "heading")
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
@@ -599,6 +601,7 @@ class PeopleCard(CMSFrontendComponent):
         ]
         child_classes = ["TextLinkPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("overline", "name", "role", "description")
 
     image = ImageFormField(
         label=_("Image"),
@@ -670,6 +673,7 @@ class MembershipPlans(CMSFrontendComponent):
             "HorizontalPlanCardPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("eyebrow_text", "heading")
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
@@ -709,6 +713,7 @@ class PlanCard(CMSFrontendComponent):
             "MembershipPlansPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("card_heading", "card_sub_heading")
 
     card_heading = forms.CharField(
         label=_("Card heading"),
@@ -767,6 +772,7 @@ class HorizontalPlanCard(CMSFrontendComponent):
             "MembershipPlansPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("card_heading", "card_sub_heading")
 
     card_heading = forms.CharField(
         label=_("Card heading"),
@@ -898,6 +904,7 @@ class QuotePanelItem(CMSFrontendComponent):
         child_classes = [
             "ImagePlugin",
         ]
+        frontend_editable_fields = ("eyebrow_text", "quote_text", "author_name", "author_role")
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
