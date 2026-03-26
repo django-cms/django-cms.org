@@ -1,0 +1,24 @@
+{% load thumbnail frontend %}
+
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+        <clipPath id="image-clip-{{ instance.pk }}" clipPathUnits="objectBoundingBox"
+                    transform="scale(342, 427)">
+            <path d="M20.2031 0.5H264.91C275.681 0.500093 284.412 9.23139 284.412 20.002V155.768H321.999C332.769 155.768 341.501 164.499 341.501 175.27V357.108L341.494 357.611C341.227 368.149 332.601 376.61 321.999 376.61H49.6807V406.998C49.6807 417.769 40.9493 426.5 30.1787 426.5H-68.1514C-78.9219 426.5 -87.6533 417.769 -87.6533 406.998V305.253L-87.6465 304.75C-87.3838 294.379 -79.0252 286.02 -68.6543 285.758L-68.1514 285.751H-18.041V250.726H-178.998C-189.769 250.726 -198.5 241.994 -198.5 231.224V57.2148C-198.5 46.4442 -189.769 37.7129 -178.998 37.7129H0.701172V20.002C0.701172 9.39947 9.162 0.773604 19.7002 0.506836L20.2031 0.5Z"/>
+        </clipPath>
+    </defs>
+</svg>
+{% if picture_link %}
+    <a href="{{ picture_link }}"
+        {% if instance.target %} target="{{ instance.target }}"{% endif %}
+        {% get_attributes instance.link_attributes %}>
+{% endif %}
+<img src="{{ instance.img_src }}" {% if not instance.attributes.alt and instance.rel_image.default_alt_text %}alt="{{ instance.rel_image.default_alt_text }}"{% endif %} {% if instance.width %} width="{{ instance.width|safe }}"{% endif %} {% if instance.height %} height="{{ instance.height|safe }}"{% endif %}
+    {% if img_srcset_data %}
+        srcset="{% for size, thumb in img_srcset_data %}{{ thumb.url }} {{ size|safe }}w,{% endfor %}{{ instance.img_src }} {{ picture_size.size.0|safe }}w"
+        sizes="{% for size, thumb in img_srcset_data %}(max-width: {{ size|safe }}px) {{ size|safe }}px, {% endfor %} {{ picture_size.size.0|safe }}px"
+    {% endif %}
+    {{ instance.get_attributes }} style="clip-path: url(#image-clip-{{ instance.pk }})"/>
+{% if picture_link %}
+    </a>
+{% endif %}
