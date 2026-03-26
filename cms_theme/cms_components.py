@@ -135,12 +135,6 @@ class Features(CMSFrontendComponent):
 
         mixins = ["Background", "Spacing"]
 
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=False,
-    )
-
     mirror_layout = forms.ChoiceField(
         label=_("Layout for text and images"),
         required=False,
@@ -172,6 +166,12 @@ class Features(CMSFrontendComponent):
         ],
         required=False,
         initial="default",
+    )
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=False,
     )
 
 
@@ -793,14 +793,12 @@ class ContentTeaser(CMSFrontendComponent):
     """Content Teaser component"""
 
     class Meta:
-        name = _("Content Teaser")
+        name = _("Two columns")
         render_template = "content_teaser/content_teaser.html"
         allow_children = True
-        child_classes = [
-            "TeaserContentPlugin",
-            "TeaserMediaPlugin",
-        ]
-        mixins = ["Background", "Spacing", "Attributes"]
+        child_classes = ["TeaserContentPlugin","TeaserMediaPlugin"]
+        mixins = ["Background", "Spacing"]
+        show_add_form = False
 
 
 @components.register
@@ -808,18 +806,13 @@ class TeaserContent(CMSFrontendComponent):
     """Teaser Content component to render text"""
 
     class Meta:
-        name = _("Teaser Content")
+        name = _("Content")
         render_template = "content_teaser/components/content.html"
         allow_children = True
         parent_classes = [
             "ContentTeaserPlugin",
         ]
-        child_classes = [
-            "TextPlugin",
-            "HeadingPlugin",
-            "SpacingPlugin",
-            "TextLinkPlugin",
-        ]
+        child_classes = []
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
@@ -835,7 +828,7 @@ class TeaserMedia(CMSFrontendComponent):
     """Media Teaser component"""
 
     class Meta:
-        name = _("Teaser Media")
+        name = _("Media")
         render_template = "content_teaser/components/media.html"
         allow_children = True
         parent_classes = [
@@ -845,6 +838,7 @@ class TeaserMedia(CMSFrontendComponent):
             "ImagePlugin",
             "VideoPlayerPlugin",
         ]
+        show_add_form = False
 
 
 @components.register
