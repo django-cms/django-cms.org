@@ -19,12 +19,6 @@ from djangocms_frontend.fields import (
 from djangocms_frontend.helpers import first_choice
 
 
-def _hero_clip_path_choices():
-    """Return (id, label) pairs for the Hero clip_path ChoiceField."""
-    clip_paths = getattr(settings, "CMS_HERO_CLIP_PATHS", [("none", _("None"), None)])
-    return [(cp[0], cp[1]) for cp in clip_paths]
-
-
 @components.register
 class Hero(CMSFrontendComponent):
     """Hero component with background grid option"""
@@ -38,11 +32,11 @@ class Hero(CMSFrontendComponent):
             Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
             Slot(
                 "satellites",
-                _("Satellite Images or Counters"),
+                _("Image Decorations"),
                 child_classes=["ImagePlugin", "CounterPlugin"],
             ),
         )
-        mixins = ["Background", "Spacing", "Attributes"]
+        mixins = ["Background", "Spacing"]
         frontend_editable_fields = ("heading", "overline", "body")
 
     heading = forms.CharField(
@@ -64,6 +58,13 @@ class Hero(CMSFrontendComponent):
         required=False,
         initial=False,
     )
+
+    main_image_template = forms.ChoiceField(
+        label=_("Image template"),
+        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
+        required=True,
+        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
+    )
     main_image = ImageFormField(
         label=_("Main image"),
         required=False,
@@ -76,16 +77,44 @@ class Hero(CMSFrontendComponent):
         required=False,
         help_text=_("If provided, this URL is used instead of the selected image."),
     )
-    clip_path = forms.ChoiceField(
-        label=_("Clip path"),
-        choices=_hero_clip_path_choices,
-        required=False,
-        initial="none",
-        help_text=_("Optional SVG clip path applied to the hero image."),
-    )
 
     def get_short_description(self):
         return self.heading if self.config.get("heading") else ""
+
+
+@components.register
+class FeatureAccordionItem(CMSFrontendComponent):
+    """Feature item component to render icon and text"""
+
+    class Meta:
+        name = _("Feature Item")
+        render_template = "features/item.html"
+        allow_children = True
+        parent_classes = ["FeatureItemsPlugin"]
+        frontend_editable_fields = ("heading", "body")
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=True,
+    )
+
+    body = HTMLFormField(
+        label=_("Body"),
+        required=False,
+    )
+
+    image_template = forms.ChoiceField(
+        label=_("Image template"),
+        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
+        required=False,
+        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
+    )
+
+    image = ImageFormField(
+        label=_("Image"),
+        required=False,
+    )
+
 
 
 @components.register
@@ -93,34 +122,41 @@ class Features(CMSFrontendComponent):
     """Features section container with accordion and content area"""
 
     class Meta:
-        plugin_name = _("Features")
+        plugin_name = _("Accordion")
         render_template = "features/features.html"
         allow_children = True
         child_classes = [
-            "TextPlugin",
-            "HeadingPlugin",
             "AccordionPlugin",
-            "TextLinkPlugin",
-        ]
-        mixins = ["Background", "Spacing", "Attributes"]
+        ]   
+        slots = (
+            Slot("items", _("Items"), child_classes=["FeatureAccordionItemPlugin"]),
+            Slot("links", _("Links"), child_classes=[ "TextLinkPlugin"]),
+        )
 
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
+        mixins = ["Background", "Spacing"]
+
+    mirror_layout = forms.ChoiceField(
+        label=_("Layout for text and images"),
         required=False,
-        initial=False,
+        initial="",
+        choices=(
+            ("", _("Accordion text left, images right (default)")),
+            ("mirrored", _("Accordion text right, images left (mirrored)")),
+        )
     )
 
-    mirror_layout = forms.BooleanField(
-        label=_("Mirror layout"),
+    heading = forms.CharField(
+        label=_("Heading"),
         required=False,
-        initial=False,
-        help_text=_(
-            "Enable to display images on the left and the accordion on the right."
-        ),
+    )
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
     )
 
     accordion_header_color = forms.ChoiceField(
-        label=_("Accordion header text color"),
+        label=_("Header text color"),
         choices=[
             ("default", _("Default (Black)")),
             ("primary", _("Primary")),
@@ -130,6 +166,12 @@ class Features(CMSFrontendComponent):
         ],
         required=False,
         initial="default",
+    )
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=False,
     )
 
 
@@ -274,9 +316,8 @@ class CTAPanel(CMSFrontendComponent):
         module = _("Sections")
         render_template = "cta/cta_panel.html"
         allow_children = True
-        child_classes = [
-            "TextLinkPlugin",
-        ]
+        child_classes = ["TextLinkPlugin",]
+        parent_classes = []
         mixins = ["Background", "Spacing", "Attributes"]
         frontend_editable_fields = ("main_heading", "eyebrow_text")
 
@@ -752,14 +793,12 @@ class ContentTeaser(CMSFrontendComponent):
     """Content Teaser component"""
 
     class Meta:
-        name = _("Content Teaser")
+        name = _("Two columns")
         render_template = "content_teaser/content_teaser.html"
         allow_children = True
-        child_classes = [
-            "TeaserContentPlugin",
-            "TeaserMediaPlugin",
-        ]
-        mixins = ["Background", "Spacing", "Attributes"]
+        child_classes = ["TeaserContentPlugin","TeaserMediaPlugin"]
+        mixins = ["Background", "Spacing"]
+        show_add_form = False
 
 
 @components.register
@@ -767,18 +806,13 @@ class TeaserContent(CMSFrontendComponent):
     """Teaser Content component to render text"""
 
     class Meta:
-        name = _("Teaser Content")
+        name = _("Content")
         render_template = "content_teaser/components/content.html"
         allow_children = True
         parent_classes = [
             "ContentTeaserPlugin",
         ]
-        child_classes = [
-            "TextPlugin",
-            "HeadingPlugin",
-            "SpacingPlugin",
-            "TextLinkPlugin",
-        ]
+        child_classes = []
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
@@ -794,7 +828,7 @@ class TeaserMedia(CMSFrontendComponent):
     """Media Teaser component"""
 
     class Meta:
-        name = _("Teaser Media")
+        name = _("Media")
         render_template = "content_teaser/components/media.html"
         allow_children = True
         parent_classes = [
@@ -804,6 +838,7 @@ class TeaserMedia(CMSFrontendComponent):
             "ImagePlugin",
             "VideoPlayerPlugin",
         ]
+        show_add_form = False
 
 
 @components.register
@@ -907,8 +942,6 @@ class Heading(CMSFrontendComponent):
     class Meta:
         name = _("Heading")
         render_template = "heading/heading.html"
-        allow_children = True
-        child_classes = []
         frontend_editable_fields = ("heading", "overline")
 
     heading_level = forms.ChoiceField(

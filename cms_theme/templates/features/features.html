@@ -2,81 +2,46 @@
 
 <section class="features-section {% if instance.config.background_grid %} background-grid{% endif %} {{ instance.get_classes }}"{{ instance.get_attributes }}>
     <div class="container">
-        {% for plugin in instance.child_plugin_instances %}
-            {% if plugin.plugin_type == "TextPlugin" %}
-                {% render_plugin plugin %}
-            {% endif %}
-            {% if plugin.plugin_type == "HeadingPlugin" %}
-                {% render_plugin plugin %}
-            {% endif %}
-        {% endfor %}
+        {% if instance.config.overline or instance.config.heading %}
+            <div class="row mb-4 justify-content-center justify-content-lg-start">
+                <div class="col-12 col-md-10 col-lg-12 text-lg-start">
+                    {% if instance.config.overline %}
+                        <h6 class="text-uppercase overline">{{ instance.config.overline }}</h6>
+                    {% endif %}
+                    {% if instance.config.heading %}
+                        <h2{% if instance.config.text_color %} class="text-{{ instance.config.text_color }}"{% endif %}>{{ instance.config.heading }}</h2>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
         <div class="row gx-lg-6">
             {# Left column: Text content and accordion #}
             <div class="col-lg-6 {% if instance.config.mirror_layout %}order-lg-2{% endif %} features-content-left">
-                {% for plugin in instance.child_plugin_instances %}
-                    {% if plugin.plugin_type == "AccordionPlugin" %}
-                        {# Custom accordion rendering without images #}
-                        <div class="features-accordion mt-4 accordion-header-{{ instance.config.accordion_header_color|default:'default' }}">
-                            <div class="accordion" id="accordion-{{ plugin.pk }}">
-                                {% for accordion_item in plugin.child_plugin_instances %}
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header mb-0" id="heading-{{ accordion_item.pk }}">
-                                            <button class="accordion-button{% if not accordion_item.accordion_item_open %} collapsed{% endif %}"
-                                                    type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse-{{ accordion_item.pk }}"
-                                                    aria-expanded="{% if accordion_item.accordion_item_open %}true{% else %}false{% endif %}"
-                                                    aria-controls="collapse-{{ accordion_item.pk }}">
-                                                {% inline_field accordion_item "accordion_item_header" %}
-                                            </button>
-                                        </h2>
-                                        <div id="collapse-{{ accordion_item.pk }}"
-                                             class="accordion-collapse collapse{% if accordion_item.accordion_item_open %} show{% endif %}"
-                                             aria-labelledby="heading-{{ accordion_item.pk }}"
-                                             data-bs-parent="#accordion-{{ plugin.pk }}">
-                                            <div class="accordion-body">
-                                                {# Render only non-image plugins #}
-                                                {% for item_plugin in accordion_item.child_plugin_instances %}
-                                                    {% if item_plugin.plugin_type != "ImagePlugin" %}
-                                                        {% render_plugin item_plugin %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                {# Custom accordion rendering without images #}
+                <div class="features-accordion mt-4 accordion-header-{{ instance.config.accordion_header_color|default:'default' }}">
+                    {% set_html_id instance as html_id %}
+                    <div class="accordion" id="accordion-{{ html_id }}">
+                        {% for accordion_item in instance|get_slot:"items" %}
+                           {% render_plugin accordion_item %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
 
             {# Right column: Accordion images #}
             <div class="col-lg-6 {% if instance.config.mirror_layout %}order-lg-1{% endif %} features-content-right">
                 <div class="features-images position-relative">
-                    {% for plugin in instance.child_plugin_instances %}
-                        {% if plugin.plugin_type == "AccordionPlugin" %}
-                            {# Render accordion items' images on the right side #}
-                            {% for accordion_item in plugin.child_plugin_instances %}
-                                <div class="features-image{% if accordion_item.accordion_item_open %} active{% endif %}">
-                                    {% for item_plugin in accordion_item.child_plugin_instances %}
-                                        {% if item_plugin.plugin_type == "ImagePlugin" %}
-                                            {% render_plugin item_plugin %}
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
+                    {# Render accordion items' images on the right side #}
+                    {% for accordion_item in instance|get_slot:"items" %}
+                        <div class="features-image{% if forloop.first %} active{% endif %}">
+                            {% plugin "image" picture=accordion_item.image template=accordion_item.image_template %}{% endplugin %}
+                        </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
         <div class="d-flex">
-            {% for plugin in instance.child_plugin_instances %}
-                {% if plugin.plugin_type == "TextLinkPlugin" %}
-                    {% render_plugin plugin %}
-                {% endif %}
-            {% endfor %}
+            {% childplugins instance "links" %}{% endchildplugins %}
         </div>
     </div>
 </section>
