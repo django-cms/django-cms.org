@@ -3,6 +3,11 @@
   position: relative;
   padding: 4rem 0;
 
+  // White text on colored backgrounds
+  &.bg-secondary, &.bg-primary, &.bg-dark {
+    --bs-accordion-color: $white;
+    color: var(--bs-accordion-color);
+  }
   // Left content area
   .features-content-left {
     padding-right: 2rem;
