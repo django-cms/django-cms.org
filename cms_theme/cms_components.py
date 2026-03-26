@@ -19,6 +19,8 @@ from djangocms_frontend.fields import (
 from djangocms_frontend.helpers import first_choice
 
 
+
+
 def _hero_clip_path_choices():
     """Return (id, label) pairs for the Hero clip_path ChoiceField."""
     clip_paths = getattr(settings, "CMS_HERO_CLIP_PATHS", [("none", _("None"), None)])
@@ -38,11 +40,11 @@ class Hero(CMSFrontendComponent):
             Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
             Slot(
                 "satellites",
-                _("Satellite Images or Counters"),
+                _("Image Decorations"),
                 child_classes=["ImagePlugin", "CounterPlugin"],
             ),
         )
-        mixins = ["Background", "Spacing", "Attributes"]
+        mixins = ["Background", "Spacing"]
         frontend_editable_fields = ("heading", "overline", "body")
 
     heading = forms.CharField(
@@ -89,20 +91,57 @@ class Hero(CMSFrontendComponent):
 
 
 @components.register
+class FeatureAccordionItem(CMSFrontendComponent):
+    """Feature item component to render icon and text"""
+
+    class Meta:
+        name = _("Feature Item")
+        render_template = "features/components/feature_item.html"
+        allow_children = True
+        parent_classes = [
+            "FeatureItemsPlugin",
+        ]
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=True,
+    )
+
+    body = HTMLFormField(
+        label=_("Body"),
+        required=False,
+    )
+
+    image = ImageFormField(
+        label=_("Image"),
+        required=False,
+    )
+
+    image_template = forms.ChoiceField(
+        label=_("Image template"),
+        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
+        required=False,
+        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
+    )
+
+
+@components.register
 class Features(CMSFrontendComponent):
     """Features section container with accordion and content area"""
 
     class Meta:
-        plugin_name = _("Features")
+        plugin_name = _("Accordion")
         render_template = "features/features.html"
         allow_children = True
         child_classes = [
-            "TextPlugin",
-            "HeadingPlugin",
             "AccordionPlugin",
-            "TextLinkPlugin",
-        ]
-        mixins = ["Background", "Spacing", "Attributes"]
+        ]   
+        slots = (
+            Slot("items", _("Items"), child_classes=["FeatureAccordionItemPlugin"]),
+            Slot("links", _("Links"), child_classes=[ "TextLinkPlugin"]),
+        )
+
+        mixins = ["Background", "Spacing"]
 
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
@@ -117,6 +156,16 @@ class Features(CMSFrontendComponent):
         help_text=_(
             "Enable to display images on the left and the accordion on the right."
         ),
+    )
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
     )
 
     accordion_header_color = forms.ChoiceField(
@@ -274,9 +323,8 @@ class CTAPanel(CMSFrontendComponent):
         module = _("Sections")
         render_template = "cta/cta_panel.html"
         allow_children = True
-        child_classes = [
-            "TextLinkPlugin",
-        ]
+        child_classes = ["TextLinkPlugin",]
+        parent_classes = []
         mixins = ["Background", "Spacing", "Attributes"]
         frontend_editable_fields = ("main_heading", "eyebrow_text")
 
@@ -900,8 +948,6 @@ class Heading(CMSFrontendComponent):
     class Meta:
         name = _("Heading")
         render_template = "heading/heading.html"
-        allow_children = True
-        child_classes = []
         frontend_editable_fields = ("heading", "overline")
 
     heading_level = forms.ChoiceField(
