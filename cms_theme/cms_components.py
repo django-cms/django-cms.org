@@ -19,14 +19,6 @@ from djangocms_frontend.fields import (
 from djangocms_frontend.helpers import first_choice
 
 
-
-
-def _hero_clip_path_choices():
-    """Return (id, label) pairs for the Hero clip_path ChoiceField."""
-    clip_paths = getattr(settings, "CMS_HERO_CLIP_PATHS", [("none", _("None"), None)])
-    return [(cp[0], cp[1]) for cp in clip_paths]
-
-
 @components.register
 class Hero(CMSFrontendComponent):
     """Hero component with background grid option"""
@@ -66,6 +58,13 @@ class Hero(CMSFrontendComponent):
         required=False,
         initial=False,
     )
+
+    main_image_template = forms.ChoiceField(
+        label=_("Image template"),
+        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
+        required=True,
+        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
+    )
     main_image = ImageFormField(
         label=_("Main image"),
         required=False,
@@ -78,13 +77,6 @@ class Hero(CMSFrontendComponent):
         required=False,
         help_text=_("If provided, this URL is used instead of the selected image."),
     )
-    clip_path = forms.ChoiceField(
-        label=_("Clip path"),
-        choices=_hero_clip_path_choices,
-        required=False,
-        initial="none",
-        help_text=_("Optional SVG clip path applied to the hero image."),
-    )
 
     def get_short_description(self):
         return self.heading if self.config.get("heading") else ""
@@ -96,11 +88,10 @@ class FeatureAccordionItem(CMSFrontendComponent):
 
     class Meta:
         name = _("Feature Item")
-        render_template = "features/components/feature_item.html"
+        render_template = "features/item.html"
         allow_children = True
-        parent_classes = [
-            "FeatureItemsPlugin",
-        ]
+        parent_classes = ["FeatureItemsPlugin"]
+        frontend_editable_fields = ("heading", "body")
 
     heading = forms.CharField(
         label=_("Heading"),
@@ -112,17 +103,18 @@ class FeatureAccordionItem(CMSFrontendComponent):
         required=False,
     )
 
-    image = ImageFormField(
-        label=_("Image"),
-        required=False,
-    )
-
     image_template = forms.ChoiceField(
         label=_("Image template"),
         choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
         required=False,
         initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
     )
+
+    image = ImageFormField(
+        label=_("Image"),
+        required=False,
+    )
+
 
 
 @components.register
@@ -149,13 +141,14 @@ class Features(CMSFrontendComponent):
         initial=False,
     )
 
-    mirror_layout = forms.BooleanField(
-        label=_("Mirror layout"),
+    mirror_layout = forms.ChoiceField(
+        label=_("Layout for text and images"),
         required=False,
-        initial=False,
-        help_text=_(
-            "Enable to display images on the left and the accordion on the right."
-        ),
+        initial="",
+        choices=(
+            ("", _("Accordion text left, images right (default)")),
+            ("mirrored", _("Accordion text right, images left (mirrored)")),
+        )
     )
 
     heading = forms.CharField(
@@ -169,7 +162,7 @@ class Features(CMSFrontendComponent):
     )
 
     accordion_header_color = forms.ChoiceField(
-        label=_("Accordion header text color"),
+        label=_("Header text color"),
         choices=[
             ("default", _("Default (Black)")),
             ("primary", _("Primary")),

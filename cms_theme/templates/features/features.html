@@ -22,26 +22,7 @@
                     {% set_html_id instance as html_id %}
                     <div class="accordion" id="accordion-{{ html_id }}">
                         {% for accordion_item in instance|get_slot:"items" %}
-                            <div class="accordion-item">
-                                <h3 class="accordion-header mb-0" id="heading-{{ accordion_item.pk }}">
-                                    <button class="accordion-button{% if not forloop.first %} collapsed{% endif %}"
-                                            type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#collapse-{{ accordion_item.pk }}"
-                                            aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-                                            aria-controls="collapse-{{ accordion_item.pk }}">
-                                        {% inline_field accordion_item "heading" %}
-                                    </button>
-                                </h3>
-                                <div id="collapse-{{ accordion_item.pk }}"
-                                        class="accordion-collapse collapse{% if forloop.first %} show{% endif %}"
-                                        aria-labelledby="heading-{{ accordion_item.pk }}"
-                                        data-bs-parent="#accordion-{{ html_id }}">
-                                    <div class="accordion-body">
-                                        {% inline_field accordion_item "body" "" "safe" %}
-                                    </div>
-                                </div>
-                            </div>
+                           {% render_plugin accordion_item %}
                         {% endfor %}
                     </div>
                 </div>
@@ -53,7 +34,7 @@
                     {# Render accordion items' images on the right side #}
                     {% for accordion_item in instance|get_slot:"items" %}
                         <div class="features-image{% if forloop.first %} active{% endif %}">
-                            <img src="{{ accordion_item.image.url }}" alt="{{ accordion_item.heading }}" class="img-fluid">
+                            {% plugin "image" picture=accordion_item.image template=accordion_item.image_template %}{% endplugin %}
                         </div>
                     {% endfor %}
                 </div>

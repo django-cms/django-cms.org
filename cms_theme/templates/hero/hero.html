@@ -2,16 +2,6 @@
 {% get_clip_path_data instance.config.clip_path as hero_clip %}
 
 <section class="{{ instance.get_classes }} hero-section{% if instance.config.background_grid %} background-grid{% endif %}"{{ instance.get_attributes }}>
-    {% if hero_clip %}
-    <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
-        <defs>
-            <clipPath id="hero-clip-{{ instance.pk }}" clipPathUnits="objectBoundingBox"
-                      transform="scale({{ hero_clip.scale_x }}, {{ hero_clip.scale_y }})">
-                <path d="{{ hero_clip.path }}"/>
-            </clipPath>
-        </defs>
-    </svg>
-    {% endif %}
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-3 mb-lg-0 hero-content-left py-6">
@@ -34,8 +24,13 @@
             <div class="col-lg-6 hero-content-right position-relative">
                 {% if instance.config.main_image_url or instance.main_image %}
                     <div class="hero-main-image mt-5 mt-lg-0"{% if hero_clip %} style="clip-path: url(#hero-clip-{{ instance.pk }})"{% endif %}>
-                        <img src="{% if instance.config.main_image_url %}{{ instance.config.main_image_url }}{% else %}{{ instance.main_image.url }}{% endif %}" alt="{{ instance.heading }}" class="img-fluid">
-                    </div>
+                        {{ instance.main_image_template }}
+                        {% if instance.config.main_image_url %}
+                            {% plugin "image" external_picture=instance.config.main_image_url template=instance.main_image_template %}{% endplugin %}
+                        {% else %}
+                            {% plugin "image" picture=instance.main_image template=instance.main_image_template %}{% endplugin %}
+                        {% endif %}
+                   </div>
 
                     {# Second and third plugins: overlay items #}
                     <div class="hero-counters">
