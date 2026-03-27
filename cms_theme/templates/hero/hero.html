@@ -11,9 +11,9 @@
                 <div class="row">
                     <div class="col-12 col-lg-11">
                         <h1 class="mt-2 pb-4 mb-0">{% inline_field instance "heading"  %}</h1>
+                        {% if instance.body %}<div class="fs-5 pb-2 mb-0">{% inline_field instance "body" "" "safe" %}</div>{% endif %}
                     </div>
                 </div>
-                {% if instance.body %}<div class="fs-5 pb-2 mb-0">{% inline_field instance "body" "" "safe" %}</div>{% endif %}
                 <div class="mt-4">
                     {% for plugin in instance|get_slot:"links" %}
                     {% render_plugin plugin %}
@@ -34,7 +34,7 @@
                     {# Second and third plugins: overlay items #}
                     <div class="hero-counters">
                         {% for plugin in instance|get_slot:"satellites" %}
-                            <div class="hero-counter hero-counter-{{ forloop.counter }}">
+                            <div class="hero-counter hero-counter-{{ forloop.counter }} {% if instance.config.main_image_url and forloop.counter == 1 %} ms-lg-3 {% endif %}">
                                 {% render_plugin plugin %}
                             </div>
                         {% endfor %}
