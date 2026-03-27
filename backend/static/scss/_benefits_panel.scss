@@ -13,3 +13,15 @@
 .benefits-card-wrapper {
 	min-height: 3.625rem; // 4 lines of text at 1.125rem font size with line-height of 1.5
 }
+
+.benefits-card.bg-primary {
+	a {
+		@extend .btn-outline-secondary;
+		color: var(--bs-secondary);
+
+		&:hover {
+			background-color: var(--bs-secondary);
+			color: white;
+		}
+	}
+}
