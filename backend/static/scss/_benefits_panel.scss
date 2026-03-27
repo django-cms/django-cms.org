@@ -14,6 +14,17 @@
 	min-height: 3.625rem; // 4 lines of text at 1.125rem font size with line-height of 1.5
 }
 
+.benefits-card-bottom-image {
+	margin: auto -1.75rem -1.75rem -1.75rem;
+	overflow: hidden;
+	border-radius: 0 0 var(--bs-card-border-radius) var(--bs-card-border-radius);
+
+	img {
+		display: block;
+		width: 100%;
+	}
+}
+
 .benefits-card.bg-primary {
 	a {
 		@extend .btn-outline-secondary;
