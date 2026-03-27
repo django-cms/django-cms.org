@@ -1,24 +1,36 @@
-{% load thumbnail frontend %}
-
-<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
-    <defs>
-        <clipPath id="image-clip-{{ instance.pk }}" clipPathUnits="objectBoundingBox"
-                    transform="scale(630, 522)">
-            <path d="M118.033 0.5H525.699C533.956 0.5 540.649 7.19354 540.649 15.4502V302.37H614.551C622.807 302.37 629.501 309.064 629.501 317.32V505.703L629.496 506.089C629.291 514.167 622.678 520.653 614.551 520.653H423.32C415.064 520.653 408.37 513.96 408.37 505.703V448.033H118.033C109.777 448.033 103.084 441.34 103.084 433.083V294.251H15.4502C7.19361 294.251 0.500104 287.557 0.5 279.301V90.918C0.5 82.6613 7.19354 75.9678 15.4502 75.9678H103.084V15.4502C103.084 7.19362 109.777 0.500178 118.033 0.5Z"/>
-        </clipPath>
-    </defs>
-</svg>
+{% load thumbnail frontend l10n %}
 {% if picture_link %}
     <a href="{{ picture_link }}"
         {% if instance.target %} target="{{ instance.target }}"{% endif %}
         {% get_attributes instance.link_attributes %}>
 {% endif %}
-<img src="{{ instance.img_src }}" {% if not instance.attributes.alt and instance.rel_image.default_alt_text %}alt="{{ instance.rel_image.default_alt_text }}"{% endif %} {% if instance.width %} width="{{ instance.width|safe }}"{% endif %} {% if instance.height %} height="{{ instance.height|safe }}"{% endif %}
-    {% if img_srcset_data %}
-        srcset="{% for size, thumb in img_srcset_data %}{{ thumb.url }} {{ size|safe }}w,{% endfor %}{{ instance.img_src }} {{ picture_size.size.0|safe }}w"
-        sizes="{% for size, thumb in img_srcset_data %}(max-width: {{ size|safe }}px) {{ size|safe }}px, {% endfor %} {{ picture_size.size.0|safe }}px"
-    {% endif %}
-    {{ instance.get_attributes }} style="clip-path: url(#image-clip-{{ instance.pk }})"/>
+    <div>
+        <svg viewBox="0 0 1300 1124" style="width: 100%;" {{ instance.get_attributes }}>
+        <defs>
+            <clipPath id="clip-shape-{{ instance.pk|unlocalize }}" clipPathUnits="userSpaceOnUse">
+            <path d="
+                M 294 114
+                L 294 30 Q 294 0 324 0
+                L 1269 0 Q 1299 0 1299 30
+                L 1299 1093 Q 1299 1123 1269 1123
+                L 324 1123 Q 294 1123 294 1093
+                L 294 858
+                L 30 858 Q 0 858 0 828
+                L 0 144 Q 0 114 30 114
+                L 294 114 Z
+            "/>
+            </clipPath>
+        </defs>
+
+        <image 
+            href="{{ instance.img_src }}"
+            width="1300"
+            height="1124"
+            clip-path="url(#clip-shape-{{ instance.pk|unlocalize }})"
+            preserveAspectRatio="xMidYMid slice"
+        />
+    </svg>
+    </div>
 {% if picture_link %}
     </a>
 {% endif %}

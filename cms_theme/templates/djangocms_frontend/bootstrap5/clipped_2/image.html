@@ -1,24 +1,82 @@
-{% load thumbnail frontend %}
-
-<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
-    <defs>
-        <clipPath id="image-clip-{{ instance.pk }}" clipPathUnits="objectBoundingBox"
-                    transform="scale(750, 672)">
-            <path d="M268 0.5H730C740.77 0.5 749.5 9.23045 749.5 20V652L749.493 652.503C749.226 663.04 740.601 671.5 730 671.5H268C257.23 671.5 248.5 662.77 248.5 652V594.5H20C9.23045 594.5 0.5 585.77 0.5 575V167L0.506836 166.497C0.773605 155.96 9.3986 147.5 20 147.5H248.5V20C248.5 9.3986 256.96 0.773603 267.497 0.506836L268 0.5Z"/>
-        </clipPath>
-    </defs>
-</svg>
+{% load thumbnail frontend l10n %}
 {% if picture_link %}
     <a href="{{ picture_link }}"
         {% if instance.target %} target="{{ instance.target }}"{% endif %}
         {% get_attributes instance.link_attributes %}>
 {% endif %}
-<img src="{{ instance.img_src }}" {% if not instance.attributes.alt and instance.rel_image.default_alt_text %}alt="{{ instance.rel_image.default_alt_text }}"{% endif %} {% if instance.width %} width="{{ instance.width|safe }}"{% endif %} {% if instance.height %} height="{{ instance.height|safe }}"{% endif %}
-    {% if img_srcset_data %}
-        srcset="{% for size, thumb in img_srcset_data %}{{ thumb.url }} {{ size|safe }}w,{% endfor %}{{ instance.img_src }} {{ picture_size.size.0|safe }}w"
-        sizes="{% for size, thumb in img_srcset_data %}(max-width: {{ size|safe }}px) {{ size|safe }}px, {% endfor %} {{ picture_size.size.0|safe }}px"
-    {% endif %}
-    {{ instance.get_attributes }} style="clip-path: url(#image-clip-{{ instance.pk }})"/>
+    <div>
+        <svg viewBox="0 0 1259 1041" style="width: 100%;" {{ instance.get_attributes }}>
+        <defs>
+            <clipPath id="clip-shape-{{ instance.pk|unlocalize }}" clipPathUnits="userSpaceOnUse">
+                <path d="
+                M 204 151
+
+                L 204 20
+                Q 204 0 224 0
+
+                L 1062 0
+                Q 1082 0 1082 20
+
+                L 1081 604
+
+                L 1239 604
+                Q 1259 604 1259 624
+
+                L 1259 1021
+                Q 1259 1041 1239 1041
+
+                L 835 1041
+                Q 815 1041 815 1021
+
+                L 815 896
+
+                L 224 896
+                Q 204 896 204 876
+
+                L 204 588
+
+                L 20 588
+                Q 0 588 0 568
+
+                L 0 171
+                Q 0 151 20 151
+
+                L 204 151
+                Z
+                "/>
+            </clipPath>
+            <filter id="shadow-{{ instance.pk|unlocalize }}" x="-10%" y="-10%" width="120%" height="120%">
+            
+            <!-- Spread (2px) -->
+            <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="spread"/>
+
+            <!-- Blur (≈ 10px) -->
+            <feGaussianBlur in="spread" stdDeviation="5" result="blur"/>
+
+            <!-- Color -->
+            <feFlood flood-color="black" flood-opacity="0.1" result="color"/>
+
+            <!-- Apply color -->
+            <feComposite in="color" in2="blur" operator="in" result="shadow"/>
+
+            <!-- Merge shadow + original -->
+            <feMerge>
+                <feMergeNode in="shadow-{{ instance.pk|unlocalize }}"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+            </filter>
+        </defs>
+        <g filter="url(#shadow-{{ instance.pk|unlocalize }})">
+            <image 
+                href="{{ instance.img_src }}"
+                width="1260"
+                height="1042"
+                preserveAspectRatio="xMidYMid slice"
+                clip-path="url(#clip-shape-{{ instance.pk|unlocalize }})"
+            />
+        </g>
+        </svg>
+    </div>
 {% if picture_link %}
     </a>
 {% endif %}
