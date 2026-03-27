@@ -132,7 +132,7 @@ djangocms-file==3.0.1
     # via -r requirements.in
 djangocms-form-builder==0.5.0
     # via -r requirements.in
-djangocms-frontend==2.3.1
+djangocms-frontend @ git+https://github.com/django-cms/djangocms-frontend
     # via -r requirements.in
 djangocms-link==5.1.1
     # via djangocms-frontend
