@@ -520,14 +520,14 @@ TEXT_EDITOR_SETTINGS = {
     "blockStyles": [
         {
             "name": "Blockquote",
-            "element": "span",
+            "element": "blockquote",
             "attributes": {
                 "class": "blockquote",
             },
         },
         {
             "name": "Lead",
-            "element": "span",
+            "element": "p",
             "attributes": {
                 "class": "lead",
             },
@@ -550,6 +550,19 @@ DJANGOCMS_FILE_TEMPLATES = [
     ("primary", _("Primary file link")),
 ]
 
+# djangocms-picture settings
+DJANGOCMS_PICTURE_TEMPLATES = [
+    ("default", _("Default")),
+    ("decorated", _("Decorated")),
+    ("clipped_0", _("Group clipped")),
+    ("clipped_1", _("Slingle person clipped with panel")),
+    ("clipped_2", _("Single person clipped")),
+]
+
+# Use image as a component in templates
+CMS_COMPONENT_PLUGINS = [
+    "ImagePlugin",
+]
 
 if not DEBUG:
     import sentry_sdk

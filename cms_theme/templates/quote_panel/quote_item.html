@@ -1,13 +1,13 @@
-{% load cms_tags cms_theme_tags %}
+{% load cms_tags cms_theme_tags frontend %}
 
 {% with image_plugins=instance.child_plugin_instances|filter_by_type:"ImagePlugin" %}
 <div class="col quote-item-text d-flex flex-column justify-content-center {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
     {% if instance.eyebrow_text %}
-        <p class="overline">{{ instance.eyebrow_text }}</p>
+        <p class="overline">{% inline_field instance "eyebrow_text" %}</p>
     {% endif %}
     {% if instance.quote_text %}
         <div class="my-4 py-1">
-            {{ instance.quote_text|safe }}
+            {% inline_field instance "quote_text" "" "safe" %}
         </div>
     {% endif %}
     <div class="quote-item-image-mobile d-md-none mb-4 pb-1">
@@ -17,10 +17,10 @@
     </div>
     <div>
         {% if instance.author_name %}
-            <p class="pb-2 h4 mb-0">{{ instance.author_name }}</p>
+            <p class="pb-2 h4 mb-0">{% inline_field instance "author_name" %}</p>
         {% endif %}
         {% if instance.author_role %}
-            <p class="mb-0 pt-1 overline">{{ instance.author_role }}</p>
+            <p class="mb-0 pt-1 overline">{% inline_field instance "author_role" %}</p>
         {% endif %}
     </div>
 </div>

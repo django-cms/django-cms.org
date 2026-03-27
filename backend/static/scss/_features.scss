@@ -3,6 +3,11 @@
   position: relative;
   padding: 4rem 0;
 
+  // White text on colored backgrounds
+  &.bg-secondary, &.bg-primary, &.bg-dark {
+    --bs-accordion-color: $white;
+    color: var(--bs-accordion-color);
+  }
   // Left content area
   .features-content-left {
     padding-right: 2rem;
@@ -49,6 +54,41 @@
         height: 100%;
         object-fit: contain;
       }
+    }
+  }
+
+  // Dark background contrast fix for accordion-header-default and accordion-header-primary.
+  // When the features section has a dark background class, the default black-based accordion
+  // colors have insufficient contrast. Override to white for all relevant states.
+  &.bg-dark,
+  &.bg-secondary,
+  &.bg-second-primary,
+  &.bg-dark-green,
+  &.bg-black {
+    .accordion-header-default {
+      .accordion-button {
+        color: rgba(255, 255, 255, 0.5);
+
+        &:not(.collapsed) {
+          color: #fff;
+        }
+
+        &.collapsed:hover {
+          color: #fff;
+        }
+      }
+
+      .accordion-item::before {
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+
+      .accordion-item:has(.accordion-button:not(.collapsed))::before {
+        background-color: #fff;
+      }
+    }
+
+    .accordion-body {
+      color: #fff;
     }
   }
 }
