@@ -20,7 +20,14 @@ class AuthorProfile(TranslatableModel):
         blank=True,
         on_delete=models.SET_NULL,
     )
-
+    has_photo_accents = models.BooleanField(
+        _("photo accents"),
+        default=False,
+    )
+    has_drop_shadow = models.BooleanField(
+        _("photo drop shadow"),
+        default=False,
+    )
     translations = TranslatedFields(
         role=models.CharField(_("role"), max_length=200, blank=True),
         bio=models.TextField(_("bio"), blank=True),
@@ -35,6 +42,7 @@ class AuthorProfile(TranslatableModel):
 
     def save(self, *args, **kwargs):
         from django.contrib.auth import get_user_model
+
         User = get_user_model()
 
         if not self.user_id:
@@ -67,7 +75,7 @@ class SocialLink(models.Model):
     url = models.CharField(
         _("link"),
         max_length=500,
-        help_text=_('URL, mailto:email@example.com, or tel:+49123456789'),
+        help_text=_("URL, mailto:email@example.com, or tel:+49123456789"),
     )
     sort_order = models.PositiveSmallIntegerField(_("order"), default=0)
 
