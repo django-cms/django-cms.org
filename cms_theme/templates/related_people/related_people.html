@@ -3,17 +3,13 @@
     <div class="container">
         <div>
             {% if instance.eyebrow_text %}
-                <h6 class="overline mb-0 {% if instance.eyebrow_text_color %}text-{{ instance.eyebrow_text_color }}{% endif %}">
-                    {{ instance.eyebrow_text }}
+                <h6 class="overline mb-0 {% if instance.text_color %}text-{{ instance.text_color }}{% endif %}">
+                    {% inline_field instance "eyebrow_text" %}
                 </h6>
             {% endif %}
-            {% with heading_texts=instance.child_plugin_instances|filter_by_type:"HeadingPlugin" %}
-                {% if heading_texts %}
-                    {% for plugin in heading_texts %}
-                        {% render_plugin plugin %}
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+            {% if instance.heading %}
+                <h2{% if instance.text_color %} class="text-{{ instance.text_color }}"{% endif %}>{% inline_field instance "heading" %}</h2>
+            {% endif %}
         </div>
         <div class="grid-{{ instance.grid_columns }}">
             {% with person_cards=instance.child_plugin_instances|filter_by_type:"PeopleCardPlugin" %}

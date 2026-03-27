@@ -8,6 +8,8 @@ from djangocms_frontend.component_base import CMSFrontendComponent, Slot
 from djangocms_frontend.component_pool import components
 from djangocms_frontend.contrib.icon.fields import IconPickerField
 from djangocms_frontend.contrib.image.fields import ImageFormField
+
+from .fields import ColorChoiceField
 from djangocms_frontend.fields import (
     ButtonGroup,
     ColoredButtonGroup,
@@ -15,12 +17,6 @@ from djangocms_frontend.fields import (
     IconGroup,
 )
 from djangocms_frontend.helpers import first_choice
-
-
-def _hero_clip_path_choices():
-    """Return (id, label) pairs for the Hero clip_path ChoiceField."""
-    clip_paths = getattr(settings, "CMS_HERO_CLIP_PATHS", [("none", _("None"), None)])
-    return [(cp[0], cp[1]) for cp in clip_paths]
 
 
 @components.register
@@ -36,11 +32,11 @@ class Hero(CMSFrontendComponent):
             Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
             Slot(
                 "satellites",
-                _("Satellite Images or Counters"),
+                _("Image Decorations"),
                 child_classes=["ImagePlugin", "CounterPlugin"],
             ),
         )
-        mixins = ["Background", "Spacing", "Attributes"]
+        mixins = ["Background", "Spacing"]
         frontend_editable_fields = ("heading", "overline", "body")
 
     heading = forms.CharField(
@@ -62,6 +58,13 @@ class Hero(CMSFrontendComponent):
         required=False,
         initial=False,
     )
+
+    main_image_template = forms.ChoiceField(
+        label=_("Image template"),
+        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
+        required=True,
+        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
+    )
     main_image = ImageFormField(
         label=_("Main image"),
         required=False,
@@ -69,12 +72,10 @@ class Hero(CMSFrontendComponent):
             "Primary image for the hero section, typically displayed on the right side. Add satellite images as child plugins."
         ),
     )
-    clip_path = forms.ChoiceField(
-        label=_("Clip path"),
-        choices=_hero_clip_path_choices,
+    main_image_url = forms.URLField(
+        label=_("Image URL override"),
         required=False,
-        initial="none",
-        help_text=_("Optional SVG clip path applied to the hero image."),
+        help_text=_("If provided, this URL is used instead of the selected image."),
     )
 
     def get_short_description(self):
@@ -82,38 +83,80 @@ class Hero(CMSFrontendComponent):
 
 
 @components.register
+class FeatureAccordionItem(CMSFrontendComponent):
+    """Feature item component to render icon and text"""
+
+    class Meta:
+        name = _("Feature Item")
+        render_template = "features/item.html"
+        allow_children = True
+        parent_classes = ["FeatureItemsPlugin"]
+        frontend_editable_fields = ("heading", "body")
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=True,
+    )
+
+    body = HTMLFormField(
+        label=_("Body"),
+        required=False,
+    )
+
+    image_template = forms.ChoiceField(
+        label=_("Image template"),
+        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
+        required=False,
+        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
+    )
+
+    image = ImageFormField(
+        label=_("Image"),
+        required=False,
+    )
+
+
+
+@components.register
 class Features(CMSFrontendComponent):
     """Features section container with accordion and content area"""
 
     class Meta:
-        plugin_name = _("Features")
+        plugin_name = _("Accordion")
         render_template = "features/features.html"
         allow_children = True
         child_classes = [
-            "TextPlugin",
-            "HeadingPlugin",
             "AccordionPlugin",
-            "TextLinkPlugin",
-        ]
-        mixins = ["Background", "Spacing", "Attributes"]
+        ]   
+        slots = (
+            Slot("items", _("Items"), child_classes=["FeatureAccordionItemPlugin"]),
+            Slot("links", _("Links"), child_classes=[ "TextLinkPlugin"]),
+        )
 
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
+        mixins = ["Background", "Spacing"]
+
+    mirror_layout = forms.ChoiceField(
+        label=_("Layout for text and images"),
         required=False,
-        initial=False,
+        initial="",
+        choices=(
+            ("", _("Accordion text left, images right (default)")),
+            ("mirrored", _("Accordion text right, images left (mirrored)")),
+        )
     )
 
-    mirror_layout = forms.BooleanField(
-        label=_("Mirror layout"),
+    heading = forms.CharField(
+        label=_("Heading"),
         required=False,
-        initial=False,
-        help_text=_(
-            "Enable to display images on the left and the accordion on the right."
-        ),
+    )
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
     )
 
     accordion_header_color = forms.ChoiceField(
-        label=_("Accordion header text color"),
+        label=_("Header text color"),
         choices=[
             ("default", _("Default (Black)")),
             ("primary", _("Primary")),
@@ -123,6 +166,12 @@ class Features(CMSFrontendComponent):
         ],
         required=False,
         initial="default",
+    )
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=False,
     )
 
 
@@ -267,9 +316,8 @@ class CTAPanel(CMSFrontendComponent):
         module = _("Sections")
         render_template = "cta/cta_panel.html"
         allow_children = True
-        child_classes = [
-            "TextLinkPlugin",
-        ]
+        child_classes = ["TextLinkPlugin",]
+        parent_classes = []
         mixins = ["Background", "Spacing", "Attributes"]
         frontend_editable_fields = ("main_heading", "eyebrow_text")
 
@@ -444,6 +492,7 @@ class BenefitsCard(CMSFrontendComponent):
             "TextLinkPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("card_title", "card_content")
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
@@ -494,26 +543,29 @@ class RelatedPeople(CMSFrontendComponent):
 
     class Meta:
         name = _("Related People")
+        module = _("Sections")
         render_template = "related_people/related_people.html"
         allow_children = True
-        child_classes = [
-            "HeadingPlugin",
-            "PeopleCardPlugin",
-        ]
+        child_classes = ["PeopleCardPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("eyebrow_text", "heading")
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
         required=False,
     )
 
-    eyebrow_text_color = forms.ChoiceField(
-        label=_("Eyebrow text color"),
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Heading text color"),
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
-        help_text=_("Eyebrow text color."),
     )
 
     grid_columns = forms.ChoiceField(
@@ -540,13 +592,15 @@ class PeopleCard(CMSFrontendComponent):
             "RelatedPeoplePlugin",
             "GridColumnPlugin",
         ]
-        child_classes = [
-            "ImagePlugin",
-            "TextPlugin",
-            "HeadingPlugin",
-            "TextLinkPlugin",
-        ]
+        child_classes = ["TextLinkPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("overline", "name", "role", "description")
+
+    image = ImageFormField(
+        label=_("Image"),
+        required=True,
+        help_text=_("Portrait of the person with white background"),
+    )
 
     image_accent = forms.BooleanField(
         label=_("Image accent"),
@@ -560,20 +614,33 @@ class PeopleCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
-        help_text=_("Image accent color."),
+        help_text=_("Image accent color"),
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    overline = forms.CharField(
+        label=_("Overline"),
+        required=False,
+        initial="contact:",
+        help_text=_("Text above the name"),
+    )
+
+    name = forms.CharField(
+        label=_("Name"),
+        required=True,
+        help_text=_("Full name"),
     )
 
     role = forms.CharField(
         label=_("Role"),
         required=False,
-        help_text=_("Role displayed in people card."),
+        help_text=_("Role displayed in people card"),
     )
 
     description = HTMLFormField(
         label=_("Description"),
         required=False,
-        help_text=_("Description displayed in people card."),
+        help_text=_("Description displayed in people card"),
     )
 
     text_color = forms.ChoiceField(
@@ -581,7 +648,7 @@ class PeopleCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="dark",
-        help_text=_("Card content text color."),
+        help_text=_("Card content text color"),
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
@@ -595,11 +662,11 @@ class MembershipPlans(CMSFrontendComponent):
         render_template = "membership/membership_plans.html"
         allow_children = True
         child_classes = [
-            "HeadingPlugin",
             "PlanCardPlugin",
             "HorizontalPlanCardPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("eyebrow_text", "heading")
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
@@ -607,13 +674,18 @@ class MembershipPlans(CMSFrontendComponent):
         help_text=_("Eyebrow text"),
     )
 
-    eyebrow_text_color = forms.ChoiceField(
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
         label=_("Text color"),
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
-        help_text=_("Color for eyebrow text."),
+        help_text=_("Color for eyebrow and heading text"),
     )
 
 
@@ -627,7 +699,6 @@ class PlanCard(CMSFrontendComponent):
         allow_children = True
         child_classes = [
             "TextPlugin",
-            "SpacingPlugin",
             "FeatureItemPlugin",
             "TextLinkPlugin",
         ]
@@ -635,6 +706,7 @@ class PlanCard(CMSFrontendComponent):
             "MembershipPlansPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("card_heading", "card_sub_heading")
 
     card_heading = forms.CharField(
         label=_("Card heading"),
@@ -685,7 +757,6 @@ class HorizontalPlanCard(CMSFrontendComponent):
         allow_children = True
         child_classes = [
             "TextPlugin",
-            "SpacingPlugin",
             "FeatureItemPlugin",
             "TextLinkPlugin",
             "ImagePlugin",
@@ -694,6 +765,7 @@ class HorizontalPlanCard(CMSFrontendComponent):
             "MembershipPlansPlugin",
         ]
         mixins = ["Background", "Spacing", "Attributes"]
+        frontend_editable_fields = ("card_heading", "card_sub_heading")
 
     card_heading = forms.CharField(
         label=_("Card heading"),
@@ -721,14 +793,12 @@ class ContentTeaser(CMSFrontendComponent):
     """Content Teaser component"""
 
     class Meta:
-        name = _("Content Teaser")
+        name = _("Two columns")
         render_template = "content_teaser/content_teaser.html"
         allow_children = True
-        child_classes = [
-            "TeaserContentPlugin",
-            "TeaserMediaPlugin",
-        ]
-        mixins = ["Background", "Spacing", "Attributes"]
+        child_classes = ["TeaserContentPlugin","TeaserMediaPlugin"]
+        mixins = ["Background", "Spacing"]
+        show_add_form = False
 
 
 @components.register
@@ -736,18 +806,13 @@ class TeaserContent(CMSFrontendComponent):
     """Teaser Content component to render text"""
 
     class Meta:
-        name = _("Teaser Content")
+        name = _("Content")
         render_template = "content_teaser/components/content.html"
         allow_children = True
         parent_classes = [
             "ContentTeaserPlugin",
         ]
-        child_classes = [
-            "TextPlugin",
-            "HeadingPlugin",
-            "SpacingPlugin",
-            "TextLinkPlugin",
-        ]
+        child_classes = []
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
@@ -763,7 +828,7 @@ class TeaserMedia(CMSFrontendComponent):
     """Media Teaser component"""
 
     class Meta:
-        name = _("Teaser Media")
+        name = _("Media")
         render_template = "content_teaser/components/media.html"
         allow_children = True
         parent_classes = [
@@ -773,6 +838,7 @@ class TeaserMedia(CMSFrontendComponent):
             "ImagePlugin",
             "VideoPlayerPlugin",
         ]
+        show_add_form = False
 
 
 @components.register
@@ -784,11 +850,25 @@ class QuotePanelContainer(CMSFrontendComponent):
         module = _("Sections")
         render_template = "quote_panel/quote_panel.html"
         allow_children = True
-        child_classes = [
-            "HeadingPlugin",
-            "QuotePanelItemPlugin",
-        ]
+        child_classes = ["QuotePanelItemPlugin"]
+        frontend_editable_fields = ["overline", "heading"]
         mixins = ["Background", "Spacing", "Attributes"]
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+    heading_context = forms.ChoiceField(
+        label=_("Heading context"),
+        required=False,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        initial=frontend_settings.EMPTY_CHOICE,
+        widget=ColoredButtonGroup(),
+    )
 
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
@@ -811,6 +891,7 @@ class QuotePanelItem(CMSFrontendComponent):
         child_classes = [
             "ImagePlugin",
         ]
+        frontend_editable_fields = ("eyebrow_text", "quote_text", "author_name", "author_role")
 
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
@@ -861,8 +942,6 @@ class Heading(CMSFrontendComponent):
     class Meta:
         name = _("Heading")
         render_template = "heading/heading.html"
-        allow_children = True
-        child_classes = []
         frontend_editable_fields = ("heading", "overline")
 
     heading_level = forms.ChoiceField(
@@ -888,7 +967,7 @@ class Heading(CMSFrontendComponent):
 
     def get_short_description(self):
         return (
-            f"{self.heading} ({self.heading_level})"
+            f"{self.heading} <{self.heading_level}>"
             if self.config.get("heading")
             else ""
         )
@@ -973,7 +1052,7 @@ class CodeBlock(CMSFrontendComponent):
         label=_("Heading"),
         required=False,
         help_text=_("Heading for the code block."),
-    )   
+    )
     dark_mode = forms.BooleanField(
         label=_("Dark mode"),
         required=False,
@@ -986,3 +1065,224 @@ class CodeBlock(CMSFrontendComponent):
         required=True,
         widget=forms.widgets.Textarea(attrs={"class": "js-ckeditor-use-selected-text"}),
     )
+
+
+@components.register
+class CounterContainer(CMSFrontendComponent):
+    """Counter container component with optional heading"""
+
+    class Meta:
+        name = _("Counter Panel")
+        module = _("Sections")
+        render_template = "counter/counter_container.html"
+        allow_children = True
+        child_classes = ["CounterPlugin"]
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        help_text=_("Color for eyebrow and heading text"),
+    )
+
+
+class CounterPluginMixin:
+    """Plugin mixin that fetches GitHub stats for Counter components."""
+
+    GITHUB_REPO = "django-cms/django-cms"
+    GITHUB_ORG = "django-cms"
+    CACHE_TIMEOUT = 86400  # 24 hours
+
+    def _get_github_number(self, counter_type):
+        import logging
+
+        from django.core.cache import cache
+
+        cache_key = f"counter_github_{counter_type}"
+        cached = cache.get(cache_key)
+        if cached is not None:
+            return cached
+
+        logger = logging.getLogger(__name__)
+        number = 0
+        try:
+            number = self._fetch_github_stat(counter_type)
+        except Exception:
+            logger.exception("Failed to fetch GitHub stat for %s", counter_type)
+        cache.set(cache_key, number, self.CACHE_TIMEOUT)
+        return number
+
+    def _fetch_github_stat(self, counter_type):
+        from datetime import datetime, timedelta, timezone
+
+        import requests
+
+        if counter_type in ("stars", "forks"):
+            resp = requests.get(
+                f"https://api.github.com/repos/{self.GITHUB_REPO}",
+                headers={"Accept": "application/vnd.github.v3+json"},
+                timeout=10,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            return data["stargazers_count" if counter_type == "stars" else "forks_count"]
+
+        since = (datetime.now(tz=timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
+
+        if counter_type == "issues_closed":
+            resp = requests.get(
+                "https://api.github.com/search/issues",
+                params={"q": f"org:{self.GITHUB_ORG} type:issue is:closed closed:>={since}"},
+                headers={"Accept": "application/vnd.github.v3+json"},
+                timeout=10,
+            )
+            resp.raise_for_status()
+            return resp.json()["total_count"]
+
+        if counter_type == "merges":
+            resp = requests.get(
+                "https://api.github.com/search/issues",
+                params={"q": f"org:{self.GITHUB_ORG} type:pr is:merged merged:>={since}"},
+                headers={"Accept": "application/vnd.github.v3+json"},
+                timeout=10,
+            )
+            resp.raise_for_status()
+            return resp.json()["total_count"]
+
+        return 0
+
+    def render(self, context, instance, placeholder):
+        counter_type = instance.config.get("counter_type", "manual")
+        if counter_type != "manual":
+            instance.config["number"] = self._get_github_number(counter_type)
+        return super().render(context, instance, placeholder)
+
+
+COUNTER_TYPE_CHOICES = [
+    ("manual", _("Manual")),
+    ("stars", _("GitHub Stars")),
+    ("forks", _("GitHub Forks")),
+    ("issues_closed", _("GitHub Issues Closed (30 days)")),
+    ("merges", _("GitHub PRs Merged (30 days)")),
+]
+
+
+@components.register
+class Counter(CMSFrontendComponent):
+    """Counter component with animated number display"""
+
+    _plugin_mixins = [CounterPluginMixin]
+
+    class Meta:
+        name = _("Counter")
+        render_template = "counter/counter.html"
+        allow_children = True
+        child_classes = ["TextLinkPlugin"]
+        mixins = ["Background", "Attributes"]
+        fieldsets = (
+            (None, {
+                "fields": (
+                    "icon",
+                    "title",
+                    ("counter_type", "number", "is_percent"),
+                    "number_color",
+                    "description",
+                    "color_style",
+                )
+            }),
+        )
+
+    counter_type = forms.ChoiceField(
+        label=_("Counter Type"),
+        choices=COUNTER_TYPE_CHOICES,
+        initial="manual",
+    )
+    icon = IconPickerField(
+        label=_("Icon"),
+        required=False,
+    )
+    title = forms.CharField(
+        label=_("Title"),
+        required=False,
+    )
+    number = forms.IntegerField(
+        label=_("Number"),
+        required=False,
+    )
+    is_percent = forms.BooleanField(
+        label=_("Is Percent"),
+        required=False,
+        initial=False,
+    )
+    number_color = ColorChoiceField(
+        label=_("Number Color"),
+        initial="dark",
+    )
+    description = HTMLFormField(
+        label=_("Description"),
+        required=False,
+    )
+    color_style = ColorChoiceField(
+        label=_("Text Color"),
+        initial="dark",
+    )
+
+    def get_short_description(self):
+        return dict(COUNTER_TYPE_CHOICES).get(self.config.get("counter_type"), _("Manual"))
+
+
+@components.register
+class ContainerWithGrid(CMSFrontendComponent):
+    """Grid section container with optional background grid"""
+
+    class Meta:
+        name = _("Grid Section")
+        module = _("Sections")
+        render_template = "grid_container/grid_container.html"
+        allow_children = True
+        show_add_form = False
+        mixins = ["Background", "Spacing", "Attributes"]
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=True,
+    )
+
+    def get_short_description(self) -> str:
+        heading = self.config.get("heading")
+        background_context = self.config.get('background_context', 'none')     
+        if heading:
+            return f"{heading} ({background_context})"
+        return background_context

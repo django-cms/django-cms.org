@@ -21,7 +21,8 @@ djangocms-simple-admin-style
 
 # the default RTE - optional, but used in most projects
 djangocms-text
-
+# additional markdown text field - optional
+djangocms-markdown
 
 # optional django CMS frontend
 djangocms-frontend

@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "parler",
     # the default text editor - optional, but used in most projects
     "djangocms_text",
+    "djangocms_markdown",
     # optional django CMS frontend modules
     "djangocms_frontend",
     "djangocms_frontend.contrib.accordion",
@@ -495,20 +496,6 @@ TEXT_EDITOR_SETTINGS = {
             },
         },
         {
-            "name": "Blockquote",
-            "element": "span",
-            "attributes": {
-                "class": "blockquote",
-            },
-        },
-        {
-            "name": "Lead",
-            "element": "span",
-            "attributes": {
-                "class": "lead",
-            },
-        },
-        {
             "name": "Text XS",
             "element": "span",
             "attributes": {
@@ -530,6 +517,22 @@ TEXT_EDITOR_SETTINGS = {
             },
         },
     ],
+    "blockStyles": [
+        {
+            "name": "Blockquote",
+            "element": "blockquote",
+            "attributes": {
+                "class": "blockquote",
+            },
+        },
+        {
+            "name": "Lead",
+            "element": "p",
+            "attributes": {
+                "class": "lead",
+            },
+        },
+    ],
     "textColors": {
         "text-primary": {"name": "Primary"},
         "text-secondary": {"name": "Secondary"},
@@ -547,6 +550,19 @@ DJANGOCMS_FILE_TEMPLATES = [
     ("primary", _("Primary file link")),
 ]
 
+# djangocms-picture settings
+DJANGOCMS_PICTURE_TEMPLATES = [
+    ("default", _("Default")),
+    ("decorated", _("Decorated")),
+    ("clipped_0", _("Group clipped")),
+    ("clipped_1", _("Slingle person clipped with panel")),
+    ("clipped_2", _("Single person clipped")),
+]
+
+# Use image as a component in templates
+CMS_COMPONENT_PLUGINS = [
+    "ImagePlugin",
+]
 
 if not DEBUG:
     import sentry_sdk
@@ -555,4 +571,4 @@ if not DEBUG:
         # Add data like request headers and IP for users,
         # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
         send_default_pii=True,
-    )   
+    )

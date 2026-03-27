@@ -1,0 +1,84 @@
+{% load thumbnail frontend l10n %}
+{% if picture_link %}
+    <a href="{{ picture_link }}"
+        {% if instance.target %} target="{{ instance.target }}"{% endif %}
+        {% get_attributes instance.link_attributes %}>
+{% endif %}
+    <div>
+        <svg viewBox="0 0 990 1019" style="width: 100%;" {{ instance.get_attributes }}>
+        <defs>
+            <clipPath id="clip-shape-{{ instance.pk|unlocalize }}" clipPathUnits="userSpaceOnUse">
+            <path d="
+                M 187 484
+
+                L 187 84
+                Q 187 64 207 64
+
+                L 970 64
+                Q 990 64 990 84
+
+                L 990 618
+
+                L 990 1019
+
+                L 766 1019
+                Q 746 1019 746 999
+
+                L 746 886
+
+                L 20 886
+                Q 0 886 0 866
+
+                L 0 504
+                Q 0 484 20 484
+
+                L 187 484
+                Z
+            "/>
+            </clipPath>
+            <filter id="shadow-{{ instance.pk|unlocalize }}" x="-10%" y="-10%" width="120%" height="120%">
+            
+            <!-- Spread (2px) -->
+            <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="spread"/>
+
+            <!-- Blur (≈ 10px) -->
+            <feGaussianBlur in="spread" stdDeviation="5" result="blur"/>
+
+            <!-- Color -->
+            <feFlood flood-color="black" flood-opacity="0.1" result="color"/>
+
+            <!-- Apply color -->
+            <feComposite in="color" in2="blur" operator="in" result="shadow"/>
+
+            <!-- Merge shadow + original -->
+            <feMerge>
+                <feMergeNode in="shadow-{{ instance.pk|unlocalize }}"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+            </filter>
+        </defs>
+        <rect
+            x="112"
+            y="24"
+            width="308"
+            height="305"
+            rx="20"
+            ry="20"
+            class="text-primary"
+            style="fill: currentColor;"
+            filter="url(#shadow-{{ instance.pk|unlocalize }})"        
+        />
+        <g filter="url(#shadow-{{ instance.pk|unlocalize }})">
+            <image 
+                href="{{ instance.img_src }}"
+                width="991"
+                height="1020"
+                preserveAspectRatio="xMidYMid slice"
+                clip-path="url(#clip-shape-{{ instance.pk|unlocalize }})"
+            />
+        </g>
+        </svg>
+    </div>
+    {% if picture_link %}
+    </a>
+{% endif %}
