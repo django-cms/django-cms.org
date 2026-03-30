@@ -1,3 +1,5 @@
+import logging
+
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -17,6 +19,10 @@ from djangocms_frontend.fields import (
     IconGroup,
 )
 from djangocms_frontend.helpers import first_choice
+
+
+# Common logger
+logger = logging.getLogger(__name__)
 
 
 @components.register
@@ -1139,8 +1145,6 @@ class CounterPluginMixin:
     CACHE_TIMEOUT = 86400  # 24 hours
 
     def _get_counter_number(self, counter_type):
-        import logging
-
         from django.core.cache import cache
 
         cache_key = f"counter_{counter_type}"
@@ -1148,7 +1152,6 @@ class CounterPluginMixin:
         if cached is not None:
             return cached
 
-        logger = logging.getLogger(__name__)
         number = 0
         try:
             if counter_type in ("pypi_downloads", "pypi_downloads_total"):
