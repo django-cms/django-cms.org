@@ -1178,7 +1178,7 @@ class CounterPluginMixin:
             timeout=10,
         )
         resp.raise_for_status()
-        return resp.json()["data"]["last_month"]
+        return resp.json().get("data", {}).get("last_month")
 
     def _fetch_github_stat(self, counter_type):
         from datetime import datetime, timedelta, timezone
