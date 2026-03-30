@@ -135,7 +135,6 @@ class Features(CMSFrontendComponent):
         default_config = {
             "padding_y": "py-6",
         }
-        ]   
         slots = (
             Slot("items", _("Items"), child_classes=["FeatureAccordionItemPlugin"]),
             Slot("links", _("Links"), child_classes=[ "TextLinkPlugin"]),
@@ -1314,7 +1313,7 @@ class ContainerWithGrid(CMSFrontendComponent):
 
     def get_short_description(self) -> str:
         heading = self.config.get("heading")
-        background_context = self.config.get('background_context', 'none')     
+        background_context = self.config.get('background_context', 'none')
         if heading:
             return f"{heading} ({background_context})"
         return background_context
