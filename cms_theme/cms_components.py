@@ -1193,7 +1193,7 @@ class CounterPluginMixin:
             )
             resp.raise_for_status()
             data = resp.json()
-            return data["stargazers_count" if counter_type == "stars" else "forks_count"]
+            return data.get("stargazers_count" if counter_type == "stars" else "forks_count")
 
         since = (datetime.now(tz=timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
 
