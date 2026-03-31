@@ -23,9 +23,9 @@
 
             <div class="col-lg-6 hero-content-right position-relative">
                 {% if instance.config.main_image_url or instance.main_image %}
-                    <div class="hero-main-image mt-5 mt-lg-0"{% if hero_clip %} style="clip-path: url(#hero-clip-{{ instance.pk }})"{% endif %}>
-                        {% if instance.config.main_image_url %}
-                            {% plugin "image" external_picture=instance.config.main_image_url template=instance.main_image_template %}{% endplugin %}
+                    <div class="hero-main-image mt-5 mt-lg-0">
+                        {% if instance.main_image_url %}
+                            {% plugin "image" external_picture=instance.main_image_url template=instance.main_image_template %}{% endplugin %}
                         {% else %}
                             {% plugin "image" picture=instance.main_image template=instance.main_image_template %}{% endplugin %}
                         {% endif %}
