@@ -1,3 +1,5 @@
+import logging
+
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -17,6 +19,10 @@ from djangocms_frontend.fields import (
     IconGroup,
 )
 from djangocms_frontend.helpers import first_choice
+
+
+# Common logger
+logger = logging.getLogger(__name__)
 
 
 @components.register
@@ -135,7 +141,6 @@ class Features(CMSFrontendComponent):
         default_config = {
             "padding_y": "py-6",
         }
-        ]   
         slots = (
             Slot("items", _("Items"), child_classes=["FeatureAccordionItemPlugin"]),
             Slot("links", _("Links"), child_classes=[ "TextLinkPlugin"]),
@@ -1138,30 +1143,51 @@ class CounterContainer(CMSFrontendComponent):
 
 
 class CounterPluginMixin:
-    """Plugin mixin that fetches GitHub stats for Counter components."""
+    """Plugin mixin that fetches GitHub/PyPI stats for Counter components."""
 
     GITHUB_REPO = "django-cms/django-cms"
     GITHUB_ORG = "django-cms"
+    PYPI_PACKAGE = "django-cms"
     CACHE_TIMEOUT = 86400  # 24 hours
 
-    def _get_github_number(self, counter_type):
-        import logging
-
+    def _get_counter_number(self, counter_type):
         from django.core.cache import cache
 
-        cache_key = f"counter_github_{counter_type}"
+        cache_key = f"counter_{counter_type}"
         cached = cache.get(cache_key)
         if cached is not None:
             return cached
 
-        logger = logging.getLogger(__name__)
         number = 0
         try:
-            number = self._fetch_github_stat(counter_type)
+            if counter_type in ("pypi_downloads", "pypi_downloads_total"):
+                number = self._fetch_pypi_downloads(counter_type)
+            else:
+                number = self._fetch_github_stat(counter_type)
         except Exception:
-            logger.exception("Failed to fetch GitHub stat for %s", counter_type)
+            logger.exception("Failed to fetch stat for %s", counter_type)
         cache.set(cache_key, number, self.CACHE_TIMEOUT)
         return number
+
+    def _fetch_pypi_downloads(self, counter_type):
+        import requests
+
+        if counter_type == "pypi_downloads_total":
+            resp = requests.get(
+                f"https://api.pepy.tech/api/v2/projects/{self.PYPI_PACKAGE}",
+                headers={"Accept": "application/json"},
+                timeout=10,
+            )
+            resp.raise_for_status()
+            return resp.json()["total_downloads"]
+
+        resp = requests.get(
+            f"https://pypistats.org/api/packages/{self.PYPI_PACKAGE}/recent",
+            headers={"Accept": "application/json"},
+            timeout=10,
+        )
+        resp.raise_for_status()
+        return resp.json().get("data", {}).get("last_month")
 
     def _fetch_github_stat(self, counter_type):
         from datetime import datetime, timedelta, timezone
@@ -1176,7 +1202,7 @@ class CounterPluginMixin:
             )
             resp.raise_for_status()
             data = resp.json()
-            return data["stargazers_count" if counter_type == "stars" else "forks_count"]
+            return data.get("stargazers_count" if counter_type == "stars" else "forks_count")
 
         since = (datetime.now(tz=timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
 
@@ -1205,7 +1231,7 @@ class CounterPluginMixin:
     def render(self, context, instance, placeholder):
         counter_type = instance.config.get("counter_type", "manual")
         if counter_type != "manual":
-            instance.config["number"] = self._get_github_number(counter_type)
+            instance.config["number"] = self._get_counter_number(counter_type)
         return super().render(context, instance, placeholder)
 
 
@@ -1215,6 +1241,8 @@ COUNTER_TYPE_CHOICES = [
     ("forks", _("GitHub Forks")),
     ("issues_closed", _("GitHub Issues Closed (30 days)")),
     ("merges", _("GitHub PRs Merged (30 days)")),
+    ("pypi_downloads", _("PyPI Downloads (last month)")),
+    ("pypi_downloads_total", _("PyPI Downloads (total)")),
 ]
 
 
@@ -1320,7 +1348,7 @@ class ContainerWithGrid(CMSFrontendComponent):
 
     def get_short_description(self) -> str:
         heading = self.config.get("heading")
-        background_context = self.config.get('background_context', 'none')     
+        background_context = self.config.get('background_context', 'none')
         if heading:
             return f"{heading} ({background_context})"
         return background_context
