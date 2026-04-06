@@ -117,7 +117,7 @@ django-templatetag-sugar==1.0
     # via django-taggit-templatetags
 django-treebeard==5.0.5
     # via django-cms
-djangocms-alias @ git+https://github.com/django-cms/djangocms-alias@fix/static-alias-editing
+djangocms-alias @ git+https://github.com/django-cms/djangocms-alias
     # via -r requirements.in
 djangocms-attributes-field==4.1.2
     # via
