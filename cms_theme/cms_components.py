@@ -98,7 +98,7 @@ class Accordion(CMSFrontendComponent):
 
     class Meta:
         plugin_name = _("Accordion")
-        render_template = "features/features.html"
+        render_template = "accordion/accordion.html"
         allow_children = True
         child_classes = [
             "AccordionItemPlugin",
@@ -160,7 +160,7 @@ class AccordionItem(CMSFrontendComponent):
 
     class Meta:
         name = _("Accordion Item")
-        render_template = "features/item.html"
+        render_template = "accordion/item.html"
         allow_children = True
         parent_classes = ["AccordionPlugin"]
         frontend_editable_fields = ("heading", "body")
