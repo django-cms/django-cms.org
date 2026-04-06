@@ -1,6 +1,6 @@
 {% load frontend sekizai_tags cms_theme_tags icon_tags %}
 {% add_css_for_icon instance.config.icon %}
-<div class="text-start counter-component p-lg-3 mb-3 rounded text-{{ instance.config.color_style|default:'black' }} {{ instance.get_classes }}"{{ instance.get_attributes }}>
+<div class="text-start counter-component p-lg-3 rounded text-{{ instance.config.color_style|default:'black' }} {{ instance.get_classes }}"{{ instance.get_attributes }}>
     <div class="counter-body-spacing">
         {% if instance.config.icon %}
             <div class="counter-icon">

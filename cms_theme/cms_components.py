@@ -1338,6 +1338,7 @@ class ContainerWithGrid(CMSFrontendComponent):
         render_template = "container/container.html"
         allow_children = True
         show_add_form = False
+        frontend_editable_fields = ["heading", "overline"]
         mixins = ["Background", "Spacing"]
 
     overline = forms.CharField(
@@ -1382,6 +1383,7 @@ class Container1ColText(CMSFrontendComponent):
         render_template = "container/narrow_container.html"
         allow_children = True
         show_add_form = False
+        frontend_editable_fields = ["heading", "overline"]
         mixins = ["Background", "Spacing"]
 
     overline = forms.CharField(
