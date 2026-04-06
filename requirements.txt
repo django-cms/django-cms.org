@@ -55,7 +55,7 @@ django-classy-tags==4.1.0
     # via
     #   django-cms
     #   django-sekizai
-django-cms @ git+https://github.com/django-cms/django-cms@website
+django-cms @ git+https://github.com/django-cms/django-cms@release/build
     # via
     #   -r requirements.in
     #   djangocms-alias

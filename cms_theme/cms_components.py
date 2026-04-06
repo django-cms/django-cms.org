@@ -100,16 +100,12 @@ class Accordion(CMSFrontendComponent):
         plugin_name = _("Accordion")
         render_template = "accordion/accordion.html"
         allow_children = True
-        child_classes = [
-            "AccordionItemPlugin",
-            "TextLinkPlugin",
-        ]
         default_config = {
             "padding_y": "py-6",
         }
         slots = (
-            Slot("items", _("Items"), child_classes=["FeatureAccordionItemPlugin"]),
-            Slot("links", _("Links"), child_classes=[ "TextLinkPlugin"]),
+            Slot("items", _("Items"), child_classes=["AccordionItemPlugin"]),
+            Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
         )
 
         mixins = ["Background", "Spacing"]
@@ -162,7 +158,7 @@ class AccordionItem(CMSFrontendComponent):
         name = _("Accordion Item")
         render_template = "accordion/item.html"
         allow_children = True
-        parent_classes = ["AccordionPlugin"]
+        parent_classes = ["AccordionItemsPlugin"]
         frontend_editable_fields = ("heading", "body")
 
     heading = forms.CharField(

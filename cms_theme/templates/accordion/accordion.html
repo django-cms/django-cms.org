@@ -39,7 +39,9 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            {% childplugins instance "links" %}{% endchildplugins %}
+            {% for link in plugin|get_slot:"links" %}
+               {% render_plugin link %}<span class="ms-3"></span>
+            {% endfor %}
         </div>
     </div>
 </section>
