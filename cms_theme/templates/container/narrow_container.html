@@ -2,7 +2,10 @@
 <section>
     <div class="container py-6{% if instance.config.text_color %} text-{{ instance.config.text_color }}{% endif %}">
         <div class="row mb-4 justify-content-center">
-            <div class="col-12 col-lg-8 {% if instance.background_context %}card {% endif %} {{ instance.get_classes }}{% if instance.config.background_grid %} background-grid{% endif %}"{{ instance.get_attributes }}>
+            <div class="col-12 col-lg-8" {{ instance.get_attributes }}>
+                {% if instance.background_context %}
+                    <div class="card {{ instance.get_classes }}{% if instance.config.background_grid %} background-grid{% endif %}"><div class="card-body{% if instance.config.text_color %} text-{{ instance.config.text_color }}{% endif %}">
+                {% endif %}
                 {% if instance.config.overline or instance.config.heading %}
                     {% if instance.config.overline %}
                         <div class="text-uppercase overline">{{ instance.config.overline }}</div>
@@ -14,6 +17,9 @@
                 {% for plugin in instance.child_plugin_instances %}
                     {% render_plugin plugin %}
                 {% endfor %}
+                {% if instane.background_context %}
+                    </div></div>
+                {% endif %}
             </div>
         </div>
     </div>
