@@ -6,10 +6,10 @@
             <div class="row mb-4 justify-content-center justify-content-lg-start text-{{ instance.config.accordion_header_color|default:'default' }}">
                 <div class="col-12 col-md-10 col-lg-12 text-lg-start">
                     {% if instance.config.overline %}
-                        <h6 class="text-uppercase overline">{{ instance.config.overline }}</h6>
+                        <p class="text-uppercase overline">{{ instance.config.overline }}</p>
                     {% endif %}
                     {% if instance.config.heading %}
-                        <h2{% if instance.config.text_color %} class="text-{{ instance.config.text_color }}"{% endif %}>{{ instance.config.heading }}</h2>
+                        <h2 class="pb-5 mt-3{% if instance.config.text_color %} text-{{ instance.config.text_color }}"{% endif %}>{{ instance.config.heading }}</h2>
                     {% endif %}
                 </div>
             </div>

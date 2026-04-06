@@ -332,7 +332,7 @@ class CTAPanel(CMSFrontendComponent):
     """CTAPanel component with background grid option"""
 
     class Meta:
-        name = _("CTA Panel")
+        name = _("CTA")
         module = _("Sections")
         render_template = "cta/cta_panel.html"
         allow_children = True
@@ -488,7 +488,7 @@ class BenefitsPanel(CMSFrontendComponent):
     """Benefits panel component"""
 
     class Meta:
-        name = _("Benefits Panel")
+        name = _("Benefits")
         module = _("Sections")
         render_template = "benefits/benefits_panel.html"
         allow_children = True
@@ -901,7 +901,7 @@ class QuotePanelContainer(CMSFrontendComponent):
     """Quote Panel component with background grid option"""
 
     class Meta:
-        name = _("Quote Panel")
+        name = _("Quotes")
         module = _("Sections")
         render_template = "quote_panel/quote_panel.html"
         allow_children = True
@@ -940,7 +940,7 @@ class QuotePanelItem(CMSFrontendComponent):
     """Quote Panel Item component to render quote text and author"""
 
     class Meta:
-        name = _("Quote Panel Item")
+        name = _("Quote")
         render_template = "quote_panel/quote_item.html"
         allow_children = True
         parent_classes = [
@@ -1130,7 +1130,7 @@ class CounterContainer(CMSFrontendComponent):
     """Counter container component with optional heading"""
 
     class Meta:
-        name = _("Counter Panel")
+        name = _("Counters")
         module = _("Sections")
         render_template = "counter/counter_container.html"
         allow_children = True
