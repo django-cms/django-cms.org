@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     "djangocms_frontend",
     "djangocms_frontend.contrib.alert",
     "djangocms_frontend.contrib.badge",
+    "djangocms_frontend.contrib.card",
     "djangocms_frontend.contrib.collapse",
     "djangocms_frontend.contrib.content",
     "djangocms_frontend.contrib.grid",
