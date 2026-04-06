@@ -542,6 +542,12 @@ class BenefitsCard(CMSFrontendComponent):
         required=False,
     )
 
+    bottom_image = ImageFormField(
+        label=_("Bottom image"),
+        required=False,
+        help_text=_("Optional image displayed at the bottom of the card in full width."),
+    )
+
 
 @components.register
 class Navbar(CMSFrontendComponent):
