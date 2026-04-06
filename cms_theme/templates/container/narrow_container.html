@@ -1,8 +1,8 @@
 {% load cms_tags %}
-<section class="{{ instance.get_classes }}{% if instance.config.background_grid %} background-grid{% endif %}"{{ instance.get_attributes }}>
+<section>
     <div class="container py-6{% if instance.config.text_color %} text-{{ instance.config.text_color }}{% endif %}">
         <div class="row mb-4 justify-content-center">
-            <div class="col-12 col-lg-8">
+            <div class="col-12 col-lg-8 {% if instance.background_context %}card {% endif %} {{ instance.get_classes }}{% if instance.config.background_grid %} background-grid{% endif %}"{{ instance.get_attributes }}>
                 {% if instance.config.overline or instance.config.heading %}
                     {% if instance.config.overline %}
                         <div class="text-uppercase overline">{{ instance.config.overline }}</div>

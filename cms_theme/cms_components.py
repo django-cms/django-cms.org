@@ -36,7 +36,7 @@ class Hero(CMSFrontendComponent):
         allow_children = True
         child_classes = []
         slots = (
-            Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
+            Slot("links", _("Centered Links"), child_classes=["TextLinkPlugin"]),
             Slot(
                 "satellites",
                 _("Image Decorations"),
@@ -107,7 +107,7 @@ class Accordion(CMSFrontendComponent):
         }
         slots = (
             Slot("items", _("Items"), child_classes=["AccordionItemPlugin"]),
-            Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
+            Slot("links", _("Centered Links"), child_classes=["TextLinkPlugin"]),
         )
 
         mixins = ["Background", "Spacing"]
