@@ -151,13 +151,16 @@ class Accordion(CMSFrontendComponent):
         initial=False,
     )
 
+    def get_short_description(self):
+        return self.heading if self.heading else ""
+
 
 @components.register
 class AccordionItem(CMSFrontendComponent):
     """Feature item component to render icon and text"""
 
     class Meta:
-        name = _("Accordion Item")
+        name = _("Item")
         render_template = "accordion/item.html"
         allow_children = True
         parent_classes = ["AccordionItemsPlugin"]
@@ -185,6 +188,9 @@ class AccordionItem(CMSFrontendComponent):
         required=False,
     )
 
+    def get_short_description(self):
+        return self.heading 
+    
 
 @components.register
 class TimelineContainer(CMSFrontendComponent):
