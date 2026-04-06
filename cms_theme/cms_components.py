@@ -1309,10 +1309,10 @@ class Counter(CMSFrontendComponent):
 
 @components.register
 class ContainerWithGrid(CMSFrontendComponent):
-    """Grid section container with optional background grid"""
+    """Container with optional background color and/or grid"""
 
     class Meta:
-        name = _("Grid Section")
+        name = _("Wide content")
         module = _("Sections")
         render_template = "grid_container/grid_container.html"
         allow_children = True
@@ -1331,9 +1331,9 @@ class ContainerWithGrid(CMSFrontendComponent):
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
-        initial="default",
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
