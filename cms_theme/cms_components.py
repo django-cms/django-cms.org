@@ -31,6 +31,7 @@ class Hero(CMSFrontendComponent):
 
     class Meta:
         name = _("Hero")
+        module = _("Sections")
         render_template = "hero/hero.html"
         allow_children = True
         child_classes = []
@@ -371,6 +372,7 @@ class Carousel(CMSFrontendComponent):
 
     class Meta:
         name = _("Carousel")
+        module = _("Sections")
         render_template = "carousel/logo_carousel.html"
         allow_children = True
         child_classes = ["CarouselItemPlugin"]
@@ -690,6 +692,7 @@ class MembershipPlans(CMSFrontendComponent):
 
     class Meta:
         name = _("Membership Plans")
+        module = _("Sections")
         render_template = "membership/membership_plans.html"
         allow_children = True
         child_classes = [
@@ -828,6 +831,7 @@ class ContentTeaser(CMSFrontendComponent):
 
     class Meta:
         name = _("Two columns")
+        module = _("Sections")
         render_template = "content_teaser/content_teaser.html"
         allow_children = True
         child_classes = ["TeaserContentPlugin","TeaserMediaPlugin"]
