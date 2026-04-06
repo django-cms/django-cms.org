@@ -101,7 +101,7 @@ class Accordion(CMSFrontendComponent):
         render_template = "features/features.html"
         allow_children = True
         child_classes = [
-            "AccordionPlugin",
+            "AccordionItemPlugin",
             "TextLinkPlugin",
         ]
         default_config = {
@@ -162,7 +162,7 @@ class AccordionItem(CMSFrontendComponent):
         name = _("Accordion Item")
         render_template = "features/item.html"
         allow_children = True
-        parent_classes = ["FeatureItemsPlugin"]
+        parent_classes = ["AccordionPlugin"]
         frontend_editable_fields = ("heading", "body")
 
     heading = forms.CharField(
