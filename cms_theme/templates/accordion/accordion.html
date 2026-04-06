@@ -21,7 +21,9 @@
                 <div class="features-accordion mt-4 accordion-header-{{ instance.config.accordion_header_color|default:'default' }}">
                     {% set_html_id instance as html_id %}
                     <div class="accordion" id="accordion-{{ html_id }}">
-                        {% childplugins instance "items" %}{% endchildplugins %}
+                        {% for accordion_item in instance|get_slot:"links" %}
+                            {% render_plugin accordion_item %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -40,7 +42,7 @@
         </div>
         <div class="d-flex justify-content-center">
             {% for link in instance|get_slot:"links" %}
-               {% render_plugin link %}<span class="ms-3"></span>
+               {% render_plugin link %}<span class="ms-4 mt-6"></span>
             {% endfor %}
         </div>
     </div>

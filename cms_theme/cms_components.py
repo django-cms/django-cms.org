@@ -31,6 +31,7 @@ class Hero(CMSFrontendComponent):
 
     class Meta:
         name = _("Hero")
+        module = _("Sections")
         render_template = "hero/hero.html"
         allow_children = True
         child_classes = []
@@ -98,6 +99,7 @@ class Accordion(CMSFrontendComponent):
 
     class Meta:
         plugin_name = _("Accordion")
+        module = _("Sections")
         render_template = "accordion/accordion.html"
         allow_children = True
         default_config = {
@@ -370,6 +372,7 @@ class Carousel(CMSFrontendComponent):
 
     class Meta:
         name = _("Carousel")
+        module = _("Sections")
         render_template = "carousel/logo_carousel.html"
         allow_children = True
         child_classes = ["CarouselItemPlugin"]
@@ -689,6 +692,7 @@ class MembershipPlans(CMSFrontendComponent):
 
     class Meta:
         name = _("Membership Plans")
+        module = _("Sections")
         render_template = "membership/membership_plans.html"
         allow_children = True
         child_classes = [
@@ -827,6 +831,7 @@ class ContentTeaser(CMSFrontendComponent):
 
     class Meta:
         name = _("Two columns")
+        module = _("Sections")
         render_template = "content_teaser/content_teaser.html"
         allow_children = True
         child_classes = ["TeaserContentPlugin","TeaserMediaPlugin"]
@@ -1308,15 +1313,15 @@ class Counter(CMSFrontendComponent):
 
 @components.register
 class ContainerWithGrid(CMSFrontendComponent):
-    """Grid section container with optional background grid"""
+    """Container with optional background color and/or grid"""
 
     class Meta:
-        name = _("Grid Section")
+        name = _("Wide content")
         module = _("Sections")
-        render_template = "grid_container/grid_container.html"
+        render_template = "container/container.html"
         allow_children = True
         show_add_form = False
-        mixins = ["Background", "Spacing", "Attributes"]
+        mixins = ["Background", "Spacing"]
 
     overline = forms.CharField(
         label=_("Eyebrow text"),
@@ -1330,9 +1335,53 @@ class ContainerWithGrid(CMSFrontendComponent):
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
-        initial="default",
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=True,
+    )
+
+    def get_short_description(self) -> str:
+        heading = self.config.get("heading")
+        background_context = self.config.get('background_context', 'none')
+        if heading:
+            return f"{heading} ({background_context})"
+        return background_context
+
+
+@components.register
+class Container1ColText(CMSFrontendComponent):
+    """Container with optional background color and/or grid"""
+
+    class Meta:
+        name = _("Regular-width content")
+        module = _("Sections")
+        render_template = "container/narrow_container.html"
+        allow_children = True
+        show_add_form = False
+        mixins = ["Background", "Spacing"]
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
