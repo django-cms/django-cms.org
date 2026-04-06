@@ -3,19 +3,30 @@
 {% add_css_for_icon instance.card_icon %}
 <div class="col-12 col-md-6 col-lg-3">
     <div class="{{ instance.get_classes }} h-100 card benefits-card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}" {{ instance.get_attributes }}>
-        <div class="mb-4 pb-1">
-            <i class="{{ instance.card_icon.iconClass }} display-1"></i>
-        </div>
+        {% if instance.card_icon %}
+            <div class="mb-4 pb-1">
+                <i class="{{ instance.card_icon.iconClass }} display-1"></i>
+            </div>
+        {% endif %}
+        {% if instance.card_title %}
         <div class="benefits-card-wrapper benefits-card-margin-bottom">
             <h3 class="h4 fw-bold mb-4">{% inline_field instance "card_title" %}</h3>
         </div>
+        {% endif %}
+        {% if instance.card_content|striptags %}
         <div class="benefits-card-spacing flex-grow-1 benefits-card-body mt-auto">
-            {% if instance.card_content %}{% inline_field instance "card_content" "" "safe" %}{% endif %}
+            {% inline_field instance "card_content" "" "safe" %}
         </div>
-        <div class="mt-auto">
-            {% if instance.child_plugin_instances %}
+        {% endif %}
+        {% if instance.child_plugin_instances %}
+            <div class="mt-auto">
                 {% childplugins %}{% endchildplugins %}
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
+        {% if instance.bottom_image %}
+            <div class="benefits-card-bottom-image">
+                <img src="{{ instance.bottom_image.url }}" alt="" class="w-100 d-block">
+            </div>
+        {% endif %}
     </div>
 </div>
