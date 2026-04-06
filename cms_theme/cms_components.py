@@ -211,7 +211,7 @@ class TimelineContainer(CMSFrontendComponent):
 
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),
-        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
         help_text=_("Color of the vertical timeline line."),
@@ -1316,7 +1316,7 @@ class ContainerWithGrid(CMSFrontendComponent):
     """Container with optional background color and/or grid"""
 
     class Meta:
-        name = _("Wide content")
+        name = _("Regular-width content")
         module = _("Sections")
         render_template = "container/container.html"
         allow_children = True
@@ -1360,7 +1360,7 @@ class Container1ColText(CMSFrontendComponent):
     """Container with optional background color and/or grid"""
 
     class Meta:
-        name = _("Regular-width content")
+        name = _("Narrow content")
         module = _("Sections")
         render_template = "container/narrow_container.html"
         allow_children = True
