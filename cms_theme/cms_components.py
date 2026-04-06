@@ -98,6 +98,7 @@ class Accordion(CMSFrontendComponent):
 
     class Meta:
         plugin_name = _("Accordion")
+        module = _("Sections")
         render_template = "accordion/accordion.html"
         allow_children = True
         default_config = {
