@@ -91,44 +91,10 @@ class Hero(CMSFrontendComponent):
         return self.heading if self.config.get("heading") else ""
 
 
-@components.register
-class FeatureAccordionItem(CMSFrontendComponent):
-    """Feature item component to render icon and text"""
-
-    class Meta:
-        name = _("Feature Item")
-        render_template = "features/item.html"
-        allow_children = True
-        parent_classes = ["FeatureItemsPlugin"]
-        frontend_editable_fields = ("heading", "body")
-
-    heading = forms.CharField(
-        label=_("Heading"),
-        required=True,
-    )
-
-    body = HTMLFormField(
-        label=_("Body"),
-        required=False,
-    )
-
-    image_template = forms.ChoiceField(
-        label=_("Image template"),
-        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
-        required=False,
-        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
-    )
-
-    image = ImageFormField(
-        label=_("Image"),
-        required=False,
-    )
-
-
 
 @components.register
-class Features(CMSFrontendComponent):
-    """Features section container with accordion and content area"""
+class Accordion(CMSFrontendComponent):
+    """Accordion section container for features and content area"""
 
     class Meta:
         plugin_name = _("Accordion")
@@ -185,6 +151,40 @@ class Features(CMSFrontendComponent):
         label=_("Show background grid"),
         required=False,
         initial=False,
+    )
+
+
+@components.register
+class AccordionItem(CMSFrontendComponent):
+    """Feature item component to render icon and text"""
+
+    class Meta:
+        name = _("Accordion Item")
+        render_template = "features/item.html"
+        allow_children = True
+        parent_classes = ["FeatureItemsPlugin"]
+        frontend_editable_fields = ("heading", "body")
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=True,
+    )
+
+    body = HTMLFormField(
+        label=_("Body"),
+        required=False,
+    )
+
+    image_template = forms.ChoiceField(
+        label=_("Image template"),
+        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
+        required=False,
+        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
+    )
+
+    image = ImageFormField(
+        label=_("Image"),
+        required=False,
     )
 
 
