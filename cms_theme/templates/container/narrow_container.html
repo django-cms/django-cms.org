@@ -8,10 +8,10 @@
                 {% endif %}
                 {% if instance.config.overline or instance.config.heading %}
                     {% if instance.config.overline %}
-                        <div class="text-uppercase overline">{{ instance.config.overline }}</div>
+                        <div class="text-uppercase overline">{% inline_field instance "overline" %}</div>
                     {% endif %}
                     {% if instance.config.heading %}
-                        <h2 class="pb-5 mt-3">{{ instance.config.heading }}</h2>
+                        <h2 class="pb-5 mt-3">{% inline_field instance "heading" %}</h2>
                     {% endif %}
                 {% endif %}
                 {% for plugin in instance.child_plugin_instances %}
