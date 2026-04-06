@@ -152,7 +152,7 @@ class Accordion(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return self.heading if self.heading else ""
+        return self.heading if self.config.get("heading") else ""
 
 
 @components.register
@@ -189,8 +189,8 @@ class AccordionItem(CMSFrontendComponent):
     )
 
     def get_short_description(self):
-        return self.heading 
-    
+        return self.heading if self.config.get("heading") else ""
+
 
 @components.register
 class TimelineContainer(CMSFrontendComponent):
@@ -624,7 +624,7 @@ class PeopleCard(CMSFrontendComponent):
     """People card component"""
 
     class Meta:
-        name = _("People Card")
+        name = _("Person")
         render_template = "related_people/person_card.html"
         allow_children = True
         parent_classes = [
@@ -691,6 +691,9 @@ class PeopleCard(CMSFrontendComponent):
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
+    def get_short_description(self):
+        return self.name if self.config.get("name") else ""
+
 
 @components.register
 class MembershipPlans(CMSFrontendComponent):
@@ -730,6 +733,9 @@ class MembershipPlans(CMSFrontendComponent):
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
         help_text=_("Color for eyebrow and heading text"),
     )
+
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
 
 
 @components.register
@@ -771,6 +777,9 @@ class PlanCard(CMSFrontendComponent):
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
         help_text=_("Tier style / Color."),
     )
+
+    def get_short_description(self):
+        return self.card_heading if self.config.get("card_heading") else ""
 
 
 @components.register
@@ -1401,7 +1410,7 @@ class Container1ColText(CMSFrontendComponent):
 
     def get_short_description(self) -> str:
         heading = self.config.get("heading")
-        background_context = self.config.get('background_context', 'none')
+        background_context = self.config.get("background_context") or "no background"
         if heading:
             return f"{heading} ({background_context})"
         return background_context
