@@ -851,6 +851,7 @@ class TeaserContent(CMSFrontendComponent):
             "ContentTeaserPlugin",
         ]
         child_classes = []
+        is_slot = True
 
     text_color = forms.ChoiceField(
         label=_("Text color"),
@@ -877,6 +878,7 @@ class TeaserMedia(CMSFrontendComponent):
             "VideoPlayerPlugin",
         ]
         show_add_form = False
+        is_slot = True
 
 
 @components.register
