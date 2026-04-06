@@ -1,21 +1,21 @@
 {% load cms_tags frontend %}
 <div class="accordion-item">
-    <h3 class="accordion-header mb-0" id="heading-{{ accordion_item.pk }}">
+    <h3 class="accordion-header mb-0" id="heading-{{ instance.pk }}">
         <button class="accordion-button{% if not forloop.first %} collapsed{% endif %}"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapse-{{ accordion_item.pk }}"
+                data-bs-target="#collapse-{{ instance.pk }}"
                 aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
-                aria-controls="collapse-{{ accordion_item.pk }}">
-            {% inline_field accordion_item "heading" %}
+                aria-controls="collapse-{{ instance.pk }}">
+            {% inline_field instance "heading" %}
         </button>
     </h3>
-    <div id="collapse-{{ accordion_item.pk }}"
+    <div id="collapse-{{ instance.pk }}"
             class="accordion-collapse collapse{% if forloop.first %} show{% endif %}"
-            aria-labelledby="heading-{{ accordion_item.pk }}"
+            aria-labelledby="heading-{{ instance.pk }}"
             data-bs-parent="#accordion-{{ html_id }}">
         <div class="accordion-body">
-            {% inline_field accordion_item "body" "" "safe" %}
+            {% inline_field instance "body" "" "safe" %}
         </div>
     </div>
 </div>
