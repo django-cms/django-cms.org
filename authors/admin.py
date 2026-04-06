@@ -4,8 +4,8 @@ from parler.admin import TranslatableAdmin
 
 from .models import AuthorProfile, SocialLink
 
-
 # --- AuthorProfile Admin ---
+
 
 class SocialLinkInline(admin.TabularInline):
     model = SocialLink
@@ -19,12 +19,23 @@ class AuthorProfileAdmin(TranslatableAdmin):
     prepopulated_fields = {"slug": ("name",)}
     fieldsets = (
         (None, {"fields": ("name", "slug", "role")}),
-        ("Details", {"fields": ("bio", "photo")}),
+        (
+            "Details",
+            {
+                "fields": (
+                    "bio",
+                    "photo",
+                    "has_photo_accents",
+                    "has_drop_shadow",
+                )
+            },
+        ),
     )
     inlines = [SocialLinkInline]
 
 
 # --- Override djangocms-stories PostAdmin to use AuthorProfile ---
+
 
 class AuthorProfileChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
@@ -71,8 +82,7 @@ def _override_post_admin():
                     elif isinstance(field, (list, tuple)):
                         new_fields.append(
                             type(field)(
-                                f if f != "author" else "author_profile"
-                                for f in field
+                                f if f != "author" else "author_profile" for f in field
                             )
                         )
                     else:

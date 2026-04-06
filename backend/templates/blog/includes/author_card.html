@@ -3,10 +3,17 @@
 {% if profile %}
 <div class="card related-people-card p-4 shadow-lg">
     {% if profile.photo %}
-        <div class="text-center">
+        {% if profile.has_photo_accents %}
+            <div class="profile-wrapper mb-4 mt-3">
+                <div class="position-absolute shape-tl bg-primary z-0"></div>
+                <div class="position-absolute shape-br bg-primary z-0"></div>
+                {% thumbnail profile.photo 345x0 subject_location=profile.photo.subject_location as thumb %}
+                <img src="{{ thumb.url }}" alt="{{ profile.name }}" class="author-photo img-fluid {% if profile.has_drop_shadow %}shadow-sm{% endif %} rounded" />
+            </div>
+        {% else %}
             {% thumbnail profile.photo 345x0 subject_location=profile.photo.subject_location as thumb %}
             <img src="{{ thumb.url }}" alt="{{ profile.name }}" class="author-photo img-fluid" />
-        </div>
+        {% endif %}
     {% endif %}
     <div class="card-body p-0 mt-4 text-secondary">
         <div class="pt-1">
