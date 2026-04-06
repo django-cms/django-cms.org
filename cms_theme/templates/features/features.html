@@ -21,9 +21,7 @@
                 <div class="features-accordion mt-4 accordion-header-{{ instance.config.accordion_header_color|default:'default' }}">
                     {% set_html_id instance as html_id %}
                     <div class="accordion" id="accordion-{{ html_id }}">
-                        {% for accordion_item in instance|get_slot:"items" %}
-                           {% render_plugin accordion_item %}
-                        {% endfor %}
+                        {% childplugins instance "items" %}{% endchildplugins %}
                     </div>
                 </div>
             </div>

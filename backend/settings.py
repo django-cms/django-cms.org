@@ -64,16 +64,16 @@ INSTALLED_APPS = [
     "djangocms_markdown",
     # optional django CMS frontend modules
     "djangocms_frontend",
-    "djangocms_frontend.contrib.accordion",
+#     "djangocms_frontend.contrib.accordion",
     "djangocms_frontend.contrib.alert",
     "djangocms_frontend.contrib.badge",
-    "djangocms_frontend.contrib.card",
+#    "djangocms_frontend.contrib.card",
     "djangocms_frontend.contrib.collapse",
     "djangocms_frontend.contrib.content",
-    "djangocms_frontend.contrib.grid",
+#     "djangocms_frontend.contrib.grid",
     "djangocms_frontend.contrib.icon",
     "djangocms_frontend.contrib.image",
-    "djangocms_frontend.contrib.jumbotron",
+#    "djangocms_frontend.contrib.jumbotron",
     "djangocms_frontend.contrib.link",
     "djangocms_frontend.contrib.listgroup",
     "djangocms_frontend.contrib.media",
@@ -148,6 +148,8 @@ CMS_TEMPLATES = [
     # optional templates that extend base.html, to be used with Bootstrap 5
     ("cms_theme/base.html", "Default"),
 ]
+
+CMS_DEFAULT_IN_NAVIGATION = False
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
@@ -323,6 +325,7 @@ STORIES_TEMPLATE_CHOICES = (("blog/post_list.html", _("Default")),)
 
 
 # djangocms-frontend settings
+DJANGOCMS_FRONTEND_SHOW_ADVANCED_SETTINGS = False
 DJANGOCMS_FRONTEND_COMPONENT_FIELDS = {
     "cms_theme": "cms_theme.fields.ColorChoiceField",
 }
@@ -366,14 +369,6 @@ _DJANGOCMS_FRONTEND_ICON_CDN = {
 DJANGOCMS_FRONTEND_ICON_LIBRARIES = {
     "font-awesome-light": ("font-awesome-light.min.json", "font-awesome-light.css"),
     "font-awesome-thin": ("font-awesome-thin.min.json", "font-awesome-thin.css"),
-    **{
-        library: (
-            f"{library}.min.json",
-            _DJANGOCMS_FRONTEND_ICON_CDN.get(library, f"{library}.css"),
-        )
-        for library in DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN
-        if library not in {"font-awesome-light", "font-awesome-thin"}
-    },
 }
 
 DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (

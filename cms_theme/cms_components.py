@@ -369,8 +369,8 @@ class CTAPanel(CMSFrontendComponent):
 
 
 @components.register
-class LogoCarousel(CMSFrontendComponent):
-    """LogoCarousel component"""
+class Carousel(CMSFrontendComponent):
+    """Carousel component"""
 
     class Meta:
         name = _("Carousel")
