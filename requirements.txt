@@ -138,7 +138,7 @@ djangocms-link==5.1.1
     # via djangocms-frontend
 djangocms-markdown==1.0.0
     # via -r requirements.in
-djangocms-simple-admin-style==2.0.1
+djangocms-simple-admin-style @ git+https://github.com/fsbraun/djangocms-simple-admin-style
     # via -r requirements.in
 djangocms-stories==0.8.0
     # via -r requirements.in
