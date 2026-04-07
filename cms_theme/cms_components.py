@@ -503,7 +503,7 @@ class BenefitsCards(CMSFrontendComponent):
         default_config = {
             "padding_y": "py-6",
         }
-        frontend_editable_fields = ("eyebrow_text", "heading")
+        frontend_editable_fields = ("overline", "heading")
 
     heading = forms.CharField(
         label=_("Heading"),
