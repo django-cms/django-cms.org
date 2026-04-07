@@ -576,6 +576,10 @@ class BenefitsCard(CMSFrontendComponent):
         help_text=_("Optional image displayed at the bottom of the card in full width."),
     )
 
+    def get_short_description(self):
+        return self.card_title if self.config.get("card_title") else ""
+
+
 
 @components.register
 class Navbar(CMSFrontendComponent):
