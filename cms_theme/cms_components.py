@@ -25,6 +25,12 @@ from djangocms_frontend.helpers import first_choice
 logger = logging.getLogger(__name__)
 
 
+ALIGNMENT_CHOICES = (
+    ("text-start", _("Left")),
+    ("text-center", _("Centered")),
+    ("text-end", _("Right")),
+)
+
 @components.register
 class Hero(CMSFrontendComponent):
     """Hero component with background grid option"""
@@ -504,7 +510,7 @@ class BenefitsCards(CMSFrontendComponent):
         required=False,
     )
 
-    eyebrow_text = forms.CharField(
+    overline = forms.CharField(
         label=_("Eyebrow text"),
         required=False,
     )
@@ -515,6 +521,13 @@ class BenefitsCards(CMSFrontendComponent):
         required=False,
         initial=frontend_settings.EMPTY_CHOICE,
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
+
+    alignment = forms.ChoiceField(
+        label=_("Heading alignment"),
+        choices=frontend_settings.ALIGN_CHOICES,
+        initial=frontend_settings.ALIGN_CHOICES[0][0],
+        widget=IconGroup(),
     )
 
     background_grid = forms.BooleanField(
