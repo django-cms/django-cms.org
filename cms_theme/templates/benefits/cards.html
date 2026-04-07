@@ -1,0 +1,17 @@
+<!-- cms_theme/templates/benefits/benefits_panel.html -->
+{% load static cms_tags frontend %}
+<div {% if instance.background_grid %}class="{{ instance.get_classes }}  background-grid"{% endif %} {{ instance.get_attributes }}>
+    <div class="container">
+        {% if instance.heading %}
+            {% if instance.overline %}
+                <p class="overline text-{{ instance.heading_context }}">{% inline_field instance "overline" %}</p>
+            {% endif %}
+            <h2 class="pb-5 mt-3 text-{{ instance.heading_context }}">{% inline_field instance "heading" %}</h2>
+        {% endif %}
+        <div class="row g-4 justify-content-center">
+            {% for plugin in instance.child_plugin_instances %}
+                {% render_plugin plugin %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

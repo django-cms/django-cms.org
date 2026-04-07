@@ -484,23 +484,38 @@ class Carousel(CMSFrontendComponent):
 
 
 @components.register
-class BenefitsPanel(CMSFrontendComponent):
+class BenefitsCards(CMSFrontendComponent):
     """Benefits panel component"""
 
     class Meta:
-        name = _("Benefits")
+        name = _("Cards")
         module = _("Sections")
-        render_template = "benefits/benefits_panel.html"
+        render_template = "benefits/cards.html"
         allow_children = True
-        child_classes = [
-            "BenefitsCardPlugin",
-            "TextPlugin",
-            "HeadingPlugin",
-        ]
+        child_classes = ["BenefitsCardPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
         default_config = {
             "padding_y": "py-6",
         }
+        frontend_editable_fields = ("eyebrow_text", "heading")
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    heading_context = forms.ChoiceField(
+        label=_("Heading context"),
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
+        initial=frontend_settings.EMPTY_CHOICE,
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
 
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
@@ -508,19 +523,20 @@ class BenefitsPanel(CMSFrontendComponent):
         initial=False,
     )
 
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
+
 
 @components.register
 class BenefitsCard(CMSFrontendComponent):
     """Benefits card component"""
 
     class Meta:
-        name = _("Benefits Card")
-        render_template = "benefits/benefits_card.html"
+        name = _("Card")
+        render_template = "benefits/card.html"
         allow_children = True
-        parent_classes = ["BenefitsPanelPlugin"]
-        child_classes = [
-            "TextLinkPlugin",
-        ]
+        parent_classes = ["BenefitsCardsPlugin"]
+        child_classes = ["TextLinkPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
         frontend_editable_fields = ("card_title", "card_content")
 
@@ -589,13 +605,13 @@ class RelatedPeople(CMSFrontendComponent):
         }
         frontend_editable_fields = ("eyebrow_text", "heading")
 
-    eyebrow_text = forms.CharField(
-        label=_("Eyebrow text"),
+    heading = forms.CharField(
+        label=_("Heading"),
         required=False,
     )
 
-    heading = forms.CharField(
-        label=_("Heading"),
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
 
@@ -1017,10 +1033,10 @@ class Heading(CMSFrontendComponent):
     )
     heading_context = forms.ChoiceField(
         label=_("Heading context"),
-        required=False,
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
         initial=frontend_settings.EMPTY_CHOICE,
-        widget=ColoredButtonGroup(),
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
     def get_short_description(self):
