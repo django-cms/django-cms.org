@@ -62,6 +62,10 @@ INSTALLED_APPS = [
     # the default text editor - optional, but used in most projects
     "djangocms_text",
     "djangocms_markdown",
+    # Specific designs for this site
+    "cms_theme",
+    "djangocms_video",
+    "djangocms_ecosystem",
     # optional django CMS frontend modules
     "djangocms_frontend",
     "djangocms_frontend.contrib.alert",
@@ -74,10 +78,6 @@ INSTALLED_APPS = [
     "djangocms_frontend.contrib.listgroup",
     "djangocms_frontend.contrib.media",
     "djangocms_link",
-    # Specific designs for this site
-    "cms_theme",
-    "djangocms_video",
-    "djangocms_ecosystem",
     # djangocms-stories-related stuff
     "djangocms_stories",
     "authors",
