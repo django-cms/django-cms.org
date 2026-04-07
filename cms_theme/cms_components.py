@@ -25,12 +25,6 @@ from djangocms_frontend.helpers import first_choice
 logger = logging.getLogger(__name__)
 
 
-ALIGNMENT_CHOICES = (
-    ("text-start", _("Left")),
-    ("text-center", _("Centered")),
-    ("text-end", _("Right")),
-)
-
 @components.register
 class Hero(CMSFrontendComponent):
     """Hero component with background grid option"""
