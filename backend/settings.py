@@ -560,8 +560,8 @@ CMS_PLACEHOLDER_CONF = {
             "FooterPlugin",
             "CardPlugin",
             "CardLayoutPlugin",
-            "RowPlugin",
-            "ContainerPlugin",
+            "GridRowPlugin",
+            "GridContainerPlugin",
             "FigurePlugin",
         ]
     }
