@@ -65,7 +65,6 @@ INSTALLED_APPS = [
     # optional django CMS frontend modules
     "djangocms_frontend",
     "djangocms_frontend.contrib.alert",
-    "djangocms_frontend.contrib.badge",
     "djangocms_frontend.contrib.card",
     "djangocms_frontend.contrib.content",
     "djangocms_frontend.contrib.grid",
@@ -555,14 +554,14 @@ CMS_COMPONENT_PLUGINS = [
     "ImagePlugin",
 ]
 
-CMS_PLACEHOLDER_CONFIG = {
+CMS_PLACEHOLDER_CONF = {
     "content": {
-        "exclude_plugins": [
-            "FooterPlugin", 
-            "CardPlugin", 
-            "CardLayoutPlugin", 
-            "RowPlugin", 
-            "ContainerPlugin", 
+        "excluded_plugins": [
+            "FooterPlugin",
+            "CardPlugin",
+            "CardLayoutPlugin",
+            "RowPlugin",
+            "ContainerPlugin",
             "FigurePlugin",
         ]
     }
