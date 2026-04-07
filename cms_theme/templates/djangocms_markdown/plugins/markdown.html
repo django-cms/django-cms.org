@@ -1,0 +1,11 @@
+{% if instance.parent_id %}{{ body|safe }}{% else %}
+    <section>
+        <div class="container py-6">
+            <div class="row mb-4 justify-content-center">
+                <div class="col-12 col-lg-8 cms-content-start">
+                    {{ body|safe }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}

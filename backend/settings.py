@@ -59,13 +59,13 @@ INSTALLED_APPS = [
     # the default alias content - optional, but used in most projects
     "djangocms_alias",
     "parler",
-    # the default text editor - optional, but used in most projects
-    "djangocms_text",
-    "djangocms_markdown",
     # Specific designs for this site
     "cms_theme",
     "djangocms_video",
     "djangocms_ecosystem",
+    # the default text editor - optional, but used in most projects
+    "djangocms_text",
+    "djangocms_markdown",
     # optional django CMS frontend modules
     "djangocms_frontend",
     "djangocms_frontend.contrib.alert",
