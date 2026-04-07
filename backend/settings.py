@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     "djangocms_frontend.contrib.alert",
     "djangocms_frontend.contrib.badge",
     "djangocms_frontend.contrib.card",
-    "djangocms_frontend.contrib.collapse",
     "djangocms_frontend.contrib.content",
     "djangocms_frontend.contrib.grid",
     "djangocms_frontend.contrib.icon",
@@ -75,7 +74,6 @@ INSTALLED_APPS = [
     "djangocms_frontend.contrib.link",
     "djangocms_frontend.contrib.listgroup",
     "djangocms_frontend.contrib.media",
-    "djangocms_frontend.contrib.tabs",
     "djangocms_link",
     # Specific designs for this site
     "cms_theme",
@@ -556,6 +554,19 @@ DJANGOCMS_PICTURE_TEMPLATES = [
 CMS_COMPONENT_PLUGINS = [
     "ImagePlugin",
 ]
+
+CMS_PLACEHOLDER_CONFIG = {
+    "content": {
+        "exclude_plugins": [
+            "FooterPlugin", 
+            "CardPlugin", 
+            "CardLayoutPlugin", 
+            "RowPlugin", 
+            "ContainerPlugin", 
+            "FigurePlugin",
+        ]
+    }
+}
 
 if not DEBUG:
     import sentry_sdk
