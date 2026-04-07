@@ -11,4 +11,8 @@ class CmsThemeConfig(AppConfig):
         code_plugin = plugin_pool.get_plugin("CodeBlockPlugin")
         if code_plugin:
             code_plugin.change_form_template = "code_block/admin/code_block.html"
-            
+        
+        from djangocms_frontend.contrib.grid.cms_plugins import GridColumnPlugin
+
+        GridColumnPlugin.is_slot = True
+        

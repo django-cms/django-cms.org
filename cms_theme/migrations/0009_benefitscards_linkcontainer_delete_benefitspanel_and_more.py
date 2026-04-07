@@ -6,16 +6,16 @@ from django.db import migrations
 def rename_plugin(apps, schema_editor):
     CMSPlugin = apps.get_model("cms", "CMSPlugin")
     CMSPlugin.objects.filter(
-        plugin_type="BenefitsPanel",
-    ).update(plugin_type="BenefitsCards")
+        plugin_type="BenefitsPanelPlugin",
+    ).update(plugin_type="BenefitsCardsPlugin")
 
 
 
 def reverse_rename(apps, schema_editor):
     CMSPlugin = apps.get_model("cms", "CMSPlugin")
     CMSPlugin.objects.filter(
-        plugin_type="BenefitsCards",
-    ).update(plugin_type="BenefitsPanel")
+        plugin_type="BenefitsCardsPlugin",
+    ).update(plugin_type="BenefitsPanelPlugin")
 
 
 class Migration(migrations.Migration):
