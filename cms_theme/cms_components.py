@@ -523,7 +523,7 @@ class BenefitsCards(CMSFrontendComponent):
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
 
-    alignment = forms.ChoiceField(
+    heading_alignment = forms.ChoiceField(
         label=_("Heading alignment"),
         choices=frontend_settings.ALIGN_CHOICES,
         initial=frontend_settings.ALIGN_CHOICES[0][0],

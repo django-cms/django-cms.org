@@ -4,9 +4,9 @@
     <div class="container">
         {% if instance.heading %}
             {% if instance.overline %}
-                <p class="overline text-{{ instance.heading_context }} text-{{ instance.alignment }}">{% inline_field instance "overline" %}</p>
+                <p class="overline {% if instance.heading_context %}text-{{ instance.heading_context }} {% endif %}text-{{ instance.heading_alignment }}">{% inline_field instance "overline" %}</p>
             {% endif %}
-            <h2 class="pb-5 mt-3 text-{{ instance.heading_context }} text-{{ instance.alignment }}">{% inline_field instance "heading" %}</h2>
+            <h2 class="pb-5 mt-3 {% if instance.heading_context %}text-{{ instance.heading_context }} {% endif %}text-{{ instance.heading_alignment }}">{% inline_field instance "heading" %}</h2>
         {% endif %}
         <div class="row g-4 justify-content-center">
             {% for plugin in instance.child_plugin_instances %}
