@@ -743,14 +743,13 @@ class MembershipPlans(CMSFrontendComponent):
         }
         frontend_editable_fields = ("eyebrow_text", "heading")
 
-    eyebrow_text = forms.CharField(
-        label=_("Eyebrow text"),
-        required=False,
-        help_text=_("Eyebrow text"),
-    )
-
     heading = forms.CharField(
         label=_("Heading"),
+        required=False,
+    )
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
 
@@ -941,12 +940,12 @@ class QuotePanelContainer(CMSFrontendComponent):
             "padding_y": "py-6",
         }
 
-    overline = forms.CharField(
-        label=_("Eyebrow text"),
-        required=False,
-    )
     heading = forms.CharField(
         label=_("Heading"),
+        required=False,
+    )
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
     heading_context = forms.ChoiceField(
@@ -983,7 +982,6 @@ class QuotePanelItem(CMSFrontendComponent):
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
         required=False,
-        help_text=_("Eyebrow text for quote item."),
     )
 
     quote_text = HTMLFormField(
@@ -1036,13 +1034,13 @@ class Heading(CMSFrontendComponent):
         choices=getattr(frontend_settings, "DJANGO_FRONTEND_HEADINGS", HEADINGS),
         required=True,
     )
-    overline = forms.CharField(
-        label=_("Eyebrow text"),
-        required=False,
-    )
     heading = forms.CharField(
         label=_("Heading"),
         required=True,
+    )
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
     )
     heading_context = forms.ChoiceField(
         label=_("Heading context"),
@@ -1169,13 +1167,13 @@ class CounterContainer(CMSFrontendComponent):
             "padding_y": "py-6",
         }
 
-    eyebrow_text = forms.CharField(
-        label=_("Eyebrow text"),
+    heading = forms.CharField(
+        label=_("Heading"),
         required=False,
     )
 
-    heading = forms.CharField(
-        label=_("Heading"),
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
 
@@ -1370,13 +1368,13 @@ class ContainerWithGrid(CMSFrontendComponent):
         frontend_editable_fields = ["heading", "overline"]
         mixins = ["Background", "Spacing"]
 
-    overline = forms.CharField(
-        label=_("Eyebrow text"),
+    heading = forms.CharField(
+        label=_("Heading"),
         required=False,
     )
 
-    heading = forms.CharField(
-        label=_("Heading"),
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
 
@@ -1415,13 +1413,13 @@ class Container1ColText(CMSFrontendComponent):
         frontend_editable_fields = ["heading", "overline"]
         mixins = ["Background", "Spacing"]
 
-    overline = forms.CharField(
-        label=_("Eyebrow text"),
+    heading = forms.CharField(
+        label=_("Heading"),
         required=False,
     )
 
-    heading = forms.CharField(
-        label=_("Heading"),
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
 
