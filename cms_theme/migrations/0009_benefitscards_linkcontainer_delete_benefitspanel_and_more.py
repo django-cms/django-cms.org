@@ -87,4 +87,7 @@ class Migration(migrations.Migration):
             name='quotepanelitem',
             options={'managed': False, 'verbose_name': 'Quote'},
         ),
+        migrations.RunPython(
+            rename_plugin, reverse_code=reverse_rename
+        )
     ]
