@@ -10,7 +10,6 @@
             {% for item in instance|get_slot:"links" %}
                 <li class="list-link-item">{% render_plugin item %}</li>
             {% empty %}
-                <li class="list-link-item"><a href="{{ child.get_absolute_url }}">{{ child.title }}</a></li>
                 {% for item in children %}
                     <li class="list-link-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
                 {% endfor %}
