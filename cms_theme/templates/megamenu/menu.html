@@ -1,0 +1,22 @@
+{% load frontend %}
+<div class="row">
+    <div class="col-12 mb-lg-0 col-lg-4 col mb-4">
+        <h2 class="pb-5 mt-3 text-secondary">{{ instance.topic }}</h2>
+        {% childplugins instance "left" %}{% endchildplugins %}
+    </div>
+    <div class="col-12 mb-3 mb-lg-0 col-lg-4 col pb-1">
+        <h4 class="pb-5 mt-3">{{ instance.link_list|default:_("Learn more")}}</h4>
+        {% childplugins instance "links" %}{% endchildplugins %}
+    </div>
+    <div class="col-12 col col-lg-4">
+        {% with right=instance|get_slot:"right" %}
+            {% if right %}
+                <div class="shadow-sm h-100 bg-secondary text-light card">
+                    <div class="card-body">
+                        {% for child in right %}{% render_plugin child %}{% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
