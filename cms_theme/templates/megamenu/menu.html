@@ -9,8 +9,8 @@
         <ol class="list-unstyled m-0 d-flex list-container flex-column gap-1">
             {% for child in instance|get_slot:"links" %}
                 <li class="list-link-item">{% render_plugin child %}</li>
-            {% empty %}
-                {% for items in child.children %}
+            {% empty %} {{ children }} 
+                {% for items in children %}
                     <li class="list-link-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
                 {% endfor %}
             {% endfor %}
