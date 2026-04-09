@@ -15,7 +15,7 @@
             aria-labelledby="heading-{{ instance.pk }}"
             data-bs-parent="#accordion-{{ html_id }}">
         <div class="accordion-body">
-            {% inline_field instance "body" "" "safe" %}
+            {{ instance.body|safe }}
         </div>
     </div>
 </div>

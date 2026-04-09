@@ -3,6 +3,21 @@
 from django.db import migrations
 
 
+def rename_plugin(apps, schema_editor):
+    CMSPlugin = apps.get_model("cms", "CMSPlugin")
+    CMSPlugin.objects.filter(
+        plugin_type="ContentTeaserPlugin",
+    ).update(plugin_type="TwoColumnPlugin")
+
+
+
+def reverse_rename(apps, schema_editor):
+    CMSPlugin = apps.get_model("cms", "CMSPlugin")
+    CMSPlugin.objects.filter(
+        plugin_type="TwoColumnPlugin",
+    ).update(plugin_type="ContentTeaserPlugin")
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -25,4 +40,5 @@ class Migration(migrations.Migration):
         migrations.DeleteModel(
             name='ContentTeaser',
         ),
+        migrations.RunPython(rename_plugin, reverse_code=reverse_rename)
     ]
