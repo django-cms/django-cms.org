@@ -867,7 +867,7 @@ class HorizontalPlanCard(CMSFrontendComponent):
 
 @components.register
 class TwoColumn(CMSFrontendComponent):
-    """Content Teaser component"""
+    """Two column section with a content slot and a media slot (image or video)."""
 
     class Meta:
         name = _("Two columns")
