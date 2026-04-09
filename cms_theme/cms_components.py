@@ -164,7 +164,6 @@ class AccordionItem(CMSFrontendComponent):
         render_template = "accordion/item.html"
         allow_children = True
         parent_classes = ["AccordionItemsPlugin"]
-        frontend_editable_fields = ("heading", "body")
 
     heading = forms.CharField(
         label=_("Heading"),
