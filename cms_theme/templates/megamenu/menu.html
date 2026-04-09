@@ -1,4 +1,4 @@
-{% load cms_tags frontend i18n %}
+{% load cms_tags menu_tags frontend i18n %}
 <div class="row">
     <div class="col-12 mb-lg-0 col-lg-4 col mb-4">
         <h2 class="pb-3 mt-3 text-secondary">{{ instance.topic }}</h2>
@@ -9,16 +9,22 @@
         <ol class="list-unstyled m-0 d-flex list-container flex-column gap-1">
             {% for child in instance|get_slot:"links" %}
                 <li class="list-link-item">{% render_plugin child %}</li>
+            {% empty %}
+                {% for items in child.children %}
+                    <li class="list-link-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
+                {% endfor %}
             {% endfor %}
         </ol>
     </div>
     <div class="col-12 col col-lg-4">
         {% with right=instance|get_slot:"right" %}
-            <div class="shadow-sm h-100 bg-secondary text-light card">
-                <div class="card-body">
-                    {% for child in right %}{% render_plugin child %}{% endfor %}
+            {% if right %}
+                <div class="shadow-sm h-100 bg-secondary text-light card">
+                    <div class="card-body">
+                        {% for child in right %}{% render_plugin child %}{% endfor %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         {% endwith %}
     </div>
 </div>
