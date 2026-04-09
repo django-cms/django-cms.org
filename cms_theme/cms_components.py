@@ -867,7 +867,7 @@ class HorizontalPlanCard(CMSFrontendComponent):
 
 
 @components.register
-class ContentTeaser(CMSFrontendComponent):
+class TwoColumn(CMSFrontendComponent):
     """Content Teaser component"""
 
     class Meta:
@@ -875,9 +875,27 @@ class ContentTeaser(CMSFrontendComponent):
         module = _("Sections")
         render_template = "content_teaser/content_teaser.html"
         allow_children = True
-        child_classes = ["TeaserContentPlugin","TeaserMediaPlugin"]
         mixins = ["Background", "Spacing"]
         show_add_form = False
+        slots = [
+            Slot("content", _("Content"), render_template="content_teaser/components/content.html"),
+            Slot(
+                "media", 
+                _("Media"), 
+                render_template="content_teaser/components/media.html",
+                child_classes=[
+                    "ImagePlugin",
+                    "VideoPlayerPlugin",
+                ],
+            ),
+        ]
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
+        initial="default",
+        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+    )
 
 
 @components.register
@@ -893,14 +911,6 @@ class TeaserContent(CMSFrontendComponent):
         ]
         child_classes = []
         is_slot = True
-
-    text_color = forms.ChoiceField(
-        label=_("Text color"),
-        choices=frontend_settings.COLOR_STYLE_CHOICES,
-        required=False,
-        initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
-    )
 
 
 @components.register
