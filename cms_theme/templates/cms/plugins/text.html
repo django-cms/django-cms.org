@@ -1,4 +1,4 @@
-{% if instance.parent_id %}{{ body|safe }}{% else %}
+{% if instance.parent_id or placeholder != "content" %}{{ body|safe }}{% else %}
     <section>
         <div class="container py-6">
             <div class="row mb-4 justify-content-center">
