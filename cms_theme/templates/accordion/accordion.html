@@ -33,9 +33,11 @@
                 <div class="features-images position-relative">
                     {# Render accordion items' images on the right side #}
                     {% for accordion_item in instance|get_slot:"items" %}
-                        <div class="{% if request.toolbar.edit_mode_active%}cms-plugin cms-plugin-{{ accordion_item.pk }} {% endif %}features-image{% if forloop.first %} active{% endif %}">
+                    {% if request.toolbar.edit_mode_active%}<template class="cms-plugin-start cms-plugin cms-plugin-{{ accordion_item.pk }}" data-cms-placeholder="{{ instance.placeholder.pk }}></template>{% endif %}
+                        <div class="features-image{% if forloop.first %} active{% endif %}">
                             {% plugin "image" picture=accordion_item.image template=accordion_item.image_template %}{% endplugin %}
                         </div>
+                    {% if request.toolbar.edit_mode_active%}<template class="cms-plugin-end cms-plugin cms-plugin-{{ accordion_item.pk }}"></template>{% endif %}
                     {% endfor %}
                 </div>
             </div>
