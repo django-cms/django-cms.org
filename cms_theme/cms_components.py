@@ -224,7 +224,7 @@ class TimelineContainer(CMSFrontendComponent):
         required=False,
         initial="primary",
         help_text=_("Color of the vertical timeline line."),
-        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS,
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     circle_color = forms.ChoiceField(
@@ -234,6 +234,32 @@ class TimelineContainer(CMSFrontendComponent):
         initial="secondary",
         help_text=_("Color of the timeline circles."),
         widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
+    )
+
+
+@components.register
+class MegaMenu(CMSFrontendComponent):
+    """Component for the mega menu with customizable static content"""
+
+    class Meta:
+        name = _("Mega Menu")
+        render_template = "megamenu/menu.html"
+        slots = (
+            Slot("left", _("Left column"), child_classes=["Text", "TextLinkPlugin"]),
+            Slot("links", _("Links (middle)"), child_classes=["TextLinkPlugin"]),
+            Slot("right", _("Right column"), child_classes=["Text", "TextLinkPlugin"]),
+        )
+
+    topic = forms.CharField(
+        label=_("Menu topic"),
+        required=True,
+        help_text=_("Typically is the page title of the root page for the menu"),
+    )
+
+    link_list = forms.CharField(
+        label=_("Title link list"),
+        required=False,
+        help_text=_("Shown above the links inside this menu")
     )
 
 
