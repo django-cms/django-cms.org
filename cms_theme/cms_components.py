@@ -867,7 +867,7 @@ class HorizontalPlanCard(CMSFrontendComponent):
 
 
 @components.register
-class ContentTeaser(CMSFrontendComponent):
+class TwoColumn(CMSFrontendComponent):
     """Content Teaser component"""
 
     class Meta:
