@@ -25,6 +25,10 @@ from djangocms_frontend.helpers import first_choice
 logger = logging.getLogger(__name__)
 
 
+WRAP_BUTTONS = {"style": "flex-wrap: wrap;"}
+
+
+
 @components.register
 class Hero(CMSFrontendComponent):
     """Hero component with background grid option"""
@@ -220,7 +224,7 @@ class TimelineContainer(CMSFrontendComponent):
         required=False,
         initial="primary",
         help_text=_("Color of the vertical timeline line."),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS,
     )
 
     circle_color = forms.ChoiceField(
@@ -229,7 +233,7 @@ class TimelineContainer(CMSFrontendComponent):
         required=False,
         initial="secondary",
         help_text=_("Color of the timeline circles."),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
 
@@ -290,7 +294,7 @@ class Footer(CMSFrontendComponent):
         required=False,
         initial="white",
         help_text=_("Color of the horizontal divider line."),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
 
@@ -421,7 +425,7 @@ class Carousel(CMSFrontendComponent):
         label=_("Text color"),
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         initial=frontend_settings.EMPTY_CHOICE[0][0],
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         required=False,
     )
 
@@ -429,7 +433,7 @@ class Carousel(CMSFrontendComponent):
         label=_("Background color"),
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         initial=frontend_settings.EMPTY_CHOICE[0][0],
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         required=False,
     )
 
@@ -474,7 +478,7 @@ class Carousel(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Color for the carousel button."),
     )
 
@@ -513,7 +517,7 @@ class BenefitsCards(CMSFrontendComponent):
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial=frontend_settings.EMPTY_CHOICE,
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     heading_alignment = forms.ChoiceField(
@@ -551,7 +555,7 @@ class BenefitsCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     card_title = forms.CharField(
@@ -630,7 +634,7 @@ class RelatedPeople(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     grid_columns = forms.ChoiceField(
@@ -680,7 +684,7 @@ class PeopleCard(CMSFrontendComponent):
         required=False,
         initial="primary",
         help_text=_("Image accent color"),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     overline = forms.CharField(
@@ -714,7 +718,7 @@ class PeopleCard(CMSFrontendComponent):
         required=False,
         initial="dark",
         help_text=_("Card content text color"),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     def get_short_description(self):
@@ -755,7 +759,7 @@ class MembershipPlans(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Color for eyebrow and heading text"),
     )
 
@@ -799,7 +803,7 @@ class PlanCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Tier style / Color."),
     )
 
@@ -861,7 +865,7 @@ class HorizontalPlanCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
 
@@ -890,10 +894,10 @@ class TwoColumn(CMSFrontendComponent):
         ]
     text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
-        initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
 
@@ -980,7 +984,7 @@ class QuotePanelItem(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="dark",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Text color for quote item."),
     )
 
@@ -1020,7 +1024,7 @@ class Heading(CMSFrontendComponent):
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial=frontend_settings.EMPTY_CHOICE,
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     def get_short_description(self):
@@ -1155,7 +1159,7 @@ class CounterContainer(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Color for eyebrow and heading text"),
     )
 
@@ -1356,7 +1360,7 @@ class ContainerWithGrid(CMSFrontendComponent):
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial=frontend_settings.EMPTY_CHOICE[0][0],
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     background_grid = forms.BooleanField(
@@ -1401,7 +1405,7 @@ class Container1ColText(CMSFrontendComponent):
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial=frontend_settings.EMPTY_CHOICE[0][0],
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     background_grid = forms.BooleanField(
