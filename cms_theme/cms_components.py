@@ -875,7 +875,6 @@ class ContentTeaser(CMSFrontendComponent):
         module = _("Sections")
         render_template = "content_teaser/content_teaser.html"
         allow_children = True
-        child_classes = ["TeaserContentPlugin","TeaserMediaPlugin"]
         mixins = ["Background", "Spacing"]
         show_add_form = False
         slots = [
