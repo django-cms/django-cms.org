@@ -45,6 +45,7 @@ from django.utils import timezone  # noqa: E402
 from django.utils.text import slugify  # noqa: E402
 
 from cms.api import add_plugin  # noqa: E402
+from cms.utils.placeholder import get_placeholder_from_slot  # noqa: E402
 
 from authors.models import AuthorProfile  # noqa: E402
 from djangocms_stories.cms_appconfig import StoriesConfig  # noqa: E402
@@ -197,7 +198,9 @@ def import_entry(
     dry_run: bool = False,
 ) -> str:
     """Import a single JSON entry. Returns one of: 'created', 'skipped', 'error:...'."""
-    title = entry["title"]
+    title = entry.get("title", "") or ""
+    if not title.strip():
+        return "error:no-title"
     date = parse_date(entry["date"])
 
     existing = find_existing_post(date, title)
@@ -239,8 +242,9 @@ def import_entry(
 
         body = entry.get("content", "") or ""
         if body:
+            placeholder = get_placeholder_from_slot(pc.placeholders, "Blog Content")
             add_plugin(
-                placeholder=pc.content,
+                placeholder=placeholder,
                 plugin_type=MARKDOWN_PLUGIN_TYPE,
                 language=LANGUAGE,
                 body=body,
