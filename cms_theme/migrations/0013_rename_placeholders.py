@@ -12,7 +12,7 @@ def rename_placeholders(apps, schema_editor):
     Placeholder.objects.filter(slot="Post detail").update(slot="Post Footer")
 
 
-def rename_placeholders(apps, schema_editor):
+def reverse_rename(apps, schema_editor):
     Placeholder = apps.get_model("cms", "Placeholder")
 
     Placeholder.objects.filter(slot="Blog Content").update(slot="Left Column")
