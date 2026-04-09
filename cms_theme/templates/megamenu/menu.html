@@ -14,13 +14,11 @@
     </div>
     <div class="col-12 col col-lg-4">
         {% with right=instance|get_slot:"right" %}
-            {% if right.0 %}
-                <div class="shadow-sm h-100 bg-secondary text-light card">
-                    <div class="card-body">
-                        {% for child in right %}{% render_plugin child %}{% endfor %}
-                    </div>
+            <div class="shadow-sm h-100 bg-secondary text-light card">
+                <div class="card-body">
+                    {% for child in right %}{% render_plugin child %}{% endfor %}
                 </div>
-            {% endif %}
+            </div>
         {% endwith %}
     </div>
 </div>
