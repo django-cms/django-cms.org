@@ -873,16 +873,16 @@ class TwoColumn(CMSFrontendComponent):
     class Meta:
         name = _("Two columns")
         module = _("Sections")
-        render_template = "content_teaser/content_teaser.html"
+        render_template = "two_column/two_column.html"
         allow_children = True
         mixins = ["Background", "Spacing"]
         show_add_form = False
         slots = [
-            Slot("content", _("Content"), render_template="content_teaser/components/content.html"),
+            Slot("content", _("Content"), render_template="two_column/slots/content.html"),
             Slot(
                 "media", 
                 _("Media"), 
-                render_template="content_teaser/components/media.html",
+                render_template="two_column/slots/media.html",
                 child_classes=[
                     "ImagePlugin",
                     "VideoPlayerPlugin",
@@ -896,40 +896,6 @@ class TwoColumn(CMSFrontendComponent):
         initial="default",
         widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
     )
-
-
-@components.register
-class TeaserContent(CMSFrontendComponent):
-    """Teaser Content component to render text"""
-
-    class Meta:
-        name = _("Content")
-        render_template = "content_teaser/components/content.html"
-        allow_children = True
-        parent_classes = [
-            "ContentTeaserPlugin",
-        ]
-        child_classes = []
-        is_slot = True
-
-
-@components.register
-class TeaserMedia(CMSFrontendComponent):
-    """Media Teaser component"""
-
-    class Meta:
-        name = _("Media")
-        render_template = "content_teaser/components/media.html"
-        allow_children = True
-        parent_classes = [
-            "ContentTeaserPlugin",
-        ]
-        child_classes = [
-            "ImagePlugin",
-            "VideoPlayerPlugin",
-        ]
-        show_add_form = False
-        is_slot = True
 
 
 @components.register
