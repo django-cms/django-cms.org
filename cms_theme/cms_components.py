@@ -245,9 +245,9 @@ class MegaMenu(CMSFrontendComponent):
         name = _("Mega Menu")
         render_template = "megamenu/menu.html"
         slots = (
-            Slot("left", _("Left column"), child_classes=["Text", "TextLinkPlugin"]),
-            Slot("links", _("Links (middle)"), child_classes=["TextLinkPlugin"]),
-            Slot("right", _("Right column"), child_classes=["Text", "TextLinkPlugin"]),
+            Slot("left", _("Left column"), child_classes=["TextPlugin", "TextLinkPlugin"]),
+            Slot("links", _("Links (middle)")),
+            Slot("right", _("Right column"), child_classes=["TextPlugin", "TextLinkPlugin"]),
         )
 
     topic = forms.CharField(
