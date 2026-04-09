@@ -249,12 +249,7 @@ class MegaMenu(CMSFrontendComponent):
             Slot("links", _("Links (middle)")),
             Slot("right", _("Right column"), child_classes=["TextPlugin", "TextLinkPlugin"]),
         )
-
-    topic = forms.CharField(
-        label=_("Menu topic"),
-        required=True,
-        help_text=_("Typically is the page title of the root page for the menu"),
-    )
+        show_add_form = False
 
     link_list = forms.CharField(
         label=_("Title link list"),
