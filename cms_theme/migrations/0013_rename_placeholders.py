@@ -23,8 +23,7 @@ def reverse_rename(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms_theme', '0011_delete_teasercontent_delete_teasermedia'),
-        ('djangocms_frontend', '0003_slotmodel'),
+        ('cms_theme', '0012_megamenu'),
     ]
 
     operations = [
