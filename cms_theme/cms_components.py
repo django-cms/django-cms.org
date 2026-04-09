@@ -242,7 +242,7 @@ class MegaMenu(CMSFrontendComponent):
     """Component for the mega menu with customizable static content"""
 
     class Meta:
-        name = _("Mega mMenu")
+        name = _("Mega Menu")
         render_template = "megamenu/menu.html"
         slots = (
             Slot("left", _("Left column"), child_classes=["Text", "TextLinkPlugin"]),
