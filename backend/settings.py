@@ -569,9 +569,27 @@ CMS_PLACEHOLDER_CONF = {
 
 if not DEBUG:
     import sentry_sdk
+    from django.core.exceptions import DisallowedHost
+
+    def before_send(event, hint):
+        # Exception aus dem Hint holen
+        exc_info = hint.get("exc_info")
+
+        if exc_info:
+            exc_type, exc_value, tb = exc_info
+
+            # DisallowedHost komplett ignorieren
+            if isinstance(exc_value, DisallowedHost):
+                return None
+
+            # Optional: nur bestimmte Host-Fehler ignorieren
+            if isinstance(exc_value, DisallowedHost) and "10.0.0.81" in str(exc_value):
+                return None
+
+        return event
+
     sentry_sdk.init(
         dsn="https://f8c524803172e25fffe7e04be0e9fdc5@o4511032249155584.ingest.de.sentry.io/4511032253415504",
-        # Add data like request headers and IP for users,
-        # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
         send_default_pii=True,
+        before_send=before_send,
     )
