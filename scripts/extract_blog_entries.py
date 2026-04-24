@@ -350,6 +350,10 @@ def extract_post_fields(
     root = article if article is not None else builder.root
     lead_node = _find_by_class(root, "div", "lead")
     content_node = _find_by_class(root, "div", "content")
+    if content_node is not None:
+        _strip_disqus(content_node)
+    if lead_node is not None:
+        _strip_disqus(lead_node)
     lead_md = html_node_to_markdown(lead_node) if lead_node is not None else ""
     content_md = html_node_to_markdown(content_node) if content_node is not None else ""
     author = _extract_author(root)

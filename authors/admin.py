@@ -14,7 +14,8 @@ class SocialLinkInline(admin.TabularInline):
 
 @admin.register(AuthorProfile)
 class AuthorProfileAdmin(TranslatableAdmin):
-    list_display = ("name",)
+    list_display = ("name", "role")
+    ordering = ("name",)
     search_fields = ("name", "translations__role")
     prepopulated_fields = {"slug": ("name",)}
     fieldsets = (
