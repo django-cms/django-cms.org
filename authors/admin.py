@@ -104,5 +104,5 @@ def _override_post_admin():
 
 try:
     _override_post_admin()
-except Exception:
+except ImportError:
     pass
