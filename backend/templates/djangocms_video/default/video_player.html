@@ -1,10 +1,10 @@
-{% load i18n cms_tags %}
+{% load i18n cms_tags cms_theme_tags %}
 
 
 <div class="djangocms-video-plugin">
     {% if instance.embed_link %}
         {# show iframe if embed_link is provided #}
-        <iframe src="{{ instance.embed_link_with_parameters }}" 
+        <iframe src="{{ instance.embed_link_with_parameters|to_nocookie_embed }}"
             {{ instance.attributes_str }} 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
