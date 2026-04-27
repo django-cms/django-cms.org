@@ -26,7 +26,7 @@
                                 <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3" data-bs-dismiss="modal" aria-label="Close"></button>
                                 <div class="ratio ratio-16x9">
                                     {% if video_plugin.0.embed_link %}
-                                        <iframe data-src="{{ video_plugin.0.embed_link }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        <iframe data-src="{{ video_plugin.0.embed_link|to_nocookie_embed }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
                                     {% elif video_sources %}
                                         <video data-src="{{ video_sources.0.source_file.url }}" controls playsinline preload="none"{% if video_plugin.0.poster %} poster="{{ video_plugin.0.poster.url }}"{% endif %}></video>
                                     {% endif %}
