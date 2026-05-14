@@ -244,6 +244,7 @@ class MegaMenu(CMSFrontendComponent):
     class Meta:
         name = _("Mega Menu")
         render_template = "megamenu/menu.html"
+        allowed_models = ["djangocms_alias.aliascontent"]
         slots = (
             Slot("left", _("Left column"), child_classes=["TextPlugin", "TextLinkPlugin"]),
             Slot("links", _("Links (middle)")),
@@ -265,6 +266,7 @@ class Footer(CMSFrontendComponent):
     class Meta:
         name = _("Footer")
         render_template = "footer/footer.html"
+        allowed_models = ["djangocms_alias.aliascontent"]
         allow_children = True
         mixins = ["Background", "Spacing", "Attributes"]
         frontend_editable_fields = ("left_label", "middle_label", "right_label")
@@ -904,8 +906,8 @@ class TwoColumn(CMSFrontendComponent):
         slots = [
             Slot("content", _("Content"), render_template="two_column/slots/content.html"),
             Slot(
-                "media", 
-                _("Media"), 
+                "media",
+                _("Media"),
                 render_template="two_column/slots/media.html",
                 child_classes=[
                     "ImagePlugin",

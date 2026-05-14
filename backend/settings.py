@@ -60,12 +60,8 @@ INSTALLED_APPS = [
     "djangocms_alias",
     "parler",
     # Specific designs for this site
-    "cms_theme",
     "djangocms_video",
     "djangocms_ecosystem",
-    # the default text editor - optional, but used in most projects
-    "djangocms_text",
-    "djangocms_markdown",
     # optional django CMS frontend modules
     "djangocms_frontend",
     "djangocms_frontend.contrib.alert",
@@ -87,6 +83,11 @@ INSTALLED_APPS = [
     "sortedm2m",
     "djangocms_file",
     "djangocms_form_builder",
+    # Last, to allow modifying third-party plugins
+    "cms_theme",
+    # the default text editor
+    "djangocms_text",
+    "djangocms_markdown",
 
     "djangocms4_utilities",
 ]
@@ -299,7 +300,6 @@ if DEBUG:
 
 # Design settings
 STORIES_PLUGIN_TEMPLATE_FOLDERS = (
-    ("plugins", _("Default")),
     ("cards", _("Cards Image on Top")),
     ("cards_author", _("Cards with Author")),
     ("events", _("Events")),
