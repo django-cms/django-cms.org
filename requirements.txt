@@ -140,7 +140,7 @@ djangocms-markdown==1.0.1
     # via -r requirements.in
 djangocms-simple-admin-style @ git+https://github.com/fsbraun/djangocms-simple-admin-style
     # via -r requirements.in
-djangocms-stories==0.9.0
+djangocms-stories @ git+https://github.com/django-cms/djangocms-stories
     # via -r requirements.in
 djangocms-text==0.9.7
     # via
