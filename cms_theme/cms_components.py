@@ -366,6 +366,7 @@ class CTAPanel(CMSFrontendComponent):
         parent_classes = []
         mixins = ["Background", "Spacing", "Attributes"]
         default_config = {
+            "background_context": "secondary",
             "padding_y": "py-6",
         }
         frontend_editable_fields = ("main_heading", "eyebrow_text")
