@@ -1,0 +1,12 @@
+{% load frontend cms_component %}
+
+{% cms_component "FAQ" name=_("FAQ") %}
+{% field "question" forms.CharField required=True %}
+{% field "answer" HTMLFormField required=True %}
+
+<details class="faq-expandable mt-3 mb-3">
+    <summary class="faq-question"><b>{% inline_field instance "question" %}</b></summary>
+    <div class="faq-answer mt-2 ps-4">
+        {% inline_field instance "answer" "" "safe" %}
+    </div>
+</details>
