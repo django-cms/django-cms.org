@@ -5,7 +5,7 @@
 {% field "answer" HTMLFormField required=True %}
 
 <details class="faq-expandable mt-3 mb-3">
-    <summary class="faq-question"><b>{% inline_field instance "question" %}</b></summary>
+    <summary class="faq-question h5">{{ question }}</summary>
     <div class="faq-answer mt-2 ps-4">
         {% inline_field instance "answer" "" "safe" %}
     </div>
