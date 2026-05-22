@@ -16,7 +16,8 @@
                 </div>
                 <div class="mt-4">
                     {% for plugin in instance|get_slot:"links" %}
-                    {% render_plugin plugin %}
+                        {% render_plugin plugin %}
+                        {% if not forloop.last %}<span class="ms-4"></span>{% endif %}
                     {% endfor %}
                 </div>
             </div>
