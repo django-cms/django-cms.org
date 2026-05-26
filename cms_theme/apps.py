@@ -5,7 +5,7 @@ class CmsThemeConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "cms_theme"
 
-    root_plugins = ("TextPlugin", "MDTextPlugin", "Alias")
+    root_plugins = ("TextPlugin", "MDTextPlugin", "Alias", "ClientCardPlugin", )
 
     def ready(self) -> None:
         from cms.plugin_pool import plugin_pool
