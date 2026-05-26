@@ -298,6 +298,24 @@ def html_node_to_markdown(node: _Node) -> str:
     return "\n\n".join(b for b in blocks if b).strip()
 
 
+def _strip_disqus(node: _Node) -> None:
+    """Remove Disqus comment embed nodes from a parsed DOM node in-place."""
+    node.children = [
+        c for c in node.children
+        if isinstance(c, str)
+        or not (
+            c.tag in ("div", "section")
+            and (
+                "disqus" in c.attrs.get("id", "").lower()
+                or "disqus" in c.attrs.get("class", "").lower()
+            )
+        )
+    ]
+    for child in node.children:
+        if not isinstance(child, str):
+            _strip_disqus(child)
+
+
 AUTHOR_SLUG_RE = re.compile(r"/blog/author/([^/]+)/?$")
 CATEGORY_SLUG_RE = re.compile(r"/blog/category/([^/]+)/?$")
 
