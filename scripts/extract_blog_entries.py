@@ -406,10 +406,11 @@ class BlogIndexParser(HTMLParser):
         self._list_depth = 0
         self._in_article = False
         self._article_depth = 0
-        self._in_title_a = False
+        self._in_post_link = False
         self._in_date_p = False
         self._current_url: str | None = None
-        self._current_title_parts: list[str] = []
+        self._current_link_text_parts: list[str] = []
+        self._best_title: str = ""
         self._current_date_parts: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
@@ -431,7 +432,8 @@ class BlogIndexParser(HTMLParser):
             self._in_article = True
             self._article_depth = 1
             self._current_url = None
-            self._current_title_parts = []
+            self._current_link_text_parts = []
+            self._best_title = ""
             self._current_date_parts = []
             return
 
@@ -442,13 +444,13 @@ class BlogIndexParser(HTMLParser):
         if tag == "article":
             self._article_depth += 1
 
-        if (
-            tag == "a"
-            and self._current_url is None
-            and POST_URL_RE.match(attrs_d.get("href") or "")
-        ):
-            self._current_url = attrs_d["href"]
-            self._in_title_a = True
+        if tag == "a" and POST_URL_RE.match(attrs_d.get("href") or ""):
+            href = attrs_d["href"]
+            if self._current_url is None:
+                self._current_url = href
+            if href == self._current_url:
+                self._in_post_link = True
+                self._current_link_text_parts = []
         elif tag == "p" and "date" in classes:
             self._in_date_p = True
 
@@ -460,17 +462,18 @@ class BlogIndexParser(HTMLParser):
             return
         if not self._in_article:
             return
-        if tag == "a" and self._in_title_a:
-            self._in_title_a = False
+        if tag == "a" and self._in_post_link:
+            self._in_post_link = False
+            title = " ".join("".join(self._current_link_text_parts).split()).strip()
+            if title and len(title) > len(self._best_title):
+                self._best_title = title
         elif tag == "p" and self._in_date_p:
             self._in_date_p = False
         elif tag == "article":
             self._article_depth -= 1
             if self._article_depth == 0:
                 if self._current_url:
-                    title = " ".join(
-                        "".join(self._current_title_parts).split()
-                    ).strip()
+                    title = self._best_title
                     date_text = " ".join(
                         "".join(self._current_date_parts).split()
                     ).strip()
@@ -478,8 +481,8 @@ class BlogIndexParser(HTMLParser):
                 self._in_article = False
 
     def handle_data(self, data: str) -> None:
-        if self._in_title_a:
-            self._current_title_parts.append(data)
+        if self._in_post_link:
+            self._current_link_text_parts.append(data)
         elif self._in_date_p:
             self._current_date_parts.append(data)
 
