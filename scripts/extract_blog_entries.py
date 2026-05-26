@@ -7,7 +7,7 @@ individual posts, so this script:
   1. Reads sitemap.xml and locates any blog landing pages.
   2. Walks the paginated blog index for each landing page.
   3. Parses each article card for title, publication date, and URL.
-  4. Fetches each post page and extracts the lead and body as Markdown.
+    4. Fetches each post page and extracts the lead as HTML and body as Markdown.
 
 Output is JSON on stdout (or to --output). Pass --csv for CSV instead
 (CSV omits the long markdown fields). Pass --no-content to skip step 4.
@@ -22,6 +22,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
+from html import escape
 from html.parser import HTMLParser
 from urllib.parse import urljoin
 from urllib.request import Request, urlopen
@@ -298,6 +299,32 @@ def html_node_to_markdown(node: _Node) -> str:
     return "\n\n".join(b for b in blocks if b).strip()
 
 
+def _attrs_to_html(attrs: dict[str, str]) -> str:
+    if not attrs:
+        return ""
+    return "".join(
+        f' {name}="{escape(value, quote=True)}"'
+        for name, value in attrs.items()
+    )
+
+
+def _node_to_html(node: _Node) -> str:
+    if node.tag in VOID_HTML_ELEMENTS:
+        return f"<{node.tag}{_attrs_to_html(node.attrs)}>"
+    inner = _children_to_html(node.children)
+    return f"<{node.tag}{_attrs_to_html(node.attrs)}>{inner}</{node.tag}>"
+
+
+def _children_to_html(children: list[_Node | str]) -> str:
+    parts: list[str] = []
+    for child in children:
+        if isinstance(child, str):
+            parts.append(escape(child))
+        else:
+            parts.append(_node_to_html(child))
+    return "".join(parts)
+
+
 def _strip_disqus(node: _Node) -> None:
     """Remove Disqus comment embed nodes from a parsed DOM node in-place."""
     node.children = [
@@ -314,6 +341,38 @@ def _strip_disqus(node: _Node) -> None:
     for child in node.children:
         if not isinstance(child, str):
             _strip_disqus(child)
+
+
+def _has_disqus_link(node: _Node) -> bool:
+    for a in _find_all(node, "a"):
+        href = (a.attrs.get("href") or "").lower()
+        if "disqus.com" in href:
+            return True
+    return False
+
+
+def _strip_disqus_footer(node: _Node) -> None:
+    """Remove footer-like nodes that only advertise Disqus comments."""
+    kept: list[_Node | str] = []
+    for child in node.children:
+        if isinstance(child, str):
+            kept.append(child)
+            continue
+
+        text = _collapse_ws(_node_text(child)).lower()
+        drop = (
+            "blog comments powered by disqus" in text
+            or (
+                child.tag in ("p", "div", "section", "footer", "aside", "small")
+                and _has_disqus_link(child)
+            )
+        )
+        if drop:
+            continue
+
+        _strip_disqus_footer(child)
+        kept.append(child)
+    node.children = kept
 
 
 AUTHOR_SLUG_RE = re.compile(r"/blog/author/([^/]+)/?$")
@@ -361,7 +420,7 @@ def _extract_author(article: _Node) -> dict[str, str] | None:
 def extract_post_fields(
     post_html: str,
 ) -> tuple[str, str, dict[str, str] | None, list[dict[str, str]]]:
-    """Return (lead_md, content_md, author, categories) extracted from a post page."""
+    """Return (lead_html, content_md, author, categories) from a post page."""
     builder = _DOMBuilder()
     builder.feed(post_html)
     article = _find_by_class(builder.root, "article", "aldryn-newsblog-article")
@@ -370,13 +429,15 @@ def extract_post_fields(
     content_node = _find_by_class(root, "div", "content")
     if content_node is not None:
         _strip_disqus(content_node)
+        _strip_disqus_footer(content_node)
     if lead_node is not None:
         _strip_disqus(lead_node)
-    lead_md = html_node_to_markdown(lead_node) if lead_node is not None else ""
+        _strip_disqus_footer(lead_node)
+    lead_html = _children_to_html(lead_node.children).strip() if lead_node is not None else ""
     content_md = html_node_to_markdown(content_node) if content_node is not None else ""
     author = _extract_author(root)
     categories = _extract_categories(root)
-    return lead_md, content_md, author, categories
+    return lead_html, content_md, author, categories
 
 
 def fetch(url: str) -> str:
