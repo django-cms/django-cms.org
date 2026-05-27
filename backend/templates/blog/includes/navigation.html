@@ -1,0 +1,32 @@
+{% load djangocms_stories blog_tags i18n %}
+{% adjacent_post_urls post_content as nav %}
+{{ nav }}
+<div class="card mt-5">
+    <div class="card-body">
+        <form class="w-100 mb-3" method="get" action="{% namespace_url 'posts-latest' %}">
+            <input name="q" class="form-control" type="text" placeholder="{% translate 'Search articles...' %}" />
+        </form>
+        <div class="d-flex justify-content-between gap-2">
+            <a
+                {% if nav.previous %}href="{{ nav.previous }}"{% endif %}
+                class="btn btn-outline-secondary text-center{% if not nav.previous %} disabled{% endif %}"
+                {% if not nav.previous %}aria-disabled="true" tabindex="-1"{% endif %}
+                title="{% translate 'Previous' %}"
+            >
+                <span class="fa fa-angle-left"></span>
+            </a>
+            <a href="{% namespace_url 'posts-latest' %}" class="btn btn-outline-secondary text-center" title="{% translate 'All Posts' %}"
+>
+                <span class="fa fa-arrow-up"></span>
+            </a>
+            <a
+                {% if nav.next %}href="{{ nav.next }}"{% endif %}
+                class="btn btn-outline-secondary text-center{% if not nav.next %} disabled{% endif %}"
+                {% if not nav.next %}aria-disabled="true" tabindex="-1"{% endif %}
+                title="{% translate 'Next' %}"
+            >
+                <span class="fa fa-angle-right"></span>
+            </a>
+        </div>
+    </div>
+</div>

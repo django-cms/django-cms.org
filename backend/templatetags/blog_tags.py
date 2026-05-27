@@ -1,5 +1,9 @@
 from django import template
-from djangocms_stories.models import PostCategory
+from django.db.models import Q
+from django.db.models.functions import Coalesce
+from django.utils.timezone import now
+from djangocms_stories.models import PostCategory, PostContent
+from cms.utils import get_current_site
 
 register = template.Library()
 
@@ -46,3 +50,62 @@ def pagination_range(current_page, total_pages, neighbours=1):
 @register.filter
 def est_read_time(post_content):
     return 5
+
+
+@register.simple_tag(name="adjacent_post_urls", takes_context=True)
+def adjacent_post_urls(context, post_content):
+    """
+    Returns a dict with previous_url and next_url for the given PostContent.
+    previous_url = newer post in list order
+    next_url = older post in list order
+    """
+    if not post_content:
+        return {"previous_url": "", "next_url": ""}
+
+    request = context.get("request")
+    if request is None:
+        return {"previous_url": "", "next_url": ""}
+
+    ts = now()
+    current = post_content
+    current_sort_date = current.post.date_published or current.post.date_created
+
+    base = (
+        PostContent.objects
+        .filter(
+            language=current.language,
+            post__app_config=current.post.app_config,
+        )
+        .on_site(get_current_site(request))
+        .filter(
+            Q(post__date_published__isnull=True) | Q(post__date_published__lte=ts),
+            Q(post__date_published_end__isnull=True) | Q(post__date_published_end__gt=ts),
+        )
+        .annotate(sort_date=Coalesce("post__date_published", "post__date_created"))
+    )
+    # next in list order (new -> old) = older
+    next_obj = (
+        base.filter(
+            Q(sort_date__lt=current_sort_date) |
+            Q(sort_date=current_sort_date, post_id__lt=current.post_id)
+        )
+        .order_by("-sort_date", "-post_id")
+        .first()
+    )
+
+    # previous in list order = newer
+    previous_obj = (
+        base.filter(
+            Q(sort_date__gt=current_sort_date) |
+            Q(sort_date=current_sort_date, post_id__gt=current.post_id)
+        )
+        .order_by("sort_date", "post_id")
+        .last()
+    )
+
+    result = {
+        "previous": previous_obj.get_absolute_url() if previous_obj else "",
+        "next": next_obj.get_absolute_url() if next_obj else "",
+    }
+    print(result)
+    return result
