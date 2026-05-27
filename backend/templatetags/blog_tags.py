@@ -107,5 +107,4 @@ def adjacent_post_urls(context, post_content):
         "previous": previous_obj.get_absolute_url() if previous_obj else "",
         "next": next_obj.get_absolute_url() if next_obj else "",
     }
-    print(result)
     return result
