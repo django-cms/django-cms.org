@@ -1,6 +1,5 @@
 {% load djangocms_stories blog_tags i18n %}
 {% adjacent_post_urls post_content as nav %}
-{{ nav }}
 <div class="card mt-5">
     <div class="card-body">
         <form class="w-100 mb-3" method="get" action="{% namespace_url 'posts-latest' %}">
