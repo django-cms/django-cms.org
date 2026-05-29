@@ -142,7 +142,7 @@ djangocms-simple-admin-style @ git+https://github.com/fsbraun/djangocms-simple-a
     # via -r requirements.in
 djangocms-stories @ git+https://github.com/django-cms/djangocms-stories
     # via -r requirements.in
-djangocms-text==0.9.7
+djangocms-text==0.9.8
     # via
     #   -r requirements.in
     #   djangocms-stories
