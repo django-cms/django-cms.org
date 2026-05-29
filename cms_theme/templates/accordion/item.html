@@ -14,8 +14,11 @@
             class="accordion-collapse collapse{% if forloop.first %} show{% endif %}"
             aria-labelledby="heading-{{ instance.pk }}"
             data-bs-parent="#accordion-{{ html_id }}">
+        {# The FAQ shows its answer in the right-hand column, so the collapse stays empty #}
+        {% if not is_faq %}
         <div class="accordion-body">
             {{ instance.body|safe }}
         </div>
+        {% endif %}
     </div>
 </div>
