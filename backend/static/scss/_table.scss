@@ -30,7 +30,7 @@ table tbody tr th,
 }
 
 table, .table {
-    th :last-child, td :last-child {
+    th > :last-child, td > :last-child {
         margin-bottom: 0;
     }
 }
