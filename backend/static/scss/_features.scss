@@ -54,6 +54,36 @@
         height: 100%;
         object-fit: contain;
       }
+
+      // FAQ answers replace the image: lay out text rather than a contained image
+      &.features-answer {
+        display: block;
+        position: absolute;
+        height: auto;
+        overflow-y: auto;
+
+        &:not(.active) {
+          visibility: hidden;
+        }
+
+        &.active {
+          position: relative;
+        }
+      }
+    }
+  }
+
+  // FAQ answer column: text needs no fixed image height
+  .features-content-answers {
+    min-height: 0;
+    margin-block: auto;
+    @media (max-width: 991.98px) {
+      min-height: 0;
+    }
+  }
+  &.bg-secondary, &.bg-dark {
+    .features-content-answers {
+      color: $white;
     }
   }
 
