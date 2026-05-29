@@ -329,41 +329,10 @@ DJANGOCMS_FRONTEND_ADMIN_CSS = {
     "all": ("css/admin_colors.css",),
 }
 
-DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN = (
-    "font-awesome",
-    "font-awesome-light",
-    "font-awesome-thin",
-    "bootstrap-icons",
-    "material-icons-filled",
-    "material-icons-outlined",
-    "material-icons-round",
-    "material-icons-sharp",
-    "material-icons-two-tone",
-    "fomantic-ui",
-    "foundation-icons",
-    "elegant-icons",
-    "feather-icons",
-    "open-iconic",
-    "tabler-icons",
-    "weather-icons",
-)
-
-DJANGOCMS_FRONTEND_ICONS_LIBRARIES_SHOWN = DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN
-
-_DJANGOCMS_FRONTEND_ICON_CDN = {
-    "bootstrap-icons": "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css",
-    "font-awesome": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css",
-    "material-icons-filled": "https://fonts.googleapis.com/css2?family=Material+Icons",
-    "material-icons-outlined": "https://fonts.googleapis.com/css2?family=Material+Icons+Outlined",
-    "material-icons-round": "https://fonts.googleapis.com/css2?family=Material+Icons+Round",
-    "material-icons-sharp": "https://fonts.googleapis.com/css2?family=Material+Icons+Sharp",
-    "material-icons-two-tone": "https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone",
-    "fomantic-ui": "fomantic-ui-icons.css",
-}
-
 DJANGOCMS_FRONTEND_ICON_LIBRARIES = {
     "font-awesome-light": ("font-awesome-light.min.json", "font-awesome-light.css"),
     "font-awesome-thin": ("font-awesome-thin.min.json", "font-awesome-thin.css"),
+    "font-awesome-brands": ("font-awesome-brands.min.json", "font-awesome-brands.css"),
 }
 
 DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
