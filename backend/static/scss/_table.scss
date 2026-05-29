@@ -29,11 +29,8 @@ table tbody tr th,
     border-right: 1px solid $mid-grey !important;
 }
 
-table th,
-table td,
-.table th,
-.table td {
-    p:last-child {
+table, .table {
+    th :last-child, td :last-child {
         margin-bottom: 0;
     }
 }
