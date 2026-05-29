@@ -15,7 +15,7 @@
             "name": "{{ question.heading|escapejs }}",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "{{ question.body|escapejs }}"
+                "text": "{{ question.body|striptags|escapejs }}"
             }
         }{% endfor %}
     ]
