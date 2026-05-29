@@ -76,9 +76,14 @@
   // FAQ answer column: text needs no fixed image height
   .features-content-answers {
     min-height: 0;
-
+    margin-block: auto;
     @media (max-width: 991.98px) {
       min-height: 0;
+    }
+  }
+  &.bg-secondary, &.bg-dark {
+    .features-content-answers {
+      color: $white;
     }
   }
 
