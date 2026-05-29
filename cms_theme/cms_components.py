@@ -196,6 +196,96 @@ class AccordionItem(CMSFrontendComponent):
 
 
 @components.register
+class FAQ(CMSFrontendComponent):
+    """FAQ section that reuses the accordion layout and emits FAQPage structured data.
+
+    Mirrors the Accordion component, but instead of an image the matching answer is
+    shown in the right-hand column, synced to the open question.
+    """
+
+    class Meta:
+        plugin_name = _("FAQ")
+        module = _("Sections")
+        render_template = "faq/faq.html"
+        allow_children = True
+        default_config = {
+            "padding_y": "py-6",
+        }
+        slots = (
+            Slot("items", _("Questions"), child_classes=["FAQItemPlugin"]),
+            Slot("links", _("Centered Links"), child_classes=["TextLinkPlugin"]),
+        )
+
+        mixins = ["Background", "Spacing"]
+
+    mirror_layout = forms.ChoiceField(
+        label=_("Layout for questions and answers"),
+        required=False,
+        initial="",
+        choices=(
+            ("", _("Questions left, answers right (default)")),
+            ("mirrored", _("Questions right, answers left (mirrored)")),
+        )
+    )
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    accordion_header_color = forms.ChoiceField(
+        label=_("Header text color"),
+        choices=[
+            ("default", _("Default (Black)")),
+            ("primary", _("Primary")),
+            ("secondary", _("Secondary")),
+            ("white", _("White")),
+            ("muted", _("Muted")),
+        ],
+        required=False,
+        initial="default",
+    )
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=False,
+    )
+
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
+
+
+@components.register
+class FAQItem(CMSFrontendComponent):
+    """A single question/answer pair for the FAQ component."""
+
+    class Meta:
+        name = _("Question")
+        render_template = "accordion/item.html"
+        allow_children = False
+        parent_classes = ["FAQPlugin"]
+
+    heading = forms.CharField(
+        label=_("Question"),
+        required=True,
+    )
+
+    body = HTMLFormField(
+        label=_("Answer"),
+        required=True,
+    )
+
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
+
+
+@components.register
 class TimelineContainer(CMSFrontendComponent):
     """Timeline component with vertical layout option"""
 

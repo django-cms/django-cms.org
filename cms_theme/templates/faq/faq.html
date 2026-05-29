@@ -1,0 +1,25 @@
+{% load static cms_tags sekizai_tags frontend %}
+
+{# Reuse the accordion layout; `is_faq` swaps the right-column image for the answer #}
+{% include "accordion/accordion.html" with is_faq=True %}
+
+{% with questions=instance|get_slot:"items" %}
+    {% if questions %}
+        <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{% for question in questions %}{% if not forloop.first %},{% endif %}
+        {
+            "@type": "Question",
+            "name": "{{ question.heading|escapejs }}",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "{{ question.body|escapejs }}"
+            }
+        }{% endfor %}
+    ]
+}
+        </script>
+    {% endif %}
+{% endwith %}
