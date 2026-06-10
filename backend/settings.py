@@ -59,30 +59,21 @@ INSTALLED_APPS = [
     # the default alias content - optional, but used in most projects
     "djangocms_alias",
     "parler",
-    # the default text editor - optional, but used in most projects
-    "djangocms_text",
-    "djangocms_markdown",
+    # Specific designs for this site
+    "djangocms_video",
+    "djangocms_ecosystem",
     # optional django CMS frontend modules
     "djangocms_frontend",
-    "djangocms_frontend.contrib.accordion",
     "djangocms_frontend.contrib.alert",
-    "djangocms_frontend.contrib.badge",
     "djangocms_frontend.contrib.card",
-    "djangocms_frontend.contrib.collapse",
     "djangocms_frontend.contrib.content",
     "djangocms_frontend.contrib.grid",
     "djangocms_frontend.contrib.icon",
     "djangocms_frontend.contrib.image",
-    "djangocms_frontend.contrib.jumbotron",
     "djangocms_frontend.contrib.link",
     "djangocms_frontend.contrib.listgroup",
     "djangocms_frontend.contrib.media",
-    "djangocms_frontend.contrib.tabs",
     "djangocms_link",
-    # Specific designs for this site
-    "cms_theme",
-    "djangocms_video",
-    "djangocms_ecosystem",
     # djangocms-stories-related stuff
     "djangocms_stories",
     "authors",
@@ -92,6 +83,11 @@ INSTALLED_APPS = [
     "sortedm2m",
     "djangocms_file",
     "djangocms_form_builder",
+    # Last, to allow modifying third-party plugins
+    "cms_theme",
+    # the default text editor
+    "djangocms_text",
+    "djangocms_markdown",
 
     "djangocms4_utilities",
 ]
@@ -148,6 +144,8 @@ CMS_TEMPLATES = [
     # optional templates that extend base.html, to be used with Bootstrap 5
     ("cms_theme/base.html", "Default"),
 ]
+
+CMS_DEFAULT_IN_NAVIGATION = False
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
@@ -302,7 +300,6 @@ if DEBUG:
 
 # Design settings
 STORIES_PLUGIN_TEMPLATE_FOLDERS = (
-    ("plugins", _("Default")),
     ("cards", _("Cards Image on Top")),
     ("cards_author", _("Cards with Author")),
     ("events", _("Events")),
@@ -323,6 +320,7 @@ STORIES_TEMPLATE_CHOICES = (("blog/post_list.html", _("Default")),)
 
 
 # djangocms-frontend settings
+DJANGOCMS_FRONTEND_SHOW_ADVANCED_SETTINGS = False
 DJANGOCMS_FRONTEND_COMPONENT_FIELDS = {
     "cms_theme": "cms_theme.fields.ColorChoiceField",
 }
@@ -331,49 +329,10 @@ DJANGOCMS_FRONTEND_ADMIN_CSS = {
     "all": ("css/admin_colors.css",),
 }
 
-DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN = (
-    "font-awesome",
-    "font-awesome-light",
-    "font-awesome-thin",
-    "bootstrap-icons",
-    "material-icons-filled",
-    "material-icons-outlined",
-    "material-icons-round",
-    "material-icons-sharp",
-    "material-icons-two-tone",
-    "fomantic-ui",
-    "foundation-icons",
-    "elegant-icons",
-    "feather-icons",
-    "open-iconic",
-    "tabler-icons",
-    "weather-icons",
-)
-
-DJANGOCMS_FRONTEND_ICONS_LIBRARIES_SHOWN = DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN
-
-_DJANGOCMS_FRONTEND_ICON_CDN = {
-    "bootstrap-icons": "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css",
-    "font-awesome": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css",
-    "material-icons-filled": "https://fonts.googleapis.com/css2?family=Material+Icons",
-    "material-icons-outlined": "https://fonts.googleapis.com/css2?family=Material+Icons+Outlined",
-    "material-icons-round": "https://fonts.googleapis.com/css2?family=Material+Icons+Round",
-    "material-icons-sharp": "https://fonts.googleapis.com/css2?family=Material+Icons+Sharp",
-    "material-icons-two-tone": "https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone",
-    "fomantic-ui": "fomantic-ui-icons.css",
-}
-
 DJANGOCMS_FRONTEND_ICON_LIBRARIES = {
     "font-awesome-light": ("font-awesome-light.min.json", "font-awesome-light.css"),
     "font-awesome-thin": ("font-awesome-thin.min.json", "font-awesome-thin.css"),
-    **{
-        library: (
-            f"{library}.min.json",
-            _DJANGOCMS_FRONTEND_ICON_CDN.get(library, f"{library}.css"),
-        )
-        for library in DJANGOCMS_FRONTEND_ICON_LIBRARIES_SHOWN
-        if library not in {"font-awesome-light", "font-awesome-thin"}
-    },
+    "font-awesome-brands": ("font-awesome-brands.min.json", "font-awesome-brands.css"),
 }
 
 DJANGOCMS_FRONTEND_COLOR_STYLE_CHOICES = (
@@ -564,11 +523,42 @@ CMS_COMPONENT_PLUGINS = [
     "ImagePlugin",
 ]
 
+CMS_PLACEHOLDER_CONF = {
+    "content": {
+        "excluded_plugins": [
+            "FooterPlugin",
+            "CardPlugin",
+            "CardLayoutPlugin",
+            "GridRowPlugin",
+            "GridContainerPlugin",
+            "FigurePlugin",
+        ]
+    }
+}
+
 if not DEBUG:
     import sentry_sdk
+    from django.core.exceptions import DisallowedHost
+
+    def before_send(event, hint):
+        # Exception aus dem Hint holen
+        exc_info = hint.get("exc_info")
+
+        if exc_info:
+            exc_type, exc_value, tb = exc_info
+
+            # DisallowedHost komplett ignorieren
+            if isinstance(exc_value, DisallowedHost):
+                return None
+
+            # Optional: nur bestimmte Host-Fehler ignorieren
+            if isinstance(exc_value, DisallowedHost) and "10.0.0.81" in str(exc_value):
+                return None
+
+        return event
+
     sentry_sdk.init(
         dsn="https://f8c524803172e25fffe7e04be0e9fdc5@o4511032249155584.ingest.de.sentry.io/4511032253415504",
-        # Add data like request headers and IP for users,
-        # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
         send_default_pii=True,
+        before_send=before_send,
     )

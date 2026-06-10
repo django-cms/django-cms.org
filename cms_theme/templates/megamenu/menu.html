@@ -1,0 +1,30 @@
+{% load cms_tags menu_tags frontend i18n %}
+<div class="row">
+    <div class="col-12 mb-lg-0 col-lg-4 col mb-4">
+        <h2 class="pb-3 mt-3 text-secondary">{{ child.title }}</h2>
+        {% for item in instance|get_slot:"left" %}{% render_plugin item %}{% endfor %}
+    </div>
+    <div class="col-12 mb-3 mb-lg-0 col-lg-4 col pb-1">
+        <h4 class="pb-3 mt-3">{{ instance.link_list|default:_("Learn more")}}</h4>
+        <ol class="list-unstyled m-0 d-flex list-container flex-column gap-1">
+            {% for item in instance|get_slot:"links" %}
+                <li class="list-link-item">{% render_plugin item %}</li>
+            {% empty %}
+                {% for item in children %}
+                    <li class="list-link-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
+                {% endfor %}
+            {% endfor %}
+        </ol>
+    </div>
+    <div class="col-12 col col-lg-4">
+        {% with right=instance|get_slot:"right" %}
+            {% if right %}
+                <div class="shadow-sm h-100 bg-secondary text-light card">
+                    <div class="card-body">
+                        {% for item in right %}{% render_plugin item %}{% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>

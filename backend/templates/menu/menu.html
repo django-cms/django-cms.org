@@ -18,7 +18,7 @@
 
         <div class="dropdown-menu w-100" aria-labelledby="menu-{{ child.id|safe }}">
           {% if child.attr.reverse_id %}
-            {% with "mega-menu-"|add:child.attr.reverse_id as alias_code %}
+            {% with alias_code="mega-menu-"|add:child.attr.reverse_id children=child.children %}
               {% static_alias alias_code %}
             {% endwith %}
           {% else %}

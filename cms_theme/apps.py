@@ -5,10 +5,15 @@ class CmsThemeConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "cms_theme"
 
+    root_plugins = ("TextPlugin", "MDTextPlugin", "Alias", "ClientCardPlugin", )
+
     def ready(self) -> None:
         from cms.plugin_pool import plugin_pool
+        from djangocms_frontend.contrib.grid.cms_plugins import GridColumnPlugin
 
-        code_plugin = plugin_pool.get_plugin("CodeBlockPlugin")
-        if code_plugin:
-            code_plugin.change_form_template = "code_block/admin/code_block.html"
-            
+        GridColumnPlugin.is_slot = True
+
+        plugin_pool.discover_plugins()
+        for plugin_type, plugin in plugin_pool.plugins.items():
+            if plugin_type not in self.root_plugins and str(plugin.module) != "Sections" and plugin.allowed_models is None:
+                plugin.require_parent = True

@@ -1,0 +1,6 @@
+{% load frontend cms_component %}
+
+{% cms_component "LinkContainer" name=_("Centered Links") child_classes="TextLinkPlugin"|split is_slot=True show_add_form=False %}
+<div class="text-center mt-3 link-container">
+    {% childplugins %}{% endchildplugins %}
+</div>

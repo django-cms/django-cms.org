@@ -65,6 +65,22 @@ def get_clip_path_data(clip_path_id):
     return None
 
 @register.filter
+def to_nocookie_embed(url):
+    """Rewrite YouTube embed URLs to the privacy-enhanced youtube-nocookie.com domain.
+
+    Why: Safari's Intelligent Tracking Prevention blocks third-party requests
+    to youtube.com (stats/log endpoints), causing the embedded player to fail
+    with error 153. youtube-nocookie.com is exempted because it doesn't set
+    cookies until the user interacts with the player.
+    """
+    if not url:
+        return url
+    return url.replace("://www.youtube.com/embed/", "://www.youtube-nocookie.com/embed/").replace(
+        "://youtube.com/embed/", "://www.youtube-nocookie.com/embed/"
+    )
+
+
+@register.filter
 def get_slot(instance, slot_name):
     """Get plugins for a specific slot
     Usage: plugins|get_slot:"community"

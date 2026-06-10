@@ -13,14 +13,24 @@
             <div class="card-text text-secondary pt-3 pb-2">
                 {% render_model post_content "abstract" "" "" "truncatewords_html:20|safe"  %}
             </div>
-            <div class="d-flex flex-row gap-4 mt-auto pt-4">
+            <div class="d-flex flex-row mt-auto pt-4" style="gap: 34px;">
                 {% with post_content.author.author_profile as profile %}
                 {% if profile %}
-                <div>
                     {% if profile.photo %}
-                        <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" width="135" height="114"/>
+                        {% if profile.has_photo_accents %}
+                            <div>
+                                <div class="profile-wrapper-sm">
+                                    <div class="shape-tl bg-primary"></div>
+                                    <div class="shape-br bg-primary"></div>
+                                    <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="{% if profile.has_drop_shadow %}shadow-sm{% endif %}"/>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="d-flex align-items-center">
+                                <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" width="135"/>
+                            </div>
+                        {% endif %}
                     {% endif %}
-                </div>
                 <div class="py-2">
                     <h4 class="pt-1 pb-2">{{ profile.name }}</h4>
                     {% if profile.role %}

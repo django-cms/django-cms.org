@@ -25,17 +25,22 @@ from .fields import ColorChoiceField
 logger = logging.getLogger(__name__)
 
 
+WRAP_BUTTONS = {"style": "flex-wrap: wrap;"}
+
+
+
 @components.register
 class Hero(CMSFrontendComponent):
     """Hero component with background grid option"""
 
     class Meta:
         name = _("Hero")
+        module = _("Sections")
         render_template = "hero/hero.html"
         allow_children = True
         child_classes = []
         slots = (
-            Slot("links", _("Links"), child_classes=["TextLinkPlugin"]),
+            Slot("links", _("Centered Links"), child_classes=["TextLinkPlugin"]),
             Slot(
                 "satellites",
                 _("Image Decorations"),
@@ -91,59 +96,22 @@ class Hero(CMSFrontendComponent):
         return self.heading if self.config.get("heading") else ""
 
 
-@components.register
-class FeatureAccordionItem(CMSFrontendComponent):
-    """Feature item component to render icon and text"""
-
-    class Meta:
-        name = _("Feature Item")
-        render_template = "features/item.html"
-        allow_children = True
-        parent_classes = ["FeatureItemsPlugin"]
-        frontend_editable_fields = ("heading", "body")
-
-    heading = forms.CharField(
-        label=_("Heading"),
-        required=True,
-    )
-
-    body = HTMLFormField(
-        label=_("Body"),
-        required=False,
-    )
-
-    image_template = forms.ChoiceField(
-        label=_("Image template"),
-        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
-        required=False,
-        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
-    )
-
-    image = ImageFormField(
-        label=_("Image"),
-        required=False,
-    )
-
-
 
 @components.register
-class Features(CMSFrontendComponent):
-    """Features section container with accordion and content area"""
+class Accordion(CMSFrontendComponent):
+    """Accordion section container for features and content area"""
 
     class Meta:
         plugin_name = _("Accordion")
-        render_template = "features/features.html"
+        module = _("Sections")
+        render_template = "accordion/accordion.html"
         allow_children = True
-        child_classes = [
-            "AccordionPlugin",
-            "TextLinkPlugin",
-        ]
         default_config = {
             "padding_y": "py-6",
         }
         slots = (
-            Slot("items", _("Items"), child_classes=["FeatureAccordionItemPlugin"]),
-            Slot("links", _("Links"), child_classes=[ "TextLinkPlugin"]),
+            Slot("items", _("Items"), child_classes=["AccordionItemPlugin"]),
+            Slot("links", _("Centered Links"), child_classes=["TextLinkPlugin"]),
         )
 
         mixins = ["Background", "Spacing"]
@@ -187,6 +155,135 @@ class Features(CMSFrontendComponent):
         initial=False,
     )
 
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
+
+
+@components.register
+class AccordionItem(CMSFrontendComponent):
+    """Feature item component to render icon and text"""
+
+    class Meta:
+        name = _("Item")
+        render_template = "accordion/item.html"
+        allow_children = True
+        parent_classes = ["AccordionItemsPlugin"]
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=True,
+    )
+
+    body = HTMLFormField(
+        label=_("Body"),
+        required=False,
+    )
+
+    image_template = forms.ChoiceField(
+        label=_("Image template"),
+        choices=settings.DJANGOCMS_PICTURE_TEMPLATES,
+        required=False,
+        initial=settings.DJANGOCMS_PICTURE_TEMPLATES[0][0],
+    )
+
+    image = ImageFormField(
+        label=_("Image"),
+        required=False,
+    )
+
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
+
+
+@components.register
+class FAQ(CMSFrontendComponent):
+    """FAQ section that reuses the accordion layout and emits FAQPage structured data.
+
+    Mirrors the Accordion component, but instead of an image the matching answer is
+    shown in the right-hand column, synced to the open question.
+    """
+
+    class Meta:
+        plugin_name = _("FAQ")
+        module = _("Sections")
+        render_template = "faq/faq.html"
+        allow_children = True
+        default_config = {
+            "padding_y": "py-6",
+        }
+        slots = (
+            Slot("items", _("Questions"), child_classes=["FAQItemPlugin"]),
+            Slot("links", _("Centered Links"), child_classes=["TextLinkPlugin"]),
+        )
+
+        mixins = ["Background", "Spacing"]
+
+    mirror_layout = forms.ChoiceField(
+        label=_("Layout for questions and answers"),
+        required=False,
+        initial="",
+        choices=(
+            ("", _("Questions left, answers right (default)")),
+            ("mirrored", _("Questions right, answers left (mirrored)")),
+        )
+    )
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    accordion_header_color = forms.ChoiceField(
+        label=_("Header text color"),
+        choices=[
+            ("default", _("Default (Black)")),
+            ("primary", _("Primary")),
+            ("secondary", _("Secondary")),
+            ("white", _("White")),
+            ("muted", _("Muted")),
+        ],
+        required=False,
+        initial="default",
+    )
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=False,
+    )
+
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
+
+
+@components.register
+class FAQItem(CMSFrontendComponent):
+    """A single question/answer pair for the FAQ component."""
+
+    class Meta:
+        name = _("Question")
+        render_template = "accordion/item.html"
+        allow_children = False
+        parent_classes = ["FAQPlugin"]
+
+    heading = forms.CharField(
+        label=_("Question"),
+        required=True,
+    )
+
+    body = HTMLFormField(
+        label=_("Answer"),
+        required=True,
+    )
+
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
+
 
 @components.register
 class TimelineContainer(CMSFrontendComponent):
@@ -228,11 +325,11 @@ class TimelineContainer(CMSFrontendComponent):
 
     divider_color = forms.ChoiceField(
         label=_("Divider line color"),
-        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
         help_text=_("Color of the vertical timeline line."),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     circle_color = forms.ChoiceField(
@@ -241,7 +338,29 @@ class TimelineContainer(CMSFrontendComponent):
         required=False,
         initial="secondary",
         help_text=_("Color of the timeline circles."),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
+    )
+
+
+@components.register
+class MegaMenu(CMSFrontendComponent):
+    """Component for the mega menu with customizable static content"""
+
+    class Meta:
+        name = _("Mega Menu")
+        render_template = "megamenu/menu.html"
+        allowed_models = ["djangocms_alias.AliasContent"]
+        slots = (
+            Slot("left", _("Left column"), child_classes=["TextPlugin", "TextLinkPlugin"]),
+            Slot("links", _("Links (middle)")),
+            Slot("right", _("Right column"), child_classes=["TextPlugin", "TextLinkPlugin"]),
+        )
+        show_add_form = False
+
+    link_list = forms.CharField(
+        label=_("Title link list"),
+        required=False,
+        help_text=_("Shown above the links inside this menu")
     )
 
 
@@ -290,6 +409,7 @@ class Footer(CMSFrontendComponent):
     class Meta:
         name = _("Footer")
         render_template = "footer/footer.html"
+        allowed_models = ["djangocms_alias.AliasContent"]
         allow_children = True
         mixins = ["Background", "Spacing", "Attributes"]
         frontend_editable_fields = ("left_label", "middle_label", "right_label")
@@ -340,7 +460,7 @@ class Footer(CMSFrontendComponent):
         required=False,
         initial="white",
         help_text=_("Color of the horizontal divider line."),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
 
@@ -381,7 +501,7 @@ class CTAPanel(CMSFrontendComponent):
     """CTAPanel component with background grid option"""
 
     class Meta:
-        name = _("CTA Panel")
+        name = _("CTA")
         module = _("Sections")
         render_template = "cta/cta_panel.html"
         allow_children = True
@@ -389,6 +509,7 @@ class CTAPanel(CMSFrontendComponent):
         parent_classes = []
         mixins = ["Background", "Spacing", "Attributes"]
         default_config = {
+            "background_context": "secondary",
             "padding_y": "py-6",
         }
         frontend_editable_fields = ("main_heading", "eyebrow_text")
@@ -422,11 +543,12 @@ class CTAPanel(CMSFrontendComponent):
 
 
 @components.register
-class LogoCarousel(CMSFrontendComponent):
-    """LogoCarousel component"""
+class Carousel(CMSFrontendComponent):
+    """Carousel component"""
 
     class Meta:
         name = _("Carousel")
+        module = _("Sections")
         render_template = "carousel/logo_carousel.html"
         allow_children = True
         child_classes = ["CarouselItemPlugin"]
@@ -470,7 +592,7 @@ class LogoCarousel(CMSFrontendComponent):
         label=_("Text color"),
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         initial=frontend_settings.EMPTY_CHOICE[0][0],
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         required=False,
     )
 
@@ -478,7 +600,7 @@ class LogoCarousel(CMSFrontendComponent):
         label=_("Background color"),
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         initial=frontend_settings.EMPTY_CHOICE[0][0],
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         required=False,
     )
 
@@ -523,7 +645,7 @@ class LogoCarousel(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="primary",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Color for the carousel button."),
     )
 
@@ -532,23 +654,45 @@ class LogoCarousel(CMSFrontendComponent):
 
 
 @components.register
-class BenefitsPanel(CMSFrontendComponent):
+class BenefitsCards(CMSFrontendComponent):
     """Benefits panel component"""
 
     class Meta:
-        name = _("Benefits Panel")
+        name = _("Cards")
         module = _("Sections")
-        render_template = "benefits/benefits_panel.html"
+        render_template = "benefits/cards.html"
         allow_children = True
-        child_classes = [
-            "BenefitsCardPlugin",
-            "TextPlugin",
-            "HeadingPlugin",
-        ]
+        child_classes = ["BenefitsCardPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
         default_config = {
             "padding_y": "py-6",
         }
+        frontend_editable_fields = ("overline", "heading")
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    heading_context = forms.ChoiceField(
+        label=_("Heading context"),
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
+        initial=frontend_settings.EMPTY_CHOICE,
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
+    )
+
+    heading_alignment = forms.ChoiceField(
+        label=_("Heading alignment"),
+        choices=frontend_settings.ALIGN_CHOICES,
+        initial=frontend_settings.ALIGN_CHOICES[0][0],
+        widget=IconGroup(),
+    )
 
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
@@ -556,19 +700,20 @@ class BenefitsPanel(CMSFrontendComponent):
         initial=False,
     )
 
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
+
 
 @components.register
 class BenefitsCard(CMSFrontendComponent):
     """Benefits card component"""
 
     class Meta:
-        name = _("Benefits Card")
-        render_template = "benefits/benefits_card.html"
+        name = _("Card")
+        render_template = "benefits/card.html"
         allow_children = True
-        parent_classes = ["BenefitsPanelPlugin"]
-        child_classes = [
-            "TextLinkPlugin",
-        ]
+        parent_classes = ["BenefitsCardsPlugin"]
+        child_classes = ["TextLinkPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
         frontend_editable_fields = ("card_title", "card_content")
 
@@ -577,7 +722,7 @@ class BenefitsCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     card_title = forms.CharField(
@@ -594,6 +739,16 @@ class BenefitsCard(CMSFrontendComponent):
         label=_("Icon"),
         required=False,
     )
+
+    bottom_image = ImageFormField(
+        label=_("Bottom image"),
+        required=False,
+        help_text=_("Optional image displayed at the bottom of the card in full width."),
+    )
+
+    def get_short_description(self):
+        return self.card_title if self.config.get("card_title") else ""
+
 
 
 @components.register
@@ -631,13 +786,13 @@ class RelatedPeople(CMSFrontendComponent):
         }
         frontend_editable_fields = ("eyebrow_text", "heading")
 
-    eyebrow_text = forms.CharField(
-        label=_("Eyebrow text"),
+    heading = forms.CharField(
+        label=_("Heading"),
         required=False,
     )
 
-    heading = forms.CharField(
-        label=_("Heading"),
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
 
@@ -646,7 +801,7 @@ class RelatedPeople(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     grid_columns = forms.ChoiceField(
@@ -666,7 +821,7 @@ class PeopleCard(CMSFrontendComponent):
     """People card component"""
 
     class Meta:
-        name = _("People Card")
+        name = _("Person")
         render_template = "related_people/person_card.html"
         allow_children = True
         parent_classes = [
@@ -696,7 +851,7 @@ class PeopleCard(CMSFrontendComponent):
         required=False,
         initial="primary",
         help_text=_("Image accent color"),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     overline = forms.CharField(
@@ -730,8 +885,11 @@ class PeopleCard(CMSFrontendComponent):
         required=False,
         initial="dark",
         help_text=_("Card content text color"),
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
+
+    def get_short_description(self):
+        return self.name if self.config.get("name") else ""
 
 
 @components.register
@@ -740,6 +898,7 @@ class MembershipPlans(CMSFrontendComponent):
 
     class Meta:
         name = _("Membership Plans")
+        module = _("Sections")
         render_template = "membership/membership_plans.html"
         allow_children = True
         child_classes = [
@@ -752,14 +911,13 @@ class MembershipPlans(CMSFrontendComponent):
         }
         frontend_editable_fields = ("eyebrow_text", "heading")
 
-    eyebrow_text = forms.CharField(
-        label=_("Eyebrow text"),
-        required=False,
-        help_text=_("Eyebrow text"),
-    )
-
     heading = forms.CharField(
         label=_("Heading"),
+        required=False,
+    )
+
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
 
@@ -768,9 +926,12 @@ class MembershipPlans(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Color for eyebrow and heading text"),
     )
+
+    def get_short_description(self):
+        return self.heading if self.config.get("heading") else ""
 
 
 @components.register
@@ -809,9 +970,12 @@ class PlanCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Tier style / Color."),
     )
+
+    def get_short_description(self):
+        return self.card_heading if self.config.get("card_heading") else ""
 
 
 @components.register
@@ -868,61 +1032,40 @@ class HorizontalPlanCard(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
 
 @components.register
-class ContentTeaser(CMSFrontendComponent):
-    """Content Teaser component"""
+class TwoColumn(CMSFrontendComponent):
+    """Two column section with a content slot and a media slot (image or video)."""
 
     class Meta:
         name = _("Two columns")
-        render_template = "content_teaser/content_teaser.html"
+        module = _("Sections")
+        render_template = "two_column/two_column.html"
         allow_children = True
-        child_classes = ["TeaserContentPlugin","TeaserMediaPlugin"]
         mixins = ["Background", "Spacing"]
         show_add_form = False
-
-
-@components.register
-class TeaserContent(CMSFrontendComponent):
-    """Teaser Content component to render text"""
-
-    class Meta:
-        name = _("Content")
-        render_template = "content_teaser/components/content.html"
-        allow_children = True
-        parent_classes = [
-            "ContentTeaserPlugin",
+        slots = [
+            Slot("content", _("Content"), render_template="two_column/slots/content.html"),
+            Slot(
+                "media",
+                _("Media"),
+                render_template="two_column/slots/media.html",
+                child_classes=[
+                    "ImagePlugin",
+                    "VideoPlayerPlugin",
+                ],
+            ),
         ]
-        child_classes = []
-
     text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
-        initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
-
-
-@components.register
-class TeaserMedia(CMSFrontendComponent):
-    """Media Teaser component"""
-
-    class Meta:
-        name = _("Media")
-        render_template = "content_teaser/components/media.html"
-        allow_children = True
-        parent_classes = [
-            "ContentTeaserPlugin",
-        ]
-        child_classes = [
-            "ImagePlugin",
-            "VideoPlayerPlugin",
-        ]
-        show_add_form = False
 
 
 @components.register
@@ -930,7 +1073,7 @@ class QuotePanelContainer(CMSFrontendComponent):
     """Quote Panel component with background grid option"""
 
     class Meta:
-        name = _("Quote Panel")
+        name = _("Quotes")
         module = _("Sections")
         render_template = "quote_panel/quote_panel.html"
         allow_children = True
@@ -941,12 +1084,12 @@ class QuotePanelContainer(CMSFrontendComponent):
             "padding_y": "py-6",
         }
 
-    overline = forms.CharField(
-        label=_("Eyebrow text"),
-        required=False,
-    )
     heading = forms.CharField(
         label=_("Heading"),
+        required=False,
+    )
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
     heading_context = forms.ChoiceField(
@@ -969,7 +1112,7 @@ class QuotePanelItem(CMSFrontendComponent):
     """Quote Panel Item component to render quote text and author"""
 
     class Meta:
-        name = _("Quote Panel Item")
+        name = _("Quote")
         render_template = "quote_panel/quote_item.html"
         allow_children = True
         parent_classes = [
@@ -983,7 +1126,6 @@ class QuotePanelItem(CMSFrontendComponent):
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
         required=False,
-        help_text=_("Eyebrow text for quote item."),
     )
 
     quote_text = HTMLFormField(
@@ -1009,7 +1151,7 @@ class QuotePanelItem(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="dark",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Text color for quote item."),
     )
 
@@ -1036,20 +1178,20 @@ class Heading(CMSFrontendComponent):
         choices=getattr(frontend_settings, "DJANGO_FRONTEND_HEADINGS", HEADINGS),
         required=True,
     )
-    overline = forms.CharField(
-        label=_("Eyebrow text"),
-        required=False,
-    )
     heading = forms.CharField(
         label=_("Heading"),
         required=True,
     )
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
     heading_context = forms.ChoiceField(
         label=_("Heading context"),
-        required=False,
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
         initial=frontend_settings.EMPTY_CHOICE,
-        widget=ColoredButtonGroup(),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     def get_short_description(self):
@@ -1160,7 +1302,7 @@ class CounterContainer(CMSFrontendComponent):
     """Counter container component with optional heading"""
 
     class Meta:
-        name = _("Counter Panel")
+        name = _("Counters")
         module = _("Sections")
         render_template = "counter/counter_container.html"
         allow_children = True
@@ -1170,13 +1312,13 @@ class CounterContainer(CMSFrontendComponent):
             "padding_y": "py-6",
         }
 
-    eyebrow_text = forms.CharField(
-        label=_("Eyebrow text"),
+    heading = forms.CharField(
+        label=_("Heading"),
         required=False,
     )
 
-    heading = forms.CharField(
-        label=_("Heading"),
+    eyebrow_text = forms.CharField(
+        label=_("Eyebrow text"),
         required=False,
     )
 
@@ -1185,7 +1327,7 @@ class CounterContainer(CMSFrontendComponent):
         choices=frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
         initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
         help_text=_("Color for eyebrow and heading text"),
     )
 
@@ -1371,32 +1513,33 @@ class Counter(CMSFrontendComponent):
 
 @components.register
 class ContainerWithGrid(CMSFrontendComponent):
-    """Grid section container with optional background grid"""
+    """Container with optional background color and/or grid"""
 
     class Meta:
-        name = _("Grid Section")
+        name = _("Regular-width")
         module = _("Sections")
-        render_template = "grid_container/grid_container.html"
+        render_template = "container/container.html"
         allow_children = True
         show_add_form = False
-        mixins = ["Background", "Spacing", "Attributes"]
-
-    overline = forms.CharField(
-        label=_("Eyebrow text"),
-        required=False,
-    )
+        frontend_editable_fields = ["heading", "overline"]
+        mixins = ["Background", "Spacing"]
 
     heading = forms.CharField(
         label=_("Heading"),
         required=False,
     )
 
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
     text_color = forms.ChoiceField(
         label=_("Text color"),
-        choices=frontend_settings.COLOR_STYLE_CHOICES,
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         required=False,
-        initial="default",
-        widget=ColoredButtonGroup(attrs={"class": "flex-wrap"}),
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
     background_grid = forms.BooleanField(
@@ -1408,6 +1551,51 @@ class ContainerWithGrid(CMSFrontendComponent):
     def get_short_description(self) -> str:
         heading = self.config.get("heading")
         background_context = self.config.get("background_context", "none")
+        if heading:
+            return f"{heading} ({background_context})"
+        return background_context
+
+
+@components.register
+class Container1ColText(CMSFrontendComponent):
+    """Container with optional background color and/or grid"""
+
+    class Meta:
+        name = _("Narrow")
+        module = _("Sections")
+        render_template = "container/narrow_container.html"
+        allow_children = True
+        show_add_form = False
+        frontend_editable_fields = ["heading", "overline"]
+        mixins = ["Background", "Spacing"]
+
+    heading = forms.CharField(
+        label=_("Heading"),
+        required=False,
+    )
+
+    overline = forms.CharField(
+        label=_("Eyebrow text"),
+        required=False,
+    )
+
+    text_color = forms.ChoiceField(
+        label=_("Text color"),
+        choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
+        required=False,
+        initial=frontend_settings.EMPTY_CHOICE[0][0],
+        widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
+    )
+
+    background_grid = forms.BooleanField(
+        label=_("Show background grid"),
+        required=False,
+        initial=True,
+    )
+
+    def get_short_description(self) -> str:
+        heading = self.config.get("heading")
+        background_context = self.config.get("background_context") or "no background"
         if heading:
             return f"{heading} ({background_context})"
         return background_context

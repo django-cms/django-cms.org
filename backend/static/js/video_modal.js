@@ -18,9 +18,19 @@
         return url;
     }
 
+    // Safari ITP blocks third-party requests to youtube.com (stats/log endpoints),
+    // causing the embed player to fail with error 153. youtube-nocookie.com is
+    // exempted because it doesn't set cookies until the user interacts.
+    function toNocookieEmbed(url) {
+        if (!url) return url;
+        return url
+            .replace('://www.youtube.com/embed/', '://www.youtube-nocookie.com/embed/')
+            .replace('://youtube.com/embed/', '://www.youtube-nocookie.com/embed/');
+    }
+
     function openFullscreenEmbed(src) {
         var iframe = document.createElement('iframe');
-        var fullSrc = ensureHttps(src);
+        var fullSrc = toNocookieEmbed(ensureHttps(src));
         fullSrc += (fullSrc.indexOf('?') === -1 ? '?autoplay=1' : '&autoplay=1');
         iframe.src = fullSrc;
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
@@ -96,7 +106,7 @@
 
             modal.addEventListener('shown.bs.modal', function() {
                 if (media.type === 'iframe') {
-                    media.el.src = ensureHttps(media.src);
+                    media.el.src = toNocookieEmbed(ensureHttps(media.src));
                 } else {
                     media.el.src = media.src;
                     media.el.play();

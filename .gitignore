@@ -20,5 +20,7 @@ data/
 
 filer_public/
 filer_public_thumbnails/
+staticfiles_collected/
 
 .idea/
+.claude/

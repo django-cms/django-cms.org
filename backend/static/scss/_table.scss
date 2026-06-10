@@ -29,6 +29,12 @@ table tbody tr th,
     border-right: 1px solid $mid-grey !important;
 }
 
+table, .table {
+    th > :last-child, td > :last-child {
+        margin-bottom: 0;
+    }
+}
+
 table tbody tr th:last-child,
 .table tbody tr th:last-child {
     border-right: none !important;

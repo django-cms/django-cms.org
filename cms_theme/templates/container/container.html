@@ -1,0 +1,20 @@
+{% load cms_tags frontend %}
+<section class="{{ instance.get_classes }}{% if instance.config.background_grid %} background-grid{% endif %}"{{ instance.get_attributes }}>
+    <div class="container py-6{% if instance.config.text_color %} text-{{ instance.config.text_color }}{% endif %}">
+        {% if instance.config.overline or instance.config.heading %}
+            <div class="row mb-4 justify-content-center justify-content-lg-start">
+                <div class="col-12 col-md-10 col-lg-12 text-lg-start">
+                    {% if instance.config.overline %}
+                        <div class="text-uppercase overline">{% inline_field instance "overline" %}</div>
+                    {% endif %}
+                    {% if instance.config.heading %}
+                        <h2 class="pb-5 mt-3">{% inline_field instance "heading" %}</h2>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        {% for plugin in instance.child_plugin_instances %}
+            {% render_plugin plugin %}
+        {% endfor %}
+    </div>
+</section>
