@@ -291,6 +291,7 @@ class TimelineContainer(CMSFrontendComponent):
 
     class Meta:
         name = _("Timeline")
+        module = _("Sections")
         render_template = "timeline/timeline.html"
         allow_children = True
         child_classes = [
