@@ -1,2 +1,7 @@
-User-agent: *
+{% if allow_indexing %}User-agent: *
+Disallow: /admin
+
+Sitemap: https://www.django-cms.org/sitemap.xml
+{% else %}User-agent: *
 Disallow: /
+{% endif %}

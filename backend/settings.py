@@ -30,6 +30,10 @@ SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT") != "False"
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
+# Only the production domain should be indexed by search engines; staging and
+# other environments serve a robots.txt that disallows everything.
+ROBOTS_ALLOW_INDEXING = os.environ.get("DOMAIN") == "www.django-cms.org"
+
 
 # Application definition
 
