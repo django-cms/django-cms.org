@@ -107,6 +107,9 @@ MIDDLEWARE = [
     "cms.middleware.page.CurrentPageMiddleware",
     "cms.middleware.toolbar.ToolbarMiddleware",
     "cms.middleware.language.LanguageCookieMiddleware",
+    # Serves Redirect entries (must be last: it acts on 404 responses).
+    # Custom subclass matches on request.path so query strings don't block a match.
+    "backend.middleware.PathOnlyRedirectFallbackMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
