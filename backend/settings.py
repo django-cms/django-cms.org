@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",  # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "django.contrib.sitemaps",
     # key django CMS modules
     "cms",
     "menus",
