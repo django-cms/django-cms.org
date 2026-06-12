@@ -1,7 +1,7 @@
 {% load cms_tags cms_component frontend %}
 
 <article id="milestone-{{ instance.id }}" class="milestone-card">
-    <div class="card shadow-sm {{ instance.get_classes }}">
+    <div class="card shadow-sm {{ instance.get_classes }} {{ instance.get_classes }} text-{% if instance.background_context in "secondary|dark"|split %}white{% else %}dark{% endif %}">
         <div class="card-body">
             {% if instance.label %}
                 <h2 class="mb-2 pb-1">{% inline_field instance "label" %}</h2>

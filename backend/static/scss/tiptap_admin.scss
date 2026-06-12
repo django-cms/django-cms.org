@@ -22,6 +22,13 @@ $theme-colors: map-merge(
 
 // TipTap Admin Editor Styles
 .cms-admin {
+    // Lead paragraph - mirror the frontend `.lead` styling
+    .lead {
+        font-size: $lead-font-size;
+        font-weight: $lead-font-weight;
+        line-height: $lead-line-height;
+    }
+
     // Text colors - using Bootstrap theme colors
     .text-primary {
         color: $primary !important;
