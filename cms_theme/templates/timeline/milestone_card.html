@@ -1,4 +1,4 @@
-{% load cms_tags frontend %}
+{% load cms_tags cms_component frontend %}
 
 <article id="milestone-{{ instance.id }}" class="milestone-card">
     <div class="card shadow-sm {{ instance.get_classes }} {{ instance.get_classes }} text-{% if instance.background_context in "secondary|dark"|split %}white{% else %}dark{% endif %}">
