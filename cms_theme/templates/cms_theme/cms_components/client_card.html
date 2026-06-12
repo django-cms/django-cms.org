@@ -1,5 +1,6 @@
 {% load frontend cms_tags cms_component cms_theme_tags sekizai_tags i18n %}
 {% cms_component "ClientCard" name=_("Client Card") allow_children=True child_classes="TextLinkPlugin"|split mixins="Background|Attributes|Margin"|split allowed_models="djangocms_stories.PostContent"|split %}
+{% field "case_study_type" forms.ChoiceField required=True label=_("Case Study Type") choices=_("Client|Agency|Enterprise")|split %}
 {% field "client_name" forms.CharField required=True label=_("Client Name") %}
 {% field "color_name" ColorChoiceField required=False label=_("Name Color") initial="dark" %}
 {% field "client_size" forms.CharField required=False label=_("Client Size") %}
@@ -11,7 +12,7 @@
 
 <div class="client-card card mx-auto {{ instance.get_classes }}"{{ instance.get_attributes }}>
     <div class="card-body text-{{ color_style }}">
-        <p class="overline pb-2 mb-0">{% trans "Client" %}:</p>
+        <p class="overline pb-2 mb-0">{{ case_study_type|default:_("Client") }}:</p>
         <h4 class="client-name text-{{ color_name }} mb-0">{{ client_name }}</h4>
         <div class="client-details pt-3 mt-2 d-flex flex-column gap-2">
             {% if client_size %}
