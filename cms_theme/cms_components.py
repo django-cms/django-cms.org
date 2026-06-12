@@ -412,7 +412,7 @@ class Footer(CMSFrontendComponent):
         render_template = "footer/footer.html"
         allowed_models = ["djangocms_alias.AliasContent"]
         allow_children = True
-        mixins = ["Background", "Spacing", "Attributes"]
+        mixins = ["Spacing", "Attributes"]
         frontend_editable_fields = ("left_label", "middle_label", "right_label")
         slots = (
             Slot("left", _("Links left column"), child_classes=["TextLinkPlugin"]),
@@ -1013,7 +1013,7 @@ class HorizontalPlanCard(CMSFrontendComponent):
         parent_classes = [
             "MembershipPlansPlugin",
         ]
-        mixins = ["Background", "Spacing", "Attributes"]
+        mixins = ["Spacing", "Attributes"]
         frontend_editable_fields = ("card_heading", "card_sub_heading")
 
     card_heading = forms.CharField(
