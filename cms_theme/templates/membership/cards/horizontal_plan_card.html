@@ -1,5 +1,5 @@
 {% load static cms_tags sekizai_tags frontend cms_theme_tags %}
-<div class="card p-4 bg-dark text-white">
+<div class="card p-4 bg-dark text-white {{ instance.get_classes }}">
     <div class="row align-items-center g-4">
         {% with images=instance.child_plugin_instances|filter_by_type:"ImagePlugin" %}
             {% if images and images|length > 0 %}

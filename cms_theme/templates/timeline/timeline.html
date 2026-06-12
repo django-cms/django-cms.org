@@ -1,16 +1,16 @@
-{% load frontend cms_tags sekizai_tags thumbnail %}
+{% load frontend cms_tags cms_theme_tags sekizai_tags thumbnail %}
 
 <section
     id="timeline-{{ instance.pk }}"
-    class="{% if instance.config.background_grid %}background-grid{% endif %} {{ instance.get_classes }}"
+    class="{% if instance.config.background_grid %}background-grid{% endif %} {{ instance.get_classes }} {{ instance.background_context|text_bg }}"
     {{ instance.get_attributes }}
 >
     <div class="container">
         {# Header content: Heading and intro text #}
         <div class="text-center pb-7">
-            <p class="overline text-dark">{{ instance.eyebrow_text }}</p>
-            <h2 class="pt-2 pb-4 mb-0 text-secondary">{{ instance.title }}</h2>
-            <div class="timeline-text text-dark">{{ instance.text|safe }}</div>
+            <p class="overline{% if not instance.background_context %} text-dark{% endif %}">{{ instance.eyebrow_text }}</p>
+            <h2 class="pt-2 pb-4 mb-0{% if not instance.background_context %} text-secondary{% endif %}">{{ instance.title }}</h2>
+            <div class="timeline-text{% if not instance.background_context %} text-dark{% endif %}">{{ instance.text|safe }}</div>
         </div>
 
         {# Timeline items #}

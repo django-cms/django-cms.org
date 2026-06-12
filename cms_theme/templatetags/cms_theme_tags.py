@@ -36,6 +36,26 @@ def make_choices(value):
 
 
 @register.filter
+def text_bg(background_context):
+    """Map a background context to a class giving the text sufficient contrast.
+
+    Delegates to Bootstrap's .text-bg-<color> helpers, whose text color is
+    chosen at Sass compile time by color-contrast() against the actual hex
+    value of each entry in $theme-colors. Apply on the same element that
+    receives the bg-* class (e.g. next to instance.get_classes); the color
+    is inherited by all children that don't set their own text-* utility.
+
+    "white" and "transparent" are offered by the Background mixin but are
+    not theme colors, so no helper class is compiled for them.
+    """
+    if not background_context or background_context == "transparent":
+        return ""
+    if background_context == "white":
+        return "text-body"
+    return f"text-bg-{background_context}"
+
+
+@register.filter
 def filter_by_type(plugins, plugin_types):
     """Filter plugins by type(s)
     Usage: plugins|filter_by_type:"CounterPlugin,ImagePlugin"
