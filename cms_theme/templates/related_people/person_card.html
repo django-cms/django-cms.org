@@ -17,7 +17,7 @@
                 <div class="text-uppercase mb-1 overline pb-2">{% inline_field instance "overline" %}</div>
                 <h4>{% inline_field instance "name" %}</h4>
                 {% if instance.role %}
-                    <p class="mb-0">{% inline_field instance "role" %}</p>
+                    <p>{% inline_field instance "role" %}</p>
                 {% endif %}
                 {% if instance.description %}{% inline_field instance "description" "" "safe" %}{% endif %}
                 {% with buttons=instance.child_plugin_instances %}
