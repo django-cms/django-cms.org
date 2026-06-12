@@ -7,7 +7,7 @@
                 <h2 class="mb-2 pb-1">{% inline_field instance "label" %}</h2>
             {% endif %}
             {% if instance.heading %}
-                    <h3 class="text-primary mb-4 pb-1">{% inline_field instance "heading" %}</h3>
+                    <h3 class="text-{% if instance.background_context in "secondary|dark"|split %}primary{% else %}secondary{% endif %} mb-4 pb-1">{% inline_field instance "heading" %}</h3>
             {% endif %}
             <div class="d-flex flex-column gap-4">
                 {% for plugin in instance|get_slot:"image_top"  %}
