@@ -1,0 +1,32 @@
+{% load cms_tags frontend %}
+
+<article id="milestone-{{ instance.id }}" class="milestone-card">
+    <div class="card shadow-sm {{ instance.get_classes }}">
+        <div class="card-body">
+            {% if instance.label %}
+                <h2 class="mb-2 pb-1">{% inline_field instance "label" %}</h2>
+            {% endif %}
+            {% if instance.heading %}
+                    <h3 class="text-primary mb-4 pb-1">{% inline_field instance "heading" %}</h3>
+            {% endif %}
+            <div class="d-flex flex-column gap-4">
+                {% for plugin in instance|get_slot:"image_top"  %}
+                    {% render_plugin plugin %}
+                {% endfor %}
+                {% if instance.text %}
+                    <div class="milestone-text">
+                        {% inline_field instance "text" "" "safe" %}
+                    </div>
+                {% endif %}
+                {% for plugin in instance|get_slot:"image_bottom"  %}
+                    {% render_plugin plugin %}
+                {% endfor %}
+                {% for plugin in instance|get_slot:"links" %}
+                    {% if forloop.first %}<div class="milestone-links">{% endif %}
+                    {% render_plugin plugin %}
+                    {% if forloop.last %}</div>{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</article>

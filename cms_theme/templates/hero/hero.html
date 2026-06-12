@@ -28,7 +28,7 @@
                         {% if instance.main_image_url %}
                             {% plugin "image" external_picture=instance.main_image_url template=instance.main_image_template %}{% endplugin %}
                         {% else %}
-                            {% plugin "image" picture=instance.main_image template=instance.main_image_template %}{% endplugin %}
+                            {% plugin "image" picture=instance.main_image template=instance.main_image_template width=800 %}{% endplugin %}
                         {% endif %}
                    </div>
 

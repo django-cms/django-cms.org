@@ -30,6 +30,10 @@ SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT") != "False"
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
+# Only the production domain should be indexed by search engines; staging and
+# other environments serve a robots.txt that disallows everything.
+ROBOTS_ALLOW_INDEXING = os.environ.get("DOMAIN") == "www.django-cms.org"
+
 
 # Application definition
 
@@ -46,6 +50,7 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",  # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "django.contrib.sitemaps",
     # key django CMS modules
     "cms",
     "menus",
@@ -106,6 +111,9 @@ MIDDLEWARE = [
     "cms.middleware.page.CurrentPageMiddleware",
     "cms.middleware.toolbar.ToolbarMiddleware",
     "cms.middleware.language.LanguageCookieMiddleware",
+    # Serves Redirect entries (must be last: it acts on 404 responses).
+    # Custom subclass matches on request.path so query strings don't block a match.
+    "backend.middleware.PathOnlyRedirectFallbackMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"

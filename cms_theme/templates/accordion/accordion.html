@@ -18,7 +18,7 @@
             {# Left column: Text content and accordion #}
             <div class="col-lg-6 {% if instance.config.mirror_layout %}order-lg-2{% endif %} features-content-left">
                 {# Custom accordion rendering without images #}
-                <div class="features-accordion mt-4 accordion-header-{{ instance.config.accordion_header_color|default:'default' }}">
+                <div class="features-accordion accordion-header-{{ instance.config.accordion_header_color|default:'default' }}">
                     {% set_html_id instance as html_id %}
                     <div class="accordion" id="accordion-{{ html_id }}">
                         {% for accordion_item in instance|get_slot:"items" %}
