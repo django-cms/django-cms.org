@@ -8,7 +8,7 @@
             {% endif %}
             <h2 class="pb-5 mt-3 {% if instance.heading_context %}text-{{ instance.heading_context }} {% endif %}text-{{ instance.heading_alignment }}">{% inline_field instance "heading" %}</h2>
         {% endif %}
-        <div class="row g-4 justify-content-center">
+        <div class="row g-4 justify-content-center-12 row-cols-1{% if instance.card_layout != 'landscape' %} row-cols-md-2 row-cols-lg-4{% else %} row-cols-lg-2{% endif %}">
             {% for plugin in instance.child_plugin_instances %}
                 {% render_plugin plugin %}
             {% endfor %}

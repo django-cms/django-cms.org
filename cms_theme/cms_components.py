@@ -695,6 +695,15 @@ class BenefitsCards(CMSFrontendComponent):
         widget=IconGroup(),
     )
 
+    card_layout = forms.ChoiceField(
+        label=_("Card layout"),
+        choices=[
+            ("landscape", _("Landscape")),
+            ("portrait", _("Portrait")),
+        ],
+        initial="patrtrait",
+    )
+
     background_grid = forms.BooleanField(
         label=_("Show background grid"),
         required=False,
