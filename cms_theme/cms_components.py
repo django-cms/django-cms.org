@@ -392,7 +392,7 @@ class MilestoneCard(CMSFrontendComponent):
 
     heading = forms.CharField(
         label=_("Milestone heading"),
-        required=True,
+        required=False,
         help_text=_("Heading for the milestone card."),
     )
 
