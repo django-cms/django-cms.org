@@ -1058,6 +1058,7 @@ class TwoColumn(CMSFrontendComponent):
                     "ImagePlugin",
                     "VideoPlayerPlugin",
                     "SnippetPlugin",
+                    "Alias",
                 ],
             ),
         ]
