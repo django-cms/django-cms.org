@@ -48,6 +48,12 @@
                 {% else %}
                     <div class="w-100 text-center">{% render_plugin image_plugin.0 %}</div>
                 {% endif %}
+            {% else %}
+                <div class="w-100 text-center">
+                    {% for plugin in instance.child_plugin_instances %}
+                         {% render_plugin plugin %}
+                    {% endfor %}
+                </div>
             {% endif %}
         </div>
     {% endwith %}

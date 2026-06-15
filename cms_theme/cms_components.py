@@ -1057,6 +1057,7 @@ class TwoColumn(CMSFrontendComponent):
                 child_classes=[
                     "ImagePlugin",
                     "VideoPlayerPlugin",
+                    "SnippetPlugin",
                 ],
             ),
         ]
