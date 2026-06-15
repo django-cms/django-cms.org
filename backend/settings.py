@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     "sortedm2m",
     "djangocms_file",
     "djangocms_form_builder",
+    "djangocms_snippet",
     # Last, to allow modifying third-party plugins
     "cms_theme",
     # the default text editor

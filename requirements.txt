@@ -252,3 +252,5 @@ whitenoise==6.12.0
 # setuptools
 
 git+https://github.com/fsbraun/djangocms4-utilities#egg=djangocms4-utilities
+
+djangocms-snippet

@@ -32,6 +32,9 @@ django-filer
 # djangocms-blog for v4+
 djangocms-stories
 
+# djangocms-snippet for raw html (3rd party code)
+djangocms-snippet
+
 # single source of truth for the djangocms-ecosystem
 git+https://github.com/django-cms/djangocms-ecosystem
 requests
