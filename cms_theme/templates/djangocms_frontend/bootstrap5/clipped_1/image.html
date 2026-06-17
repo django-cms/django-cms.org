@@ -69,13 +69,13 @@
                 style="fill: currentColor;"
                 filter="url(#shadow-{{ html_id }})"        
             />
-            <g filter="url(#shadow-{{ instance.pk|unlocalize }})">
+            <g filter="url(#shadow-{{ html_id }})">
                 <image 
                     href="{{ instance.img_src }}"
                     width="991"
                     height="1020"
                     preserveAspectRatio="xMidYMid slice"
-                    clip-path="url(#clip-shape-{{ instance.pk|unlocalize }})"
+                    clip-path="url(#clip-shape-{{ html_id }})"
                 />
             </g>
         </svg>
