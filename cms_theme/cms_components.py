@@ -661,7 +661,7 @@ class BenefitsCards(CMSFrontendComponent):
     class Meta:
         name = _("Cards")
         module = _("Sections")
-        render_template = "benefits/cards.html"
+        render_template = "cards/cards.html"
         allow_children = True
         child_classes = ["BenefitsCardPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
@@ -695,13 +695,16 @@ class BenefitsCards(CMSFrontendComponent):
         widget=IconGroup(),
     )
 
-    card_layout = forms.ChoiceField(
-        label=_("Card layout"),
+    grid_columns = forms.ChoiceField(
+        label=_("Grid columns"),
         choices=[
-            ("landscape", _("Landscape")),
-            ("portrait", _("Portrait")),
+            ("1", _("1")),
+            ("2", _("2")),
+            ("3", _("3")),
+            ("4", _("4")),
         ],
-        initial="patrtrait",
+        initial="3",
+        help_text=_("Number of grid columns."),
     )
 
     background_grid = forms.BooleanField(
@@ -720,7 +723,7 @@ class BenefitsCard(CMSFrontendComponent):
 
     class Meta:
         name = _("Card")
-        render_template = "benefits/card.html"
+        render_template = "cards/card.html"
         allow_children = True
         parent_classes = ["BenefitsCardsPlugin"]
         child_classes = ["TextLinkPlugin"]

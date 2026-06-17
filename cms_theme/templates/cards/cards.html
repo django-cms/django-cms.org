@@ -8,7 +8,11 @@
             {% endif %}
             <h2 class="pb-5 mt-3 {% if instance.heading_context %}text-{{ instance.heading_context }} {% endif %}text-{{ instance.heading_alignment }}">{% inline_field instance "heading" %}</h2>
         {% endif %}
-        <div class="row g-4 justify-content-center-12 row-cols-1{% if instance.card_layout != 'landscape' %} row-cols-md-2 row-cols-lg-4{% else %} row-cols-lg-2{% endif %}">
+        <div class="row g-4 justify-content-center row-cols-1
+            {% if instance.grid_columns == '2' %} row-cols-lg-2
+            {% elif instance.grid_columns == '3' %} row-cols-md-2 row-cols-lg-3
+            {% elif instance.grid_columns == '4' %} row-cols-md-2 row-cols-lg-4{% endif %}
+        ">
             {% for plugin in instance.child_plugin_instances %}
                 {% render_plugin plugin %}
             {% endfor %}

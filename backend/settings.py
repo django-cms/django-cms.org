@@ -67,7 +67,9 @@ INSTALLED_APPS = [
     # Specific designs for this site
     "djangocms_video",
     "djangocms_ecosystem",
-    # optional django CMS frontend modules
+
+    "cms_theme",
+
     "djangocms_frontend",
     "djangocms_frontend.contrib.alert",
     "djangocms_frontend.contrib.card",
@@ -90,7 +92,6 @@ INSTALLED_APPS = [
     "djangocms_form_builder",
     "djangocms_snippet",
     # Last, to allow modifying third-party plugins
-    "cms_theme",
     # the default text editor
     "djangocms_text",
     "djangocms_markdown",
