@@ -788,7 +788,7 @@ class RelatedPeople(CMSFrontendComponent):
     """Related People component"""
 
     class Meta:
-        name = _("Related People")
+        name = _("Related Partners")
         module = _("Sections")
         render_template = "related_people/related_people.html"
         allow_children = True
@@ -823,8 +823,8 @@ class RelatedPeople(CMSFrontendComponent):
             ("1", _("1")),
             ("2", _("2")),
             ("3", _("3")),
-            ("3", _("5")),
-            ("3", _("4")),
+            ("4", _("4")),
+            ("5", _("5")),
         ],
         initial="3",
         help_text=_("Number of grid columns."),
@@ -836,7 +836,7 @@ class PeopleCard(CMSFrontendComponent):
     """People card component"""
 
     class Meta:
-        name = _("Person")
+        name = _("Partner")
         render_template = "related_people/person_card.html"
         allow_children = True
         parent_classes = [
