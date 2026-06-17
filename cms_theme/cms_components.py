@@ -823,6 +823,8 @@ class RelatedPeople(CMSFrontendComponent):
             ("1", _("1")),
             ("2", _("2")),
             ("3", _("3")),
+            ("3", _("5")),
+            ("3", _("4")),
         ],
         initial="3",
         help_text=_("Number of grid columns."),
