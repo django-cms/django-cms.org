@@ -25,6 +25,20 @@
 	}
 }
 
+.benefits-card-top-image {
+	margin: auto -1.75rem -1.75rem -1.75rem;
+	overflow: hidden;
+	border-radius: var(--bs-card-border-radius) var(--bs-card-border-radius) 0 0;
+
+	img {
+		display: block;
+		width: 100%;
+		height: 60%;
+		object-fit: contain;
+		object-position: center;
+	}
+}
+
 .benefits-card.bg-primary {
 	a {
 		@extend .btn-outline-secondary;

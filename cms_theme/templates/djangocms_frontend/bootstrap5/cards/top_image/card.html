@@ -1,0 +1,32 @@
+<!-- cms_theme/templates/djangocms_frontend/bootstrap5/cards/top_image/card.html -->
+{% load static cms_tags frontend icon_tags %}
+{% add_css_for_icon instance.card_icon %}
+<div class="col">
+    <div class="{{ instance.get_classes }} h-100 card benefits-card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}" {{ instance.get_attributes }}>
+        {% if instance.bottom_image %}
+            <div class="benefits-card-top-image">
+                <img src="{{ instance.bottom_image.url }}" alt="" class="w-100 d-block">
+            </div>
+        {% endif %}
+        {% if instance.card_title %}
+        <div class="benefits-card-wrapper benefits-card-margin-bottom">
+            <h3 class="h4 fw-bold mb-4">{% inline_field instance "card_title" %}</h3>
+        </div>
+        {% endif %}
+        {% if instance.card_content|striptags %}
+        <div class="benefits-card-spacing flex-grow-1 benefits-card-body mt-auto">
+            {% inline_field instance "card_content" "" "safe" %}
+        </div>
+        {% endif %}
+        {% if instance.child_plugin_instances %}
+            <div class="mt-auto">
+                {% childplugins %}{% endchildplugins %}
+            </div>
+        {% endif %}
+        {% if instance.card_icon %}
+            <div class="mb-4 pb-1">
+                <i class="{{ instance.card_icon.iconClass }} display-1"></i>
+            </div>
+        {% endif %}
+    </div>
+</div>
