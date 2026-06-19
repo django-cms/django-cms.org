@@ -26,11 +26,11 @@
 }
 
 .benefits-card-top-image {
-	margin: 0rem 0rem 1.75rem -1.75rem;
+	margin: 0rem 0rem 1.75rem 0;
 	overflow: hidden;
 	border-radius: var(--bs-card-border-radius) var(--bs-card-border-radius) 0 0;
 
-	width: calc(100% + 3.5rem); // span the card padding on both sides
+	width: 100%;
 	aspect-ratio: 5 / 3; // height is 60% of the width
 
 	img {
