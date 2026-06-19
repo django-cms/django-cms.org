@@ -16,7 +16,7 @@ from djangocms_frontend.fields import (
     HTMLFormField,
     IconGroup,
 )
-from djangocms_frontend.helpers import first_choice
+from djangocms_frontend.helpers import first_choice, get_plugin_template
 
 from .fields import ColorChoiceField
 
@@ -661,7 +661,7 @@ class BenefitsCards(CMSFrontendComponent):
     class Meta:
         name = _("Cards")
         module = _("Sections")
-        render_template = "benefits/cards.html"
+        render_template = "cards/cards.html"
         allow_children = True
         child_classes = ["BenefitsCardPlugin"]
         mixins = ["Background", "Spacing", "Attributes"]
@@ -669,6 +669,11 @@ class BenefitsCards(CMSFrontendComponent):
             "padding_y": "py-6",
         }
         frontend_editable_fields = ("overline", "heading")
+
+    TEMPLATES = [
+            ("default", _("Image at bottom")),
+            ("top_image", _("Image at top")),
+        ]
 
     heading = forms.CharField(
         label=_("Heading"),
@@ -695,13 +700,23 @@ class BenefitsCards(CMSFrontendComponent):
         widget=IconGroup(),
     )
 
-    card_layout = forms.ChoiceField(
-        label=_("Card layout"),
+    template = forms.ChoiceField(
+        label=_("Card design"),
+        choices=TEMPLATES,
+        initial="default",
+        help_text=_("Choose the design for this card."),
+    )
+
+    grid_columns = forms.ChoiceField(
+        label=_("Grid columns"),
         choices=[
-            ("landscape", _("Landscape")),
-            ("portrait", _("Portrait")),
+            ("1", _("1")),
+            ("2", _("2")),
+            ("3", _("3")),
+            ("4", _("4")),
         ],
-        initial="patrtrait",
+        initial="4",
+        help_text=_("Number of grid columns."),
     )
 
     background_grid = forms.BooleanField(
@@ -709,6 +724,14 @@ class BenefitsCards(CMSFrontendComponent):
         required=False,
         initial=False,
     )
+
+    def get_render_template(self, context, instance, placeholder):
+        return get_plugin_template(
+            instance,
+            "cards",
+            "cards",
+            BenefitsCards.TEMPLATES,
+        )
 
     def get_short_description(self):
         return self.heading if self.config.get("heading") else ""
@@ -720,7 +743,7 @@ class BenefitsCard(CMSFrontendComponent):
 
     class Meta:
         name = _("Card")
-        render_template = "benefits/card.html"
+        render_template = "cards/card.html"
         allow_children = True
         parent_classes = ["BenefitsCardsPlugin"]
         child_classes = ["TextLinkPlugin"]
@@ -751,10 +774,19 @@ class BenefitsCard(CMSFrontendComponent):
     )
 
     bottom_image = ImageFormField(
-        label=_("Bottom image"),
+        label=_("Image"),
         required=False,
-        help_text=_("Optional image displayed at the bottom of the card in full width."),
+        help_text=_("Optional image displayed in full width."),
     )
+
+    def get_render_template(self, context, instance, placeholder):
+        return get_plugin_template(
+            instance.parent.get_plugin_instance()[0] if instance.parent else instance,
+            # instance.parent or instance once django-cms 4.1 support can be dropped
+            "cards",
+            "card",
+            BenefitsCards.TEMPLATES,
+        )
 
     def get_short_description(self):
         return self.card_title if self.config.get("card_title") else ""
@@ -785,7 +817,7 @@ class RelatedPeople(CMSFrontendComponent):
     """Related People component"""
 
     class Meta:
-        name = _("Related People")
+        name = _("Related Partners")
         module = _("Sections")
         render_template = "related_people/related_people.html"
         allow_children = True
@@ -820,6 +852,8 @@ class RelatedPeople(CMSFrontendComponent):
             ("1", _("1")),
             ("2", _("2")),
             ("3", _("3")),
+            ("4", _("4")),
+            ("5", _("5")),
         ],
         initial="3",
         help_text=_("Number of grid columns."),
@@ -831,7 +865,7 @@ class PeopleCard(CMSFrontendComponent):
     """People card component"""
 
     class Meta:
-        name = _("Person")
+        name = _("Partner")
         render_template = "related_people/person_card.html"
         allow_children = True
         parent_classes = [
