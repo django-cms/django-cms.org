@@ -26,16 +26,19 @@
 }
 
 .benefits-card-top-image {
-	margin: auto -1.75rem -1.75rem -1.75rem;
+	margin: -1.75rem -1.75rem 1.75rem -1.75rem;
 	overflow: hidden;
 	border-radius: var(--bs-card-border-radius) var(--bs-card-border-radius) 0 0;
+
+	width: calc(100% + 3.5rem); // span the card padding on both sides
+	aspect-ratio: 5 / 3; // height is 60% of the width
 
 	img {
 		display: block;
 		width: 100%;
-		height: 60%;
-		object-fit: contain;
-		object-position: center;
+		height: 100%;
+		object-fit: contain; // scale down so the image is fully contained
+		object-position: center center;
 	}
 }
 
