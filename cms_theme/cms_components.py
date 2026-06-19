@@ -16,7 +16,7 @@ from djangocms_frontend.fields import (
     HTMLFormField,
     IconGroup,
 )
-from djangocms_frontend.helpers import first_choice
+from djangocms_frontend.helpers import first_choice, get_plugin_template
 
 from .fields import ColorChoiceField
 
@@ -670,6 +670,11 @@ class BenefitsCards(CMSFrontendComponent):
         }
         frontend_editable_fields = ("overline", "heading")
 
+    TEMPLATES = [
+            ("default", _("Image at bottom")),
+            ("top_image", _("Image at top")),
+        ]
+
     heading = forms.CharField(
         label=_("Heading"),
         required=False,
@@ -695,6 +700,13 @@ class BenefitsCards(CMSFrontendComponent):
         widget=IconGroup(),
     )
 
+    template = forms.ChoiceField(
+        label=_("Card design"),
+        choices=TEMPLATES,
+        initial="default",
+        help_text=_("Choose the design for this card."),
+    )
+
     grid_columns = forms.ChoiceField(
         label=_("Grid columns"),
         choices=[
@@ -712,6 +724,14 @@ class BenefitsCards(CMSFrontendComponent):
         required=False,
         initial=False,
     )
+
+    def get_render_template(self, context, instance, placeholder):
+        return get_plugin_template(
+            instance,
+            "cards",
+            "cards",
+            BenefitsCards.TEMPLATES,
+        )
 
     def get_short_description(self):
         return self.heading if self.config.get("heading") else ""
@@ -754,10 +774,19 @@ class BenefitsCard(CMSFrontendComponent):
     )
 
     bottom_image = ImageFormField(
-        label=_("Bottom image"),
+        label=_("Image"),
         required=False,
-        help_text=_("Optional image displayed at the bottom of the card in full width."),
+        help_text=_("Optional image displayed in full width."),
     )
+
+    def get_render_template(self, context, instance, placeholder):
+        return get_plugin_template(
+            instance.parent.get_plugin_instance()[0] if instance.parent else instance,
+            # instance.parent or instance once django-cms 4.1 support can be dropped
+            "cards",
+            "card",
+            BenefitsCards.TEMPLATES,
+        )
 
     def get_short_description(self):
         return self.card_title if self.config.get("card_title") else ""
