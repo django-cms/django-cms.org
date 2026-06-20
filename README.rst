@@ -58,9 +58,12 @@ Local Development Setup
 
    .. code-block:: bash
 
-     docker compose exec caddy caddy trust
+     ./do.sh trust-ca
 
-   After running this command, restart your browser to pick up the new trusted CA.
+   This is a one-off step per machine — the CA is stored in the ``caddy-data`` Docker volume
+   and reused across restarts. You only need to repeat it if you delete that volume (e.g.
+   via ``docker compose down -v``). After running the command, restart your browser to apply
+   the new trusted CA.
 
 
 Contributing
