@@ -1,0 +1,8 @@
+{
+    # Use Caddy's local CA to issue certificates (no external CA required)
+    local_certs
+}
+
+:443 {
+    reverse_proxy web:80
+}

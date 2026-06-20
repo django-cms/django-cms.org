@@ -50,7 +50,17 @@ Local Development Setup
 
 3. Open your browser and navigate to:
 
-   http://django-cms.org.127.0.0.1.nip.io:8000 (or just http://127.0.0.1:8000)
+   https://django-cms.org.127.0.0.1.nip.io:8443 (or https://localhost:8443)
+
+   On first use, your browser may show a security warning because the certificate is issued
+   by Caddy's local CA. To avoid this warning, trust the local CA once. First ensure the
+   stack is running (``docker compose up -d``), then run:
+
+   .. code-block:: bash
+
+     docker compose exec caddy caddy trust
+
+   After running this command, restart your browser to pick up the new trusted CA.
 
 
 Contributing

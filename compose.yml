@@ -2,9 +2,6 @@ services:
   web:
     # the application's web service (container) will use an image based on our Dockerfile
     build: .
-    # map the internal port 80 to port 8000 on the host
-    ports:
-      - "8000:80"
     # map the host directory to app (which allows us to see and edit files inside the container)
     volumes:
       - ".:/app:rw"
@@ -16,6 +13,20 @@ services:
       - djangocmsnet
 
     env_file: .env-local
+
+  caddy:
+    # Caddy reverse proxy provides HTTPS termination for local development
+    image: caddy:2-alpine
+    ports:
+      - "8443:443"
+    volumes:
+      - "./Caddyfile:/etc/caddy/Caddyfile"
+      - "caddy-data:/data"
+      - "caddy-config:/config"
+    networks:
+      - djangocmsnet
+    depends_on:
+      - web
 
   database_default:
     # Select one of the following db configurations for the database
@@ -39,3 +50,5 @@ networks:
 
 volumes:
   postgres-data:
+  caddy-data:
+  caddy-config:
