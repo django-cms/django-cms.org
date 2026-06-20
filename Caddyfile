@@ -3,6 +3,13 @@
     local_certs
 }
 
-:443 {
+django-cms.org.127.0.0.1.nip.io, localhost {
+    tls internal
+
+    handle /static/* {
+        root * /srv
+        file_server
+    }
+
     reverse_proxy web:80
 }

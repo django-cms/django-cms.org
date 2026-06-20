@@ -21,6 +21,7 @@ services:
       - "8443:443"
     volumes:
       - "./Caddyfile:/etc/caddy/Caddyfile"
+      - "./staticfiles_collected:/srv/static:ro"
       - "caddy-data:/data"
       - "caddy-config:/config"
     networks:
