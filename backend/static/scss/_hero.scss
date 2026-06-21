@@ -10,10 +10,8 @@
     h1 {
       color: $primary;
     }
-    a:hover {
-      color: $white;
-      border-color: $white;
-    }
+    // Link colors (primary text, inverted pill on hover) are handled globally
+    // for all dark backgrounds in _links.scss.
   }
 
   .hero-content-right {
