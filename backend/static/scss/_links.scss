@@ -5,8 +5,6 @@
 // Global link base styles
 a {
   font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
   letter-spacing: 0;
   color: $secondary;
   text-decoration: none !important;
@@ -87,6 +85,22 @@ footer .bg-dark a,
   &:focus {
     color: $secondary !important;
     text-decoration: none;
+  }
+}
+
+// Links on dark backgrounds (hero, cards, features, …)
+// Inverted pill: primary text by default, primary pill with secondary text on hover.
+#{$dark-bg-selectors} {
+  a:not(.btn):not(.nav-link):not(.link-white):not(.link-light):not(.card-author-link):not(.card-event-link) {
+    color: $primary;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      color: $secondary;
+      background-color: $primary;
+    }
   }
 }
 
