@@ -136,6 +136,26 @@ ol ol > li {
 }
 
 // ==============================================
+// Dark backgrounds – list markers use primary for contrast
+// (squares/dashes via background-color, numbers/letters via color)
+#{$dark-bg-selectors} {
+  ul > li::before,
+  .list-bullet > li::before,
+  ul.list-styled > li::before,
+  .list-dash > li::before,
+  ul.list-styled-dash > li::before {
+    background-color: $primary;
+  }
+
+  ol:not(.list-unstyled):not(.breadcrumb) > li::before,
+  .list-numbered > li::before,
+  ol.list-styled > li::before,
+  ol ol > li::before {
+    color: $primary;
+  }
+}
+
+// ==============================================
 // CMS Toolbar & Frontend List Style Reset
 .cms-toolbar,
 .djangocms-frontend {

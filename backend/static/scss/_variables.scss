@@ -51,6 +51,10 @@ $list-group-active-bg: $primary;
 $list-group-active-color: $secondary;
 $list-group-active-border-color: $primary;
 
+// Background utility classes that render light text on a dark surface.
+// Used to invert link colors (primary text, primary pill on hover).
+$dark-bg-selectors: ".bg-secondary, .bg-dark, .bg-second-primary, .bg-dark-green, .bg-black";
+
 // Custom colors
 $mid-grey: #7C7C7C;
 $dark-green: #1a4d2e;
