@@ -12,8 +12,12 @@ For each entry in the JSON file:
   drop a single ``MDTextPlugin`` carrying the markdown body into its ``content``
   placeholder, and (when ``djangocms-versioning`` is installed) publish the
   resulting version.
+* Ensure a :class:`django.contrib.redirects.models.Redirect` exists from the
+  entry's original URL to the imported post. This happens for every entry,
+  including ones whose post already exists (and is therefore skipped).
 
-The script is idempotent: re-running it skips entries that already exist.
+The script is idempotent: re-running it skips entries that already exist and
+only creates a redirect when one is not already present.
 
 Usage::
 
@@ -29,6 +33,7 @@ import os
 import sys
 from datetime import datetime, time
 from pathlib import Path
+from urllib.parse import urlparse
 
 # --- Django bootstrap ------------------------------------------------------
 ROOT = Path(__file__).resolve().parent.parent
@@ -39,7 +44,10 @@ import django  # noqa: E402
 
 django.setup()
 
+from django.conf import settings  # noqa: E402
 from django.contrib.auth import get_user_model  # noqa: E402
+from django.contrib.redirects.models import Redirect  # noqa: E402
+from django.contrib.sites.models import Site  # noqa: E402
 from django.db import transaction  # noqa: E402
 from django.utils import timezone  # noqa: E402
 from django.utils.text import slugify  # noqa: E402
@@ -145,6 +153,29 @@ def publish_if_versioned(content_obj, user) -> None:
         version.publish(user)
 
 
+def ensure_redirect(
+    post: Post,
+    old_url: str,
+    site: Site,
+    *,
+    dry_run: bool = False,
+) -> str:
+    """Create a Redirect from the entry's original URL to ``post`` if missing.
+
+    Returns one of: ``'created'`` (a redirect was — or would be — created),
+    ``'exists'`` (one was already present), or ``'none'`` (nothing to do).
+    """
+    if not old_url:
+        return "none"
+    old_path = urlparse(old_url).path or "/"
+    if Redirect.objects.filter(site=site, old_path=old_path).exists():
+        return "exists"
+    if not dry_run:
+        new_path = post.get_absolute_url(language=LANGUAGE)
+        Redirect.objects.create(site=site, old_path=old_path, new_path=new_path)
+    return "created"
+
+
 def resolve_app_config(namespace: str | None) -> StoriesConfig:
     qs = StoriesConfig.objects.all()
     if namespace:
@@ -194,25 +225,39 @@ def import_entry(
     entry: dict,
     app_config: StoriesConfig,
     user,
+    site: Site,
     *,
     dry_run: bool = False,
-) -> str:
-    """Import a single JSON entry. Returns one of: 'created', 'skipped', 'error:...'."""
+) -> tuple[str, str]:
+    """Import a single JSON entry.
+
+    Returns a ``(status, redirect)`` pair where ``status`` is one of
+    ``'created'``, ``'skipped'`` or ``'error:...'`` and ``redirect`` is the
+    value returned by :func:`ensure_redirect` (``'created'``/``'exists'``/``'none'``).
+    """
     title = entry.get("title", "") or ""
     if not title.strip():
-        return "error:no-title"
+        return "error:no-title", "none"
     date = parse_date(entry["date"])
+    old_url = entry.get("url", "") or ""
 
     existing = find_existing_post(date, title)
     if existing is not None:
-        return "skipped"
+        redirect = ensure_redirect(existing, old_url, site, dry_run=dry_run)
+        return "skipped", redirect
 
     if dry_run:
-        return "created"
+        # The post would be created; report whether a redirect would follow.
+        redirect = "none"
+        if old_url:
+            old_path = urlparse(old_url).path or "/"
+            if not Redirect.objects.filter(site=site, old_path=old_path).exists():
+                redirect = "created"
+        return "created", redirect
 
     author_data = entry.get("author")
     if not author_data:
-        return "error:no-author"
+        return "error:no-author", "none"
     author_profile = get_or_create_author(author_data)
 
     categories = [
@@ -252,7 +297,9 @@ def import_entry(
 
         publish_if_versioned(pc, user)
 
-    return "created"
+        redirect = ensure_redirect(post, old_url, site, dry_run=False)
+
+    return "created", redirect
 
 
 def main() -> int:
@@ -290,16 +337,19 @@ def main() -> int:
 
     app_config = resolve_app_config(args.app_config)
     user = resolve_user(args.user)
+    site = Site.objects.get(pk=settings.SITE_ID)
     print(
         f"using app_config={app_config.namespace!r}, version-author={user.username!r}, "
-        f"language={LANGUAGE!r}",
+        f"language={LANGUAGE!r}, site={site.domain!r}",
         file=sys.stderr,
     )
 
-    counts = {"created": 0, "skipped": 0, "error": 0}
+    counts = {"created": 0, "skipped": 0, "error": 0, "redirects": 0}
     for i, entry in enumerate(entries, 1):
         try:
-            result = import_entry(entry, app_config, user, dry_run=args.dry_run)
+            result, redirect = import_entry(
+                entry, app_config, user, site, dry_run=args.dry_run
+            )
         except Exception as exc:  # noqa: BLE001
             print(
                 f"  [{i}/{len(entries)}] ERROR {entry.get('url', '?')}: {exc}",
@@ -307,6 +357,8 @@ def main() -> int:
             )
             counts["error"] += 1
             continue
+        if redirect == "created":
+            counts["redirects"] += 1
         if result.startswith("error"):
             counts["error"] += 1
             print(
@@ -318,13 +370,15 @@ def main() -> int:
         if i % 25 == 0 or i == len(entries):
             print(
                 f"  progress: {i}/{len(entries)} "
-                f"(created={counts['created']} skipped={counts['skipped']} error={counts['error']})",
+                f"(created={counts['created']} skipped={counts['skipped']} "
+                f"redirects={counts['redirects']} error={counts['error']})",
                 file=sys.stderr,
             )
 
     verb = "would create" if args.dry_run else "created"
     print(
-        f"done: {verb}={counts['created']}, skipped={counts['skipped']}, errors={counts['error']}",
+        f"done: {verb}={counts['created']}, skipped={counts['skipped']}, "
+        f"redirects={counts['redirects']}, errors={counts['error']}",
         file=sys.stderr,
     )
     return 0 if counts["error"] == 0 else 1
