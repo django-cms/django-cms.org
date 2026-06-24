@@ -1630,6 +1630,14 @@ class Container1ColText(CMSFrontendComponent):
         help_text=_("Controls horizontal alignment of all content"),
     )
 
+    content_alignment = forms.ChoiceField(
+        label=_("Content alignment"),
+        choices=frontend_settings.ALIGN_CHOICES,
+        initial="center",
+        widget=IconGroup(),
+        help_text=_("Controls horizontal alignment of all content"),
+    )
+
     def get_short_description(self) -> str:
         heading = self.config.get("heading")
         background_context = self.config.get("background_context") or "no background"
