@@ -44,7 +44,7 @@
                 {% endif %}
                 {% endwith %}
             </div>
-            <a href="{% absolute_url post_content %}" class="stretched-link"></a>
+            <a href="{% absolute_url post_content %}" class="stretched-link" aria-label="{{ profile.name|escapejs }}"></a>
         </div>
     </div>
 </article>
