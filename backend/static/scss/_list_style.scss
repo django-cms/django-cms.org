@@ -185,11 +185,11 @@ ol ol > li {
     padding-left: 0 !important;
   }
 
-  li {
+  ol > li {
     padding-left: 1.25rem !important;
   }
 
-  li::before {
+  ol > li::before {
     font-weight: 400 !important;
     font-size: 1rem !important;
     top: 0.25em !important;
