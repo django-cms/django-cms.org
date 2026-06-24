@@ -533,12 +533,9 @@ class CTAPanel(CMSFrontendComponent):
 
     content_alignment = forms.ChoiceField(
         label=_("Content alignment"),
-        choices=[
-            ("start", _("Start")),
-            ("center", _("Center (Default)")),
-            ("end", _("End")),
-        ],
+        choices=frontend_settings.ALIGN_CHOICES,
         initial="center",
+        widget=IconGroup(),
         help_text=_("Controls horizontal alignment of all content"),
     )
 
@@ -1641,12 +1638,9 @@ class Container1ColText(CMSFrontendComponent):
 
     content_alignment = forms.ChoiceField(
         label=_("Content alignment"),
-        choices=[
-            ("start", _("Start")),
-            ("center", _("Center (Default)")),
-            ("end", _("End")),
-        ],
+        choices=frontend_settings.ALIGN_CHOICES,
         initial="center",
+        widget=IconGroup(),
         help_text=_("Controls horizontal alignment of all content"),
     )
 
