@@ -50,7 +50,7 @@ class Hero(CMSFrontendComponent):
         default_config = {
             "padding_y": "py-6",
         }
-        mixins = ["Background", "Spacing"]
+        mixins = ["Background", "cms_theme.BackgroundGrid", "Spacing"]
         frontend_editable_fields = ("heading", "overline", "body")
 
     heading = forms.CharField(
@@ -66,11 +66,6 @@ class Hero(CMSFrontendComponent):
     body = HTMLFormField(
         label=_("Body"),
         required=False,
-    )
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=False,
     )
 
     main_image_template = forms.ChoiceField(
@@ -96,7 +91,6 @@ class Hero(CMSFrontendComponent):
         return self.heading if self.config.get("heading") else ""
 
 
-
 @components.register
 class Accordion(CMSFrontendComponent):
     """Accordion section container for features and content area"""
@@ -114,7 +108,7 @@ class Accordion(CMSFrontendComponent):
             Slot("links", _("Centered Links"), child_classes=["TextLinkPlugin"]),
         )
 
-        mixins = ["Background", "Spacing"]
+        mixins = ["Background", "cms_theme.BackgroundGrid", "Spacing"]
 
     mirror_layout = forms.ChoiceField(
         label=_("Layout for text and images"),
@@ -149,11 +143,6 @@ class Accordion(CMSFrontendComponent):
         initial="default",
     )
 
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=False,
-    )
 
     def get_short_description(self):
         return self.heading if self.config.get("heading") else ""
@@ -216,7 +205,7 @@ class FAQ(CMSFrontendComponent):
             Slot("links", _("Centered Links"), child_classes=["TextLinkPlugin"]),
         )
 
-        mixins = ["Background", "Spacing"]
+        mixins = ["Background", "cms_theme.BackgroundGrid", "Spacing"]
 
     mirror_layout = forms.ChoiceField(
         label=_("Layout for questions and answers"),
@@ -251,11 +240,6 @@ class FAQ(CMSFrontendComponent):
         initial="default",
     )
 
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=False,
-    )
 
     def get_short_description(self):
         return self.heading if self.config.get("heading") else ""
@@ -508,18 +492,13 @@ class CTAPanel(CMSFrontendComponent):
         allow_children = True
         child_classes = ["TextLinkPlugin",]
         parent_classes = []
-        mixins = ["Background", "Spacing", "Attributes"]
+        mixins = ["Background", "cms_theme.BackgroundGrid", "Spacing", "Attributes"]
         default_config = {
             "background_context": "secondary",
             "padding_y": "py-6",
         }
         frontend_editable_fields = ("main_heading", "eyebrow_text")
 
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=False,
-    )
 
     main_heading = HTMLFormField(
         label=_("Main heading"),
@@ -661,7 +640,7 @@ class BenefitsCards(CMSFrontendComponent):
         render_template = "cards/cards.html"
         allow_children = True
         child_classes = ["BenefitsCardPlugin"]
-        mixins = ["Background", "Spacing", "Attributes"]
+        mixins = ["Background", "cms_theme.BackgroundGrid", "Spacing", "Attributes"]
         default_config = {
             "padding_y": "py-6",
         }
@@ -716,11 +695,6 @@ class BenefitsCards(CMSFrontendComponent):
         help_text=_("Number of grid columns."),
     )
 
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=False,
-    )
 
     def get_render_template(self, context, instance, placeholder):
         return get_plugin_template(
@@ -1122,7 +1096,7 @@ class QuotePanelContainer(CMSFrontendComponent):
         allow_children = True
         child_classes = ["QuotePanelItemPlugin"]
         frontend_editable_fields = ["overline", "heading"]
-        mixins = ["Background", "Spacing", "Attributes"]
+        mixins = ["Background", "cms_theme.BackgroundGrid", "Spacing", "Attributes"]
         default_config = {
             "padding_y": "py-6",
         }
@@ -1141,12 +1115,6 @@ class QuotePanelContainer(CMSFrontendComponent):
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
         initial=frontend_settings.EMPTY_CHOICE,
         widget=ColoredButtonGroup(),
-    )
-
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=False,
     )
 
 
@@ -1565,7 +1533,8 @@ class ContainerWithGrid(CMSFrontendComponent):
         allow_children = True
         show_add_form = False
         frontend_editable_fields = ["heading", "overline"]
-        mixins = ["Background", "Spacing"]
+        mixins = ["Background", "cms_theme.BackgroundGrid", "Spacing"]
+        default_config = {"background_grid": True}
 
     heading = forms.CharField(
         label=_("Heading"),
@@ -1585,11 +1554,6 @@ class ContainerWithGrid(CMSFrontendComponent):
         widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=True,
-    )
 
     def get_short_description(self) -> str:
         heading = self.config.get("heading")
@@ -1610,7 +1574,8 @@ class Container1ColText(CMSFrontendComponent):
         allow_children = True
         show_add_form = False
         frontend_editable_fields = ["heading", "overline"]
-        mixins = ["Background", "Spacing"]
+        mixins = ["Background", "cms_theme.BackgroundGrid", "Spacing"]
+        default_config = {"background_grid": True}
 
     heading = forms.CharField(
         label=_("Heading"),
@@ -1630,11 +1595,6 @@ class Container1ColText(CMSFrontendComponent):
         widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
 
-    background_grid = forms.BooleanField(
-        label=_("Show background grid"),
-        required=False,
-        initial=True,
-    )
 
     content_alignment = forms.ChoiceField(
         label=_("Content alignment"),
