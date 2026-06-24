@@ -518,6 +518,32 @@ class CTAPanel(CMSFrontendComponent):
         help_text=_("Controls horizontal alignment of all content"),
     )
 
+    def save_model(self, request, obj, form, change):
+        """Auto-create a default Button child plugin when a CTA is first added.
+
+        This method is transplanted onto the generated plugin class (see
+        ``CMSFrontendComponent.plugin_factory``), so the base implementation –
+        which persists the plugin and creates slot children – has to be invoked
+        explicitly rather than via ``super()``.
+        """
+        CMSFrontendComponent.save_model(self, request, obj, form, change)
+        if not change:
+            from cms.api import add_plugin
+
+            add_plugin(
+                obj.placeholder,
+                "TextLinkPlugin",
+                obj.language,
+                target=obj,
+                config={
+                    "name": str(_("Call to action")),
+                    "link_type": "btn",
+                    "link_context": "primary",
+                    "link_size": "",
+                    "template": "default",
+                },
+            )
+
 
 @components.register
 class Carousel(CMSFrontendComponent):
