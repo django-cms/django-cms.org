@@ -1391,10 +1391,11 @@ class CounterPluginMixin:
                 number = self._fetch_pypi_downloads(counter_type)
             else:
                 number = self._fetch_github_stat(counter_type)
+            cache.set(cache_key, number, self.CACHE_TIMEOUT)
+            return number
         except Exception:
             logger.exception("Failed to fetch stat for %s", counter_type)
-        cache.set(cache_key, number, self.CACHE_TIMEOUT)
-        return number
+        return None
 
     def _fetch_pypi_downloads(self, counter_type):
         import requests
@@ -1464,7 +1465,7 @@ class CounterPluginMixin:
     def render(self, context, instance, placeholder):
         counter_type = instance.config.get("counter_type", "manual")
         if counter_type != "manual":
-            instance.config["number"] = self._get_counter_number(counter_type)
+            instance.config["number"] = self._get_counter_number(counter_type) or "-"
         return super().render(context, instance, placeholder)
 
 
