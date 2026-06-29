@@ -83,6 +83,12 @@ stop() {
     $DOCKER_COMPOSE down "$@"
 }
 
+trust-ca() {
+    _requires caddy
+    $DOCKER_COMPOSE exec caddy caddy trust
+    echo "Caddy's local CA has been trusted. Restart your browser to apply the change."
+}
+
 exec() {
     $DOCKER_COMPOSE exec -e COLUMNS -e LINES "$@"
 }
@@ -152,6 +158,12 @@ Usage:
     ${BOLD}stop${NORMAL} [<arg>]
 
         Stop the django server (and dependent services)
+
+    ${BOLD}trust-ca${NORMAL}
+
+        Trust Caddy's local CA so your browser accepts the HTTPS certificate without a warning.
+        Run this once after the first \`start\` (or after wiping the caddy-data volume).
+        Safe to run again — it is idempotent.
 
 USAGE
 }
