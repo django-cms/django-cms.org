@@ -94,7 +94,10 @@ def _override_post_admin():
 
         def save_model(self, request, obj, form, change):
             profile = form.cleaned_data.get("author_profile")
-            obj.author = profile.user
+            if profile:
+                obj.author = profile.user
+            else:
+                obj.author = None
             super().save_model(request, obj, form, change)
 
     if admin.site.is_registered(Post):
