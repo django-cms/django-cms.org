@@ -69,6 +69,7 @@ def _override_post_admin():
                     pass
 
     class CustomPostAdmin(PostAdmin):
+        autocomplete_fields = ["author_profile", "related"]
         form = CustomPostForm
 
         def get_fieldsets(self, request, obj=None):
@@ -93,8 +94,7 @@ def _override_post_admin():
 
         def save_model(self, request, obj, form, change):
             profile = form.cleaned_data.get("author_profile")
-            if profile:
-                obj.author = profile.user
+            obj.author = profile.user
             super().save_model(request, obj, form, change)
 
     if admin.site.is_registered(Post):
