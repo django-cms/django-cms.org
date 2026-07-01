@@ -69,7 +69,7 @@ def _override_post_admin():
                     pass
 
     class CustomPostAdmin(PostAdmin):
-        autocomplete_fields = ["author_profile", "related"]
+        autocomplete_fields = ["related"]
         form = CustomPostForm
 
         def get_fieldsets(self, request, obj=None):
