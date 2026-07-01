@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import admin
+from django.contrib.admin.widgets import AutocompleteSelect
 from parler.admin import TranslatableAdmin
 
 from .models import AuthorProfile, SocialLink
@@ -52,6 +53,13 @@ def _override_post_admin():
             queryset=AuthorProfile.objects.all(),
             required=False,
             label="Author",
+            # Drive select2 autocomplete via AuthorProfileAdmin's search view.
+            # author_profile is a form-only field, so we borrow a real FK to
+            # AuthorProfile (SocialLink.author) as the autocomplete source field.
+            widget=AutocompleteSelect(
+                SocialLink._meta.get_field("author"),
+                admin.site,
+            ),
         )
 
         class Meta:
