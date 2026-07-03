@@ -518,31 +518,28 @@ class CTAPanel(CMSFrontendComponent):
         help_text=_("Controls horizontal alignment of all content"),
     )
 
-    def save_model(self, request, obj, form, change):
-        """Auto-create a default Button child plugin when a CTA is first added.
+    class PluginMixin:
+        def save_model(self, request, obj, form, change):
+            """Auto-create a default Button child plugin when a CTA is first added."""
+            super().save_model(request, obj, form, change)
+            if not change:
+                from cms.api import add_plugin
+                from djangocms_link.helpers import LinkDict
 
-        This method is transplanted onto the generated plugin class (see
-        ``CMSFrontendComponent.plugin_factory``), so the base implementation –
-        which persists the plugin and creates slot children – has to be invoked
-        explicitly rather than via ``super()``.
-        """
-        CMSFrontendComponent.save_model(self, request, obj, form, change)
-        if not change:
-            from cms.api import add_plugin
-
-            add_plugin(
-                obj.placeholder,
-                "TextLinkPlugin",
-                obj.language,
-                target=obj,
-                config={
-                    "name": str(_("Call to action")),
-                    "link_type": "btn",
-                    "link_context": "primary",
-                    "link_size": "",
-                    "template": "default",
-                },
-            )
+                add_plugin(
+                    obj.placeholder,
+                    "TextLinkPlugin",
+                    obj.language,
+                    target=obj,
+                    config={
+                        "name": str(_("Call to action")),
+                        "link": LinkDict("/"),
+                        "link_type": "btn",
+                        "link_context": "primary",
+                        "link_size": "",
+                        "template": "default",
+                    },
+                )
 
 
 @components.register
@@ -721,14 +718,14 @@ class BenefitsCards(CMSFrontendComponent):
         help_text=_("Number of grid columns."),
     )
 
-
-    def get_render_template(self, context, instance, placeholder):
-        return get_plugin_template(
-            instance,
-            "cards",
-            "cards",
-            BenefitsCards.TEMPLATES,
-        )
+    class PluginMixin:
+        def get_render_template(self, context, instance, placeholder):
+            return get_plugin_template(
+                instance,
+                "cards",
+                "cards",
+                BenefitsCards.TEMPLATES,
+            )
 
     def get_short_description(self):
         return self.heading if self.config.get("heading") else ""
@@ -776,14 +773,15 @@ class BenefitsCard(CMSFrontendComponent):
         help_text=_("Optional image displayed in full width."),
     )
 
-    def get_render_template(self, context, instance, placeholder):
-        return get_plugin_template(
-            instance.parent.get_plugin_instance()[0] if instance.parent else instance,
-            # instance.parent or instance once django-cms 4.1 support can be dropped
-            "cards",
-            "card",
-            BenefitsCards.TEMPLATES,
-        )
+    class PluginMixin:
+        def get_render_template(self, context, instance, placeholder):
+            return get_plugin_template(
+                instance.parent.get_plugin_instance()[0] if instance.parent else instance,
+                # instance.parent or instance once django-cms 4.1 support can be dropped
+                "cards",
+                "card",
+                BenefitsCards.TEMPLATES,
+            )
 
     def get_short_description(self):
         return self.card_title if self.config.get("card_title") else ""
