@@ -684,6 +684,13 @@ class BenefitsCards(CMSFrontendComponent):
         required=False,
     )
 
+    anchor = forms.CharField(
+        label=_("HTML anchor"),
+        required=False,
+        help_text=_("Optional HTML anchor for the section"),
+    )
+
+    
     heading_context = forms.ChoiceField(
         label=_("Heading context"),
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
@@ -831,6 +838,12 @@ class RelatedPeople(CMSFrontendComponent):
     eyebrow_text = forms.CharField(
         label=_("Eyebrow text"),
         required=False,
+    )
+
+    anchor = forms.CharField(
+        label=_("HTML anchor"),
+        required=False,
+        help_text=_("Optional HTML anchor for the section"),
     )
 
     text_color = forms.ChoiceField(
@@ -1107,6 +1120,13 @@ class TwoColumn(CMSFrontendComponent):
         initial=frontend_settings.EMPTY_CHOICE[0][0],
         widget=ColoredButtonGroup(attrs=WRAP_BUTTONS),
     )
+
+    anchor = forms.CharField(
+        label=_("HTML anchor"),
+        required=False,
+        help_text=_("Optional HTML anchor for the section"),
+    )
+    
 
 
 @components.register
@@ -1571,6 +1591,12 @@ class ContainerWithGrid(CMSFrontendComponent):
         required=False,
     )
 
+    anchor = forms.CharField(
+        label=_("HTML anchor"),
+        required=False,
+        help_text=_("Optional HTML anchor for the section"),
+    )
+    
     text_color = forms.ChoiceField(
         label=_("Text color"),
         choices=frontend_settings.EMPTY_CHOICE + frontend_settings.COLOR_STYLE_CHOICES,
@@ -1610,6 +1636,12 @@ class Container1ColText(CMSFrontendComponent):
     overline = forms.CharField(
         label=_("Eyebrow text"),
         required=False,
+    )
+
+    anchor = forms.CharField(
+        label=_("HTML anchor"),
+        required=False,
+        help_text=_("Optional HTML anchor for the section"),
     )
 
     text_color = forms.ChoiceField(

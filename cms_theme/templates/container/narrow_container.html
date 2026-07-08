@@ -1,5 +1,5 @@
 {% load cms_tags frontend %}
-<section>
+<section{% if instance.anchor %} id="{{ instance.anchor }}" {% endif %}>
     <div class="container py-6{% if instance.config.text_color %} text-{{ instance.config.text_color }}{% endif %}">
         <div class="row mb-4 justify-content-center">
             <div class="col-12 col-lg-8 text-{{ instance.config.content_alignment|default:'center' }}" {{ instance.get_attributes }}>
