@@ -17,6 +17,7 @@ from djangocms_frontend.fields import (
     IconGroup,
 )
 from djangocms_frontend.helpers import first_choice, get_plugin_template
+from djangocms_link.fields import LinkFormField
 
 from .fields import ColorChoiceField
 
@@ -779,6 +780,12 @@ class BenefitsCard(CMSFrontendComponent):
         label=_("Image"),
         required=False,
         help_text=_("Optional image displayed in full width."),
+    )
+
+    card_link = LinkFormField(
+        label=_("Card link"),
+        required=False,
+        help_text=_("Optional link for the entire card. If provided, the whole card will be clickable."),
     )
 
     class PluginMixin:

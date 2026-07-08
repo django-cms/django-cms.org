@@ -45,6 +45,15 @@
 	}
 }
 
+.benefits-card:has(.stretched-link) {
+	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+	&:hover {
+		transform: scale(1.03);
+		box-shadow: var(--bs-box-shadow);
+	}
+}
+
 .benefits-card.bg-primary {
 	a {
 		@extend .btn-outline-secondary;

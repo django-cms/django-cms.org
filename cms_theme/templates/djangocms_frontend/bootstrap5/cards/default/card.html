@@ -1,8 +1,11 @@
 <!-- cms_theme/templates/benefits/benefits_card.html -->
-{% load static cms_tags frontend icon_tags %}
+{% load static cms_tags frontend icon_tags djangocms_link_tags %}
 {% add_css_for_icon instance.card_icon %}
 <div class="col">
     <div class="{{ instance.get_classes }} h-100 card benefits-card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}" {{ instance.get_attributes }}>
+        {% if instance.card_link %}
+            <a href="{{ instance.card_link|to_url }}" class="stretched-link" {% if instance.card_link.target %}target="{{ instance.card_link.target }}"{% endif %}></a>
+        {% endif %}
         {% if instance.card_icon %}
             <div class="mb-4 pb-1">
                 <i class="{{ instance.card_icon.iconClass }} display-1"></i>
