@@ -11,7 +11,8 @@
         <div class="row g-4 justify-content-center row-cols-1
             {% if instance.grid_columns == '2' %} row-cols-lg-2
             {% elif instance.grid_columns == '3' %} row-cols-md-2 row-cols-lg-3
-            {% elif instance.grid_columns|default:'4' == '4' %} row-cols-md-2 row-cols-lg-4{% endif %}
+            {% elif instance.grid_columns|default:'4' == '4' %} row-cols-md-2 row-cols-lg-4
+            {% elif instance.grid_columns == '5' %} row-cols-md-2 row-cols-lg-5{% endif %}
         ">
             {% for plugin in instance.child_plugin_instances %}
                 {% render_plugin plugin %}

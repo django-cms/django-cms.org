@@ -26,7 +26,7 @@
 }
 
 .benefits-card-top-image {
-	margin: 0rem 0rem 1.75rem 0;
+	margin: 0;
 	overflow: hidden;
 	border-radius: var(--bs-card-border-radius) var(--bs-card-border-radius) 0 0;
 
@@ -39,6 +39,9 @@
 		height: 100%;
 		object-fit: contain; // scale down so the image is fully contained
 		object-position: center center;
+	}
+	& + * {
+		margin-top: 1.75rem;
 	}
 }
 
