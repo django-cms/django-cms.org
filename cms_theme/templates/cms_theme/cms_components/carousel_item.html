@@ -21,7 +21,7 @@
                     sizes="(max-width: 768px) 90vw,
                         (max-width: 1200px) 70vw,
                         1200px"
-                    alt="{{ image.alt }}"
+                    alt="{{ image.default_alt_text|default:'' }}"
                     title="{{ image.title }}"
                     loading="lazy">
             {% if logo_link %}</a>{% endif %}
