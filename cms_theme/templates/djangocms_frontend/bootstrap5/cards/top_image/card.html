@@ -8,7 +8,7 @@
         {% endif %}
         {% if instance.bottom_image %}
             <div class="benefits-card-top-image">
-                <img src="{{ instance.bottom_image.url }}" alt="" class="w-100 d-block">
+                <img src="{{ instance.bottom_image.url }}" alt="{{ instance.bottom_image.default_alt_text|default_if_none:'' }}" class="w-100 d-block">
             </div>
         {% endif %}
         {% if instance.card_title %}

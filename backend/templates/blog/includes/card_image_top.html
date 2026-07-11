@@ -6,7 +6,7 @@
       {% thumbnail post_content.post.main_image 400x241 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as hero_sm %}
       {% thumbnail post_content.post.main_image 600x362 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as hero_md %}
       {% thumbnail post_content.post.main_image 800x482 crop="smart" quality=55 subject_location=post_content.post.main_image.subject_location as hero_lg %}
-            <img src="{{ hero_md.url }}"
+            <img src="{{ hero_md.url }}" alt="{{ hero_md.default_alt_text|default_if_none:'' }}"
                  srcset="{{ hero_sm.url }} 400w, {{ hero_md.url }} 600w, {{ hero_lg.url }} 800w"
                  sizes="(max-width: 576px) 400px, (max-width: 992px) 600px, 800px"
                  class="card-img-top blog-img-top"
