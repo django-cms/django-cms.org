@@ -28,9 +28,7 @@ urlpatterns = [
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
     ),
-    path("taggit_autosuggest/", include("taggit_autosuggest.urls")),
     path("admin/", admin.site.urls),
-    path("autosuggest/", include("taggit_autosuggest.urls")),
 ]
 
 if settings.DEBUG:
