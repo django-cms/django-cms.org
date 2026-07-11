@@ -95,8 +95,6 @@ INSTALLED_APPS = [
     # the default text editor
     "djangocms_text",
     "djangocms_markdown",
-
-    "djangocms4_utilities",
 ]
 
 MIDDLEWARE = [
