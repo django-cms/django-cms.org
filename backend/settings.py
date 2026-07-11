@@ -85,9 +85,9 @@ INSTALLED_APPS = [
     "djangocms_stories",
     "authors",
     "taggit",
-    "taggit_autosuggest",
     "meta",
     "sortedm2m",
+
     "djangocms_file",
     "djangocms_form_builder",
     "djangocms_snippet",
