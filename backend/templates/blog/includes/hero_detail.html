@@ -7,11 +7,11 @@
                     <span class="overline text-primary">{{ post_content.post.categories.first }}{% if post_content.post.date_published and not post_content.post.date_featured %} | {{post_content.post.date_published|date:"F j, Y" }}{% endif %}</span>
                 <div class="row">
                     <div class="col-12 col-lg-11">
-                        <h1 class="mt-2 mb-0 pb-4 text-primary">{{ post_content.title }}</h1>
+                        <h1 class="mt-2 mb-0 pb-4 text-primary">{% render_model post_content "title" "title" %}</h1>
                     </div>
                 </div>
-                {% if post_content.abstract %}
-                    <div class="fs-5 pb-2 text-white col-12 col-lg-11">{{ post_content.abstract }}</div>
+                {% if post_content.abstract or request.toolbar.edit_mode_active %}
+                    <div class="fs-5 pb-2 text-white col-12 col-lg-11">{% render_model post_content "abstract" "abstract" "" "safe" %}</div>
                 {% endif %}
                 {% if post_content.post.date_featured %}
                     <div class="pt-3 mt-2">
