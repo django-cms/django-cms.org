@@ -10,7 +10,11 @@ register = template.Library()
 
 @register.simple_tag
 def get_blog_categories():
-    return PostCategory.objects.order_by("priority", "translations__name")
+    return (
+        PostCategory.objects
+        .prefetch_related("translations")
+        .order_by("priority", "translations__name")
+    )
 
 
 @register.simple_tag(takes_context=True)
