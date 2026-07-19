@@ -147,7 +147,7 @@ djangocms-text==0.9.10
     # via
     #   -r requirements.in
     #   djangocms-stories
-djangocms-versioning==2.6.1
+djangocms-versioning @ git+https://github.com/django-cms/djangocms-versioning
     # via -r requirements.in
 djangocms-video==3.1.0
     # via -r requirements.in
@@ -251,3 +251,5 @@ whitenoise==6.12.0
 # The following packages are considered to be unsafe in a requirements file:
 # pip
 # setuptools
+
+django-debug-toolbar

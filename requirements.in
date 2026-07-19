@@ -48,3 +48,4 @@ djangocms-history
 
 sentry-sdk
 
+django-debug-toolbar
