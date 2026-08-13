@@ -4,21 +4,21 @@
 #
 #    pip-compile --cert=None --client-cert=None --index-url=None --output-file=requirements.txt --pip-args=None requirements.in
 #
-asgiref==3.11.1
+asgiref==3.12.1
     # via django
-boto3==1.43.46
+boto3==1.43.70
     # via -r requirements.in
-botocore==1.43.46
+botocore==1.43.70
     # via
     #   boto3
     #   s3transfer
-build==1.5.1
+build==1.5.0
     # via pip-tools
-certifi==2026.6.17
+certifi==2026.7.22
     # via
     #   requests
     #   sentry-sdk
-charset-normalizer==3.4.9
+charset-normalizer==3.5.0
     # via
     #   reportlab
     #   requests
@@ -28,7 +28,7 @@ cssselect2==0.9.0
     # via svglib
 dj-database-url==3.1.2
     # via -r requirements.in
-django==6.0.7
+django==6.1
     # via
     #   -r requirements.in
     #   dj-database-url
@@ -55,7 +55,7 @@ django-classy-tags==4.1.0
     # via
     #   django-cms
     #   django-sekizai
-django-cms @ git+https://github.com/django-cms/django-cms@main
+django-cms==5.1.1
     # via
     #   -r requirements.in
     #   djangocms-alias
@@ -92,7 +92,7 @@ django-parler==2.4
     # via
     #   djangocms-alias
     #   djangocms-stories
-django-polymorphic==4.11.6
+django-polymorphic==4.11.7
     # via django-filer
 django-sekizai==4.1.0
     # via django-cms
@@ -102,7 +102,7 @@ django-storage-url==0.12.1
     # via -r requirements.in
 django-storages==1.14.6
     # via django-storage-url
-django-stubs-ext==6.0.6
+django-stubs-ext==6.1.0
     # via django-fsm-2
 django-taggit==6.1.0
     # via
@@ -127,7 +127,7 @@ djangocms-ecosystem @ git+https://github.com/django-cms/djangocms-ecosystem
     # via -r requirements.in
 djangocms-file==4.0.1
     # via -r requirements.in
-djangocms-form-builder==0.5.1
+djangocms-form-builder==0.6.0
     # via -r requirements.in
 djangocms-frontend==2.5.1
     # via -r requirements.in
@@ -147,7 +147,7 @@ djangocms-text==0.9.10
     # via
     #   -r requirements.in
     #   djangocms-stories
-djangocms-versioning @ git+https://github.com/django-cms/djangocms-versioning
+djangocms-versioning==2.7.0
     # via -r requirements.in
 djangocms-video==3.1.0
     # via -r requirements.in
@@ -170,7 +170,7 @@ lxml==6.1.1
     #   djangocms-stories
     #   djangocms-text
     #   svglib
-markdown==3.10.2
+markdown==3.10.3
     # via djangocms-markdown
 nh3==0.3.6
     # via
@@ -178,7 +178,7 @@ nh3==0.3.6
     #   djangocms-text
 orderedmultidict==1.0.2
     # via furl
-packaging==26.2
+packaging==26.3
     # via
     #   build
     #   djangocms-text
@@ -190,7 +190,7 @@ pillow==12.3.0
     #   easy-thumbnails
     #   reportlab
     #   svglib
-pip-tools==7.5.3
+pip-tools==7.6.1
     # via -r requirements.in
 psycopg==3.3.4
     # via -r requirements.in
@@ -202,7 +202,7 @@ pyproject-hooks==1.2.0
     #   pip-tools
 python-dateutil==2.9.0.post0
     # via botocore
-pytz==2026.2
+pytz==2026.3.post1
     # via djangocms-stories
 reportlab==5.0.0
     # via
@@ -210,9 +210,9 @@ reportlab==5.0.0
     #   svglib
 requests==2.34.2
     # via -r requirements.in
-s3transfer==0.19.1
+s3transfer==0.19.2
     # via boto3
-sentry-sdk==2.64.0
+sentry-sdk==2.68.0
     # via -r requirements.in
 six==1.17.0
     # via
@@ -221,7 +221,7 @@ six==1.17.0
     #   python-dateutil
 sqlparse==0.5.5
     # via django
-svglib==2.0.2
+svglib==2.1.0
     # via easy-thumbnails
 tinycss2==1.5.1
     # via
@@ -243,7 +243,7 @@ webencodings==0.5.1
     # via
     #   cssselect2
     #   tinycss2
-wheel==0.47.0
+wheel==0.48.0
     # via pip-tools
 whitenoise==6.12.0
     # via -r requirements.in
@@ -251,5 +251,3 @@ whitenoise==6.12.0
 # The following packages are considered to be unsafe in a requirements file:
 # pip
 # setuptools
-
-django-debug-toolbar
