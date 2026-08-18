@@ -52,6 +52,32 @@ Local Development Setup
 
    http://django-cms.org.127.0.0.1.nip.io:8000 (or just http://127.0.0.1:8000)
 
+Email configuration
+~~~~~~~~~~~~~~~~~~~
+
+Email delivery is configured through environment variables. An SMTP deployment
+can set:
+
+.. code-block:: dotenv
+
+   EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+   EMAIL_HOST=smtp.example.com
+   EMAIL_PORT=587
+   EMAIL_HOST_USER=username
+   EMAIL_HOST_PASSWORD=password
+   EMAIL_USE_TLS=true
+   EMAIL_USE_SSL=false
+   EMAIL_TIMEOUT=10
+   DEFAULT_FROM_EMAIL=django CMS <info@example.com>
+   SERVER_EMAIL=django CMS <errors@example.com>
+
+``EMAIL_USE_TLS`` and ``EMAIL_USE_SSL`` are mutually exclusive. Boolean values
+accept ``1``, ``0``, ``true``, ``false``, ``yes``, ``no``, ``on``, and ``off``.
+
+For local development, set ``EMAIL_BACKEND`` to
+``django.core.mail.backends.console.EmailBackend`` to print messages instead of
+sending them.
+
 
 Contributing
 ------------
@@ -125,4 +151,3 @@ Quick Overview
 2. Create an **Alias** named ``mega-menu-[reverse-id]`` (e.g., ``mega-menu-about``)
 3. Add content plugins to your alias
 4. Publish and enjoy your mega menu!
-

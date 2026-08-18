@@ -4,12 +4,38 @@ from copy import deepcopy
 from pathlib import Path
 
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.log import DEFAULT_LOGGING
 from django.utils.translation import gettext_lazy as _
 from django_storage_url import dsn_configured_storage_class
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def _env_bool(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+
+    normalized = value.strip().lower()
+    if normalized in {"1", "true", "yes", "on"}:
+        return True
+    if normalized in {"0", "false", "no", "off"}:
+        return False
+    raise ImproperlyConfigured(
+        f"{name} must be one of: 1, 0, true, false, yes, no, on, off."
+    )
+
+
+def _env_int(name, default):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    try:
+        return int(value)
+    except ValueError as exc:
+        raise ImproperlyConfigured(f"{name} must be an integer.") from exc
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -136,6 +162,7 @@ TEMPLATES = [
                 "django.template.context_processors.csrf",
                 "django.template.context_processors.tz",
                 "django.template.context_processors.i18n",
+                "backend.context_processors.admin_delete_confirmation_defaults",
                 "cms.context_processors.cms_settings",
                 "sekizai.context_processors.sekizai",
             ],
@@ -386,9 +413,23 @@ DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_RECIPIENT_WINDOW = 24 * 60 * 60
 DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_WORKERS = 2
 DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_MAX_PENDING = 10
 
+# Email delivery. Defaults generally match Django's SMTP backend while allowing each
+# deployment to provide its mail server and credentials through the environment,
+# with EMAIL_TIMEOUT defaulting to 10 seconds instead of Django's None.
+EMAIL_BACKEND = os.environ.get(
+    "EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"
+)
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "localhost")
+EMAIL_PORT = _env_int("EMAIL_PORT", 25)
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = _env_bool("EMAIL_USE_TLS")
+EMAIL_USE_SSL = _env_bool("EMAIL_USE_SSL")
+EMAIL_TIMEOUT = _env_int("EMAIL_TIMEOUT", 10)
 DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL", "django CMS <info@django-cms.org>"
 )
+SERVER_EMAIL = os.environ.get("SERVER_EMAIL", DEFAULT_FROM_EMAIL)
 
 DJANGOCMS_FRONTEND_SPACER_SIZES = (
     ("0", "* 0"),
