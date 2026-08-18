@@ -136,6 +136,7 @@ TEMPLATES = [
                 "django.template.context_processors.csrf",
                 "django.template.context_processors.tz",
                 "django.template.context_processors.i18n",
+                "backend.context_processors.admin_delete_confirmation_defaults",
                 "cms.context_processors.cms_settings",
                 "sekizai.context_processors.sekizai",
             ],
