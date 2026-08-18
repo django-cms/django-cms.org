@@ -151,7 +151,7 @@ djangocms-snippet==5.0.2
     # via -r requirements.in
 djangocms-stories==0.9.3
     # via -r requirements.in
-djangocms-text==0.9.10
+djangocms-text==0.9.11
     # via
     #   -r requirements.in
     #   djangocms-stories
