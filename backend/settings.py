@@ -413,8 +413,9 @@ DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_RECIPIENT_WINDOW = 24 * 60 * 60
 DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_WORKERS = 2
 DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_MAX_PENDING = 10
 
-# Email delivery. Defaults match Django's SMTP backend while allowing each
-# deployment to provide its mail server and credentials through the environment.
+# Email delivery. Defaults generally match Django's SMTP backend while allowing each
+# deployment to provide its mail server and credentials through the environment,
+# with EMAIL_TIMEOUT defaulting to 10 seconds instead of Django's None.
 EMAIL_BACKEND = os.environ.get(
     "EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"
 )
