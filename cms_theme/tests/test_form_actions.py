@@ -1,3 +1,4 @@
+from threading import Event, current_thread
 from types import SimpleNamespace
 from unittest.mock import patch
 
@@ -5,11 +6,15 @@ from django import forms
 from django.core import mail
 from django.template import Context, Template
 from django.template.loader import render_to_string
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import RequestFactory, SimpleTestCase, TestCase, override_settings
 from django.utils.safestring import mark_safe
 from django_altcha import AltchaField
 
-from cms_theme.form_actions import SendConfirmationEmailAction, _email_context
+from cms_theme.form_actions import (
+    SendConfirmationEmailAction,
+    _BoundedEmailExecutor,
+    _email_context,
+)
 from cms_theme.models import FormEmailQuota
 
 
@@ -25,6 +30,12 @@ class SendConfirmationEmailActionTests(TestCase):
     def setUp(self):
         self.action = SendConfirmationEmailAction()
         self.request_factory = RequestFactory()
+        dispatcher = patch(
+            "cms_theme.form_actions._dispatch_email",
+            side_effect=lambda message: bool(message.send(fail_silently=False)),
+        )
+        dispatcher.start()
+        self.addCleanup(dispatcher.stop)
 
     def form(self, email="person@example.com", **parameters):
         options = {
@@ -173,6 +184,31 @@ class SendConfirmationEmailActionTests(TestCase):
         self.assertNotIn("person@example.com", "".join(keys))
         self.assertNotIn("192.0.2.1", "".join(keys))
 
+    def test_quota_failure_fails_closed_without_sending_email(self):
+        with patch(
+            "cms_theme.form_actions._consume_quota",
+            side_effect=RuntimeError("quota error"),
+        ), self.assertLogs("cms_theme.form_actions", level="ERROR") as logs:
+            result = self.action.execute(self.form(), self.request())
+
+        self.assertEqual(result, 0)
+        self.assertEqual(mail.outbox, [])
+        self.assertTrue(
+            any("quota check failed" in record.getMessage() for record in logs.records)
+        )
+
+    def test_full_delivery_queue_does_not_send_email(self):
+        with patch(
+            "cms_theme.form_actions._dispatch_email", return_value=False
+        ), self.assertLogs("cms_theme.form_actions", level="WARNING") as logs:
+            result = self.action.execute(self.form(), self.request())
+
+        self.assertEqual(result, 0)
+        self.assertEqual(mail.outbox, [])
+        self.assertTrue(
+            any("queue is full" in record.getMessage() for record in logs.records)
+        )
+
     def test_rejects_unknown_template_set(self):
         form = self.form(confirmationemail_template="../../unexpected")
 
@@ -181,3 +217,42 @@ class SendConfirmationEmailActionTests(TestCase):
 
         self.assertEqual(result, 0)
         self.assertEqual(mail.outbox, [])
+
+
+class BoundedEmailExecutorTests(SimpleTestCase):
+    def test_sends_message_on_worker_thread(self):
+        sent = Event()
+        sending_thread = []
+
+        class Message:
+            def send(self, fail_silently):
+                sending_thread.append(current_thread().name)
+                sent.set()
+
+        executor = _BoundedEmailExecutor(max_workers=1, max_pending=1)
+        try:
+            self.assertTrue(executor.submit(Message()))
+            self.assertTrue(sent.wait(timeout=2))
+        finally:
+            executor.shutdown()
+
+        self.assertNotEqual(sending_thread, [current_thread().name])
+        self.assertTrue(sending_thread[0].startswith("form-confirmation-email"))
+
+    def test_rejects_message_when_outstanding_limit_is_reached(self):
+        started = Event()
+        release = Event()
+
+        class BlockingMessage:
+            def send(self, fail_silently):
+                started.set()
+                release.wait(timeout=2)
+
+        executor = _BoundedEmailExecutor(max_workers=1, max_pending=1)
+        try:
+            self.assertTrue(executor.submit(BlockingMessage()))
+            self.assertTrue(started.wait(timeout=2))
+            self.assertFalse(executor.submit(BlockingMessage()))
+        finally:
+            release.set()
+            executor.shutdown()

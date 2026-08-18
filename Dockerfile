@@ -21,4 +21,4 @@ COPY --from=build /app/backend/static/djangocms_text/css /app/backend/static/dja
 
 RUN python manage.py collectstatic --noinput
 
-CMD uwsgi --http=0.0.0.0:80 --module=backend.wsgi
+CMD uwsgi --http=0.0.0.0:80 --module=backend.wsgi --enable-threads

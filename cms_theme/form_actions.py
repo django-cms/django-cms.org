@@ -2,7 +2,9 @@ import hashlib
 import hmac
 import logging
 import re
+from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
+from threading import BoundedSemaphore, Lock
 
 from django import forms
 from django.conf import settings
@@ -40,6 +42,8 @@ if not TEMPLATE_SETS or any(
     )
 TEMPLATE_KEYS = frozenset(key for key, _label in TEMPLATE_SETS)
 MAX_CONTEXT_VALUE_LENGTH = 2000
+_email_executor = None
+_email_executor_lock = Lock()
 
 
 def _positive_setting(name, default):
@@ -47,6 +51,64 @@ def _positive_setting(name, default):
     if value < 1:
         raise ImproperlyConfigured(f"{name} must be a positive integer")
     return value
+
+
+class _BoundedEmailExecutor:
+    """A process-local executor with a hard cap on outstanding messages."""
+
+    def __init__(self, max_workers, max_pending):
+        self._slots = BoundedSemaphore(max_pending)
+        self._executor = ThreadPoolExecutor(
+            max_workers=max_workers,
+            thread_name_prefix="form-confirmation-email",
+        )
+
+    def submit(self, message):
+        if not self._slots.acquire(blocking=False):
+            return False
+        try:
+            self._executor.submit(self._send, message)
+        except Exception:
+            self._slots.release()
+            raise
+        return True
+
+    def _send(self, message):
+        try:
+            message.send(fail_silently=False)
+        except Exception:
+            logger.exception("Failed to send form confirmation email")
+        finally:
+            self._slots.release()
+
+    def shutdown(self, wait=True):
+        self._executor.shutdown(wait=wait)
+
+
+def _get_email_executor():
+    # Create it after the first request, rather than at import time before a
+    # WSGI server may fork worker processes.
+    global _email_executor
+    if _email_executor is None:
+        with _email_executor_lock:
+            if _email_executor is None:
+                _email_executor = _BoundedEmailExecutor(
+                    max_workers=_positive_setting(
+                        "DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_WORKERS", 2
+                    ),
+                    max_pending=_positive_setting(
+                        "DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_MAX_PENDING", 10
+                    ),
+                )
+    return _email_executor
+
+
+def _dispatch_email(message):
+    try:
+        return _get_email_executor().submit(message)
+    except Exception:
+        logger.exception("Failed to enqueue form confirmation email")
+        return False
 
 
 def _quota_key(kind, value, window, now):
@@ -269,10 +331,7 @@ class SendConfirmationEmailAction(actions.FormAction):
         if html_message:
             message.attach_alternative(html_message, "text/html")
 
-        try:
-            return message.send(fail_silently=False)
-        except Exception:
-            # Match the form builder's built-in mail action: preserve a successful
-            # form submission while making delivery failures visible to operators.
-            logger.exception("Failed to send form confirmation email")
+        if not _dispatch_email(message):
+            logger.warning("Confirmation email skipped: delivery queue is full")
             return 0
+        return 1
