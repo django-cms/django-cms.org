@@ -1,0 +1,24 @@
+Hi {{ form_fields.first_name|default:"friend" }},
+
+Thanks for signing up for the django CMS demo.
+
+Your demo session will run for 60 minutes, giving you time to explore django CMS and try it out for yourself.
+
+DEMO ACCESS
+
+Link: https://control.divio.com/demo/get-new/
+Username: demo
+Password: demo1234
+
+Your access will be available for 60 minutes.
+
+JOIN THE DJANGO CMS COMMUNITY
+
+Have questions, want to share what you’re building, or simply want to connect with other django CMS users and contributors?
+Join us on Discord to get help, exchange ideas, and stay connected with the community:
+https://www.django-cms.org/discord
+
+We hope you enjoy exploring django CMS. See you on Discord!
+
+Best,
+The django CMS Team
