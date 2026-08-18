@@ -42,7 +42,7 @@ requests
 pip-tools  # needed for compilation of this file into requirements.txt, see start of file
 
 djangocms-file
-djangocms-form-builder
+djangocms-form-builder[altcha]
 
 djangocms-history
 

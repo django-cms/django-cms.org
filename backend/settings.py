@@ -1,3 +1,4 @@
+import hashlib
 import os
 from copy import deepcopy
 from pathlib import Path
@@ -89,6 +90,7 @@ INSTALLED_APPS = [
     "sortedm2m",
 
     "djangocms_file",
+    "django_altcha",
     "djangocms_form_builder",
     "djangocms_snippet",
     # Last, to allow modifying third-party plugins
@@ -364,6 +366,27 @@ DJANGO_FORM_BUILDER_COLOR_STYLE_CHOICES = (
     ("second-primary", _("Dark Green")),
 )
 DJANGOCMS_FORM_BUILDER_COLOR_STYLE_CHOICES = DJANGO_FORM_BUILDER_COLOR_STYLE_CHOICES
+
+# Self-hosted, proof-of-work CAPTCHA for forms that send email to submitters.
+# Derive a separate default from SECRET_KEY; deployments can rotate it independently.
+ALTCHA_HMAC_KEY = os.environ.get(
+    "ALTCHA_HMAC_KEY",
+    hashlib.sha256(f"djangocms-form-builder-altcha:{SECRET_KEY}".encode()).hexdigest(),
+)
+ALTCHA_FIELD_OPTIONS = {"floating": "auto"}
+ALTCHA_INCLUDE_TRANSLATIONS = True
+
+DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_TEMPLATE_SETS = (
+    ("default", _("Default confirmation")),
+)
+DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_IP_LIMIT = 10
+DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_IP_WINDOW = 60 * 60
+DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_RECIPIENT_LIMIT = 3
+DJANGOCMS_FORM_BUILDER_CONFIRMATION_EMAIL_RECIPIENT_WINDOW = 24 * 60 * 60
+
+DEFAULT_FROM_EMAIL = os.environ.get(
+    "DEFAULT_FROM_EMAIL", "django CMS <info@django-cms.org>"
+)
 
 DJANGOCMS_FRONTEND_SPACER_SIZES = (
     ("0", "* 0"),

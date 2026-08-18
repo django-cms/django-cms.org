@@ -1,3 +1,4 @@
+from django.db import models
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.contrib.image.models import ImageMixin
@@ -61,3 +62,15 @@ class Person(ImageMixin, SquareThumbnailMixin, FrontendUIItem):
 
     def get_short_description(self):
         return self.config.get("name", "-")
+
+
+class FormEmailQuota(models.Model):
+    """Fixed-window counters for form confirmation email abuse controls."""
+
+    key = models.CharField(max_length=64, primary_key=True)
+    count = models.PositiveIntegerField(default=0)
+    expires_at = models.DateTimeField(db_index=True)
+
+    class Meta:
+        verbose_name = _("form email quota")
+        verbose_name_plural = _("form email quotas")

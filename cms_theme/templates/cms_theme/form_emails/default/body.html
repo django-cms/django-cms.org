@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your django CMS Demo – Access Details</title>
+  </head>
+  <body style="margin:0; padding:0; background:#f5f5f5; font-family:Arial, Helvetica, sans-serif; color:#222222;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f5f5f5; padding:32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; background:#ffffff; border-radius:8px;">
+            <tr>
+              <td style="padding:40px;">
+                <h1 style="margin:0 0 24px; font-size:26px; line-height:1.3;">
+                  Your django CMS demo
+                </h1>
+
+                <p style="margin:0 0 16px; font-size:16px; line-height:1.6;">
+                  Dear {{ form_fields.first_name|default:"friend" }},
+                </p>
+
+                <p style="margin:0 0 16px; font-size:16px; line-height:1.6;">
+                  Thanks for signing up for the <strong>django CMS demo</strong>.
+                </p>
+
+                <p style="margin:0 0 24px; font-size:16px; line-height:1.6;">
+                  Your demo session will run for <strong>60 minutes</strong>, giving you time to explore django CMS
+                  and try it out for yourself.
+                </p>
+
+                <h2 style="margin:0 0 16px; font-size:20px;">
+                  Demo access
+                </h2>
+
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; background:#f7f7f7; border-radius:6px;">
+                  <tr>
+                    <td style="padding:20px; font-size:15px; line-height:1.8;">
+                      <strong>Link:</strong>
+                      <a href="https://control.divio.com/demo/get-new/" style="color:#0066cc;">https://control.divio.com/demo/get-new/</a><br />
+                      <strong>Username:</strong> demo<br />
+                      <strong>Password:</strong> demo1234
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin:0 0 28px; font-size:16px; line-height:1.6;">
+                  Your access will be available for 60 minutes. We recommend having the link and credentials ready before
+                  you begin so you can make the most of your session.
+                </p>
+
+                <h2 style="margin:0 0 16px; font-size:20px;">
+                  Join the django CMS community
+                </h2>
+
+                <p style="margin:0 0 20px; font-size:16px; line-height:1.6;">
+                  Have questions, want to share what you’re building, or simply want to connect with other django CMS users and
+                  contributors? Join us on Discord to get help, exchange ideas, and stay connected with the community.
+                </p>
+
+                <p style="margin:0 0 32px;">
+                  <a
+                    href="https://www.django-cms.org/discord"
+                    style="display:inline-block; padding:12px 20px; background:#5865F2; color:#ffffff; text-decoration:none; border-radius:5px; font-size:16px; font-weight:bold;"
+                  >
+                    Join us on Discord
+                  </a>
+                </p>
+
+                <p style="margin:0 0 16px; font-size:16px; line-height:1.6;">
+                  We hope you enjoy exploring django CMS. See you on Discord!
+                </p>
+
+                <p style="margin:0; font-size:16px; line-height:1.6;">
+                  Best,<br />
+                  The django CMS Team
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
