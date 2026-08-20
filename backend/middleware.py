@@ -1,7 +1,56 @@
+from urllib.parse import urlunsplit
+
+from django.conf import settings
 from django.contrib.redirects.middleware import RedirectFallbackMiddleware
 from django.contrib.redirects.models import Redirect
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
+
+
+class CanonicalHostRedirectMiddleware:
+    """Redirect alias domains to the canonical host, keeping path and query string.
+
+    ``django-cms.org`` and ``django-cms.com`` (configurable through
+    ``CANONICAL_HOST_ALIASES``) are answered with a permanent redirect to the
+    same URL on ``CANONICAL_HOST``. Ports are ignored when matching, so
+    ``django-cms.org:8000`` redirects as well.
+
+    Runs before ``SecurityMiddleware`` so an insecure request to an alias takes
+    a single hop: the redirect already points at HTTPS whenever
+    ``SECURE_SSL_REDIRECT`` is on or the request itself is secure.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+        self.canonical_host = getattr(settings, "CANONICAL_HOST", "www.django-cms.org")
+        self.aliases = {
+            alias.lower()
+            for alias in getattr(
+                settings,
+                "CANONICAL_HOST_ALIASES",
+                ("django-cms.org", "django-cms.com"),
+            )
+        }
+
+    def __call__(self, request):
+        host = request.get_host().split(":")[0].lower()
+        if host in self.aliases:
+            scheme = (
+                "https"
+                if request.is_secure() or settings.SECURE_SSL_REDIRECT
+                else "http"
+            )
+            target = urlunsplit(
+                (
+                    scheme,
+                    self.canonical_host,
+                    request.path,
+                    request.META.get("QUERY_STRING", ""),
+                    "",
+                )
+            )
+            return HttpResponsePermanentRedirect(target)
+        return self.get_response(request)
 
 
 class PathOnlyRedirectFallbackMiddleware(RedirectFallbackMiddleware):
