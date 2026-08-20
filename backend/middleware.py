@@ -22,9 +22,7 @@ class CanonicalHostRedirectMiddleware:
 
     def __init__(self, get_response):
         self.get_response = get_response
-        self.canonical_host = getattr(
-            settings, "CANONICAL_HOST", "www.django-cms.org"
-        )
+        self.canonical_host = getattr(settings, "CANONICAL_HOST", "www.django-cms.org")
         self.aliases = {
             alias.lower()
             for alias in getattr(
