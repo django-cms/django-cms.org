@@ -1,4 +1,4 @@
-{% if allow_indexing %}User-agent: *
+{% if request.get_host == "www.django-cms.org" %}User-agent: *
 Disallow: /admin
 
 Sitemap: https://www.django-cms.org/sitemap.xml
