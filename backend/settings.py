@@ -46,6 +46,7 @@ DEBUG = os.environ.get("DEBUG") == "True"
 
 ALLOWED_HOSTS = [
     os.environ.get("DOMAIN"),
+    os.environ.get("DIVIO_DOMAIN"),
     "www.django-cms.org",
     "www.django-cms.com",
     "django-cms.org",
