@@ -68,6 +68,9 @@ CANONICAL_HOST_ALIASES = [
 # Redirect to HTTPS by default, unless explicitly disabled
 SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT") != "False"
 
+# Trust the reverse proxy's HTTPS header, e.g. from Caddy.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Application definition
