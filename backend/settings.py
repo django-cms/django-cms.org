@@ -56,6 +56,14 @@ if DEBUG:
         "*",
     ]
 
+# Alias domains redirected to the canonical host by
+# backend.middleware.CanonicalHostRedirectMiddleware.
+CANONICAL_HOST = os.environ.get("CANONICAL_HOST", "www.django-cms.org")
+CANONICAL_HOST_ALIASES = [
+    "django-cms.org",
+    "django-cms.com",
+]
+
 # Redirect to HTTPS by default, unless explicitly disabled
 SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT") != "False"
 
@@ -131,6 +139,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Sends alias domains to the canonical host (must be first, so the redirect
+    # happens before any other middleware does work on the request).
+    "backend.middleware.CanonicalHostRedirectMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
