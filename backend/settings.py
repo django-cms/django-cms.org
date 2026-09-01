@@ -324,8 +324,23 @@ CMS_CONFIRM_VERSION4 = True
 DJANGOCMS_VERSIONING_ALLOW_DELETING_VERSIONS = True
 
 
-# Activate webp support
-THUMBNAIL_PRESERVE_EXTENSIONS = ("webp",)
+# Activate webp support.
+#
+# THUMBNAIL_EXTENSION is what actually converts: without it easy-thumbnails
+# falls back to its 'jpg' default, so every JPEG/PNG in the media library was
+# being re-encoded as JPEG. It only applies when neither of the two rules below
+# claims the file first.
+THUMBNAIL_EXTENSION = "webp"
+
+# Sources whose extension is kept as-is. "webp" avoids a pointless re-encode;
+# "svg" is required for correctness, not size: easy_thumbnails dispatches on the
+# *source* extension (files.py: save_svg_image vs save_pil_image), so an SVG
+# stays vector data but would otherwise be written under a .webp name and served
+# with the wrong content type.
+THUMBNAIL_PRESERVE_EXTENSIONS = ("webp", "svg")
+
+# Images with an alpha channel: WebP carries transparency, so they convert too
+# instead of falling back to PNG.
 THUMBNAIL_TRANSPARENCY_EXTENSION = "webp"
 
 # For development: django-debug-toolbar

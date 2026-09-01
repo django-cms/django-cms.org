@@ -1,4 +1,4 @@
-{% load i18n cms_tags cms_theme_tags %}
+{% load i18n cms_tags cms_theme_tags thumbnail %}
 
 
 <div class="djangocms-video-plugin">
@@ -18,8 +18,9 @@
         {% endwith %}
     {% else %}
         {# render <source> or <track> plugins #}
+        {% if instance.poster %}{% thumbnail instance.poster 1000x0 upscale=False subject_location=instance.poster.subject_location as poster_img %}{% endif %}
         <video controls {{ instance.attributes_str }}
-            {% if instance.poster %} poster="{{ instance.poster.url }}"{% endif %}>
+            {% if instance.poster %} poster="{{ poster_img|thumb_or_original:instance.poster }}"{% endif %}>
             {% for plugin in instance.child_plugin_instances %}
                 {% render_plugin plugin %}
             {% endfor %}

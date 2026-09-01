@@ -1,5 +1,5 @@
 <!-- cms_theme/templates/cms_theme/cms_components/carousel_item.html -->
-{% load frontend cms_component thumbnail sekizai_tags djangocms_link_tags %}
+{% load frontend cms_component thumbnail sekizai_tags djangocms_link_tags cms_theme_tags %}
 {% cms_component "CarouselItem" name=_("Carousel Item") parent_classes="LogoCarouselPlugin" %}
 {% field "logo" ImageFormField required=True %}
 {% field "logo_link" LinkFormField required=False %}
@@ -14,13 +14,13 @@
                     target="_blank"
                     rel="noopener noreferrer">
             {% endif %}
-            <img src="{{ md.url }}" loading="lazy" decoding="async"
-                    srcset="{{ sm.url }} 400w,
+            <img src="{{ md|thumb_or_original:image }}" loading="lazy" decoding="async"
+                    {% if md %}srcset="{{ sm.url }} 400w,
                             {{ md.url }} 800w,
                             {{ lg.url }} 1200w"
                     sizes="(max-width: 768px) 90vw,
                         (max-width: 1200px) 70vw,
-                        1200px"
+                        1200px"{% endif %}
                     alt="{{ image.default_alt_text|default:'' }}"
                     title="{{ image.title }}"
                     loading="lazy">

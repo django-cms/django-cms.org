@@ -34,9 +34,9 @@
                         {% thumbnail post_content.post.main_image 600x0 quality=80 subject_location=post_content.post.main_image.subject_location as hero_sm %}
                         {% thumbnail post_content.post.main_image 900x0 quality=80 subject_location=post_content.post.main_image.subject_location as hero_md %}
                         {% thumbnail post_content.post.main_image 1400x0 quality=80 subject_location=post_content.post.main_image.subject_location as hero_lg %}
-                        <img src="{{ hero_md.url }}"
-                             srcset="{{ hero_sm.url }} 600w, {{ hero_md.url }} 900w, {{ hero_lg.url }} 1400w"
-                             sizes="(max-width: 992px) 100vw, 50vw"
+                        <img src="{{ hero_md|thumb_or_original:post_content.post.main_image }}"
+                             {% if hero_md %}srcset="{{ hero_sm.url }} 600w, {{ hero_md.url }} 900w, {{ hero_lg.url }} 1400w"
+                             sizes="(max-width: 992px) 100vw, 50vw"{% endif %}
                              fetchpriority="high" decoding="async"
                              alt="{{ post_content.post.main_image.default_alt_text|default:'' }}">
                     </div>

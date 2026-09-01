@@ -1,4 +1,4 @@
-{% load static cms_tags cms_theme_tags %}
+{% load static cms_tags cms_theme_tags thumbnail %}
 {% with image_plugin=instance.child_plugin_instances|filter_by_type:"ImagePlugin" %}
     {% with video_plugin=instance.child_plugin_instances|filter_by_type:"VideoPlayerPlugin" %}
         <div class="col-lg-6 order-2 order-lg-0 mt-6 mt-lg-0 d-flex justify-content-center align-items-center">
@@ -8,7 +8,8 @@
                 <div class="d-none">{% render_plugin video_plugin.0 %}</div>
                 <div class="video-poster-wrapper" role="button" data-video-target="#videoModal-{{ video_plugin.0.pk }}">
                     {% if video_plugin.0.poster %}
-                        <img src="{{ video_plugin.0.poster.url }}" alt="" loading="lazy" decoding="async" class="video-poster-img">
+                        {% thumbnail video_plugin.0.poster 1000x0 upscale=False subject_location=video_plugin.0.poster.subject_location as poster_img %}
+                        <img src="{{ poster_img|thumb_or_original:video_plugin.0.poster }}" alt="" loading="lazy" decoding="async" class="video-poster-img">
                     {% endif %}
                     <div class="video-play-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="75" height="74" viewBox="0 0 75 74" fill="none">
@@ -28,7 +29,7 @@
                                     {% if video_plugin.0.embed_link %}
                                         <iframe data-src="{{ video_plugin.0.embed_link|to_nocookie_embed }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
                                     {% elif video_sources %}
-                                        <video data-src="{{ video_sources.0.source_file.url }}" controls playsinline preload="none"{% if video_plugin.0.poster %} poster="{{ video_plugin.0.poster.url }}"{% endif %}></video>
+                                        <video data-src="{{ video_sources.0.source_file.url }}" controls playsinline preload="none"{% if video_plugin.0.poster %} poster="{{ poster_img|thumb_or_original:video_plugin.0.poster }}"{% endif %}></video>
                                     {% endif %}
                                 </div>
                             </div>

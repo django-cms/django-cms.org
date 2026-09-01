@@ -1,5 +1,5 @@
 <!-- cms_theme/templates/benefits/benefits_card.html -->
-{% load static cms_tags frontend icon_tags djangocms_link_tags %}
+{% load static cms_tags frontend icon_tags djangocms_link_tags thumbnail cms_theme_tags %}
 {% add_css_for_icon instance.card_icon %}
 <div class="col">
     <div class="{{ instance.get_classes }} h-100 card benefits-card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}" {{ instance.get_attributes }}>
@@ -28,7 +28,8 @@
         {% endif %}
         {% if instance.bottom_image %}
             <div class="benefits-card-bottom-image">
-                <img src="{{ instance.bottom_image.url }}" alt="" loading="lazy" decoding="async" class="w-100 d-block">
+                {% thumbnail instance.bottom_image 800x0 upscale=False subject_location=instance.bottom_image.subject_location as card_img %}
+                <img src="{{ card_img|thumb_or_original:instance.bottom_image }}" alt="" loading="lazy" decoding="async" class="w-100 d-block">
             </div>
         {% endif %}
     </div>

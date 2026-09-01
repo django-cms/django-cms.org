@@ -1,4 +1,4 @@
-{% load djangocms_stories i18n easy_thumbnails_tags cms_tags %}
+{% load djangocms_stories i18n easy_thumbnails_tags cms_tags cms_theme_tags %}
 
 <article id="post-{{ post_content.slug }}" class="post-item post-item-event">
     <a href="{% absolute_url post_content %}" class="card-event-link">
@@ -8,9 +8,9 @@
                     <div class="col-md-4 event-img-col">
                         {% thumbnail post_content.post.main_image 400x0 quality=70 subject_location=post_content.post.main_image.subject_location as event_sm %}
                         {% thumbnail post_content.post.main_image 800x0 quality=70 subject_location=post_content.post.main_image.subject_location as event_md %}
-                        <img src="{{ event_sm.url }}"
-                             srcset="{{ event_sm.url }} 400w, {{ event_md.url }} 800w"
-                             sizes="(max-width: 768px) 100vw, 33vw"
+                        <img src="{{ event_sm|thumb_or_original:post_content.post.main_image }}"
+                             {% if event_sm %}srcset="{{ event_sm.url }} 400w, {{ event_md.url }} 800w"
+                             sizes="(max-width: 768px) 100vw, 33vw"{% endif %}
                              loading="lazy" decoding="async"
                              alt="{{ post_content.post.main_image.default_alt_text|default:'' }}"
                              class="img-fluid rounded-start h-100 blog-event-image" />
