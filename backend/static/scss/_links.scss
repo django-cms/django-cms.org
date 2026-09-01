@@ -7,7 +7,10 @@ a {
   font-weight: 400;
   letter-spacing: 0;
   color: $secondary;
-  text-decoration: none !important;
+  // No !important: the running-text rule at the bottom of this file has to be
+  // able to win. It still overrides Bootstrap's reboot, which underlines every
+  // <a>, because _links.scss is imported after theme/bootstrap in main.scss.
+  text-decoration: none;
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover,
@@ -109,4 +112,46 @@ a:has(i) {
   align-items: center;
   justify-content: center;
   padding: 0.2rem 0.2rem 0 0.2rem;
+}
+
+// ==============================================
+// Links in running text (WCAG 1.4.1 / axe link-in-text-block)
+// ==============================================
+// The base rule above strips underlines so navigation, buttons and card links
+// read as UI rather than prose. Inside a block of text that leaves colour as
+// the only thing separating a link from the words around it, which fails
+// WCAG 1.4.1 "Use of Color" — the Lichen audit counted 970 instances.
+//
+// Restore the underline only where a link genuinely sits in running text: in a
+// paragraph, list item, table cell, definition or quotation. Everything that is
+// navigation or a control is excluded, either by class here or by the container
+// override that follows.
+
+// One :is()/:not() pair rather than a nested selector list: Sass expands nested
+// lists combinatorially, which added 29 KiB to main.css for these two rules.
+$prose-containers: ":is(p, li, td, dd, blockquote, figcaption)";
+$prose-link-exclusions: ":not(.btn, .nav-link, .navbar-brand, .stretched-link, .card-event-link, .card-author-link, .page-link, .dropdown-item, .badge)";
+
+#{$prose-containers} a#{$prose-link-exclusions} {
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.15em;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+// Link lists that happen to use <li>/<p> but are navigation, not prose. One
+// extra compound of specificity over the rule above, so no !important needed.
+$prose-nav-containers: ":is(footer, .footer, .navbar, .list-link-container, .pagination, .breadcrumb, .card-title, .dropdown-menu)";
+
+#{$prose-nav-containers} #{$prose-containers} a#{$prose-link-exclusions} {
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
 }

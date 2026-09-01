@@ -1,4 +1,4 @@
-{% load djangocms_stories i18n easy_thumbnails_tags cms_tags %}
+{% load djangocms_stories i18n easy_thumbnails_tags cms_tags cms_theme_tags %}
 
 <article id="post-{{ post_content.slug }}" class="post-item post-item-list">
     <div class="card box-shadow-card bg-light mb-3 {% if image and post_content.post.main_image %}post-item-list-height-with-img{% else %}post-item-list-height{% endif %}">
@@ -10,9 +10,9 @@
                         {% thumbnail post_content.post.main_image 1000x800 quality=85 subject_location=post_content.post.main_image.subject_location as img_sm %}
                         {% thumbnail post_content.post.main_image 600x450 quality=55 subject_location=post_content.post.main_image.subject_location as img_md %}
                         {% thumbnail post_content.post.main_image 700x500 quality=85 subject_location=post_content.post.main_image.subject_location as img_lg %}
-                        <img src="{{ img_md.url }}"
-                                srcset="{{ img_sm.url }} 300w, {{ img_md.url }} 450w, {{ img_lg.url }} 620w"
-                                sizes="(max-width: 768px) 100vw, 33vw"
+                        <img src="{{ img_md|thumb_or_original:post_content.post.main_image }}" loading="lazy" decoding="async"
+                                {% if img_md %}srcset="{{ img_sm.url }} 300w, {{ img_md.url }} 450w, {{ img_lg.url }} 620w"
+                                sizes="(max-width: 768px) 100vw, 33vw"{% endif %}
                                 alt="{{ post_content.post.main_image.default_alt_text|default:'' }}"
                                 class="post-list-img rounded-start" />
                     </div>

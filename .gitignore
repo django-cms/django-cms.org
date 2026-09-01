@@ -15,6 +15,8 @@ node_modules/
 backend/static/css/main.css
 backend/static/css/main.css.map
 backend/static/djangocms_text/css/tiptap.admin.css
+backend/static/js/bootstrap.bundle.min.js
+backend/static/js/bootstrap.bundle.min.js.map
 
 data/
 

@@ -1,5 +1,7 @@
+{% load cms_theme_tags %}
+{% capped_image instance 600 as capped %}
 <div class="person text-center">
-    <img src="{{ instance.img_src }}" alt="{{ instance.name }}" class="rounded-circle" />
+    <img src="{{ capped.url }}" alt="{{ instance.name }}" loading="lazy" decoding="async" class="rounded-circle" />
     <div class="name">{{ instance.name }}</div>
     {% if instance.role %}
         <div class="role text-muted">{{ instance.role }}</div>

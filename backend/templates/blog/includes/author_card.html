@@ -1,4 +1,4 @@
-{% load easy_thumbnails_tags %}
+{% load easy_thumbnails_tags cms_theme_tags %}
 {% with post_content.author.author_profile as profile %}
 {% if profile %}
 <div class="card related-people-card p-4 shadow-lg">
@@ -8,11 +8,11 @@
                 <div class="position-absolute shape-tl bg-primary z-0"></div>
                 <div class="position-absolute shape-br bg-primary z-0"></div>
                 {% thumbnail profile.photo 345x0 subject_location=profile.photo.subject_location as thumb %}
-                <img src="{{ thumb.url }}" alt="{{ profile.name }}" class="author-photo img-fluid {% if profile.has_drop_shadow %}shadow-sm{% endif %} rounded" />
+                <img src="{{ thumb|thumb_or_original:profile.photo }}" alt="{{ profile.name }}" loading="lazy" decoding="async" class="author-photo img-fluid {% if profile.has_drop_shadow %}shadow-sm{% endif %} rounded" />
             </div>
         {% else %}
             {% thumbnail profile.photo 345x0 subject_location=profile.photo.subject_location as thumb %}
-            <img src="{{ thumb.url }}" alt="{{ profile.name }}" class="author-photo img-fluid" />
+            <img src="{{ thumb|thumb_or_original:profile.photo }}" alt="{{ profile.name }}" loading="lazy" decoding="async" class="author-photo img-fluid" />
         {% endif %}
     {% endif %}
     <div class="card-body p-0 mt-4 text-secondary">

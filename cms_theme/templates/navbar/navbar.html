@@ -3,6 +3,9 @@
 <nav class="navbar navbar-expand-xl bg-white py-4">
   <div class="container">
 
+    {# The logo is served as uploaded: it is normally an SVG, and filer stores #}
+    {# SVGs as Image, but easy-thumbnails has no source generator for them and #}
+    {# {% thumbnail %} would fail silently to an empty src. #}
     {% with img=instance.image %}
         {% if img %}
             <a class="navbar-brand no-hover" href="/"><img src="{{ img.url }}" alt="{{ img.default_alt_text|default:img.name|default:'Logo' }}" height="47"></a>

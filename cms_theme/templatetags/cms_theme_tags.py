@@ -109,3 +109,133 @@ def get_slot(instance, slot_name):
     for plugin in instance.child_plugin_instances:
         if plugin.plugin_type == plugin_type:
             yield from plugin.child_plugin_instances
+
+
+#: Icon class tokens that describe the *style* of an icon rather than the icon
+#: itself, and so carry no meaning for an accessible name.
+ICON_STYLE_CLASSES = frozenset(
+    (
+        "fa", "fas", "far", "fal", "fat", "fab", "fad",
+        "fa-solid", "fa-regular", "fa-light", "fa-thin", "fa-duotone",
+        "fa-brands", "fa-classic", "fa-sharp", "fa-fw",
+        "bi",
+    )
+)
+
+#: Icon slugs whose title-cased form reads wrong.
+ICON_LABEL_OVERRIDES = {
+    "x-twitter": "X",
+    "square-x-twitter": "X",
+    "github": "GitHub",
+    "gitlab": "GitLab",
+    "linkedin": "LinkedIn",
+    "linkedin-in": "LinkedIn",
+    "youtube": "YouTube",
+    "stack-overflow": "Stack Overflow",
+    "discord": "Discord",
+    "mastodon": "Mastodon",
+    "bluesky": "Bluesky",
+    "rss": "RSS",
+}
+
+
+@register.filter
+def icon_link_label(instance):
+    """Return an accessible name for a link whose only content is an icon.
+
+    An icon-only link renders as <a><i class="fa-brands fa-mastodon"></i></a>,
+    which has no accessible name at all (WCAG 2.4.4 / axe "link-name"). The
+    footer social row is built this way, so the failure repeats on every page.
+
+    Returns an empty string — meaning "nothing to add" — whenever the link
+    already has a name: link text, child plugins that render the text, or an
+    aria-label/aria-labelledby/title the editor set by hand. Otherwise the
+    name is derived from the icon class, so fa-brands fa-mastodon yields
+    "Mastodon".
+    """
+    if instance.config.get("name", ""):
+        return ""
+    if getattr(instance, "child_plugin_instances", None):
+        return ""
+    attributes = instance.config.get("attributes") or {}
+    if any(attributes.get(key) for key in ("aria-label", "aria-labelledby", "title")):
+        return ""
+
+    for icon in (instance.config.get("icon_left"), instance.config.get("icon_right")):
+        if not icon:
+            continue
+        classes = icon.get("iconClass", "") if isinstance(icon, dict) else str(icon)
+        for token in classes.split():
+            if token in ICON_STYLE_CLASSES:
+                continue
+            slug = token.split("-", 1)[1] if "-" in token else token
+            if not slug:
+                continue
+            return ICON_LABEL_OVERRIDES.get(slug, slug.replace("-", " ").title())
+    return ""
+
+
+@register.simple_tag
+def capped_image(instance, max_width=1600):
+    """Resolve a djangocms-frontend Image plugin to a {url, width} pair.
+
+    Image.img_src only runs the file through easy-thumbnails when the editor
+    gave the plugin a width, a height or a thumbnail option; with none of those
+    it hands back rel_image.url, i.e. the untouched upload. That is how single
+    pages ended up carrying megabytes of images.
+
+    Thumbnailing an unsized image at max_width with upscale=False leaves small
+    images at their own dimensions while still converting them to WebP, so the
+    re-encode is worth it even when there is nothing to downscale.
+
+    Returns the width alongside the URL because callers put it in a srcset
+    descriptor: advertising the capped file under the *original* width would
+    make the browser pick it for viewports it cannot actually fill.
+
+    Falls back to img_src whenever thumbnailing cannot apply: external URLs,
+    missing files, and SVGs (filer stores those as Image, but easy-thumbnails
+    has no source generator for them and raises).
+    """
+    from easy_thumbnails.exceptions import InvalidImageFormatError
+    from easy_thumbnails.files import get_thumbnailer
+
+    def uncapped():
+        try:
+            width = instance.get_size()["size"][0]
+        except Exception:
+            width = getattr(instance.rel_image, "width", 0) if instance.rel_image else 0
+        return {"url": instance.img_src, "width": width}
+
+    if getattr(instance, "external_picture", None):
+        return uncapped()
+    image = getattr(instance, "rel_image", None)
+    if not image:
+        return uncapped()
+    if instance.config.get("width") or instance.config.get("height") or instance.config.get("thumbnail_options"):
+        return uncapped()
+
+    try:
+        thumb = get_thumbnailer(image).get_thumbnail(
+            {
+                "size": (max_width, 0),
+                "crop": False,
+                "upscale": False,
+                "subject_location": image.subject_location,
+            }
+        )
+        return {"url": thumb.url, "width": thumb.width}
+    except (InvalidImageFormatError, OSError, ValueError, AttributeError):
+        return uncapped()
+
+
+@register.filter
+def thumb_or_original(thumbnail, original):
+    """Fall back to the original file when a {% thumbnail %} call came back empty.
+
+    easy-thumbnails' template tag swallows errors unless THUMBNAIL_DEBUG is on
+    and leaves the target variable empty, which would render src="". SVG uploads
+    hit this on every template that thumbnails a filer image.
+    """
+    if thumbnail:
+        return thumbnail.url
+    return original.url if original else ""

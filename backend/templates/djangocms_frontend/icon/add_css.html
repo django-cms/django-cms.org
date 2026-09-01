@@ -1,0 +1,19 @@
+{% comment %}
+Overrides djangocms_frontend/icon/add_css.html to suppress the per-icon
+stylesheet injection.
+
+The upstream tag injects DJANGOCMS_FRONTEND_ICON_LIBRARIES[...][1] into the
+sekizai "css" block whenever an Icon (or a Link with an icon) is rendered.
+Those files live under djangocms_frontend/icon/vendor/assets/stylesheets/ and
+are byte-identical copies of the Font Awesome CSS that cms_theme/base.html
+already loads from static/iconsets/ on every page — so the injection only
+added a second, differently-named copy of fontawesome.min.css (134 KiB) to
+every page carrying an icon.
+
+The admin icon picker resolves the same setting through
+IconPickerWidget.get_context() and is unaffected by this override, so the
+vendor stylesheets must stay in place.
+
+Keep in sync with the {% block base_css %} icon sets in
+cms_theme/templates/cms_theme/base.html.
+{% endcomment %}

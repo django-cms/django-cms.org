@@ -18,6 +18,7 @@ COPY . .
 
 COPY --from=build /app/backend/static/css /app/backend/static/css
 COPY --from=build /app/backend/static/djangocms_text/css /app/backend/static/djangocms_text/css
+COPY --from=build /app/backend/static/js /app/backend/static/js
 
 RUN python manage.py collectstatic --noinput
 
