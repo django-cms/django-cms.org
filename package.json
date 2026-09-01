@@ -22,6 +22,7 @@
   "homepage": "https://github.com/django-cms/django-cms.org#readme",
   "devDependencies": {
     "autoprefixer": "^10.4.23",
+    "bootstrap": "^5.3.8",
     "gulp": "^5.0.1",
     "gulp-clean-css": "^4.3.0",
     "gulp-if": "^3.0.0",

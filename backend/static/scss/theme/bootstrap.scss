@@ -1,3 +1,9 @@
+// NOTE: unused Bootstrap components are commented out below rather than deleted,
+// so a Bootstrap upgrade that overwrites this file is easy to spot in review.
+// Together they were ~29 KiB of the compiled main.css. Re-enable an import if a
+// plugin that renders the component is added to INSTALLED_APPS. Badge and
+// button-group are deliberately kept: no plugin renders them, but hand-written
+// HTML in text plugins plausibly does, and they cost under 3 KiB combined.
 @import "mixins/banner";
 @include bsBanner("");
 
@@ -32,17 +38,17 @@
 @import "pagination";
 @import "badge";
 @import "alert";
-@import "progress";
+// @import "progress";  // dropped: no .progress markup in any template or plugin
 @import "list-group";
 @import "close";
-@import "toasts";
+// @import "toasts";  // dropped: no .toast markup in any template or plugin
 @import "modal";
-@import "tooltip";
-@import "popover";
-@import "carousel";
-@import "spinners";
-@import "offcanvas";
-@import "placeholders";
+// @import "tooltip";  // dropped: requires an explicit new bootstrap.Tooltip(); nothing initialises one
+// @import "popover";  // dropped: requires an explicit new bootstrap.Popover(); nothing initialises one
+// @import "carousel";  // dropped: contrib.carousel is not in INSTALLED_APPS; the theme's sliders use Swiper
+// @import "spinners";  // dropped: no .spinner-* markup in any template or plugin
+// @import "offcanvas";  // dropped: contrib.navigation is not in INSTALLED_APPS; the navbar uses .collapse
+// @import "placeholders";  // dropped: no .placeholder markup in any template or plugin
 
 // Helpers
 @import "helpers";

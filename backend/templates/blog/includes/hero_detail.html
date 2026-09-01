@@ -1,4 +1,4 @@
-{% load static cms_tags sekizai_tags cms_theme_tags frontend i18n blog_tags %}
+{% load static cms_tags sekizai_tags cms_theme_tags frontend i18n blog_tags easy_thumbnails_tags %}
 
 <section class="py-6 hero-section bg-secondary background-grid">
     <div class="container">
@@ -31,7 +31,14 @@
             <div class="col-lg-6 hero-content-right position-relative">
                 {% if post_content.post.main_image %}
                     <div class="hero-main-image mt-5 mt-lg-0">
-                        <img src="{{ post_content.post.main_image.url }}" alt="{{ post_content.post.main_image.default_alt_text|default:'' }}">
+                        {% thumbnail post_content.post.main_image 600x0 quality=80 subject_location=post_content.post.main_image.subject_location as hero_sm %}
+                        {% thumbnail post_content.post.main_image 900x0 quality=80 subject_location=post_content.post.main_image.subject_location as hero_md %}
+                        {% thumbnail post_content.post.main_image 1400x0 quality=80 subject_location=post_content.post.main_image.subject_location as hero_lg %}
+                        <img src="{{ hero_md.url }}"
+                             srcset="{{ hero_sm.url }} 600w, {{ hero_md.url }} 900w, {{ hero_lg.url }} 1400w"
+                             sizes="(max-width: 992px) 100vw, 50vw"
+                             fetchpriority="high" decoding="async"
+                             alt="{{ post_content.post.main_image.default_alt_text|default:'' }}">
                     </div>
                 {% endif %}
             </div>

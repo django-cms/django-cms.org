@@ -109,3 +109,67 @@ def get_slot(instance, slot_name):
     for plugin in instance.child_plugin_instances:
         if plugin.plugin_type == plugin_type:
             yield from plugin.child_plugin_instances
+
+
+#: Icon class tokens that describe the *style* of an icon rather than the icon
+#: itself, and so carry no meaning for an accessible name.
+ICON_STYLE_CLASSES = frozenset(
+    (
+        "fa", "fas", "far", "fal", "fat", "fab", "fad",
+        "fa-solid", "fa-regular", "fa-light", "fa-thin", "fa-duotone",
+        "fa-brands", "fa-classic", "fa-sharp", "fa-fw",
+        "bi",
+    )
+)
+
+#: Icon slugs whose title-cased form reads wrong.
+ICON_LABEL_OVERRIDES = {
+    "x-twitter": "X",
+    "square-x-twitter": "X",
+    "github": "GitHub",
+    "gitlab": "GitLab",
+    "linkedin": "LinkedIn",
+    "linkedin-in": "LinkedIn",
+    "youtube": "YouTube",
+    "stack-overflow": "Stack Overflow",
+    "discord": "Discord",
+    "mastodon": "Mastodon",
+    "bluesky": "Bluesky",
+    "rss": "RSS",
+}
+
+
+@register.filter
+def icon_link_label(instance):
+    """Return an accessible name for a link whose only content is an icon.
+
+    An icon-only link renders as <a><i class="fa-brands fa-mastodon"></i></a>,
+    which has no accessible name at all (WCAG 2.4.4 / axe "link-name"). The
+    footer social row is built this way, so the failure repeats on every page.
+
+    Returns an empty string — meaning "nothing to add" — whenever the link
+    already has a name: link text, child plugins that render the text, or an
+    aria-label/aria-labelledby/title the editor set by hand. Otherwise the
+    name is derived from the icon class, so fa-brands fa-mastodon yields
+    "Mastodon".
+    """
+    if instance.config.get("name", ""):
+        return ""
+    if getattr(instance, "child_plugin_instances", None):
+        return ""
+    attributes = instance.config.get("attributes") or {}
+    if any(attributes.get(key) for key in ("aria-label", "aria-labelledby", "title")):
+        return ""
+
+    for icon in (instance.config.get("icon_left"), instance.config.get("icon_right")):
+        if not icon:
+            continue
+        classes = icon.get("iconClass", "") if isinstance(icon, dict) else str(icon)
+        for token in classes.split():
+            if token in ICON_STYLE_CLASSES:
+                continue
+            slug = token.split("-", 1)[1] if "-" in token else token
+            if not slug:
+                continue
+            return ICON_LABEL_OVERRIDES.get(slug, slug.replace("-", " ").title())
+    return ""

@@ -6,7 +6,12 @@
             <div class="row g-0">
                 {% if image and post_content.post.main_image %}
                     <div class="col-md-4 event-img-col">
-                        <img src="{{ post_content.post.main_image.url }}"
+                        {% thumbnail post_content.post.main_image 400x0 quality=70 subject_location=post_content.post.main_image.subject_location as event_sm %}
+                        {% thumbnail post_content.post.main_image 800x0 quality=70 subject_location=post_content.post.main_image.subject_location as event_md %}
+                        <img src="{{ event_sm.url }}"
+                             srcset="{{ event_sm.url }} 400w, {{ event_md.url }} 800w"
+                             sizes="(max-width: 768px) 100vw, 33vw"
+                             loading="lazy" decoding="async"
                              alt="{{ post_content.post.main_image.default_alt_text|default:'' }}"
                              class="img-fluid rounded-start h-100 blog-event-image" />
                     </div>

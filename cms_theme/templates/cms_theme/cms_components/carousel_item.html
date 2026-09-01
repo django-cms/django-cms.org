@@ -14,7 +14,7 @@
                     target="_blank"
                     rel="noopener noreferrer">
             {% endif %}
-            <img src="{{ md.url }}"
+            <img src="{{ md.url }}" loading="lazy" decoding="async"
                     srcset="{{ sm.url }} 400w,
                             {{ md.url }} 800w,
                             {{ lg.url }} 1200w"
