@@ -12,7 +12,7 @@
             {% get_attributes instance.link_attributes %}>
     {% endif %}
     {% capped_image instance as capped %}
-    <img src="{{ capped.url }}" loading="lazy" decoding="async" alt="{% firstof instance.attributes.alt instance.rel_image.default_alt_text '' %}" {% if instance.width %} width="{{ instance.width|safe }}"{% endif %} {% if instance.height %} height="{{ instance.height|safe }}"{% endif %}
+    <img src="{{ capped.url }}" loading="lazy" decoding="async" alt="{% if picture_link %}{{ instance|image_link_label }}{% else %}{% firstof instance.attributes.alt instance.rel_image.default_alt_text '' %}{% endif %}" {% if instance.width %} width="{{ instance.width|safe }}"{% endif %} {% if instance.height %} height="{{ instance.height|safe }}"{% endif %}
         {% if img_srcset_data %}
             srcset="{% for size, thumb in img_srcset_data %}{{ thumb.url }} {{ size|safe }}w,{% endfor %}{{ capped.url }} {{ capped.width }}w"
             sizes="{% for size, thumb in img_srcset_data %}(max-width: {{ size|safe }}px) {{ size|safe }}px, {% endfor %} {{ picture_size.size.0|safe }}px"

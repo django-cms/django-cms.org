@@ -1,5 +1,7 @@
 from django import template
 from django.conf import settings
+from django.utils.html import strip_tags
+from django.utils.text import Truncator
 
 register = template.Library()
 
@@ -173,6 +175,47 @@ def icon_link_label(instance):
                 continue
             return ICON_LABEL_OVERRIDES.get(slug, slug.replace("-", " ").title())
     return ""
+
+
+@register.filter
+def card_link_label(instance):
+    """Return an accessible name for a card's stretched link.
+
+    A linked card renders an empty ``<a class="stretched-link"></a>`` over the
+    whole card, which has no accessible name at all (WCAG 2.4.4 / axe
+    "link-name"). The card title is what a sighted user reads before clicking,
+    so it is the right name; a card without a title falls back to the opening
+    words of its body text.
+    """
+    title = strip_tags(instance.config.get("card_title") or "").strip()
+    if title:
+        return title
+    content = strip_tags(instance.config.get("card_content") or "").strip()
+    return Truncator(content).words(8) if content else ""
+
+
+@register.filter
+def image_link_label(instance):
+    """Return an accessible name for an Image plugin that is wrapped in a link.
+
+    A link whose only content is an image takes its name from that image's alt
+    text, so an image left with ``alt=""`` makes the link nameless. Editors do
+    not always fill in the alt text, and the clipped templates render an SVG
+    that carries no alt text at all, so fall back to what filer knows about the
+    file: its alt text, then its label (its name, or failing that the uploaded
+    filename).
+
+    A filename is a poor name and the real fix is for an editor to set the alt
+    text, but it keeps the link reachable for screen reader and voice control
+    users in the meantime.
+    """
+    alt = (instance.config.get("attributes") or {}).get("alt")
+    if alt:
+        return alt
+    image = getattr(instance, "rel_image", None)
+    if image is None:
+        return ""
+    return (image.default_alt_text or "").strip() or image.label or ""
 
 
 @register.simple_tag

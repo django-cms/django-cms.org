@@ -4,7 +4,7 @@
 <div class="col"{% if instance.anchor %} id="{{ instance.anchor }}"{% endif %}>
     <div class="h-100 card benefits-card benefits-card-padding d-flex flex-column {% if instance.text_color %}text-{{ instance.text_color }}{% else %} text-secondary{% endif %}{{ instance.get_classes }}" {{ instance.get_attributes }}>
         {% if instance.card_link %}
-            <a href="{{ instance.card_link|to_url }}" class="stretched-link"  {% if instance.card_link.external_link %}target="_blank"{% endif %}></a>
+            <a href="{{ instance.card_link|to_url }}" class="stretched-link"{% with a11y_label=instance|card_link_label %}{% if a11y_label %} aria-label="{{ a11y_label }}"{% endif %}{% endwith %}{% if instance.card_link.external_link %} target="_blank"{% endif %}></a>
         {% endif %}
         {% if instance.bottom_image %}
             <div class="benefits-card-top-image">
