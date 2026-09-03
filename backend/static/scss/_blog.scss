@@ -218,3 +218,10 @@
   width: 100%;
   height: auto;
 }
+
+// Keep content images (e.g. from the "Blog Content" placeholder) inside their
+// column instead of overflowing the page on narrow viewports.
+.app-blog main img {
+  max-width: 100%;
+  height: auto;
+}
