@@ -55,6 +55,14 @@ $list-group-active-border-color: $primary;
 // Used to invert link colors (primary text, primary pill on hover).
 $dark-bg-selectors: ".bg-secondary, .bg-dark, .bg-second-primary, .bg-dark-green, .bg-black";
 
+// Appended to a bare element selector to keep it out of django CMS chrome.
+// #cms-top contains real content markup — the shortcuts modal is a <table> of
+// <kbd> caps — and django CMS styles it at (0,2,1), which the theme's own
+// element rules out-specify. :where() contributes no specificity, so adding
+// this changes nothing about how the theme's rules rank against each other.
+// See _cms_toolbar.scss for the rest of the story.
+$not-cms-chrome: ":where(:not(#cms-top *))";
+
 // Custom colors
 $mid-grey: #7C7C7C;
 $dark-green: #1a4d2e;

@@ -29,6 +29,7 @@
 @import "./mobile_slider";
 @import "./quote_panel";
 @import "./image_deco";
+@import "./cms_toolbar"; // must stay last: shields #cms-top from everything above
 
 /* optional custom styles */
 .kitchensink-page {

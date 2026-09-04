@@ -1,0 +1,100 @@
+// ==============================================
+// django CMS toolbar shield
+// ==============================================
+// Everything inside #cms-top is CMS chrome, not site content. django CMS guards
+// it with .cms-reset (cms/static/cms/sass/components/_reset.scss), but that
+// selector is only (0,1,1) — a single class — so ordinary theme rules
+// out-specify it. Two of ours do:
+//
+//   :is(p, li, …) a:not(…)  (0,1,2)  underlines every toolbar menu item
+//   ul > li::before         (0,0,2)  drops a square bullet into the menus
+//
+// Upstream fix proposed in django-cms/django-cms#8833. Until it ships, re-apply
+// django CMS's own reset values — the exact declarations from _reset.scss — at
+// a specificity that actually holds. Because the values are identical to the
+// reset's, this can only ever change the outcome for a rule sitting between
+// .cms-reset and this one, which is what the specificity below is tuned for.
+//
+// #cms-top carries both `cms` and `cms-reset`, so `.cms.cms-reset :where(…)` is
+// (0,2,0), and (0,3,0) with a state pseudo-class. That window is deliberate:
+//
+//   theme, running text        (0,1,2) / (0,2,2) on :hover   loses to shield
+//   SHIELD                     (0,2,0) / (0,3,0) on :hover
+//   django CMS components      (0,2,1) / (0,3,1) and up      beats shield
+//
+// :where() rather than :is() is what buys the bottom bit: :where() contributes
+// nothing, so the element name does not push this to (0,2,1) — where it would
+// merely *tie* with div.cms .cms-btn and friends and be decided by stylesheet
+// order. Ties resolve correctly today only because cms.base.css is injected by
+// {% render_block 'css' %} after main.css; 16 django CMS rules, including every
+// button colour and the dropdown menu padding, would silently flip if that
+// order ever changed. :where() makes django CMS win outright instead.
+//
+// Do NOT rewrite these selectors as `#cms-top …` (1,0,1), and do not swap
+// :where() back to :is(). Either one outranks django CMS's own styling.
+
+// Only the elements this theme actually leaks into. The full upstream element
+// list is deliberately not used: several django CMS components — the dialog,
+// the loader, the hover tooltips, .cms-rendering-exception — are written
+// without the `div.cms` prefix their siblings get in cms.base.scss, so they sit
+// as low as (0,1,0)-(0,1,1) (`.cms-dialog p`) even though they render inside
+// #cms-top like everything else. Covering div/p/input/… would trample them.
+//
+// Headings and table elements are deliberately NOT listed, even though the
+// shortcuts modal is a <table> of <kbd> caps under an <h2>. Those leaks are
+// fixed at the source with $not-cms-chrome (see _table.scss, kbd_tags.scss and
+// _class_overrides.scss) because the offending theme rules reach (0,2,4) or use
+// !important — beyond anything that can safely live here. What remains on those
+// elements is low-specificity Bootstrap reboot, which upstream's own
+// `.cms-reset td` (0,1,1) already outranks.
+//
+// Listing them anyway would cost real regressions: at (0,2,0) this block beats
+// `.cms-dialog h1 { margin: 0 0 10px }` (0,1,1) and flattens the dialog title.
+$cms-reset-elements: ":where(a, ul, li)";
+
+.cms.cms-reset #{$cms-reset-elements} {
+  color: var(--dca-black);
+  font: 14px/20px Helvetica, Arial, sans-serif;
+  text-align: start;
+  text-decoration: none;
+  box-sizing: border-box;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: 0;
+  list-style-type: none;
+  list-style-image: none;
+  background: 0 0;
+  transition: none;
+}
+
+// State variants are needed because the running-text rule in _links.scss
+// reaches (0,2,2) on :hover/:focus, which the (0,2,0) block above loses to.
+//
+// They carry ONLY text-decoration, deliberately. A state pseudo-class costs a
+// class, so this sits at (0,3,0) — and a state rule competes against django
+// CMS's *base* rules too, not just its hover ones. Repeating the whole reset
+// here put height/font at (0,3,0), above `div.cms .cms-toolbar-item-navigation
+// li a` (0,2,3), so hovering a menu item collapsed the 46px toolbar row.
+// text-decoration is safe to carry because every CMS rule that sets it below
+// (0,3,0) sets it to none as well; the ones that set underline
+// (div.cms .cms-messages a:hover, .cms-screenblock-inner a:hover) are (0,3,2).
+.cms.cms-reset #{$cms-reset-elements} {
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+// The theme draws list bullets as a pseudo-element, which upstream's reset does
+// not cover at all. Safe to remove wholesale: django CMS has no li:before or
+// li:after rule. Deliberately restricted to <li> — django CMS uses :before 189
+// times for its icon font, so a universal pseudo reset would blank every icon.
+.cms.cms-reset :where(li) {
+  &::before,
+  &::after {
+    content: none;
+  }
+}

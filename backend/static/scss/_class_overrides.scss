@@ -2,28 +2,28 @@
 // Heading Overrides
 // ==============================================
 
-.h1, h1 {
+.h1, h1#{$not-cms-chrome} {
   font-weight: 400 !important;
   line-height: 100% !important;
   letter-spacing: 0 !important;
   
 }
 
-.h2, h2 {
+.h2, h2#{$not-cms-chrome} {
   font-weight: 500 !important;
   line-height: normal !important;
   letter-spacing: 0 !important;
   
 }
 
-.h3, h3 {
+.h3, h3#{$not-cms-chrome} {
   font-weight: 400 !important;
   line-height: 100% !important;
   letter-spacing: 0 !important;
   
 }
 
-.h4, h4 {
+.h4, h4#{$not-cms-chrome} {
   font-weight: 500 !important;
   line-height: normal !important;
   letter-spacing: 0 !important;
