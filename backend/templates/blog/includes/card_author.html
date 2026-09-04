@@ -47,7 +47,7 @@
                 {% endwith %}
             </div>
             {% if not request.toolbar.edit_mode_active %}
-                <a href="{% absolute_url post_content %}" class="stretched-link" aria-label="{{ profile.name|escapejs }}"></a>
+                <a href="{% absolute_url post_content %}" class="stretched-link" aria-label="{{ post_content.title|escapejs }}"></a>
             {% endif %}
         </div>
     </div>
