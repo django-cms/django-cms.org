@@ -42,7 +42,7 @@
   &:active,
   &.active,
   &:focus-visible {
-    background-color: t$secondary;
+    background-color: $secondary;
     color: $primary;
     border: 1px solid $primary;
   }
